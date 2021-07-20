@@ -17,6 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
@@ -148,6 +149,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlPartKey == null ? "" : htmlPartKey.toString();
 	}
 
+	public Long sqlHtmlPartKey() {
+		return htmlPartKey;
+	}
+
 	public String jsonHtmlPartKey() {
 		return htmlPartKey == null ? "" : htmlPartKey.toString();
 	}
@@ -261,6 +266,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return pageDesignKeys == null ? "" : pageDesignKeys.toString();
 	}
 
+	public List<Long> sqlPageDesignKeys() {
+		return pageDesignKeys;
+	}
+
 	public String jsonPageDesignKeys() {
 		return pageDesignKeys == null ? "" : pageDesignKeys.toString();
 	}
@@ -301,17 +310,11 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				.a("name", "setPageDesignKeys")
 				.a("id", classApiMethodMethod, "_pageDesignKeys")
 				.a("autocomplete", "off");
-				a("oninput", "suggestHtmlPartPageDesignKeys($(this).val() ? searchPageDesignFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'htmlPartKeys:" + pk + "'}", "], $('#listHtmlPartPageDesignKeys_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestHtmlPartPageDesignKeys($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,pageDesignCompleteName' } ] : [", pk == null ? "" : "{'name':'fq','value':'htmlPartKeys:" + pk + "'}", "], $('#listHtmlPartPageDesignKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-				e("span").a("class", "varHtmlPart", pk, "PageDesignKeys ").f().sx(htmPageDesignKeys()).g("span");
-			}
 		}
 	}
 
@@ -425,6 +428,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strHtmlLink() {
 		return htmlLink == null ? "" : htmlLink;
+	}
+
+	public String sqlHtmlLink() {
+		return htmlLink;
 	}
 
 	public String jsonHtmlLink() {
@@ -574,6 +581,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlElement == null ? "" : htmlElement;
 	}
 
+	public String sqlHtmlElement() {
+		return htmlElement;
+	}
+
 	public String jsonHtmlElement() {
 		return htmlElement == null ? "" : htmlElement;
 	}
@@ -719,6 +730,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strHtmlId() {
 		return htmlId == null ? "" : htmlId;
+	}
+
+	public String sqlHtmlId() {
+		return htmlId;
 	}
 
 	public String jsonHtmlId() {
@@ -868,6 +883,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlClasses == null ? "" : htmlClasses;
 	}
 
+	public String sqlHtmlClasses() {
+		return htmlClasses;
+	}
+
 	public String jsonHtmlClasses() {
 		return htmlClasses == null ? "" : htmlClasses;
 	}
@@ -1013,6 +1032,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strHtmlStyle() {
 		return htmlStyle == null ? "" : htmlStyle;
+	}
+
+	public String sqlHtmlStyle() {
+		return htmlStyle;
 	}
 
 	public String jsonHtmlStyle() {
@@ -1162,6 +1185,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlBefore == null ? "" : htmlBefore;
 	}
 
+	public String sqlHtmlBefore() {
+		return htmlBefore;
+	}
+
 	public String jsonHtmlBefore() {
 		return htmlBefore == null ? "" : htmlBefore;
 	}
@@ -1305,6 +1332,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strHtmlAfter() {
 		return htmlAfter == null ? "" : htmlAfter;
+	}
+
+	public String sqlHtmlAfter() {
+		return htmlAfter;
 	}
 
 	public String jsonHtmlAfter() {
@@ -1452,6 +1483,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlText == null ? "" : htmlText;
 	}
 
+	public String sqlHtmlText() {
+		return htmlText;
+	}
+
 	public String jsonHtmlText() {
 		return htmlText == null ? "" : htmlText;
 	}
@@ -1595,6 +1630,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strHtmlVar() {
 		return htmlVar == null ? "" : htmlVar;
+	}
+
+	public String sqlHtmlVar() {
+		return htmlVar;
 	}
 
 	public String jsonHtmlVar() {
@@ -1744,6 +1783,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlVarSpan == null ? "" : htmlVarSpan;
 	}
 
+	public String sqlHtmlVarSpan() {
+		return htmlVarSpan;
+	}
+
 	public String jsonHtmlVarSpan() {
 		return htmlVarSpan == null ? "" : htmlVarSpan;
 	}
@@ -1889,6 +1932,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strHtmlVarForm() {
 		return htmlVarForm == null ? "" : htmlVarForm;
+	}
+
+	public String sqlHtmlVarForm() {
+		return htmlVarForm;
 	}
 
 	public String jsonHtmlVarForm() {
@@ -2038,6 +2085,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlVarInput == null ? "" : htmlVarInput;
 	}
 
+	public String sqlHtmlVarInput() {
+		return htmlVarInput;
+	}
+
 	public String jsonHtmlVarInput() {
 		return htmlVarInput == null ? "" : htmlVarInput;
 	}
@@ -2183,6 +2234,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strHtmlIfVarEquals() {
 		return htmlIfVarEquals == null ? "" : htmlIfVarEquals;
+	}
+
+	public String sqlHtmlIfVarEquals() {
+		return htmlIfVarEquals;
 	}
 
 	public String jsonHtmlIfVarEquals() {
@@ -2332,6 +2387,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlVarForEach == null ? "" : htmlVarForEach;
 	}
 
+	public String sqlHtmlVarForEach() {
+		return htmlVarForEach;
+	}
+
 	public String jsonHtmlVarForEach() {
 		return htmlVarForEach == null ? "" : htmlVarForEach;
 	}
@@ -2477,6 +2536,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strHtmlVarHtml() {
 		return htmlVarHtml == null ? "" : htmlVarHtml;
+	}
+
+	public String sqlHtmlVarHtml() {
+		return htmlVarHtml;
 	}
 
 	public String jsonHtmlVarHtml() {
@@ -2631,6 +2694,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return htmlExclude == null ? "" : htmlExclude.toString();
 	}
 
+	public Boolean sqlHtmlExclude() {
+		return htmlExclude;
+	}
+
 	public String jsonHtmlExclude() {
 		return htmlExclude == null ? "" : htmlExclude.toString();
 	}
@@ -2780,6 +2847,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return pdfExclude == null ? "" : pdfExclude.toString();
 	}
 
+	public Boolean sqlPdfExclude() {
+		return pdfExclude;
+	}
+
 	public String jsonPdfExclude() {
 		return pdfExclude == null ? "" : pdfExclude.toString();
 	}
@@ -2927,6 +2998,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strLoginLogout() {
 		return loginLogout == null ? "" : loginLogout.toString();
+	}
+
+	public Boolean sqlLoginLogout() {
+		return loginLogout;
 	}
 
 	public String jsonLoginLogout() {
@@ -3079,6 +3154,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strSort1() {
 		return sort1 == null ? "" : sort1.toString();
+	}
+
+	public Double sqlSort1() {
+		return sort1;
 	}
 
 	public String jsonSort1() {
@@ -3236,6 +3315,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort2 == null ? "" : sort2.toString();
 	}
 
+	public Double sqlSort2() {
+		return sort2;
+	}
+
 	public String jsonSort2() {
 		return sort2 == null ? "" : sort2.toString();
 	}
@@ -3389,6 +3472,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strSort3() {
 		return sort3 == null ? "" : sort3.toString();
+	}
+
+	public Double sqlSort3() {
+		return sort3;
 	}
 
 	public String jsonSort3() {
@@ -3546,6 +3633,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort4 == null ? "" : sort4.toString();
 	}
 
+	public Double sqlSort4() {
+		return sort4;
+	}
+
 	public String jsonSort4() {
 		return sort4 == null ? "" : sort4.toString();
 	}
@@ -3699,6 +3790,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strSort5() {
 		return sort5 == null ? "" : sort5.toString();
+	}
+
+	public Double sqlSort5() {
+		return sort5;
 	}
 
 	public String jsonSort5() {
@@ -3856,6 +3951,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort6 == null ? "" : sort6.toString();
 	}
 
+	public Double sqlSort6() {
+		return sort6;
+	}
+
 	public String jsonSort6() {
 		return sort6 == null ? "" : sort6.toString();
 	}
@@ -4009,6 +4108,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strSort7() {
 		return sort7 == null ? "" : sort7.toString();
+	}
+
+	public Double sqlSort7() {
+		return sort7;
 	}
 
 	public String jsonSort7() {
@@ -4166,6 +4269,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort8 == null ? "" : sort8.toString();
 	}
 
+	public Double sqlSort8() {
+		return sort8;
+	}
+
 	public String jsonSort8() {
 		return sort8 == null ? "" : sort8.toString();
 	}
@@ -4321,6 +4428,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return sort9 == null ? "" : sort9.toString();
 	}
 
+	public Double sqlSort9() {
+		return sort9;
+	}
+
 	public String jsonSort9() {
 		return sort9 == null ? "" : sort9.toString();
 	}
@@ -4474,6 +4585,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 
 	public String strSort10() {
 		return sort10 == null ? "" : sort10.toString();
+	}
+
+	public Double sqlSort10() {
+		return sort10;
 	}
 
 	public String jsonSort10() {
@@ -4646,6 +4761,10 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -4739,8 +4858,8 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		switch(var) {
 			case "pageDesignKeys":
 				oHtmlPart.addPageDesignKeys((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("pageDesignKeys"))
+					saves.add("pageDesignKeys");
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -5063,146 +5182,308 @@ public abstract class HtmlPartGen<DEV> extends Cluster {
 		return o != null;
 	}
 	public Object defineHtmlPart(String var, String val) {
-		switch(var) {
-			case "htmlLink":
+		switch(var.toLowerCase()) {
+			case "htmllink":
 				if(val != null)
 					setHtmlLink(val);
-				saves.add(var);
+				saves.add("htmlLink");
 				return val;
-			case "htmlElement":
+			case "htmlelement":
 				if(val != null)
 					setHtmlElement(val);
-				saves.add(var);
+				saves.add("htmlElement");
 				return val;
-			case "htmlId":
+			case "htmlid":
 				if(val != null)
 					setHtmlId(val);
-				saves.add(var);
+				saves.add("htmlId");
 				return val;
-			case "htmlClasses":
+			case "htmlclasses":
 				if(val != null)
 					setHtmlClasses(val);
-				saves.add(var);
+				saves.add("htmlClasses");
 				return val;
-			case "htmlStyle":
+			case "htmlstyle":
 				if(val != null)
 					setHtmlStyle(val);
-				saves.add(var);
+				saves.add("htmlStyle");
 				return val;
-			case "htmlBefore":
+			case "htmlbefore":
 				if(val != null)
 					setHtmlBefore(val);
-				saves.add(var);
+				saves.add("htmlBefore");
 				return val;
-			case "htmlAfter":
+			case "htmlafter":
 				if(val != null)
 					setHtmlAfter(val);
-				saves.add(var);
+				saves.add("htmlAfter");
 				return val;
-			case "htmlText":
+			case "htmltext":
 				if(val != null)
 					setHtmlText(val);
-				saves.add(var);
+				saves.add("htmlText");
 				return val;
-			case "htmlVar":
+			case "htmlvar":
 				if(val != null)
 					setHtmlVar(val);
-				saves.add(var);
+				saves.add("htmlVar");
 				return val;
-			case "htmlVarSpan":
+			case "htmlvarspan":
 				if(val != null)
 					setHtmlVarSpan(val);
-				saves.add(var);
+				saves.add("htmlVarSpan");
 				return val;
-			case "htmlVarForm":
+			case "htmlvarform":
 				if(val != null)
 					setHtmlVarForm(val);
-				saves.add(var);
+				saves.add("htmlVarForm");
 				return val;
-			case "htmlVarInput":
+			case "htmlvarinput":
 				if(val != null)
 					setHtmlVarInput(val);
-				saves.add(var);
+				saves.add("htmlVarInput");
 				return val;
-			case "htmlIfVarEquals":
+			case "htmlifvarequals":
 				if(val != null)
 					setHtmlIfVarEquals(val);
-				saves.add(var);
+				saves.add("htmlIfVarEquals");
 				return val;
-			case "htmlVarForEach":
+			case "htmlvarforeach":
 				if(val != null)
 					setHtmlVarForEach(val);
-				saves.add(var);
+				saves.add("htmlVarForEach");
 				return val;
-			case "htmlVarHtml":
+			case "htmlvarhtml":
 				if(val != null)
 					setHtmlVarHtml(val);
-				saves.add(var);
+				saves.add("htmlVarHtml");
 				return val;
-			case "htmlExclude":
+			case "htmlexclude":
 				if(val != null)
 					setHtmlExclude(val);
-				saves.add(var);
+				saves.add("htmlExclude");
 				return val;
-			case "pdfExclude":
+			case "pdfexclude":
 				if(val != null)
 					setPdfExclude(val);
-				saves.add(var);
+				saves.add("pdfExclude");
 				return val;
-			case "loginLogout":
+			case "loginlogout":
 				if(val != null)
 					setLoginLogout(val);
-				saves.add(var);
+				saves.add("loginLogout");
 				return val;
 			case "sort1":
 				if(val != null)
 					setSort1(val);
-				saves.add(var);
+				saves.add("sort1");
 				return val;
 			case "sort2":
 				if(val != null)
 					setSort2(val);
-				saves.add(var);
+				saves.add("sort2");
 				return val;
 			case "sort3":
 				if(val != null)
 					setSort3(val);
-				saves.add(var);
+				saves.add("sort3");
 				return val;
 			case "sort4":
 				if(val != null)
 					setSort4(val);
-				saves.add(var);
+				saves.add("sort4");
 				return val;
 			case "sort5":
 				if(val != null)
 					setSort5(val);
-				saves.add(var);
+				saves.add("sort5");
 				return val;
 			case "sort6":
 				if(val != null)
 					setSort6(val);
-				saves.add(var);
+				saves.add("sort6");
 				return val;
 			case "sort7":
 				if(val != null)
 					setSort7(val);
-				saves.add(var);
+				saves.add("sort7");
 				return val;
 			case "sort8":
 				if(val != null)
 					setSort8(val);
-				saves.add(var);
+				saves.add("sort8");
 				return val;
 			case "sort9":
 				if(val != null)
 					setSort9(val);
-				saves.add(var);
+				saves.add("sort9");
 				return val;
 			case "sort10":
 				if(val != null)
 					setSort10(val);
-				saves.add(var);
+				saves.add("sort10");
+				return val;
+			default:
+				return super.defineCluster(var, val);
+		}
+	}
+
+	@Override public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineHtmlPart(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineHtmlPart(String var, Object val) {
+		switch(var.toLowerCase()) {
+			case "htmllink":
+				if(val instanceof String)
+					setHtmlLink((String)val);
+				saves.add("htmlLink");
+				return val;
+			case "htmlelement":
+				if(val instanceof String)
+					setHtmlElement((String)val);
+				saves.add("htmlElement");
+				return val;
+			case "htmlid":
+				if(val instanceof String)
+					setHtmlId((String)val);
+				saves.add("htmlId");
+				return val;
+			case "htmlclasses":
+				if(val instanceof String)
+					setHtmlClasses((String)val);
+				saves.add("htmlClasses");
+				return val;
+			case "htmlstyle":
+				if(val instanceof String)
+					setHtmlStyle((String)val);
+				saves.add("htmlStyle");
+				return val;
+			case "htmlbefore":
+				if(val instanceof String)
+					setHtmlBefore((String)val);
+				saves.add("htmlBefore");
+				return val;
+			case "htmlafter":
+				if(val instanceof String)
+					setHtmlAfter((String)val);
+				saves.add("htmlAfter");
+				return val;
+			case "htmltext":
+				if(val instanceof String)
+					setHtmlText((String)val);
+				saves.add("htmlText");
+				return val;
+			case "htmlvar":
+				if(val instanceof String)
+					setHtmlVar((String)val);
+				saves.add("htmlVar");
+				return val;
+			case "htmlvarspan":
+				if(val instanceof String)
+					setHtmlVarSpan((String)val);
+				saves.add("htmlVarSpan");
+				return val;
+			case "htmlvarform":
+				if(val instanceof String)
+					setHtmlVarForm((String)val);
+				saves.add("htmlVarForm");
+				return val;
+			case "htmlvarinput":
+				if(val instanceof String)
+					setHtmlVarInput((String)val);
+				saves.add("htmlVarInput");
+				return val;
+			case "htmlifvarequals":
+				if(val instanceof String)
+					setHtmlIfVarEquals((String)val);
+				saves.add("htmlIfVarEquals");
+				return val;
+			case "htmlvarforeach":
+				if(val instanceof String)
+					setHtmlVarForEach((String)val);
+				saves.add("htmlVarForEach");
+				return val;
+			case "htmlvarhtml":
+				if(val instanceof String)
+					setHtmlVarHtml((String)val);
+				saves.add("htmlVarHtml");
+				return val;
+			case "htmlexclude":
+				if(val instanceof Boolean)
+					setHtmlExclude((Boolean)val);
+				saves.add("htmlExclude");
+				return val;
+			case "pdfexclude":
+				if(val instanceof Boolean)
+					setPdfExclude((Boolean)val);
+				saves.add("pdfExclude");
+				return val;
+			case "loginlogout":
+				if(val instanceof Boolean)
+					setLoginLogout((Boolean)val);
+				saves.add("loginLogout");
+				return val;
+			case "sort1":
+				if(val instanceof Double)
+					setSort1((Double)val);
+				saves.add("sort1");
+				return val;
+			case "sort2":
+				if(val instanceof Double)
+					setSort2((Double)val);
+				saves.add("sort2");
+				return val;
+			case "sort3":
+				if(val instanceof Double)
+					setSort3((Double)val);
+				saves.add("sort3");
+				return val;
+			case "sort4":
+				if(val instanceof Double)
+					setSort4((Double)val);
+				saves.add("sort4");
+				return val;
+			case "sort5":
+				if(val instanceof Double)
+					setSort5((Double)val);
+				saves.add("sort5");
+				return val;
+			case "sort6":
+				if(val instanceof Double)
+					setSort6((Double)val);
+				saves.add("sort6");
+				return val;
+			case "sort7":
+				if(val instanceof Double)
+					setSort7((Double)val);
+				saves.add("sort7");
+				return val;
+			case "sort8":
+				if(val instanceof Double)
+					setSort8((Double)val);
+				saves.add("sort8");
+				return val;
+			case "sort9":
+				if(val instanceof Double)
+					setSort9((Double)val);
+				saves.add("sort9");
+				return val;
+			case "sort10":
+				if(val instanceof Double)
+					setSort10((Double)val);
+				saves.add("sort10");
 				return val;
 			default:
 				return super.defineCluster(var, val);

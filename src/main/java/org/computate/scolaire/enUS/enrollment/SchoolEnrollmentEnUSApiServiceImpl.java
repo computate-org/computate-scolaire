@@ -5,39 +5,35 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
+import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.util.SimpleOrderedMap;
-import org.computate.scolaire.enUS.cluster.ClusterGen;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSApiServiceImpl;
-import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSGenApiServiceImpl;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.search.SearchList;
-import org.computate.scolaire.enUS.user.SiteUser;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.CompositeFuture;
@@ -52,32 +48,12 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.api.OperationRequest;
 import io.vertx.ext.web.api.OperationResponse;
 import net.authorize.Environment;
-import net.authorize.api.contract.v1.ArrayOfBatchDetailsType;
-import net.authorize.api.contract.v1.ArrayOfTransactionSummaryType;
-import net.authorize.api.contract.v1.BatchDetailsType;
 import net.authorize.api.contract.v1.CreateCustomerProfileRequest;
 import net.authorize.api.contract.v1.CreateCustomerProfileResponse;
-import net.authorize.api.contract.v1.CustomerProfileIdType;
 import net.authorize.api.contract.v1.CustomerProfileType;
-import net.authorize.api.contract.v1.GetSettledBatchListRequest;
-import net.authorize.api.contract.v1.GetSettledBatchListResponse;
-import net.authorize.api.contract.v1.GetTransactionDetailsRequest;
-import net.authorize.api.contract.v1.GetTransactionDetailsResponse;
-import net.authorize.api.contract.v1.GetTransactionListForCustomerRequest;
-import net.authorize.api.contract.v1.GetTransactionListRequest;
-import net.authorize.api.contract.v1.GetTransactionListResponse;
 import net.authorize.api.contract.v1.MerchantAuthenticationType;
 import net.authorize.api.contract.v1.MessageTypeEnum;
-import net.authorize.api.contract.v1.OrderExType;
-import net.authorize.api.contract.v1.Paging;
-import net.authorize.api.contract.v1.TransactionDetailsType;
-import net.authorize.api.contract.v1.TransactionListOrderFieldEnum;
-import net.authorize.api.contract.v1.TransactionListSorting;
-import net.authorize.api.contract.v1.TransactionSummaryType;
 import net.authorize.api.controller.CreateCustomerProfileController;
-import net.authorize.api.controller.GetSettledBatchListController;
-import net.authorize.api.controller.GetTransactionDetailsController;
-import net.authorize.api.controller.GetTransactionListController;
 import net.authorize.api.controller.GetTransactionListForCustomerController;
 import net.authorize.api.controller.base.ApiOperationBase;
 
@@ -712,6 +688,88 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 		} catch(Exception e) {
 			eventHandler.handle(Future.failedFuture(e));
 			return Future.failedFuture(e);
+		}
+	}
+
+	@Override
+	public void response200SearchSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+			QueryResponse responseSearch = listSchoolEnrollment.getQueryResponse();
+			SolrDocumentList solrDocuments = listSchoolEnrollment.getSolrDocumentList();
+			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
+			Long transmissionInMillis = responseSearch.getElapsedTime();
+			Long startNum = responseSearch.getResults().getStart();
+			Long foundNum = responseSearch.getResults().getNumFound();
+			Integer returnedNum = responseSearch.getResults().size();
+			String searchTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(searchInMillis), TimeUnit.MILLISECONDS.toMillis(searchInMillis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(searchInMillis)));
+			String transmissionTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis), TimeUnit.MILLISECONDS.toMillis(transmissionInMillis) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis)));
+			Exception exceptionSearch = responseSearch.getException();
+
+			JsonObject json = new JsonObject();
+			json.put("startNum", startNum);
+			json.put("foundNum", foundNum);
+			json.put("returnedNum", returnedNum);
+			json.put("searchTime", searchTime);
+			json.put("transmissionTime", transmissionTime);
+			JsonArray l = new JsonArray();
+			listSchoolEnrollment.getList().stream().forEach(o -> {
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listSchoolEnrollment.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
+						fieldNames.remove("created");
+					}
+					else if(fls.size() >= 1) {
+						fieldNames.removeAll(fls);
+					}
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				List<String> adminRoles = Arrays.asList("SiteAdmin");
+				if(
+						!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), adminRoles)
+						&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), adminRoles)
+						) {
+					json2.remove("adminNotes");
+				}
+				l.add(json2);
+			});
+			json.put("list", l);
+			if(exceptionSearch != null) {
+				json.put("exceptionSearch", exceptionSearch.getMessage());
+			}
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
+		} catch(Exception e) {
+			LOGGER.error(String.format("response200SearchSchoolEnrollment failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	@Override
+	public void response200GETSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
+			SolrDocumentList solrDocuments = listSchoolEnrollment.getSolrDocumentList();
+
+			JsonObject json = JsonObject.mapFrom(listSchoolEnrollment.getList().stream().findFirst().orElse(null));
+			List<String> adminRoles = Arrays.asList("SiteAdmin");
+			if(
+					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), adminRoles)
+					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), adminRoles)
+					) {
+				json.remove("adminNotes");
+			}
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
+		} catch(Exception e) {
+			LOGGER.error(String.format("response200GETSchoolEnrollment failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
 		}
 	}
 //

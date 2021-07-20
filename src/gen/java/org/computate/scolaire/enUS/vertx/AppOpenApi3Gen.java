@@ -1,24 +1,43 @@
 package org.computate.scolaire.enUS.vertx;
 
+import java.util.Arrays;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import java.util.HashMap;
+import org.computate.scolaire.enUS.vertx.AppSwagger2;
+import org.computate.scolaire.enUS.writer.AllWriter;
+import org.computate.scolaire.enUS.request.api.ApiRequest;
+import org.apache.commons.lang3.StringUtils;
+import java.text.NumberFormat;
+import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
+import org.computate.scolaire.enUS.wrap.Wrap;
+import org.apache.commons.collections.CollectionUtils;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
-import org.computate.scolaire.enUS.vertx.AppSwagger2;
-import org.computate.scolaire.enUS.writer.AllWriter;
-import org.apache.commons.lang3.StringUtils;
-import java.text.NumberFormat;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Objects;
 import io.vertx.core.json.JsonArray;
-import org.computate.scolaire.enUS.wrap.Wrap;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.vertx.AppOpenApi3&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.vertx.AppOpenApi3&fq=classeEtendGen_indexed_boolean:true">Find the class  in Solr. </a>
  * <br/>
  **/
 public abstract class AppOpenApi3Gen<DEV> extends AppSwagger2 {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(AppOpenApi3.class);
 
 	//////////////
 	// initDeep //
@@ -36,8 +55,8 @@ public abstract class AppOpenApi3Gen<DEV> extends AppSwagger2 {
 	}
 
 	public void initDeepAppOpenApi3() {
-		super.initDeepAppSwagger2(siteRequest_);
 		initAppOpenApi3();
+		super.initDeepAppSwagger2(siteRequest_);
 	}
 
 	public void initAppOpenApi3() {
@@ -72,6 +91,10 @@ public abstract class AppOpenApi3Gen<DEV> extends AppSwagger2 {
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
+			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
 			}
 		}
 		return o;
@@ -109,6 +132,62 @@ public abstract class AppOpenApi3Gen<DEV> extends AppSwagger2 {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSetAppOpenApi3(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSetAppOpenApi3(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return AppSwagger2.staticSetAppSwagger2(entityVar,  siteRequest_, o);
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrAppOpenApi3(entityVar,  siteRequest_, o);
+	}
+	public static Object staticSolrAppOpenApi3(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return AppSwagger2.staticSolrAppSwagger2(entityVar,  siteRequest_, o);
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrForClass(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		return staticSolrStrAppOpenApi3(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrStrAppOpenApi3(String entityVar, SiteRequestEnUS siteRequest_, Object o) {
+		switch(entityVar) {
+			default:
+				return AppSwagger2.staticSolrStrAppSwagger2(entityVar,  siteRequest_, o);
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqForClass(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		return staticSolrFqAppOpenApi3(entityVar,  siteRequest_, o);
+	}
+	public static String staticSolrFqAppOpenApi3(String entityVar, SiteRequestEnUS siteRequest_, String o) {
+		switch(entityVar) {
+			default:
+				return AppSwagger2.staticSolrFqAppSwagger2(entityVar,  siteRequest_, o);
+		}
+	}
+
 	/////////////
 	// define //
 	/////////////
@@ -121,17 +200,52 @@ public abstract class AppOpenApi3Gen<DEV> extends AppSwagger2 {
 				if(o == null)
 					o = defineAppOpenApi3(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.defineForClass(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
 				}
 			}
 		}
 		return o != null;
 	}
 	public Object defineAppOpenApi3(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
 			default:
 				return super.defineAppSwagger2(var, val);
+		}
+	}
+
+	@Override public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineAppOpenApi3(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineAppOpenApi3(String var, Object val) {
+		switch(var.toLowerCase()) {
+			default:
+				return super.defineAppSwagger2(var, val);
+		}
+	}
+
+	//////////////////
+	// apiRequest //
+	//////////////////
+
+	public void apiRequestAppOpenApi3() {
+		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getApiRequest_).orElse(null);
+		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+		if(o != null && o instanceof AppOpenApi3) {
+			AppOpenApi3 original = (AppOpenApi3)o;
+			super.apiRequestAppSwagger2();
 		}
 	}
 

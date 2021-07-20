@@ -4,6 +4,9 @@ import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.vertx.AppliOpenApi3
+ **/
 public class AppOpenApi3 extends AppOpenApi3Gen<AppSwagger2> {
 
 	@Override()

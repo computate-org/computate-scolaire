@@ -1,15 +1,12 @@
 package org.computate.scolaire.enUS.vertx;
 
 import java.security.MessageDigest;
-import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 import javax.crypto.Cipher;
@@ -33,16 +30,12 @@ import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.CaseInsensitiveHeaders;
-import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.ext.sql.SQLClient;
-import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.api.OperationResponse;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgPool;
 import io.vertx.sqlclient.PoolOptions;
 import io.vertx.sqlclient.Row;
-import io.vertx.sqlclient.Transaction;
 import io.vertx.sqlclient.Tuple;
 
 public class AppRestore extends AbstractVerticle {
@@ -180,8 +173,8 @@ public class AppRestore extends AbstractVerticle {
 			pgPool.preparedQuery(
 					"update d set modified=now() where pk in (select pk from d where not current and modified < $1 order by pk limit 10) returning pk, pk_c, path, value, current, created, modified;"
 //					"update d set modified=now() where pk in (select pk from d where not current and modified < $1 order by pk limit 0) returning pk, pk_c, path, value, current, created, modified;"
-					, Tuple.of(dateTime.toOffsetDateTime())
-					, Collectors.toList()
+					).collecting(Collectors.toList())
+					.execute(Tuple.of(dateTime.toOffsetDateTime())
 					, updateDAsync
 			-> {
 				if(updateDAsync.succeeded()) {
@@ -202,8 +195,8 @@ public class AppRestore extends AbstractVerticle {
 			PgPool pgPool = siteRequest.getSiteContext_().getPgPool();
 			pgPool.preparedQuery(
 					"update c set modified=now() where pk in (select pk from c where canonical_name is not null and modified < $1 order by pk limit 10) returning pk, current, canonical_name, created, modified, user_id;"
-					, Tuple.of(dateTime.toOffsetDateTime())
-					, Collectors.toList()
+					).collecting(Collectors.toList())
+					.execute(Tuple.of(dateTime.toOffsetDateTime())
 					, selectCAsync
 			-> {
 				if(selectCAsync.succeeded()) {
@@ -317,7 +310,7 @@ public class AppRestore extends AbstractVerticle {
 //			if(scramble && StringUtils.equals(path, "personFirstName"))
 			pgPool.preparedQuery(
 					"update d set modified=now(), value=$1, current=true where pk=$2;"
-					, Tuple.of(value, pk)
+					).execute(Tuple.of(value, pk)
 					, selectCAsync
 			-> {
 				if(selectCAsync.succeeded()) {
@@ -403,8 +396,8 @@ public class AppRestore extends AbstractVerticle {
 			Long pk = o.getPk();
 			pgPool.preparedQuery(
 					SiteContextEnUS.SQL_define
-					, Tuple.of(pk)
-					, Collectors.toList()
+					).collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
@@ -438,8 +431,8 @@ public class AppRestore extends AbstractVerticle {
 			Long pk = o.getPk();
 			pgPool.preparedQuery(
 					SiteContextEnUS.SQL_attribute
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+					).collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attributeAsync
 			-> {
 				try {

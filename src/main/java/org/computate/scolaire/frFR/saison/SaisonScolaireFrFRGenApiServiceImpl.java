@@ -42,6 +42,7 @@ import java.util.Set;
 import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -66,7 +67,6 @@ import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.api.OperationResponse;
@@ -75,7 +75,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import java.nio.charset.Charset;
 import org.apache.http.NameValuePair;
 import io.vertx.ext.web.api.OperationRequest;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.auth.oauth2.impl.OAuth2TokenImpl;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
@@ -126,7 +126,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -232,14 +232,17 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
+			SaisonScolaire o2 = new SaisonScolaire();
+			o2.setRequeteSite_(requeteSite);
 			List<Future> futures = new ArrayList<>();
 
 			if(requeteSite.getSessionId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "sessionId", requeteSite.getSessionId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "sessionId", requeteSite.getSessionId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -251,8 +254,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			}
 			if(requeteSite.getUtilisateurId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -264,8 +267,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			}
 			if(requeteSite.getUtilisateurCle() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -282,8 +285,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					switch(entiteVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -295,8 +298,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "archive":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -308,8 +311,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "supprime":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -323,10 +326,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						{
 							Long l = Long.parseLong(jsonObject.getString(entiteVar));
 							if(l != null) {
-								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.annee.AnneeScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.annee.AnneeScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(AnneeScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.annee.AnneeScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -334,8 +337,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "anneeCle", l2, "saisonCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "anneeCle", l2, "saisonCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -355,10 +358,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					case "sessionCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.session.SessionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.session.SessionScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(SessionScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.session.SessionScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -366,8 +369,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "saisonCle", pk, "sessionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "saisonCle", pk, "sessionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -386,8 +389,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "saisonDateDebut":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "saisonDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -399,8 +402,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "saisonEte":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonEte", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "saisonEte", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -412,8 +415,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "saisonHiver":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonHiver", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "saisonHiver", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -425,8 +428,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "saisonFuture":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonFuture", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "saisonFuture", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -439,7 +442,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
@@ -502,7 +505,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -630,7 +633,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTImportSaisonScolaire(requeteSite, gestionnaireEvenements);
@@ -692,7 +695,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -818,7 +821,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTFusionSaisonScolaire(requeteSite, gestionnaireEvenements);
@@ -880,7 +883,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -972,7 +975,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeSaisonScolaire.size());
 				if(listeSaisonScolaire.next()) {
@@ -1061,6 +1064,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			List<Future> futures = new ArrayList<>();
 
@@ -1071,8 +1075,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					switch(entiteVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1084,8 +1088,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "archive":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1097,8 +1101,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "supprime":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1112,8 +1116,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							{
 						Long l = Long.parseLong(jsonObject.getString(entiteVar));
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_addA
-									, Tuple.of(pk, "anneeCle", l, "saisonCles")
+							tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+									.execute(Tuple.of(pk, "anneeCle", l, "saisonCles")
 									, b
 							-> {
 								if(b.succeeded())
@@ -1127,8 +1131,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					case "sessionCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_addA
-										, Tuple.of(l, "saisonCle", pk, "sessionCles")
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+										.execute(Tuple.of(l, "saisonCle", pk, "sessionCles")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1145,8 +1149,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "saisonDateDebut":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "saisonDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1158,8 +1162,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "saisonEte":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonEte", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "saisonEte", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1171,8 +1175,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "saisonHiver":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonHiver", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "saisonHiver", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1184,8 +1188,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 					case "saisonFuture":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonFuture", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "saisonFuture", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1198,7 +1202,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
@@ -1259,7 +1263,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1373,7 +1377,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listeSaisonScolaire.next(dt)) {
 					listePATCHSaisonScolaire(requeteApi, listeSaisonScolaire, dt, gestionnaireEvenements);
@@ -1448,16 +1452,18 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
 			Set<String> methodeNoms = jsonObject.fieldNames();
 			SaisonScolaire o2 = new SaisonScolaire();
+			o2.setRequeteSite_(requeteSite);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-							, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+							.execute(Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1469,8 +1475,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1486,8 +1492,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					case "setInheritPk":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1499,8 +1505,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1514,8 +1520,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					case "setArchive":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "archive")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "archive")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1527,8 +1533,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "archive", o2.jsonArchive())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "archive", o2.jsonArchive())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1542,8 +1548,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					case "setSupprime":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "supprime")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "supprime")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1555,8 +1561,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "supprime", o2.jsonSupprime())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "supprime", o2.jsonSupprime())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1572,10 +1578,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							o2.setAnneeCle(jsonObject.getString(methodeNom));
 							Long l = o2.getAnneeCle();
 							if(l != null) {
-								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.annee.AnneeScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.annee.AnneeScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(AnneeScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.annee.AnneeScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1583,8 +1589,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getAnneeCle())) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "anneeCle", l2, "saisonCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "anneeCle", l2, "saisonCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1606,10 +1612,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							o2.setAnneeCle(jsonObject.getString(methodeNom));
 							Long l = o2.getAnneeCle();
 							if(l != null) {
-								ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.annee.AnneeScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.annee.AnneeScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(AnneeScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.annee.AnneeScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1617,8 +1623,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "anneeCle", l2, "saisonCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "anneeCle", l2, "saisonCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1639,10 +1645,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.session.SessionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.session.SessionScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(SessionScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.session.SessionScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1650,8 +1656,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getSessionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "saisonCle", pk, "sessionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "saisonCle", pk, "sessionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1674,10 +1680,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							for(Integer i = 0; i <  addAllSessionClesValeurs.size(); i++) {
 								Long l = Long.parseLong(addAllSessionClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.session.SessionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.session.SessionScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(SessionScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.session.SessionScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1685,8 +1691,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getSessionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "saisonCle", pk, "sessionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "saisonCle", pk, "sessionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1711,10 +1717,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							for(Integer i = 0; i <  setSessionClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setSessionClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.session.SessionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.session.SessionScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(SessionScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.session.SessionScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1724,8 +1730,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 										setSessionClesValeurs2.add(l2);
 									if(l2 != null && !o.getSessionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "saisonCle", pk, "sessionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "saisonCle", pk, "sessionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1746,8 +1752,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							for(Long l :  o.getSessionCles()) {
 								if(l != null && (setSessionClesValeurs == null || !setSessionClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l, "saisonCle", pk, "sessionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l, "saisonCle", pk, "sessionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1764,10 +1770,10 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<SessionScolaire> listeRecherche = new ListeRecherche<SessionScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.session.SessionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.session.SessionScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(SessionScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.session.SessionScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1775,8 +1781,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getSessionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l2, "saisonCle", pk, "sessionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l2, "saisonCle", pk, "sessionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1796,8 +1802,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					case "setSaisonDateDebut":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "saisonDateDebut")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "saisonDateDebut")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1809,8 +1815,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						} else {
 							o2.setSaisonDateDebut(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "saisonDateDebut", o2.jsonSaisonDateDebut())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "saisonDateDebut", o2.jsonSaisonDateDebut())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1824,8 +1830,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					case "setSaisonEte":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "saisonEte")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "saisonEte")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1837,8 +1843,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						} else {
 							o2.setSaisonEte(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "saisonEte", o2.jsonSaisonEte())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "saisonEte", o2.jsonSaisonEte())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1852,8 +1858,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					case "setSaisonHiver":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "saisonHiver")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "saisonHiver")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1865,8 +1871,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						} else {
 							o2.setSaisonHiver(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "saisonHiver", o2.jsonSaisonHiver())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "saisonHiver", o2.jsonSaisonHiver())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1880,8 +1886,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					case "setSaisonFuture":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "saisonFuture")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "saisonFuture")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1893,8 +1899,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						} else {
 							o2.setSaisonFuture(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "saisonFuture", o2.jsonSaisonFuture())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "saisonFuture", o2.jsonSaisonFuture())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1907,7 +1913,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					SaisonScolaire o3 = new SaisonScolaire();
 					o3.setRequeteSite_(o.getRequeteSite_());
@@ -1973,7 +1979,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -2063,7 +2069,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -2198,7 +2204,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -2263,7 +2269,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			ToutEcrivain w = ToutEcrivain.creer(listeSaisonScolaire.getRequeteSite_(), buffer);
 			SaisonPage page = new SaisonPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
-			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			MultiMap requeteEnTetes = MultiMap.caseInsensitiveMultiMap();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/saison");
@@ -2342,10 +2348,9 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			String utilisateurId = requeteSite.getUtilisateurId();
 			ZonedDateTime cree = Optional.ofNullable(requeteSite.getObjetJson()).map(j -> j.getString("cree")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())));
 
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_creer
-					, Tuple.of(SaisonScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_creer)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(SaisonScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
 					, creerAsync
 			-> {
 				if(creerAsync.succeeded()) {
@@ -2380,7 +2385,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
 				Buffer.buffer().appendString(json.encodePrettily())
-				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
+				, MultiMap.caseInsensitiveMultiMap().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -2562,10 +2567,9 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 						sqlTransactionSaisonScolaire(requeteSite, b -> {
 							if(b.succeeded()) {
 								Transaction tx = requeteSite.getTx();
-								tx.preparedQuery(
-										SiteContexteFrFR.SQL_selectC
-										, Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
-										, Collectors.toList()
+								tx.preparedQuery(SiteContexteFrFR.SQL_selectC)
+										.collecting(Collectors.toList())
+										.execute(Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
 										, selectCAsync
 								-> {
 									if(selectCAsync.succeeded()) {
@@ -2574,7 +2578,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 											UtilisateurSiteFrFRApiServiceImpl utilisateurService = new UtilisateurSiteFrFRApiServiceImpl(siteContexte);
 											if(utilisateurValeurs == null) {
 												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContexte.getAuthFournisseur(), utilisateurVertx);
+												JsonObject principalJson = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
@@ -2613,6 +2618,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
 																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
 																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																		requeteSite.setUtilisateurMail(principalJson.getString("email"));
 																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
 																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
 																		gestionnaireEvenements.handle(Future.succeededFuture());
@@ -2640,7 +2646,8 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 												UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
 
 												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContexte.getAuthFournisseur(), utilisateurVertx);
+												JsonObject principalJson = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
@@ -2649,8 +2656,6 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 												jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
 												jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 												Boolean definir = utilisateurSaisonScolaireDefinir(requeteSite, jsonObject, true);
@@ -2752,19 +2757,11 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
-				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -2847,82 +2844,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 
 	public void rechercheSaisonScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<SaisonScolaire>>> gestionnaireEvenements) {
 		try {
-			OperationRequest operationRequete = requeteSite.getOperationRequete();
-			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
-			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
-			ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
-			listeRecherche.setPeupler(peupler);
-			listeRecherche.setStocker(stocker);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(SaisonScolaire.class);
-			listeRecherche.setRequeteSite_(requeteSite);
-			if(entiteListe != null)
-				listeRecherche.addFields(entiteListe);
-			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
-
-			String id = operationRequete.getParams().getJsonObject("path").getString("id");
-			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
-				String entiteVar = null;
-				String valeurIndexe = null;
-				String varIndexe = null;
-				String valeurTri = null;
-				Integer valeurStart = null;
-				Integer valeurRows = null;
-				String paramNom = paramRequete.getKey();
-				Object paramValeursObjet = paramRequete.getValue();
-				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
-
-				try {
-					for(Object paramObjet : paramObjets) {
-						switch(paramNom) {
-							case "q":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : SaisonScolaire.varRechercheSaisonScolaire(entiteVar);
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheSaisonScolaireQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "fq":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = SaisonScolaire.varIndexeSaisonScolaire(entiteVar);
-								rechercheSaisonScolaireFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "sort":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = SaisonScolaire.varIndexeSaisonScolaire(entiteVar);
-								rechercheSaisonScolaireSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "start":
-								valeurStart = (Integer)paramObjet;
-								rechercheSaisonScolaireStart(uri, apiMethode, listeRecherche, valeurStart);
-								break;
-							case "rows":
-								valeurRows = (Integer)paramObjet;
-								rechercheSaisonScolaireRows(uri, apiMethode, listeRecherche, valeurRows);
-								break;
-							case "var":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheSaisonScolaireVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
-								break;
-						}
-					}
-					rechercheSaisonScolaireUri(uri, apiMethode, listeRecherche);
-				} catch(Exception e) {
-					LOGGER.error(String.format("rechercheSaisonScolaire a échoué. ", e));
-					gestionnaireEvenements.handle(Future.failedFuture(e));
-				}
-			});
-			if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
-				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
-			}
-			listeRecherche.initLoinPourClasse(requeteSite);
+			ListeRecherche<SaisonScolaire> listeRecherche = rechercheSaisonScolaireListe(requeteSite, peupler, stocker, modifier, uri, apiMethode);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {
 			LOGGER.error(String.format("rechercheSaisonScolaire a échoué. ", e));
@@ -2930,15 +2852,98 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 		}
 	}
 
+	public ListeRecherche<SaisonScolaire> rechercheSaisonScolaireListe(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode) {
+		OperationRequest operationRequete = requeteSite.getOperationRequete();
+		String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
+		String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
+		ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+		listeRecherche.setPeupler(peupler);
+		listeRecherche.setStocker(stocker);
+		listeRecherche.setQuery("*:*");
+		listeRecherche.setC(SaisonScolaire.class);
+		listeRecherche.setRequeteSite_(requeteSite);
+		if(entiteListe != null)
+			listeRecherche.addFields(entiteListe);
+		listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+
+		String id = operationRequete.getParams().getJsonObject("path").getString("id");
+		if(id != null && NumberUtils.isCreatable(id)) {
+			listeRecherche.addFilterQuery("(pk_indexed_long:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		} else if(id != null) {
+			listeRecherche.addFilterQuery("objetId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+		}
+
+		operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
+			String entiteVar = null;
+			String valeurIndexe = null;
+			String varIndexe = null;
+			String valeurTri = null;
+			Integer valeurStart = null;
+			Integer valeurRows = null;
+			String paramNom = paramRequete.getKey();
+			Object paramValeursObjet = paramRequete.getValue();
+			JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+			try {
+				for(Object paramObjet : paramObjets) {
+					switch(paramNom) {
+						case "q":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							varIndexe = "*".equals(entiteVar) ? entiteVar : SaisonScolaire.varRechercheSaisonScolaire(entiteVar);
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
+							rechercheSaisonScolaireQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "fq":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							varIndexe = SaisonScolaire.varIndexeSaisonScolaire(entiteVar);
+							rechercheSaisonScolaireFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "sort":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
+							valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+							varIndexe = SaisonScolaire.varIndexeSaisonScolaire(entiteVar);
+							rechercheSaisonScolaireSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "start":
+							valeurStart = paramObjet instanceof Integer ? (Integer)paramObjet : Integer.parseInt(paramObjet.toString());
+							rechercheSaisonScolaireStart(uri, apiMethode, listeRecherche, valeurStart);
+							break;
+						case "rows":
+							valeurRows = paramObjet instanceof Integer ? (Integer)paramObjet : Integer.parseInt(paramObjet.toString());
+							rechercheSaisonScolaireRows(uri, apiMethode, listeRecherche, valeurRows);
+							break;
+						case "var":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							rechercheSaisonScolaireVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
+							break;
+					}
+				}
+				rechercheSaisonScolaireUri(uri, apiMethode, listeRecherche);
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
+		if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
+		}
+		rechercheSaisonScolaire2(requeteSite, peupler, stocker, modifier, uri, apiMethode, listeRecherche);
+		listeRecherche.initLoinPourClasse(requeteSite);
+		return listeRecherche;
+	}
+	public void rechercheSaisonScolaire2(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, ListeRecherche<SaisonScolaire> listeRecherche) {
+	}
+
 	public void definirSaisonScolaire(SaisonScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_definir
-					, Tuple.of(pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_definir)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
@@ -2972,10 +2977,9 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_attribuer
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_attribuer)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attribuerAsync
 			-> {
 				try {
@@ -3113,7 +3117,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 					}
 				}
 
-				CompositeFuture.all(futures).setHandler(a -> {
+				CompositeFuture.all(futures).onComplete(a -> {
 					if(a.succeeded()) {
 						SaisonScolaireFrFRApiServiceImpl service = new SaisonScolaireFrFRApiServiceImpl(requeteSite.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
@@ -3131,7 +3135,7 @@ public class SaisonScolaireFrFRGenApiServiceImpl implements SaisonScolaireFrFRGe
 							);
 						}
 
-						CompositeFuture.all(futures2).setHandler(b -> {
+						CompositeFuture.all(futures2).onComplete(b -> {
 							if(b.succeeded()) {
 								gestionnaireEvenements.handle(Future.succeededFuture());
 							} else {

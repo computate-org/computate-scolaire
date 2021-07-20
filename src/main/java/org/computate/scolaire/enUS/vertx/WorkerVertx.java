@@ -188,19 +188,19 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 		siteContextEnUS.setPgPool(pgPool);
 
 
-		pgPool.preparedQuery(SQL_createTableC, a -> {
+		pgPool.preparedQuery(SQL_createTableC).execute(a -> {
 			if (a.succeeded()) {
-				pgPool.preparedQuery(SQL_uniqueIndexC, b -> {
+				pgPool.preparedQuery(SQL_uniqueIndexC).execute(b -> {
 					if (b.succeeded()) {
-						pgPool.preparedQuery(SQL_createTableA, c -> {
+						pgPool.preparedQuery(SQL_createTableA).execute(c -> {
 							if (c.succeeded()) {
-								pgPool.preparedQuery(SQL_uniqueIndexA1, d -> {
+								pgPool.preparedQuery(SQL_uniqueIndexA1).execute(d -> {
 									if (d.succeeded()) {
-										pgPool.preparedQuery(SQL_uniqueIndexA2, e -> {
+										pgPool.preparedQuery(SQL_uniqueIndexA2).execute(e -> {
 											if (d.succeeded()) {
-												pgPool.preparedQuery(SQL_createTableD, f -> {
+												pgPool.preparedQuery(SQL_createTableD).execute(f -> {
 													if (f.succeeded()) {
-														pgPool.preparedQuery(SQL_uniqueIndexD, g -> {
+														pgPool.preparedQuery(SQL_uniqueIndexD).execute(g -> {
 															if (g.succeeded()) {
 																LOGGER.info(configureDataInitSuccess);
 																promise.complete();
@@ -347,7 +347,6 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 							//searchListEnrollment.addSort("chargesCreated_indexed_boolean", ORDER.asc);
 							searchListEnrollment.addSort("modified_indexed_date", ORDER.asc);
 							searchListEnrollment.initDeepSearchList(siteRequest);
-							LOGGER.info(String.format("%s %s", searchListEnrollment.getSolrDocumentList().getNumFound(), searchListEnrollment.toString()));
 	
 							futureAuthorizeNetEnrollmentCharges(searchListEnrollment, paymentService, enrollmentService, c -> {
 								if(c.succeeded()) {

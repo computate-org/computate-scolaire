@@ -44,6 +44,7 @@ import java.util.Set;
 import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -68,7 +69,6 @@ import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.api.OperationResponse;
@@ -77,7 +77,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import java.nio.charset.Charset;
 import org.apache.http.NameValuePair;
 import io.vertx.ext.web.api.OperationRequest;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.auth.oauth2.impl.OAuth2TokenImpl;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
@@ -128,7 +128,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -234,14 +234,17 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
+			PageDesign o2 = new PageDesign();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(siteRequest.getSessionId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "sessionId", siteRequest.getSessionId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "sessionId", siteRequest.getSessionId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -253,8 +256,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			}
 			if(siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -266,8 +269,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			}
 			if(siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -284,8 +287,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					switch(entityVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -297,8 +300,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "archived":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -310,8 +313,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "deleted":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -324,10 +327,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "childDesignKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+								SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
+								searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -335,8 +338,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -356,10 +359,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "parentDesignKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+								SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
+								searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -367,8 +370,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -388,10 +391,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "htmlPartKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+								SearchList<org.computate.scolaire.enUS.html.part.HtmlPart> searchList = new SearchList<org.computate.scolaire.enUS.html.part.HtmlPart>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(HtmlPart.class);
+								searchList.setC(org.computate.scolaire.enUS.html.part.HtmlPart.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -399,8 +402,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -419,8 +422,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "pageDesignCompleteName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "pageDesignCompleteName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "pageDesignCompleteName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -432,8 +435,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designHidden":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designHidden", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designHidden", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -445,8 +448,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designAdmin":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designAdmin", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designAdmin", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -458,8 +461,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designIgnoreEmptyChildName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designIgnoreEmptyChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnoreEmptyChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -471,8 +474,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designIgnorePaymentsNotPastDue":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designIgnorePaymentsNotPastDue", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnorePaymentsNotPastDue", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -484,8 +487,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designIgnorePaymentsPastDue":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designIgnorePaymentsPastDue", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnorePaymentsPastDue", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -497,8 +500,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designFilterEnrollmentKey":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designFilterEnrollmentKey", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designFilterEnrollmentKey", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -510,8 +513,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designEnrollmentSortMonthDayOfBirth":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designEnrollmentSortMonthDayOfBirth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designEnrollmentSortMonthDayOfBirth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -523,8 +526,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designEnrollmentSortGroupName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designEnrollmentSortGroupName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designEnrollmentSortGroupName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -536,8 +539,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designEnrollmentSortChildName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designEnrollmentSortChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designEnrollmentSortChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -549,8 +552,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "searchYears":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "searchYears", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "searchYears", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -562,8 +565,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "searchPayments":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "searchPayments", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "searchPayments", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -575,8 +578,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "searchCurrentPayments":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "searchCurrentPayments", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "searchCurrentPayments", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -589,7 +592,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
@@ -652,7 +655,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -780,7 +783,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportPageDesign(siteRequest, eventHandler);
@@ -842,7 +845,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -968,7 +971,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergePageDesign(siteRequest, eventHandler);
@@ -1030,7 +1033,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1122,7 +1125,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listPageDesign.size());
 				if(listPageDesign.next()) {
@@ -1211,6 +1214,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			List<Future> futures = new ArrayList<>();
 
@@ -1221,8 +1225,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					switch(entityVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1234,8 +1238,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "archived":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1247,8 +1251,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "deleted":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1261,8 +1265,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "childDesignKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(pk, "childDesignKeys", l, "parentDesignKeys")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(pk, "childDesignKeys", l, "parentDesignKeys")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1280,8 +1284,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "parentDesignKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(l, "childDesignKeys", pk, "parentDesignKeys")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(l, "childDesignKeys", pk, "parentDesignKeys")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1299,8 +1303,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "htmlPartKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(pk, "htmlPartKeys", l, "pageDesignKeys")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(pk, "htmlPartKeys", l, "pageDesignKeys")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1317,8 +1321,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "pageDesignCompleteName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "pageDesignCompleteName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "pageDesignCompleteName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1330,8 +1334,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designHidden":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designHidden", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designHidden", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1343,8 +1347,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designAdmin":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designAdmin", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designAdmin", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1356,8 +1360,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designIgnoreEmptyChildName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designIgnoreEmptyChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnoreEmptyChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1369,8 +1373,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designIgnorePaymentsNotPastDue":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designIgnorePaymentsNotPastDue", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnorePaymentsNotPastDue", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1382,8 +1386,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designIgnorePaymentsPastDue":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designIgnorePaymentsPastDue", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnorePaymentsPastDue", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1395,8 +1399,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designFilterEnrollmentKey":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designFilterEnrollmentKey", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designFilterEnrollmentKey", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1408,8 +1412,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designEnrollmentSortMonthDayOfBirth":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designEnrollmentSortMonthDayOfBirth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designEnrollmentSortMonthDayOfBirth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1421,8 +1425,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designEnrollmentSortGroupName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designEnrollmentSortGroupName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designEnrollmentSortGroupName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1434,8 +1438,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "designEnrollmentSortChildName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "designEnrollmentSortChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "designEnrollmentSortChildName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1447,8 +1451,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "searchYears":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "searchYears", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "searchYears", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1460,8 +1464,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "searchPayments":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "searchPayments", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "searchPayments", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1473,8 +1477,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 					case "searchCurrentPayments":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "searchCurrentPayments", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "searchCurrentPayments", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1487,7 +1491,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
@@ -1548,7 +1552,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1662,7 +1666,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listPageDesign.next(dt)) {
 					listPATCHPageDesign(apiRequest, listPageDesign, dt, eventHandler);
@@ -1737,16 +1741,18 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
 			Set<String> methodNames = jsonObject.fieldNames();
 			PageDesign o2 = new PageDesign();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-							, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+							.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1758,8 +1764,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1775,8 +1781,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setInheritPk":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1788,8 +1794,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1803,8 +1809,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setArchived":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "archived")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "archived")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1816,8 +1822,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "archived", o2.jsonArchived())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "archived", o2.jsonArchived())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1831,8 +1837,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setDeleted":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "deleted")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "deleted")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1844,8 +1850,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "deleted", o2.jsonDeleted())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "deleted", o2.jsonDeleted())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1860,10 +1866,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+								SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
+								searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1871,8 +1877,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getChildDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1895,10 +1901,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							for(Integer i = 0; i <  addAllChildDesignKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllChildDesignKeysValues.getString(i));
 								if(l != null) {
-									SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+									SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(PageDesign.class);
+									searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1906,8 +1912,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getChildDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1932,10 +1938,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							for(Integer i = 0; i <  setChildDesignKeysValues.size(); i++) {
 								Long l = Long.parseLong(setChildDesignKeysValues.getString(i));
 								if(l != null) {
-									SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+									SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(PageDesign.class);
+									searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1945,8 +1951,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 										setChildDesignKeysValues2.add(l2);
 									if(l2 != null && !o.getChildDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1967,8 +1973,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							for(Long l :  o.getChildDesignKeys()) {
 								if(l != null && (setChildDesignKeysValues2 == null || !setChildDesignKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "childDesignKeys", l, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "childDesignKeys", l, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1985,10 +1991,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+								SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
+								searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1996,8 +2002,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getChildDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "childDesignKeys", l2, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2018,10 +2024,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+								SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
+								searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2029,8 +2035,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getParentDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2053,10 +2059,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							for(Integer i = 0; i <  addAllParentDesignKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllParentDesignKeysValues.getString(i));
 								if(l != null) {
-									SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+									SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(PageDesign.class);
+									searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2064,8 +2070,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getParentDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2090,10 +2096,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							for(Integer i = 0; i <  setParentDesignKeysValues.size(); i++) {
 								Long l = Long.parseLong(setParentDesignKeysValues.getString(i));
 								if(l != null) {
-									SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+									SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(PageDesign.class);
+									searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2103,8 +2109,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 										setParentDesignKeysValues2.add(l2);
 									if(l2 != null && !o.getParentDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2125,8 +2131,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							for(Long l :  o.getParentDesignKeys()) {
 								if(l != null && (setParentDesignKeysValues == null || !setParentDesignKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "childDesignKeys", pk, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "childDesignKeys", pk, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2143,10 +2149,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+								SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
+								searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2154,8 +2160,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getParentDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "childDesignKeys", pk, "parentDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2176,10 +2182,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+								SearchList<org.computate.scolaire.enUS.html.part.HtmlPart> searchList = new SearchList<org.computate.scolaire.enUS.html.part.HtmlPart>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(HtmlPart.class);
+								searchList.setC(org.computate.scolaire.enUS.html.part.HtmlPart.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2187,8 +2193,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getHtmlPartKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2211,10 +2217,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							for(Integer i = 0; i <  addAllHtmlPartKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllHtmlPartKeysValues.getString(i));
 								if(l != null) {
-									SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+									SearchList<org.computate.scolaire.enUS.html.part.HtmlPart> searchList = new SearchList<org.computate.scolaire.enUS.html.part.HtmlPart>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(HtmlPart.class);
+									searchList.setC(org.computate.scolaire.enUS.html.part.HtmlPart.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2222,8 +2228,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getHtmlPartKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2248,10 +2254,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							for(Integer i = 0; i <  setHtmlPartKeysValues.size(); i++) {
 								Long l = Long.parseLong(setHtmlPartKeysValues.getString(i));
 								if(l != null) {
-									SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+									SearchList<org.computate.scolaire.enUS.html.part.HtmlPart> searchList = new SearchList<org.computate.scolaire.enUS.html.part.HtmlPart>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(HtmlPart.class);
+									searchList.setC(org.computate.scolaire.enUS.html.part.HtmlPart.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2261,8 +2267,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 										setHtmlPartKeysValues2.add(l2);
 									if(l2 != null && !o.getHtmlPartKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2283,8 +2289,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							for(Long l :  o.getHtmlPartKeys()) {
 								if(l != null && (setHtmlPartKeysValues2 == null || !setHtmlPartKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "htmlPartKeys", l, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "htmlPartKeys", l, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2301,10 +2307,10 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+								SearchList<org.computate.scolaire.enUS.html.part.HtmlPart> searchList = new SearchList<org.computate.scolaire.enUS.html.part.HtmlPart>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(HtmlPart.class);
+								searchList.setC(org.computate.scolaire.enUS.html.part.HtmlPart.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2312,8 +2318,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getHtmlPartKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "htmlPartKeys", l2, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2333,8 +2339,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setPageDesignCompleteName":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "pageDesignCompleteName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "pageDesignCompleteName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2346,8 +2352,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setPageDesignCompleteName(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "pageDesignCompleteName", o2.jsonPageDesignCompleteName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "pageDesignCompleteName", o2.jsonPageDesignCompleteName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2361,8 +2367,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setDesignHidden":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "designHidden")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "designHidden")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2374,8 +2380,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setDesignHidden(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "designHidden", o2.jsonDesignHidden())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "designHidden", o2.jsonDesignHidden())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2389,8 +2395,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setDesignAdmin":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "designAdmin")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "designAdmin")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2402,8 +2408,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setDesignAdmin(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "designAdmin", o2.jsonDesignAdmin())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "designAdmin", o2.jsonDesignAdmin())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2417,8 +2423,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setDesignIgnoreEmptyChildName":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "designIgnoreEmptyChildName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "designIgnoreEmptyChildName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2430,8 +2436,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setDesignIgnoreEmptyChildName(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "designIgnoreEmptyChildName", o2.jsonDesignIgnoreEmptyChildName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "designIgnoreEmptyChildName", o2.jsonDesignIgnoreEmptyChildName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2445,8 +2451,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setDesignIgnorePaymentsNotPastDue":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "designIgnorePaymentsNotPastDue")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "designIgnorePaymentsNotPastDue")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2458,8 +2464,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setDesignIgnorePaymentsNotPastDue(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "designIgnorePaymentsNotPastDue", o2.jsonDesignIgnorePaymentsNotPastDue())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "designIgnorePaymentsNotPastDue", o2.jsonDesignIgnorePaymentsNotPastDue())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2473,8 +2479,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setDesignIgnorePaymentsPastDue":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "designIgnorePaymentsPastDue")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "designIgnorePaymentsPastDue")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2486,8 +2492,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setDesignIgnorePaymentsPastDue(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "designIgnorePaymentsPastDue", o2.jsonDesignIgnorePaymentsPastDue())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "designIgnorePaymentsPastDue", o2.jsonDesignIgnorePaymentsPastDue())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2501,8 +2507,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setDesignFilterEnrollmentKey":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "designFilterEnrollmentKey")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "designFilterEnrollmentKey")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2514,8 +2520,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setDesignFilterEnrollmentKey(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "designFilterEnrollmentKey", o2.jsonDesignFilterEnrollmentKey())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "designFilterEnrollmentKey", o2.jsonDesignFilterEnrollmentKey())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2529,8 +2535,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setDesignEnrollmentSortMonthDayOfBirth":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "designEnrollmentSortMonthDayOfBirth")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "designEnrollmentSortMonthDayOfBirth")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2542,8 +2548,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setDesignEnrollmentSortMonthDayOfBirth(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "designEnrollmentSortMonthDayOfBirth", o2.jsonDesignEnrollmentSortMonthDayOfBirth())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "designEnrollmentSortMonthDayOfBirth", o2.jsonDesignEnrollmentSortMonthDayOfBirth())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2557,8 +2563,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setDesignEnrollmentSortGroupName":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "designEnrollmentSortGroupName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "designEnrollmentSortGroupName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2570,8 +2576,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setDesignEnrollmentSortGroupName(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "designEnrollmentSortGroupName", o2.jsonDesignEnrollmentSortGroupName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "designEnrollmentSortGroupName", o2.jsonDesignEnrollmentSortGroupName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2585,8 +2591,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setDesignEnrollmentSortChildName":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "designEnrollmentSortChildName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "designEnrollmentSortChildName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2598,8 +2604,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setDesignEnrollmentSortChildName(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "designEnrollmentSortChildName", o2.jsonDesignEnrollmentSortChildName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "designEnrollmentSortChildName", o2.jsonDesignEnrollmentSortChildName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2613,8 +2619,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setSearchYears":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "searchYears")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "searchYears")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2626,8 +2632,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setSearchYears(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "searchYears", o2.jsonSearchYears())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "searchYears", o2.jsonSearchYears())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2641,8 +2647,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setSearchPayments":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "searchPayments")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "searchPayments")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2654,8 +2660,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setSearchPayments(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "searchPayments", o2.jsonSearchPayments())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "searchPayments", o2.jsonSearchPayments())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2669,8 +2675,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					case "setSearchCurrentPayments":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "searchCurrentPayments")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "searchCurrentPayments")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2682,8 +2688,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						} else {
 							o2.setSearchCurrentPayments(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "searchCurrentPayments", o2.jsonSearchCurrentPayments())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "searchCurrentPayments", o2.jsonSearchCurrentPayments())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2696,7 +2702,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					PageDesign o3 = new PageDesign();
 					o3.setSiteRequest_(o.getSiteRequest_());
@@ -3102,7 +3108,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			AllWriter w = AllWriter.create(listPageDesign.getSiteRequest_(), buffer);
 			PageDesignPage page = new PageDesignPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/page-design");
@@ -3197,7 +3203,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			AllWriter w = AllWriter.create(listPageDesign.getSiteRequest_(), buffer);
 			DesignDisplayPage page = new DesignDisplayPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/page");
@@ -3289,7 +3295,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			AllWriter w = AllWriter.create(listPageDesign.getSiteRequest_(), buffer);
 			DesignPdfPage page = new DesignPdfPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/pdf");
@@ -3384,7 +3390,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			AllWriter w = AllWriter.create(listPageDesign.getSiteRequest_(), buffer);
 			DesignEmailPage page = new DesignEmailPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/email");
@@ -3479,7 +3485,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			AllWriter w = AllWriter.create(listPageDesign.getSiteRequest_(), buffer);
 			DesignDisplayPage page = new DesignDisplayPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/");
@@ -3558,10 +3564,9 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			String userId = siteRequest.getUserId();
 			ZonedDateTime created = Optional.ofNullable(siteRequest.getJsonObject()).map(j -> j.getString("created")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())));
 
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_create
-					, Tuple.of(PageDesign.class.getCanonicalName(), userId, created.toOffsetDateTime())
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_create)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(PageDesign.class.getCanonicalName(), userId, created.toOffsetDateTime())
 					, createAsync
 			-> {
 				if(createAsync.succeeded()) {
@@ -3596,7 +3601,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
 				Buffer.buffer().appendString(json.encodePrettily())
-				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
+				, MultiMap.caseInsensitiveMultiMap().add("Content-Type", "application/json")
 		);
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
@@ -3778,10 +3783,9 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 						sqlTransactionPageDesign(siteRequest, b -> {
 							if(b.succeeded()) {
 								Transaction tx = siteRequest.getTx();
-								tx.preparedQuery(
-										SiteContextEnUS.SQL_selectC
-										, Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
-										, Collectors.toList()
+								tx.preparedQuery(SiteContextEnUS.SQL_selectC)
+										.collecting(Collectors.toList())
+										.execute(Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
 										, selectCAsync
 								-> {
 									if(selectCAsync.succeeded()) {
@@ -3790,7 +3794,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 											SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
 											if(userValues == null) {
 												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContext.getAuthProvider(), userVertx);
+												JsonObject jsonPrincipal = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
@@ -3829,6 +3834,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
 																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
 																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																		siteRequest.setUserEmail(jsonPrincipal.getString("email"));
 																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
 																		siteRequest.setUserKey(siteUser.getPk());
 																		eventHandler.handle(Future.succeededFuture());
@@ -3856,7 +3862,8 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 												SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
 
 												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContext.getAuthProvider(), userVertx);
+												JsonObject jsonPrincipal = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
@@ -3865,8 +3872,6 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 												jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
 												jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
 												Boolean define = userPageDesignDefine(siteRequest, jsonObject, true);
@@ -3968,19 +3973,11 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
-				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -4063,82 +4060,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 
 	public void aSearchPageDesign(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<PageDesign>>> eventHandler) {
 		try {
-			OperationRequest operationRequest = siteRequest.getOperationRequest();
-			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
-			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<PageDesign> searchList = new SearchList<PageDesign>();
-			searchList.setPopulate(populate);
-			searchList.setStore(store);
-			searchList.setQuery("*:*");
-			searchList.setC(PageDesign.class);
-			searchList.setSiteRequest_(siteRequest);
-			if(entityList != null)
-				searchList.addFields(entityList);
-			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
-
-			String id = operationRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null) {
-				searchList.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
-				String entityVar = null;
-				String valueIndexed = null;
-				String varIndexed = null;
-				String valueSort = null;
-				Integer valueStart = null;
-				Integer valueRows = null;
-				String paramName = paramRequest.getKey();
-				Object paramValuesObject = paramRequest.getValue();
-				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
-
-				try {
-					for(Object paramObject : paramObjects) {
-						switch(paramName) {
-							case "q":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : PageDesign.varSearchPageDesign(entityVar);
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchPageDesignQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "fq":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = PageDesign.varIndexedPageDesign(entityVar);
-								aSearchPageDesignFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "sort":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = PageDesign.varIndexedPageDesign(entityVar);
-								aSearchPageDesignSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "start":
-								valueStart = (Integer)paramObject;
-								aSearchPageDesignStart(uri, apiMethod, searchList, valueStart);
-								break;
-							case "rows":
-								valueRows = (Integer)paramObject;
-								aSearchPageDesignRows(uri, apiMethod, searchList, valueRows);
-								break;
-							case "var":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchPageDesignVar(uri, apiMethod, searchList, entityVar, valueIndexed);
-								break;
-						}
-					}
-					aSearchPageDesignUri(uri, apiMethod, searchList);
-				} catch(Exception e) {
-					LOGGER.error(String.format("aSearchPageDesign failed. ", e));
-					eventHandler.handle(Future.failedFuture(e));
-				}
-			});
-			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-				searchList.addSort("pageDesignCompleteName_indexed_string", ORDER.asc);
-			}
-			searchList.initDeepForClass(siteRequest);
+			SearchList<PageDesign> searchList = aSearchPageDesignList(siteRequest, populate, store, modify, uri, apiMethod);
 			eventHandler.handle(Future.succeededFuture(searchList));
 		} catch(Exception e) {
 			LOGGER.error(String.format("aSearchPageDesign failed. ", e));
@@ -4146,15 +4068,98 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 		}
 	}
 
+	public SearchList<PageDesign> aSearchPageDesignList(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod) {
+		OperationRequest operationRequest = siteRequest.getOperationRequest();
+		String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
+		String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
+		SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+		searchList.setPopulate(populate);
+		searchList.setStore(store);
+		searchList.setQuery("*:*");
+		searchList.setC(PageDesign.class);
+		searchList.setSiteRequest_(siteRequest);
+		if(entityList != null)
+			searchList.addFields(entityList);
+		searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
+
+		String id = operationRequest.getParams().getJsonObject("path").getString("id");
+		if(id != null && NumberUtils.isCreatable(id)) {
+			searchList.addFilterQuery("(pk_indexed_long:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		} else if(id != null) {
+			searchList.addFilterQuery("objectId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+		}
+
+		operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+			String entityVar = null;
+			String valueIndexed = null;
+			String varIndexed = null;
+			String valueSort = null;
+			Integer valueStart = null;
+			Integer valueRows = null;
+			String paramName = paramRequest.getKey();
+			Object paramValuesObject = paramRequest.getValue();
+			JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
+
+			try {
+				for(Object paramObject : paramObjects) {
+					switch(paramName) {
+						case "q":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							varIndexed = "*".equals(entityVar) ? entityVar : PageDesign.varSearchPageDesign(entityVar);
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
+							aSearchPageDesignQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "fq":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							varIndexed = PageDesign.varIndexedPageDesign(entityVar);
+							aSearchPageDesignFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "sort":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
+							valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+							varIndexed = PageDesign.varIndexedPageDesign(entityVar);
+							aSearchPageDesignSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "start":
+							valueStart = paramObject instanceof Integer ? (Integer)paramObject : Integer.parseInt(paramObject.toString());
+							aSearchPageDesignStart(uri, apiMethod, searchList, valueStart);
+							break;
+						case "rows":
+							valueRows = paramObject instanceof Integer ? (Integer)paramObject : Integer.parseInt(paramObject.toString());
+							aSearchPageDesignRows(uri, apiMethod, searchList, valueRows);
+							break;
+						case "var":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							aSearchPageDesignVar(uri, apiMethod, searchList, entityVar, valueIndexed);
+							break;
+					}
+				}
+				aSearchPageDesignUri(uri, apiMethod, searchList);
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
+		if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
+			searchList.addSort("pageDesignCompleteName_indexed_string", ORDER.asc);
+		}
+		aSearchPageDesign2(siteRequest, populate, store, modify, uri, apiMethod, searchList);
+		searchList.initDeepForClass(siteRequest);
+		return searchList;
+	}
+	public void aSearchPageDesign2(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, SearchList<PageDesign> searchList) {
+	}
+
 	public void definePageDesign(PageDesign o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_define
-					, Tuple.of(pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_define)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
@@ -4188,10 +4193,9 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_attribute
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_attribute)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attributeAsync
 			-> {
 				try {
@@ -4329,7 +4333,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 					}
 				}
 
-				CompositeFuture.all(futures).setHandler(a -> {
+				CompositeFuture.all(futures).onComplete(a -> {
 					if(a.succeeded()) {
 						PageDesignEnUSApiServiceImpl service = new PageDesignEnUSApiServiceImpl(siteRequest.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
@@ -4347,7 +4351,7 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							);
 						}
 
-						CompositeFuture.all(futures2).setHandler(b -> {
+						CompositeFuture.all(futures2).onComplete(b -> {
 							if(b.succeeded()) {
 								eventHandler.handle(Future.succeededFuture());
 							} else {

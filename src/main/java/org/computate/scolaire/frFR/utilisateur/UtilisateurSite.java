@@ -51,7 +51,7 @@ import org.computate.scolaire.frFR.inscription.InscriptionScolaire;
  * RoleUtilisateur: true
  * Role.frFR: SiteManager
  * Role.enUS: SiteManager
- */      
+ */     
 public class UtilisateurSite extends UtilisateurSiteGen<Cluster> {  
 
 	/**

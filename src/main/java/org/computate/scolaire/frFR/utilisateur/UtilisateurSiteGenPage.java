@@ -353,7 +353,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("a");
 			} g("h1");
-			e("div").a("class", "").f();
+			{ e("div").a("class", "").f();
 				{ e("div").f();
 					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeUtilisateurSite.getQueryResponse().getResults().getNumFound();
@@ -435,6 +435,7 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
 				table1UtilisateurSiteGenPage();
+			} g("div");
 		}
 
 		if(listeUtilisateurSite != null && listeUtilisateurSite.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -462,7 +463,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 
 		}
 		htmlBodyFormsUtilisateurSiteGenPage();
-		g("div");
 	}
 
 	public void table1UtilisateurSiteGenPage() {
@@ -564,7 +564,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			e("div").a("class", "w3-margin-top ").f();
 
 			if(listeUtilisateurSite != null && listeUtilisateurSite.size() == 1) {
 				{ e("button")
@@ -645,7 +644,6 @@ public class UtilisateurSiteGenPage extends UtilisateurSiteGenPageGen<ClusterPag
 				} g("div");
 			} g("div");
 
-			g("div");
 		}
 		htmlSuggereUtilisateurSiteGenPage(this, null, listeUtilisateurSite);
 	}

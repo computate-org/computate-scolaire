@@ -1276,7 +1276,11 @@ public class PageLayout extends PageLayoutGen<Object> {
 				// Settlement occurs every 24 hours, within 24 hours of your Transaction Cut-off Time.
 				// See: https://support.authorize.net/s/article/What-Are-the-Transaction-Types-That-Can-Be-Submitted
 				transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
-				transactionRequest.setAmount(amount.multiply(BigDecimal.valueOf(1.03)).setScale(1, RoundingMode.CEILING));
+
+				// Removed transaction fee
+				//transactionRequest.setAmount(amount.multiply(BigDecimal.valueOf(1.00)).setScale(1, RoundingMode.CEILING));
+				transactionRequest.setAmount(amount);
+
 				ArrayOfLineItem lineItems = new ArrayOfLineItem();
 				LineItemType lineItem = new LineItemType();
 				DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);

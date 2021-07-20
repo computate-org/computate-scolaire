@@ -44,6 +44,7 @@ import java.util.Set;
 import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -68,7 +69,6 @@ import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.api.OperationResponse;
@@ -77,7 +77,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import java.nio.charset.Charset;
 import org.apache.http.NameValuePair;
 import io.vertx.ext.web.api.OperationRequest;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.auth.oauth2.impl.OAuth2TokenImpl;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
@@ -128,7 +128,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -234,14 +234,17 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
+			DesignPage o2 = new DesignPage();
+			o2.setRequeteSite_(requeteSite);
 			List<Future> futures = new ArrayList<>();
 
 			if(requeteSite.getSessionId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "sessionId", requeteSite.getSessionId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "sessionId", requeteSite.getSessionId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -253,8 +256,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			}
 			if(requeteSite.getUtilisateurId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -266,8 +269,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			}
 			if(requeteSite.getUtilisateurCle() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -284,8 +287,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					switch(entiteVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -297,8 +300,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "archive":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -310,8 +313,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "supprime":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -324,10 +327,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "designEnfantCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(DesignPage.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -335,8 +338,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -356,10 +359,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "designParentCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(DesignPage.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -367,8 +370,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -388,10 +391,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "partHtmlCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
+								ListeRecherche<org.computate.scolaire.frFR.html.part.PartHtml> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.html.part.PartHtml>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(PartHtml.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.html.part.PartHtml.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -399,8 +402,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -419,8 +422,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designPageNomComplet":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designPageNomComplet", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designPageNomComplet", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -432,8 +435,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designCache":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designCache", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designCache", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -445,8 +448,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designAdmin":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designAdmin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designAdmin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -458,8 +461,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designIgnorerNomEnfantVide":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designIgnorerNomEnfantVide", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnorerNomEnfantVide", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -471,8 +474,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designIgnorerPaiementsPasEnSouffrance":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designIgnorerPaiementsPasEnSouffrance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnorerPaiementsPasEnSouffrance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -484,8 +487,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designIgnorerPaiementsEnSouffrance":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designIgnorerPaiementsEnSouffrance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnorerPaiementsEnSouffrance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -497,8 +500,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designFiltrerInscriptionCle":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designFiltrerInscriptionCle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designFiltrerInscriptionCle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -510,8 +513,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designInscriptionTriMoisJourDeNaissance":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designInscriptionTriMoisJourDeNaissance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designInscriptionTriMoisJourDeNaissance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -523,8 +526,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designInscriptionTriNomGroupe":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designInscriptionTriNomGroupe", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designInscriptionTriNomGroupe", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -536,8 +539,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designInscriptionTriNomEnfant":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designInscriptionTriNomEnfant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designInscriptionTriNomEnfant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -549,8 +552,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "rechercherAnnees":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "rechercherAnnees", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "rechercherAnnees", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -562,8 +565,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "rechercherPaiements":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "rechercherPaiements", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "rechercherPaiements", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -575,8 +578,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "rechercherPaiementsActuel":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "rechercherPaiementsActuel", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "rechercherPaiementsActuel", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -589,7 +592,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
@@ -652,7 +655,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -780,7 +783,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTImportDesignPage(requeteSite, gestionnaireEvenements);
@@ -842,7 +845,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -968,7 +971,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTFusionDesignPage(requeteSite, gestionnaireEvenements);
@@ -1030,7 +1033,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1122,7 +1125,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeDesignPage.size());
 				if(listeDesignPage.next()) {
@@ -1211,6 +1214,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			List<Future> futures = new ArrayList<>();
 
@@ -1221,8 +1225,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					switch(entiteVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1234,8 +1238,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "archive":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1247,8 +1251,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "supprime":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1261,8 +1265,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "designEnfantCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_addA
-										, Tuple.of(pk, "designEnfantCles", l, "designParentCles")
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+										.execute(Tuple.of(pk, "designEnfantCles", l, "designParentCles")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1280,8 +1284,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "designParentCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_addA
-										, Tuple.of(l, "designEnfantCles", pk, "designParentCles")
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+										.execute(Tuple.of(l, "designEnfantCles", pk, "designParentCles")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1299,8 +1303,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "partHtmlCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_addA
-										, Tuple.of(l, "designPageCles", pk, "partHtmlCles")
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+										.execute(Tuple.of(l, "designPageCles", pk, "partHtmlCles")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1317,8 +1321,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designPageNomComplet":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designPageNomComplet", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designPageNomComplet", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1330,8 +1334,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designCache":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designCache", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designCache", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1343,8 +1347,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designAdmin":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designAdmin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designAdmin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1356,8 +1360,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designIgnorerNomEnfantVide":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designIgnorerNomEnfantVide", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnorerNomEnfantVide", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1369,8 +1373,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designIgnorerPaiementsPasEnSouffrance":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designIgnorerPaiementsPasEnSouffrance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnorerPaiementsPasEnSouffrance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1382,8 +1386,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designIgnorerPaiementsEnSouffrance":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designIgnorerPaiementsEnSouffrance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designIgnorerPaiementsEnSouffrance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1395,8 +1399,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designFiltrerInscriptionCle":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designFiltrerInscriptionCle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designFiltrerInscriptionCle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1408,8 +1412,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designInscriptionTriMoisJourDeNaissance":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designInscriptionTriMoisJourDeNaissance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designInscriptionTriMoisJourDeNaissance", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1421,8 +1425,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designInscriptionTriNomGroupe":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designInscriptionTriNomGroupe", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designInscriptionTriNomGroupe", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1434,8 +1438,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "designInscriptionTriNomEnfant":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "designInscriptionTriNomEnfant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "designInscriptionTriNomEnfant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1447,8 +1451,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "rechercherAnnees":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "rechercherAnnees", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "rechercherAnnees", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1460,8 +1464,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "rechercherPaiements":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "rechercherPaiements", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "rechercherPaiements", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1473,8 +1477,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 					case "rechercherPaiementsActuel":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "rechercherPaiementsActuel", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "rechercherPaiementsActuel", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1487,7 +1491,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
@@ -1548,7 +1552,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1662,7 +1666,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listeDesignPage.next(dt)) {
 					listePATCHDesignPage(requeteApi, listeDesignPage, dt, gestionnaireEvenements);
@@ -1737,16 +1741,18 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
 			Set<String> methodeNoms = jsonObject.fieldNames();
 			DesignPage o2 = new DesignPage();
+			o2.setRequeteSite_(requeteSite);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-							, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+							.execute(Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1758,8 +1764,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1775,8 +1781,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setInheritPk":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1788,8 +1794,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1803,8 +1809,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setArchive":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "archive")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "archive")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1816,8 +1822,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "archive", o2.jsonArchive())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "archive", o2.jsonArchive())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1831,8 +1837,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setSupprime":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "supprime")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "supprime")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1844,8 +1850,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "supprime", o2.jsonSupprime())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "supprime", o2.jsonSupprime())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1860,10 +1866,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(DesignPage.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1871,8 +1877,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getDesignEnfantCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1895,10 +1901,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							for(Integer i = 0; i <  addAllDesignEnfantClesValeurs.size(); i++) {
 								Long l = Long.parseLong(addAllDesignEnfantClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+									ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(DesignPage.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1906,8 +1912,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getDesignEnfantCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1932,10 +1938,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							for(Integer i = 0; i <  setDesignEnfantClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setDesignEnfantClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+									ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(DesignPage.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1945,8 +1951,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 										setDesignEnfantClesValeurs2.add(l2);
 									if(l2 != null && !o.getDesignEnfantCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1967,8 +1973,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							for(Long l :  o.getDesignEnfantCles()) {
 								if(l != null && (setDesignEnfantClesValeurs2 == null || !setDesignEnfantClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "designEnfantCles", l, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "designEnfantCles", l, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1985,10 +1991,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(DesignPage.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1996,8 +2002,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getDesignEnfantCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "designEnfantCles", l2, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2018,10 +2024,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(DesignPage.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2029,8 +2035,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getDesignParentCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2053,10 +2059,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							for(Integer i = 0; i <  addAllDesignParentClesValeurs.size(); i++) {
 								Long l = Long.parseLong(addAllDesignParentClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+									ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(DesignPage.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2064,8 +2070,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getDesignParentCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2090,10 +2096,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							for(Integer i = 0; i <  setDesignParentClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setDesignParentClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+									ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(DesignPage.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2103,8 +2109,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 										setDesignParentClesValeurs2.add(l2);
 									if(l2 != null && !o.getDesignParentCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2125,8 +2131,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							for(Long l :  o.getDesignParentCles()) {
 								if(l != null && (setDesignParentClesValeurs == null || !setDesignParentClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l, "designEnfantCles", pk, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l, "designEnfantCles", pk, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2143,10 +2149,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(DesignPage.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2154,8 +2160,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getDesignParentCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l2, "designEnfantCles", pk, "designParentCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2176,10 +2182,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
+								ListeRecherche<org.computate.scolaire.frFR.html.part.PartHtml> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.html.part.PartHtml>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(PartHtml.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.html.part.PartHtml.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2187,8 +2193,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPartHtmlCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2211,10 +2217,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							for(Integer i = 0; i <  addAllPartHtmlClesValeurs.size(); i++) {
 								Long l = Long.parseLong(addAllPartHtmlClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
+									ListeRecherche<org.computate.scolaire.frFR.html.part.PartHtml> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.html.part.PartHtml>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(PartHtml.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.html.part.PartHtml.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2222,8 +2228,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPartHtmlCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2248,10 +2254,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							for(Integer i = 0; i <  setPartHtmlClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setPartHtmlClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
+									ListeRecherche<org.computate.scolaire.frFR.html.part.PartHtml> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.html.part.PartHtml>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(PartHtml.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.html.part.PartHtml.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2261,8 +2267,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 										setPartHtmlClesValeurs2.add(l2);
 									if(l2 != null && !o.getPartHtmlCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2283,8 +2289,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							for(Long l :  o.getPartHtmlCles()) {
 								if(l != null && (setPartHtmlClesValeurs == null || !setPartHtmlClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l, "designPageCles", pk, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l, "designPageCles", pk, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2301,10 +2307,10 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
+								ListeRecherche<org.computate.scolaire.frFR.html.part.PartHtml> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.html.part.PartHtml>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(PartHtml.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.html.part.PartHtml.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2312,8 +2318,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPartHtmlCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l2, "designPageCles", pk, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2333,8 +2339,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignPageNomComplet":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designPageNomComplet")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "designPageNomComplet")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2346,8 +2352,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignPageNomComplet(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designPageNomComplet", o2.jsonDesignPageNomComplet())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "designPageNomComplet", o2.jsonDesignPageNomComplet())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2361,8 +2367,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignCache":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designCache")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "designCache")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2374,8 +2380,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignCache(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designCache", o2.jsonDesignCache())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "designCache", o2.jsonDesignCache())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2389,8 +2395,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignAdmin":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designAdmin")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "designAdmin")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2402,8 +2408,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignAdmin(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designAdmin", o2.jsonDesignAdmin())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "designAdmin", o2.jsonDesignAdmin())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2417,8 +2423,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignIgnorerNomEnfantVide":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designIgnorerNomEnfantVide")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "designIgnorerNomEnfantVide")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2430,8 +2436,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignIgnorerNomEnfantVide(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designIgnorerNomEnfantVide", o2.jsonDesignIgnorerNomEnfantVide())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "designIgnorerNomEnfantVide", o2.jsonDesignIgnorerNomEnfantVide())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2445,8 +2451,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignIgnorerPaiementsPasEnSouffrance":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designIgnorerPaiementsPasEnSouffrance")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "designIgnorerPaiementsPasEnSouffrance")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2458,8 +2464,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignIgnorerPaiementsPasEnSouffrance(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designIgnorerPaiementsPasEnSouffrance", o2.jsonDesignIgnorerPaiementsPasEnSouffrance())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "designIgnorerPaiementsPasEnSouffrance", o2.jsonDesignIgnorerPaiementsPasEnSouffrance())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2473,8 +2479,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignIgnorerPaiementsEnSouffrance":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designIgnorerPaiementsEnSouffrance")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "designIgnorerPaiementsEnSouffrance")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2486,8 +2492,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignIgnorerPaiementsEnSouffrance(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designIgnorerPaiementsEnSouffrance", o2.jsonDesignIgnorerPaiementsEnSouffrance())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "designIgnorerPaiementsEnSouffrance", o2.jsonDesignIgnorerPaiementsEnSouffrance())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2501,8 +2507,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignFiltrerInscriptionCle":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designFiltrerInscriptionCle")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "designFiltrerInscriptionCle")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2514,8 +2520,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignFiltrerInscriptionCle(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designFiltrerInscriptionCle", o2.jsonDesignFiltrerInscriptionCle())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "designFiltrerInscriptionCle", o2.jsonDesignFiltrerInscriptionCle())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2529,8 +2535,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignInscriptionTriMoisJourDeNaissance":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designInscriptionTriMoisJourDeNaissance")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "designInscriptionTriMoisJourDeNaissance")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2542,8 +2548,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignInscriptionTriMoisJourDeNaissance(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designInscriptionTriMoisJourDeNaissance", o2.jsonDesignInscriptionTriMoisJourDeNaissance())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "designInscriptionTriMoisJourDeNaissance", o2.jsonDesignInscriptionTriMoisJourDeNaissance())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2557,8 +2563,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignInscriptionTriNomGroupe":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designInscriptionTriNomGroupe")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "designInscriptionTriNomGroupe")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2570,8 +2576,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignInscriptionTriNomGroupe(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designInscriptionTriNomGroupe", o2.jsonDesignInscriptionTriNomGroupe())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "designInscriptionTriNomGroupe", o2.jsonDesignInscriptionTriNomGroupe())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2585,8 +2591,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setDesignInscriptionTriNomEnfant":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "designInscriptionTriNomEnfant")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "designInscriptionTriNomEnfant")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2598,8 +2604,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setDesignInscriptionTriNomEnfant(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "designInscriptionTriNomEnfant", o2.jsonDesignInscriptionTriNomEnfant())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "designInscriptionTriNomEnfant", o2.jsonDesignInscriptionTriNomEnfant())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2613,8 +2619,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setRechercherAnnees":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "rechercherAnnees")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "rechercherAnnees")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2626,8 +2632,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setRechercherAnnees(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "rechercherAnnees", o2.jsonRechercherAnnees())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "rechercherAnnees", o2.jsonRechercherAnnees())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2641,8 +2647,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setRechercherPaiements":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "rechercherPaiements")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "rechercherPaiements")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2654,8 +2660,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setRechercherPaiements(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "rechercherPaiements", o2.jsonRechercherPaiements())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "rechercherPaiements", o2.jsonRechercherPaiements())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2669,8 +2675,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					case "setRechercherPaiementsActuel":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "rechercherPaiementsActuel")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "rechercherPaiementsActuel")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2682,8 +2688,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						} else {
 							o2.setRechercherPaiementsActuel(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "rechercherPaiementsActuel", o2.jsonRechercherPaiementsActuel())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "rechercherPaiementsActuel", o2.jsonRechercherPaiementsActuel())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2696,7 +2702,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					DesignPage o3 = new DesignPage();
 					o3.setRequeteSite_(o.getRequeteSite_());
@@ -3102,7 +3108,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			ToutEcrivain w = ToutEcrivain.creer(listeDesignPage.getRequeteSite_(), buffer);
 			DesignPagePage page = new DesignPagePage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
-			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			MultiMap requeteEnTetes = MultiMap.caseInsensitiveMultiMap();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/design-page");
@@ -3197,7 +3203,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			ToutEcrivain w = ToutEcrivain.creer(listeDesignPage.getRequeteSite_(), buffer);
 			DesignPageAffichage page = new DesignPageAffichage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
-			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			MultiMap requeteEnTetes = MultiMap.caseInsensitiveMultiMap();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/page");
@@ -3289,7 +3295,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			ToutEcrivain w = ToutEcrivain.creer(listeDesignPage.getRequeteSite_(), buffer);
 			DesignPdfPage page = new DesignPdfPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
-			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			MultiMap requeteEnTetes = MultiMap.caseInsensitiveMultiMap();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/pdf");
@@ -3381,7 +3387,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			ToutEcrivain w = ToutEcrivain.creer(listeDesignPage.getRequeteSite_(), buffer);
 			DesignMailPage page = new DesignMailPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
-			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			MultiMap requeteEnTetes = MultiMap.caseInsensitiveMultiMap();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/mail");
@@ -3476,7 +3482,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			ToutEcrivain w = ToutEcrivain.creer(listeDesignPage.getRequeteSite_(), buffer);
 			DesignPageAffichage page = new DesignPageAffichage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
-			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			MultiMap requeteEnTetes = MultiMap.caseInsensitiveMultiMap();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/");
@@ -3555,10 +3561,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			String utilisateurId = requeteSite.getUtilisateurId();
 			ZonedDateTime cree = Optional.ofNullable(requeteSite.getObjetJson()).map(j -> j.getString("cree")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())));
 
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_creer
-					, Tuple.of(DesignPage.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_creer)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(DesignPage.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
 					, creerAsync
 			-> {
 				if(creerAsync.succeeded()) {
@@ -3593,7 +3598,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
 				Buffer.buffer().appendString(json.encodePrettily())
-				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
+				, MultiMap.caseInsensitiveMultiMap().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -3775,10 +3780,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 						sqlTransactionDesignPage(requeteSite, b -> {
 							if(b.succeeded()) {
 								Transaction tx = requeteSite.getTx();
-								tx.preparedQuery(
-										SiteContexteFrFR.SQL_selectC
-										, Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
-										, Collectors.toList()
+								tx.preparedQuery(SiteContexteFrFR.SQL_selectC)
+										.collecting(Collectors.toList())
+										.execute(Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
 										, selectCAsync
 								-> {
 									if(selectCAsync.succeeded()) {
@@ -3787,7 +3791,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 											UtilisateurSiteFrFRApiServiceImpl utilisateurService = new UtilisateurSiteFrFRApiServiceImpl(siteContexte);
 											if(utilisateurValeurs == null) {
 												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContexte.getAuthFournisseur(), utilisateurVertx);
+												JsonObject principalJson = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
@@ -3826,6 +3831,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
 																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
 																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																		requeteSite.setUtilisateurMail(principalJson.getString("email"));
 																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
 																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
 																		gestionnaireEvenements.handle(Future.succeededFuture());
@@ -3853,7 +3859,8 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 												UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
 
 												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContexte.getAuthFournisseur(), utilisateurVertx);
+												JsonObject principalJson = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
@@ -3862,8 +3869,6 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 												jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
 												jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 												Boolean definir = utilisateurDesignPageDefinir(requeteSite, jsonObject, true);
@@ -3965,19 +3970,11 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
-				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -4060,82 +4057,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 
 	public void rechercheDesignPage(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<DesignPage>>> gestionnaireEvenements) {
 		try {
-			OperationRequest operationRequete = requeteSite.getOperationRequete();
-			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
-			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
-			ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
-			listeRecherche.setPeupler(peupler);
-			listeRecherche.setStocker(stocker);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(DesignPage.class);
-			listeRecherche.setRequeteSite_(requeteSite);
-			if(entiteListe != null)
-				listeRecherche.addFields(entiteListe);
-			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
-
-			String id = operationRequete.getParams().getJsonObject("path").getString("id");
-			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
-				String entiteVar = null;
-				String valeurIndexe = null;
-				String varIndexe = null;
-				String valeurTri = null;
-				Integer valeurStart = null;
-				Integer valeurRows = null;
-				String paramNom = paramRequete.getKey();
-				Object paramValeursObjet = paramRequete.getValue();
-				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
-
-				try {
-					for(Object paramObjet : paramObjets) {
-						switch(paramNom) {
-							case "q":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : DesignPage.varRechercheDesignPage(entiteVar);
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheDesignPageQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "fq":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = DesignPage.varIndexeDesignPage(entiteVar);
-								rechercheDesignPageFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "sort":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = DesignPage.varIndexeDesignPage(entiteVar);
-								rechercheDesignPageSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "start":
-								valeurStart = (Integer)paramObjet;
-								rechercheDesignPageStart(uri, apiMethode, listeRecherche, valeurStart);
-								break;
-							case "rows":
-								valeurRows = (Integer)paramObjet;
-								rechercheDesignPageRows(uri, apiMethode, listeRecherche, valeurRows);
-								break;
-							case "var":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheDesignPageVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
-								break;
-						}
-					}
-					rechercheDesignPageUri(uri, apiMethode, listeRecherche);
-				} catch(Exception e) {
-					LOGGER.error(String.format("rechercheDesignPage a échoué. ", e));
-					gestionnaireEvenements.handle(Future.failedFuture(e));
-				}
-			});
-			if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
-				listeRecherche.addSort("designPageNomComplet_indexed_string", ORDER.asc);
-			}
-			listeRecherche.initLoinPourClasse(requeteSite);
+			ListeRecherche<DesignPage> listeRecherche = rechercheDesignPageListe(requeteSite, peupler, stocker, modifier, uri, apiMethode);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {
 			LOGGER.error(String.format("rechercheDesignPage a échoué. ", e));
@@ -4143,15 +4065,98 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 		}
 	}
 
+	public ListeRecherche<DesignPage> rechercheDesignPageListe(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode) {
+		OperationRequest operationRequete = requeteSite.getOperationRequete();
+		String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
+		String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
+		ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+		listeRecherche.setPeupler(peupler);
+		listeRecherche.setStocker(stocker);
+		listeRecherche.setQuery("*:*");
+		listeRecherche.setC(DesignPage.class);
+		listeRecherche.setRequeteSite_(requeteSite);
+		if(entiteListe != null)
+			listeRecherche.addFields(entiteListe);
+		listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+
+		String id = operationRequete.getParams().getJsonObject("path").getString("id");
+		if(id != null && NumberUtils.isCreatable(id)) {
+			listeRecherche.addFilterQuery("(pk_indexed_long:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		} else if(id != null) {
+			listeRecherche.addFilterQuery("objetId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+		}
+
+		operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
+			String entiteVar = null;
+			String valeurIndexe = null;
+			String varIndexe = null;
+			String valeurTri = null;
+			Integer valeurStart = null;
+			Integer valeurRows = null;
+			String paramNom = paramRequete.getKey();
+			Object paramValeursObjet = paramRequete.getValue();
+			JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+			try {
+				for(Object paramObjet : paramObjets) {
+					switch(paramNom) {
+						case "q":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							varIndexe = "*".equals(entiteVar) ? entiteVar : DesignPage.varRechercheDesignPage(entiteVar);
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
+							rechercheDesignPageQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "fq":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							varIndexe = DesignPage.varIndexeDesignPage(entiteVar);
+							rechercheDesignPageFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "sort":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
+							valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+							varIndexe = DesignPage.varIndexeDesignPage(entiteVar);
+							rechercheDesignPageSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "start":
+							valeurStart = paramObjet instanceof Integer ? (Integer)paramObjet : Integer.parseInt(paramObjet.toString());
+							rechercheDesignPageStart(uri, apiMethode, listeRecherche, valeurStart);
+							break;
+						case "rows":
+							valeurRows = paramObjet instanceof Integer ? (Integer)paramObjet : Integer.parseInt(paramObjet.toString());
+							rechercheDesignPageRows(uri, apiMethode, listeRecherche, valeurRows);
+							break;
+						case "var":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							rechercheDesignPageVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
+							break;
+					}
+				}
+				rechercheDesignPageUri(uri, apiMethode, listeRecherche);
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
+		if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
+			listeRecherche.addSort("designPageNomComplet_indexed_string", ORDER.asc);
+		}
+		rechercheDesignPage2(requeteSite, peupler, stocker, modifier, uri, apiMethode, listeRecherche);
+		listeRecherche.initLoinPourClasse(requeteSite);
+		return listeRecherche;
+	}
+	public void rechercheDesignPage2(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, ListeRecherche<DesignPage> listeRecherche) {
+	}
+
 	public void definirDesignPage(DesignPage o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_definir
-					, Tuple.of(pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_definir)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
@@ -4185,10 +4190,9 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_attribuer
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_attribuer)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attribuerAsync
 			-> {
 				try {
@@ -4326,7 +4330,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 					}
 				}
 
-				CompositeFuture.all(futures).setHandler(a -> {
+				CompositeFuture.all(futures).onComplete(a -> {
 					if(a.succeeded()) {
 						DesignPageFrFRApiServiceImpl service = new DesignPageFrFRApiServiceImpl(requeteSite.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
@@ -4344,7 +4348,7 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							);
 						}
 
-						CompositeFuture.all(futures2).setHandler(b -> {
+						CompositeFuture.all(futures2).onComplete(b -> {
 							if(b.succeeded()) {
 								gestionnaireEvenements.handle(Future.succeededFuture());
 							} else {

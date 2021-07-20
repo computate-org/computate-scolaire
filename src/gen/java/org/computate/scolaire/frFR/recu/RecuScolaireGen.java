@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.lang.Long;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
+import java.util.Map;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.time.ZoneOffset;
@@ -157,6 +158,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		return recuCle == null ? "" : recuCle.toString();
 	}
 
+	public Long sqlRecuCle() {
+		return recuCle;
+	}
+
 	public String jsonRecuCle() {
 		return recuCle == null ? "" : recuCle.toString();
 	}
@@ -241,6 +246,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
 
+	public Long sqlEcoleCle() {
+		return ecoleCle;
+	}
+
 	public String jsonEcoleCle() {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
@@ -278,21 +287,15 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "école")
 				.a("title", "La clé primaire de l'école dans la base de données. ")
-				.a("class", "valeur suggereEcoleCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereEcoleCle w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setEcoleCle")
 				.a("id", classeApiMethodeMethode, "_ecoleCle")
 				.a("autocomplete", "off");
-				a("oninput", "suggereRecuScolaireEcoleCle($(this).val() ? rechercherEcoleFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'recuCles:" + pk + "'}", "], $('#listRecuScolaireEcoleCle_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereRecuScolaireEcoleCle($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,ecoleNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'recuCles:" + pk + "'}", "], $('#listRecuScolaireEcoleCle_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-				e("span").a("class", "varRecuScolaire", pk, "EcoleCle ").f().sx(htmEcoleCle()).g("span");
-			}
 		}
 	}
 
@@ -491,6 +494,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		return ecoleAddresse == null ? "" : ecoleAddresse;
 	}
 
+	public String sqlEcoleAddresse() {
+		return ecoleAddresse;
+	}
+
 	public String jsonEcoleAddresse() {
 		return ecoleAddresse == null ? "" : ecoleAddresse;
 	}
@@ -565,6 +572,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 
 	public String strEcoleNumeroTelephone() {
 		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
+	}
+
+	public String sqlEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone;
 	}
 
 	public String jsonEcoleNumeroTelephone() {
@@ -658,6 +669,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 
 	public String strPaiementDate() {
 		return paiementDate == null ? "" : paiementDate.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public LocalDate sqlPaiementDate() {
+		return paiementDate;
 	}
 
 	public String jsonPaiementDate() {
@@ -809,6 +824,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		return paiementAnnee == null ? "" : paiementAnnee.toString();
 	}
 
+	public Integer sqlPaiementAnnee() {
+		return paiementAnnee;
+	}
+
 	public String jsonPaiementAnnee() {
 		return paiementAnnee == null ? "" : paiementAnnee.toString();
 	}
@@ -900,6 +919,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 
 	public String strPaiementMontant() {
 		return paiementMontant == null ? "" : paiementMontant.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlPaiementMontant() {
+		return paiementMontant;
 	}
 
 	public String jsonPaiementMontant() {
@@ -1050,6 +1073,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		return paiementDescription == null ? "" : paiementDescription;
 	}
 
+	public String sqlPaiementDescription() {
+		return paiementDescription;
+	}
+
 	public String jsonPaiementDescription() {
 		return paiementDescription == null ? "" : paiementDescription;
 	}
@@ -1196,6 +1223,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 
 	public String strPaiementNomCourt() {
 		return paiementNomCourt == null ? "" : paiementNomCourt;
+	}
+
+	public String sqlPaiementNomCourt() {
+		return paiementNomCourt;
 	}
 
 	public String jsonPaiementNomCourt() {
@@ -1346,6 +1377,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		return paiementNomComplet == null ? "" : paiementNomComplet;
 	}
 
+	public String sqlPaiementNomComplet() {
+		return paiementNomComplet;
+	}
+
 	public String jsonPaiementNomComplet() {
 		return paiementNomComplet == null ? "" : paiementNomComplet;
 	}
@@ -1429,6 +1464,10 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -1487,8 +1526,8 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 			case "ecoleCle":
 				if(oRecuScolaire.getEcoleCle() == null)
 					oRecuScolaire.setEcoleCle((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("ecoleCle"))
+					sauvegardes.add("ecoleCle");
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -1651,26 +1690,78 @@ public abstract class RecuScolaireGen<DEV> extends Cluster {
 		return o != null;
 	}
 	public Object definirRecuScolaire(String var, String val) {
-		switch(var) {
-			case "paiementDate":
+		switch(var.toLowerCase()) {
+			case "ecolecle":
+				if(val != null)
+					setEcoleCle(val);
+				sauvegardes.add("ecoleCle");
+				return val;
+			case "paiementdate":
 				if(val != null)
 					setPaiementDate(val);
-				sauvegardes.add(var);
+				sauvegardes.add("paiementDate");
 				return val;
-			case "paiementMontant":
+			case "paiementmontant":
 				if(val != null)
 					setPaiementMontant(val);
-				sauvegardes.add(var);
+				sauvegardes.add("paiementMontant");
 				return val;
-			case "paiementDescription":
+			case "paiementdescription":
 				if(val != null)
 					setPaiementDescription(val);
-				sauvegardes.add(var);
+				sauvegardes.add("paiementDescription");
 				return val;
-			case "paiementNomCourt":
+			case "paiementnomcourt":
 				if(val != null)
 					setPaiementNomCourt(val);
-				sauvegardes.add(var);
+				sauvegardes.add("paiementNomCourt");
+				return val;
+			default:
+				return super.definirCluster(var, val);
+		}
+	}
+
+	@Override public boolean definirPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirRecuScolaire(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirRecuScolaire(String var, Object val) {
+		switch(var.toLowerCase()) {
+			case "ecolecle":
+				if(val instanceof Long)
+					setEcoleCle((Long)val);
+				sauvegardes.add("ecoleCle");
+				return val;
+			case "paiementdate":
+				if(val instanceof LocalDate)
+					setPaiementDate((LocalDate)val);
+				sauvegardes.add("paiementDate");
+				return val;
+			case "paiementmontant":
+				if(val instanceof BigDecimal)
+					setPaiementMontant((BigDecimal)val);
+				sauvegardes.add("paiementMontant");
+				return val;
+			case "paiementdescription":
+				if(val instanceof String)
+					setPaiementDescription((String)val);
+				sauvegardes.add("paiementDescription");
+				return val;
+			case "paiementnomcourt":
+				if(val instanceof String)
+					setPaiementNomCourt((String)val);
+				sauvegardes.add("paiementNomCourt");
 				return val;
 			default:
 				return super.definirCluster(var, val);

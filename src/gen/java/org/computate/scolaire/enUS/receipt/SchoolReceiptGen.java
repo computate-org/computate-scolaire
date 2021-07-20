@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.lang.Long;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
+import java.util.Map;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import java.time.ZoneOffset;
@@ -156,6 +157,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return receiptKey == null ? "" : receiptKey.toString();
 	}
 
+	public Long sqlReceiptKey() {
+		return receiptKey;
+	}
+
 	public String jsonReceiptKey() {
 		return receiptKey == null ? "" : receiptKey.toString();
 	}
@@ -240,6 +245,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
 
+	public Long sqlSchoolKey() {
+		return schoolKey;
+	}
+
 	public String jsonSchoolKey() {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
@@ -280,17 +289,11 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 				.a("name", "setSchoolKey")
 				.a("id", classApiMethodMethod, "_schoolKey")
 				.a("autocomplete", "off");
-				a("oninput", "suggestSchoolReceiptSchoolKey($(this).val() ? searchSchoolFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'receiptKeys:" + pk + "'}", "], $('#listSchoolReceiptSchoolKey_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestSchoolReceiptSchoolKey($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,schoolCompleteName' } ] : [", pk == null ? "" : "{'name':'fq','value':'receiptKeys:" + pk + "'}", "], $('#listSchoolReceiptSchoolKey_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
-					|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
-				) {
-				e("span").a("class", "varSchoolReceipt", pk, "SchoolKey ").f().sx(htmSchoolKey()).g("span");
-			}
 		}
 	}
 
@@ -489,6 +492,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return schoolAddress == null ? "" : schoolAddress;
 	}
 
+	public String sqlSchoolAddress() {
+		return schoolAddress;
+	}
+
 	public String jsonSchoolAddress() {
 		return schoolAddress == null ? "" : schoolAddress;
 	}
@@ -563,6 +570,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 
 	public String strSchoolPhoneNumber() {
 		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
+	}
+
+	public String sqlSchoolPhoneNumber() {
+		return schoolPhoneNumber;
 	}
 
 	public String jsonSchoolPhoneNumber() {
@@ -656,6 +667,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 
 	public String strPaymentDate() {
 		return paymentDate == null ? "" : paymentDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalDate sqlPaymentDate() {
+		return paymentDate;
 	}
 
 	public String jsonPaymentDate() {
@@ -806,6 +821,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return paymentYear == null ? "" : paymentYear.toString();
 	}
 
+	public Integer sqlPaymentYear() {
+		return paymentYear;
+	}
+
 	public String jsonPaymentYear() {
 		return paymentYear == null ? "" : paymentYear.toString();
 	}
@@ -897,6 +916,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 
 	public String strPaymentAmount() {
 		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlPaymentAmount() {
+		return paymentAmount;
 	}
 
 	public String jsonPaymentAmount() {
@@ -1046,6 +1069,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return paymentDescription == null ? "" : paymentDescription;
 	}
 
+	public String sqlPaymentDescription() {
+		return paymentDescription;
+	}
+
 	public String jsonPaymentDescription() {
 		return paymentDescription == null ? "" : paymentDescription;
 	}
@@ -1191,6 +1218,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 
 	public String strPaymentShortName() {
 		return paymentShortName == null ? "" : paymentShortName;
+	}
+
+	public String sqlPaymentShortName() {
+		return paymentShortName;
 	}
 
 	public String jsonPaymentShortName() {
@@ -1340,6 +1371,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return paymentCompleteName == null ? "" : paymentCompleteName;
 	}
 
+	public String sqlPaymentCompleteName() {
+		return paymentCompleteName;
+	}
+
 	public String jsonPaymentCompleteName() {
 		return paymentCompleteName == null ? "" : paymentCompleteName;
 	}
@@ -1423,6 +1458,10 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -1481,8 +1520,8 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 			case "schoolKey":
 				if(oSchoolReceipt.getSchoolKey() == null)
 					oSchoolReceipt.setSchoolKey((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("schoolKey"))
+					saves.add("schoolKey");
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -1645,26 +1684,78 @@ public abstract class SchoolReceiptGen<DEV> extends Cluster {
 		return o != null;
 	}
 	public Object defineSchoolReceipt(String var, String val) {
-		switch(var) {
-			case "paymentDate":
+		switch(var.toLowerCase()) {
+			case "schoolkey":
+				if(val != null)
+					setSchoolKey(val);
+				saves.add("schoolKey");
+				return val;
+			case "paymentdate":
 				if(val != null)
 					setPaymentDate(val);
-				saves.add(var);
+				saves.add("paymentDate");
 				return val;
-			case "paymentAmount":
+			case "paymentamount":
 				if(val != null)
 					setPaymentAmount(val);
-				saves.add(var);
+				saves.add("paymentAmount");
 				return val;
-			case "paymentDescription":
+			case "paymentdescription":
 				if(val != null)
 					setPaymentDescription(val);
-				saves.add(var);
+				saves.add("paymentDescription");
 				return val;
-			case "paymentShortName":
+			case "paymentshortname":
 				if(val != null)
 					setPaymentShortName(val);
-				saves.add(var);
+				saves.add("paymentShortName");
+				return val;
+			default:
+				return super.defineCluster(var, val);
+		}
+	}
+
+	@Override public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineSchoolReceipt(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineSchoolReceipt(String var, Object val) {
+		switch(var.toLowerCase()) {
+			case "schoolkey":
+				if(val instanceof Long)
+					setSchoolKey((Long)val);
+				saves.add("schoolKey");
+				return val;
+			case "paymentdate":
+				if(val instanceof LocalDate)
+					setPaymentDate((LocalDate)val);
+				saves.add("paymentDate");
+				return val;
+			case "paymentamount":
+				if(val instanceof BigDecimal)
+					setPaymentAmount((BigDecimal)val);
+				saves.add("paymentAmount");
+				return val;
+			case "paymentdescription":
+				if(val instanceof String)
+					setPaymentDescription((String)val);
+				saves.add("paymentDescription");
+				return val;
+			case "paymentshortname":
+				if(val instanceof String)
+					setPaymentShortName((String)val);
+				saves.add("paymentShortName");
 				return val;
 			default:
 				return super.defineCluster(var, val);

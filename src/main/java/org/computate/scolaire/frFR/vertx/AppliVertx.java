@@ -1,4 +1,4 @@
-package org.computate.scolaire.frFR.vertx;       
+package org.computate.scolaire.frFR.vertx;         
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
@@ -103,6 +103,7 @@ import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.sockjs.BridgeOptions;
+import io.vertx.ext.web.handler.sockjs.SockJSBridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 import io.vertx.pgclient.PgConnectOptions;
@@ -480,19 +481,19 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		siteContexteFrFR.setPgPool(pgPool);
 
 
-		pgPool.preparedQuery(SQL_createTableC, a -> {
+		pgPool.preparedQuery(SQL_createTableC).execute(a -> {
 			if (a.succeeded()) {
-				pgPool.preparedQuery(SQL_uniqueIndexC, b -> {
+				pgPool.preparedQuery(SQL_uniqueIndexC).execute(b -> {
 					if (b.succeeded()) {
-						pgPool.preparedQuery(SQL_createTableA, c -> {
+						pgPool.preparedQuery(SQL_createTableA).execute(c -> {
 							if (c.succeeded()) {
-								pgPool.preparedQuery(SQL_uniqueIndexA1, d -> {
+								pgPool.preparedQuery(SQL_uniqueIndexA1).execute(d -> {
 									if (d.succeeded()) {
-										pgPool.preparedQuery(SQL_uniqueIndexA2, e -> {
+										pgPool.preparedQuery(SQL_uniqueIndexA2).execute(e -> {
 											if (d.succeeded()) {
-												pgPool.preparedQuery(SQL_createTableD, f -> {
+												pgPool.preparedQuery(SQL_createTableD).execute(f -> {
 													if (f.succeeded()) {
-														pgPool.preparedQuery(SQL_uniqueIndexD, g -> {
+														pgPool.preparedQuery(SQL_uniqueIndexD).execute(g -> {
 															if (g.succeeded()) {
 																LOGGER.info(configurerDonneesSuccesInit);
 																promise.complete();
@@ -693,6 +694,8 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	 * r.enUS: RouterFactory
 	 * r: authFournisseur
 	 * r.enUS: authProvider
+	 * r: AuthFournisseur
+	 * r.enUS: AuthProvider
 	 * r: getAuthRoyaume
 	 * r.enUS: getAuthRealm
 	 * r: getAuthRessource
@@ -755,6 +758,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 				LocalSessionStore sessionStore = LocalSessionStore.create(vertx, "computate-scolaire-sessions");
 				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
 				sessionHandler.setAuthProvider(authFournisseur);
+				siteContexteFrFR.setAuthFournisseur(authFournisseur);
 		
 				OpenAPI3RouterFactory.create(vertx, "openapi3-frFR.yaml", b -> {
 					if (b.succeeded()) {
@@ -1183,7 +1187,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 		HealthCheckHandler gestionnaireControlesSante = HealthCheckHandler.create(vertx);
 
 		gestionnaireControlesSante.register("baseDeDonnees", 2000, a -> {
-			siteContexteFrFR.getPgPool().preparedQuery("select current_timestamp" , selectCAsync -> {
+			siteContexteFrFR.getPgPool().preparedQuery("select current_timestamp" ).execute(selectCAsync -> {
 				if(selectCAsync.succeeded()) {
 					a.complete(Status.OK());
 				} else {
@@ -1236,7 +1240,7 @@ public class AppliVertx extends AppliVertxGen<AbstractVerticle> {
 	private Promise<Void> configurerWebsockets() {
 		Promise<Void> promise = Promise.promise();
 		Router siteRouteur = siteContexteFrFR.getRouteur();
-		BridgeOptions options = new BridgeOptions()
+		SockJSBridgeOptions options = new SockJSBridgeOptions()
 				.addOutboundPermitted(new PermittedOptions().setAddressRegex("websocket.*"));
 		SockJSHandler gestionnaireSockJs = SockJSHandler.create(vertx);
 		gestionnaireSockJs.bridge(options);

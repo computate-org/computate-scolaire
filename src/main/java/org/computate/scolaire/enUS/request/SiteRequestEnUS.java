@@ -21,8 +21,8 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.computate.scolaire.enUS.user.SiteUser;
+import io.vertx.core.MultiMap;
 import io.vertx.core.Vertx;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.oauth2.KeycloakHelper;
@@ -139,8 +139,11 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	}
 
 	protected void _userName(Wrap<String> c) {
+	}
+
+	protected void _userEmail(Wrap<String> c) {
 		if(jsonPrincipal != null) {
-			String o = jsonPrincipal.getString("preferred_username");
+			String o = jsonPrincipal.getString("email");
 			c.o(o);
 		}
 	}
@@ -224,7 +227,7 @@ public class SiteRequestEnUS extends SiteRequestEnUSGen<Object> implements Seria
 	protected void _sqlConnection(Wrap<SqlConnection> c) {
 	}
 
-	protected void _requestHeaders(Wrap<CaseInsensitiveHeaders> c) {
+	protected void _requestHeaders(Wrap<MultiMap> c) {
 	}
 
 	protected void _requestVars(Map<String, String> m) {

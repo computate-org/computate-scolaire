@@ -9,10 +9,12 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
@@ -534,6 +536,9 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 		c.o(false);
 	}
 
+	protected void _enrollmentPassphrase(Wrap<String> c) {
+	}
+
 	protected void _familyAddress(Wrap<String> c) {
 	}
 
@@ -553,6 +558,30 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	}
 
 	protected void _childObjectives(Wrap<String> c) {
+	}
+
+	protected void _adminNotes(Wrap<String> c) {
+	}
+
+	@Override
+	public void htmAdminNotes(String classApiMethodMethod) {
+		List<String> adminRoles = Arrays.asList("SiteAdmin");
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), adminRoles)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), adminRoles)
+				) {
+			super.htmAdminNotes(classApiMethodMethod);
+		}
+	}
+
+	@Override public void inputAdminNotes(String classApiMethodMethod) {
+		List<String> adminRoles = Arrays.asList("SiteAdmin");
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), adminRoles)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), adminRoles)
+				) {
+			super.inputAdminNotes(classApiMethodMethod);
+		}
 	}
 
 	protected void _childPottyTrained(Wrap<Boolean> c) {

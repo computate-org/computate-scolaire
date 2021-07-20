@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.lang.Long;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
+import java.util.Map;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import java.math.RoundingMode;
@@ -208,6 +209,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strPageDesignId() {
 		return pageDesignId == null ? "" : pageDesignId;
+	}
+
+	public String sqlPageDesignId() {
+		return pageDesignId;
 	}
 
 	public String jsonPageDesignId() {
@@ -741,6 +746,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return yearKey == null ? "" : yearKey.toString();
 	}
 
+	public Long sqlYearKey() {
+		return yearKey;
+	}
+
 	public String jsonYearKey() {
 		return yearKey == null ? "" : yearKey.toString();
 	}
@@ -815,6 +824,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strYearVar() {
 		return yearVar == null ? "" : yearVar;
+	}
+
+	public String sqlYearVar() {
+		return yearVar;
 	}
 
 	public String jsonYearVar() {
@@ -1379,6 +1392,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return paymentLastStr == null ? "" : paymentLastStr;
 	}
 
+	public String sqlPaymentLastStr() {
+		return paymentLastStr;
+	}
+
 	public String jsonPaymentLastStr() {
 		return paymentLastStr == null ? "" : paymentLastStr;
 	}
@@ -1470,6 +1487,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strPaymentAmount() {
 		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlPaymentAmount() {
+		return paymentAmount;
 	}
 
 	public String jsonPaymentAmount() {
@@ -1565,6 +1586,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return chargeAmount == null ? "" : chargeAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargeAmount() {
+		return chargeAmount;
+	}
+
 	public String jsonChargeAmount() {
 		return chargeAmount == null ? "" : chargeAmount.toString();
 	}
@@ -1656,6 +1681,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strChargeAmountFuture() {
 		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlChargeAmountFuture() {
+		return chargeAmountFuture;
 	}
 
 	public String jsonChargeAmountFuture() {
@@ -1751,6 +1780,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargeAmountDue() {
+		return chargeAmountDue;
+	}
+
 	public String jsonChargeAmountDue() {
 		return chargeAmountDue == null ? "" : chargeAmountDue.toString();
 	}
@@ -1844,6 +1877,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return chargesNow == null ? "" : chargesNow.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargesNow() {
+		return chargesNow;
+	}
+
 	public String jsonChargesNow() {
 		return chargesNow == null ? "" : chargesNow.toString();
 	}
@@ -1925,6 +1962,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return paymentsCurrent == null ? "" : paymentsCurrent.toString();
 	}
 
+	public Boolean sqlPaymentsCurrent() {
+		return paymentsCurrent;
+	}
+
 	public String jsonPaymentsCurrent() {
 		return paymentsCurrent == null ? "" : paymentsCurrent.toString();
 	}
@@ -2004,6 +2045,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strPaymentsLate() {
 		return paymentsLate == null ? "" : paymentsLate.toString();
+	}
+
+	public Boolean sqlPaymentsLate() {
+		return paymentsLate;
 	}
 
 	public String jsonPaymentsLate() {
@@ -2099,6 +2144,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return paymentsLateAmount == null ? "" : paymentsLateAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlPaymentsLateAmount() {
+		return paymentsLateAmount;
+	}
+
 	public String jsonPaymentsLateAmount() {
 		return paymentsLateAmount == null ? "" : paymentsLateAmount.toString();
 	}
@@ -2178,6 +2227,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strPaymentsAhead() {
 		return paymentsAhead == null ? "" : paymentsAhead.toString();
+	}
+
+	public Boolean sqlPaymentsAhead() {
+		return paymentsAhead;
 	}
 
 	public String jsonPaymentsAhead() {
@@ -2389,6 +2442,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return emailFrom == null ? "" : emailFrom;
 	}
 
+	public String sqlEmailFrom() {
+		return emailFrom;
+	}
+
 	public String jsonEmailFrom() {
 		return emailFrom == null ? "" : emailFrom;
 	}
@@ -2463,6 +2520,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strEmailToSchool() {
 		return emailToSchool == null ? "" : emailToSchool;
+	}
+
+	public String sqlEmailToSchool() {
+		return emailToSchool;
 	}
 
 	public String jsonEmailToSchool() {
@@ -2541,6 +2602,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return emailToAddress == null ? "" : emailToAddress;
 	}
 
+	public String sqlEmailToAddress() {
+		return emailToAddress;
+	}
+
 	public String jsonEmailToAddress() {
 		return emailToAddress == null ? "" : emailToAddress;
 	}
@@ -2617,6 +2682,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return emailToName == null ? "" : emailToName;
 	}
 
+	public String sqlEmailToName() {
+		return emailToName;
+	}
+
 	public String jsonEmailToName() {
 		return emailToName == null ? "" : emailToName;
 	}
@@ -2691,6 +2760,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strEmailMessage() {
 		return emailMessage == null ? "" : emailMessage;
+	}
+
+	public String sqlEmailMessage() {
+		return emailMessage;
 	}
 
 	public String jsonEmailMessage() {
@@ -2777,6 +2850,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
 
+	public Long sqlSchoolKey() {
+		return schoolKey;
+	}
+
 	public String jsonSchoolKey() {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
@@ -2851,6 +2928,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strSchoolName() {
 		return schoolName == null ? "" : schoolName;
+	}
+
+	public String sqlSchoolName() {
+		return schoolName;
 	}
 
 	public String jsonSchoolName() {
@@ -2929,6 +3010,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
 
+	public String sqlSchoolCompleteName() {
+		return schoolCompleteName;
+	}
+
 	public String jsonSchoolCompleteName() {
 		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
@@ -3003,6 +3088,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strSchoolLocation() {
 		return schoolLocation == null ? "" : schoolLocation;
+	}
+
+	public String sqlSchoolLocation() {
+		return schoolLocation;
 	}
 
 	public String jsonSchoolLocation() {
@@ -3081,6 +3170,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return schoolAddress == null ? "" : schoolAddress;
 	}
 
+	public String sqlSchoolAddress() {
+		return schoolAddress;
+	}
+
 	public String jsonSchoolAddress() {
 		return schoolAddress == null ? "" : schoolAddress;
 	}
@@ -3157,6 +3250,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
 	}
 
+	public String sqlSchoolPhoneNumber() {
+		return schoolPhoneNumber;
+	}
+
 	public String jsonSchoolPhoneNumber() {
 		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
 	}
@@ -3231,6 +3328,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strSchoolAdministratorName() {
 		return schoolAdministratorName == null ? "" : schoolAdministratorName;
+	}
+
+	public String sqlSchoolAdministratorName() {
+		return schoolAdministratorName;
 	}
 
 	public String jsonSchoolAdministratorName() {
@@ -3317,6 +3418,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return yearStart == null ? "" : yearStart.toString();
 	}
 
+	public Integer sqlYearStart() {
+		return yearStart;
+	}
+
 	public String jsonYearStart() {
 		return yearStart == null ? "" : yearStart.toString();
 	}
@@ -3399,6 +3504,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strYearEnd() {
 		return yearEnd == null ? "" : yearEnd.toString();
+	}
+
+	public Integer sqlYearEnd() {
+		return yearEnd;
 	}
 
 	public String jsonYearEnd() {
@@ -3492,6 +3601,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 
 	public String strSeasonStartDate() {
 		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalDate sqlSeasonStartDate() {
+		return seasonStartDate;
 	}
 
 	public String jsonSeasonStartDate() {
@@ -4198,6 +4311,10 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -4666,7 +4783,29 @@ public abstract class DesignPdfPageGen<DEV> extends DesignPdfGenPage {
 		return o != null;
 	}
 	public Object defineDesignPdfPage(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return super.defineDesignPdfGenPage(var, val);
+		}
+	}
+
+	@Override public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineDesignPdfPage(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineDesignPdfPage(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return super.defineDesignPdfGenPage(var, val);
 		}

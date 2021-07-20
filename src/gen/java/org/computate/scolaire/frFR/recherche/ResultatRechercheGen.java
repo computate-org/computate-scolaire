@@ -14,6 +14,7 @@ import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
@@ -192,6 +193,10 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 		return resultatIndice == null ? "" : resultatIndice.toString();
 	}
 
+	public Long sqlResultatIndice() {
+		return resultatIndice;
+	}
+
 	public String jsonResultatIndice() {
 		return resultatIndice == null ? "" : resultatIndice.toString();
 	}
@@ -261,6 +266,10 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
+			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
 			}
 		}
 		return o;
@@ -388,7 +397,29 @@ public abstract class ResultatRechercheGen<DEV> extends Object {
 		return o != null;
 	}
 	public Object definirResultatRecherche(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return null;
+		}
+	}
+
+	public boolean definirPourClasse(String var, Object val) throws Exception {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirResultatRecherche(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirResultatRecherche(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return null;
 		}

@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.lang.Long;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
+import java.util.Map;
 import java.time.ZoneOffset;
 import io.vertx.core.logging.Logger;
 import java.math.RoundingMode;
@@ -209,6 +210,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strPageDesignId() {
 		return pageDesignId == null ? "" : pageDesignId;
+	}
+
+	public String sqlPageDesignId() {
+		return pageDesignId;
 	}
 
 	public String jsonPageDesignId() {
@@ -422,6 +427,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return emailContentType == null ? "" : emailContentType;
 	}
 
+	public String sqlEmailContentType() {
+		return emailContentType;
+	}
+
 	public String jsonEmailContentType() {
 		return emailContentType == null ? "" : emailContentType;
 	}
@@ -496,6 +505,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strEmailDesignId() {
 		return emailDesignId == null ? "" : emailDesignId;
+	}
+
+	public String sqlEmailDesignId() {
+		return emailDesignId;
 	}
 
 	public String jsonEmailDesignId() {
@@ -792,6 +805,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return attachmentContentType == null ? "" : attachmentContentType;
 	}
 
+	public String sqlAttachmentContentType() {
+		return attachmentContentType;
+	}
+
 	public String jsonAttachmentContentType() {
 		return attachmentContentType == null ? "" : attachmentContentType;
 	}
@@ -866,6 +883,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strAttachmentDesignId() {
 		return attachmentDesignId == null ? "" : attachmentDesignId;
+	}
+
+	public String sqlAttachmentDesignId() {
+		return attachmentDesignId;
 	}
 
 	public String jsonAttachmentDesignId() {
@@ -1574,6 +1595,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return yearKey == null ? "" : yearKey.toString();
 	}
 
+	public Long sqlYearKey() {
+		return yearKey;
+	}
+
 	public String jsonYearKey() {
 		return yearKey == null ? "" : yearKey.toString();
 	}
@@ -1656,6 +1681,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strYearStart() {
 		return yearStart == null ? "" : yearStart.toString();
+	}
+
+	public Integer sqlYearStart() {
+		return yearStart;
 	}
 
 	public String jsonYearStart() {
@@ -1742,6 +1771,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return yearEnd == null ? "" : yearEnd.toString();
 	}
 
+	public Integer sqlYearEnd() {
+		return yearEnd;
+	}
+
 	public String jsonYearEnd() {
 		return yearEnd == null ? "" : yearEnd.toString();
 	}
@@ -1816,6 +1849,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strYearVar() {
 		return yearVar == null ? "" : yearVar;
+	}
+
+	public String sqlYearVar() {
+		return yearVar;
 	}
 
 	public String jsonYearVar() {
@@ -1983,6 +2020,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
 
+	public Long sqlSchoolKey() {
+		return schoolKey;
+	}
+
 	public String jsonSchoolKey() {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
@@ -2057,6 +2098,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strSchoolName() {
 		return schoolName == null ? "" : schoolName;
+	}
+
+	public String sqlSchoolName() {
+		return schoolName;
 	}
 
 	public String jsonSchoolName() {
@@ -2135,6 +2180,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
 
+	public String sqlSchoolCompleteName() {
+		return schoolCompleteName;
+	}
+
 	public String jsonSchoolCompleteName() {
 		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
@@ -2209,6 +2258,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strSchoolLocation() {
 		return schoolLocation == null ? "" : schoolLocation;
+	}
+
+	public String sqlSchoolLocation() {
+		return schoolLocation;
 	}
 
 	public String jsonSchoolLocation() {
@@ -2287,6 +2340,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return schoolAddress == null ? "" : schoolAddress;
 	}
 
+	public String sqlSchoolAddress() {
+		return schoolAddress;
+	}
+
 	public String jsonSchoolAddress() {
 		return schoolAddress == null ? "" : schoolAddress;
 	}
@@ -2363,6 +2420,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
 	}
 
+	public String sqlSchoolPhoneNumber() {
+		return schoolPhoneNumber;
+	}
+
 	public String jsonSchoolPhoneNumber() {
 		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
 	}
@@ -2437,6 +2498,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strSchoolAdministratorName() {
 		return schoolAdministratorName == null ? "" : schoolAdministratorName;
+	}
+
+	public String sqlSchoolAdministratorName() {
+		return schoolAdministratorName;
 	}
 
 	public String jsonSchoolAdministratorName() {
@@ -2530,6 +2595,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strSeasonStartDate() {
 		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalDate sqlSeasonStartDate() {
+		return seasonStartDate;
 	}
 
 	public String jsonSeasonStartDate() {
@@ -3450,6 +3519,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return paymentLastStr == null ? "" : paymentLastStr;
 	}
 
+	public String sqlPaymentLastStr() {
+		return paymentLastStr;
+	}
+
 	public String jsonPaymentLastStr() {
 		return paymentLastStr == null ? "" : paymentLastStr;
 	}
@@ -3541,6 +3614,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strPaymentAmount() {
 		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlPaymentAmount() {
+		return paymentAmount;
 	}
 
 	public String jsonPaymentAmount() {
@@ -3636,6 +3713,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return chargeAmount == null ? "" : chargeAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargeAmount() {
+		return chargeAmount;
+	}
+
 	public String jsonChargeAmount() {
 		return chargeAmount == null ? "" : chargeAmount.toString();
 	}
@@ -3727,6 +3808,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strChargeAmountFuture() {
 		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlChargeAmountFuture() {
+		return chargeAmountFuture;
 	}
 
 	public String jsonChargeAmountFuture() {
@@ -3822,6 +3907,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargeAmountDue() {
+		return chargeAmountDue;
+	}
+
 	public String jsonChargeAmountDue() {
 		return chargeAmountDue == null ? "" : chargeAmountDue.toString();
 	}
@@ -3915,6 +4004,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return chargesNow == null ? "" : chargesNow.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargesNow() {
+		return chargesNow;
+	}
+
 	public String jsonChargesNow() {
 		return chargesNow == null ? "" : chargesNow.toString();
 	}
@@ -3996,6 +4089,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return paymentsCurrent == null ? "" : paymentsCurrent.toString();
 	}
 
+	public Boolean sqlPaymentsCurrent() {
+		return paymentsCurrent;
+	}
+
 	public String jsonPaymentsCurrent() {
 		return paymentsCurrent == null ? "" : paymentsCurrent.toString();
 	}
@@ -4075,6 +4172,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strPaymentsLate() {
 		return paymentsLate == null ? "" : paymentsLate.toString();
+	}
+
+	public Boolean sqlPaymentsLate() {
+		return paymentsLate;
 	}
 
 	public String jsonPaymentsLate() {
@@ -4170,6 +4271,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return paymentsLateAmount == null ? "" : paymentsLateAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlPaymentsLateAmount() {
+		return paymentsLateAmount;
+	}
+
 	public String jsonPaymentsLateAmount() {
 		return paymentsLateAmount == null ? "" : paymentsLateAmount.toString();
 	}
@@ -4249,6 +4354,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strPaymentsAhead() {
 		return paymentsAhead == null ? "" : paymentsAhead.toString();
+	}
+
+	public Boolean sqlPaymentsAhead() {
+		return paymentsAhead;
 	}
 
 	public String jsonPaymentsAhead() {
@@ -4460,6 +4569,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return emailFrom == null ? "" : emailFrom;
 	}
 
+	public String sqlEmailFrom() {
+		return emailFrom;
+	}
+
 	public String jsonEmailFrom() {
 		return emailFrom == null ? "" : emailFrom;
 	}
@@ -4534,6 +4647,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strEmailToSchool() {
 		return emailToSchool == null ? "" : emailToSchool;
+	}
+
+	public String sqlEmailToSchool() {
+		return emailToSchool;
 	}
 
 	public String jsonEmailToSchool() {
@@ -4612,6 +4729,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return emailToAddress == null ? "" : emailToAddress;
 	}
 
+	public String sqlEmailToAddress() {
+		return emailToAddress;
+	}
+
 	public String jsonEmailToAddress() {
 		return emailToAddress == null ? "" : emailToAddress;
 	}
@@ -4686,6 +4807,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strEmailToName() {
 		return emailToName == null ? "" : emailToName;
+	}
+
+	public String sqlEmailToName() {
+		return emailToName;
 	}
 
 	public String jsonEmailToName() {
@@ -4764,6 +4889,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return emailMessage == null ? "" : emailMessage;
 	}
 
+	public String sqlEmailMessage() {
+		return emailMessage;
+	}
+
 	public String jsonEmailMessage() {
 		return emailMessage == null ? "" : emailMessage;
 	}
@@ -4838,6 +4967,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 
 	public String strEmailSubject() {
 		return emailSubject == null ? "" : emailSubject;
+	}
+
+	public String sqlEmailSubject() {
+		return emailSubject;
 	}
 
 	public String jsonEmailSubject() {
@@ -5045,6 +5178,10 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
+			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
 			}
 		}
 		return o;
@@ -5584,7 +5721,29 @@ public abstract class DesignEmailPageGen<DEV> extends DesignEmailGenPage {
 		return o != null;
 	}
 	public Object defineDesignEmailPage(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return super.defineDesignEmailGenPage(var, val);
+		}
+	}
+
+	@Override public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineDesignEmailPage(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineDesignEmailPage(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return super.defineDesignEmailGenPage(var, val);
 		}

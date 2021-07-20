@@ -20,6 +20,9 @@ import org.computate.scolaire.enUS.writer.ApiWriter;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.vertx.AppliSwagger2
+ **/
 public class AppSwagger2 extends AppSwagger2Gen<Object> {
 
 	public static void  main(String[] args) {

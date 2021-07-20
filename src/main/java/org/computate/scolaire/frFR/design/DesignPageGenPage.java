@@ -575,7 +575,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("a");
 			} g("h1");
-			e("div").a("class", "").f();
+			{ e("div").a("class", "").f();
 				{ e("div").f();
 					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeDesignPage.getQueryResponse().getResults().getNumFound();
@@ -657,6 +657,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
 				table1DesignPageGenPage();
+			} g("div");
 		}
 
 		if(listeDesignPage != null && listeDesignPage.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -684,7 +685,6 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsDesignPageGenPage();
-		g("div");
 	}
 
 	public void table1DesignPageGenPage() {
@@ -786,7 +786,6 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			e("div").a("class", "w3-margin-top ").f();
 
 			if(listeDesignPage != null && listeDesignPage.size() == 1) {
 				{ e("button")
@@ -969,7 +968,6 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
-			g("div");
 		}
 		htmlSuggereDesignPageGenPage(this, null, listeDesignPage);
 	}

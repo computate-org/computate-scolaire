@@ -40,6 +40,7 @@ import java.util.Set;
 import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -64,7 +65,6 @@ import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.api.OperationResponse;
@@ -73,7 +73,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import java.nio.charset.Charset;
 import org.apache.http.NameValuePair;
 import io.vertx.ext.web.api.OperationRequest;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.auth.oauth2.impl.OAuth2TokenImpl;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
@@ -124,7 +124,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -230,14 +230,17 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
+			HtmlPart o2 = new HtmlPart();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(siteRequest.getSessionId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "sessionId", siteRequest.getSessionId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "sessionId", siteRequest.getSessionId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -249,8 +252,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			}
 			if(siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -262,8 +265,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			}
 			if(siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -280,8 +283,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					switch(entityVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -293,8 +296,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "archived":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -306,8 +309,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "deleted":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -320,10 +323,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "pageDesignKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+								SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
+								searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -331,8 +334,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -351,8 +354,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlLink":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlLink", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlLink", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -364,8 +367,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlElement":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlElement", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlElement", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -377,8 +380,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlId":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -390,8 +393,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlClasses":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlClasses", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlClasses", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -403,8 +406,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlStyle":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlStyle", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlStyle", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -416,8 +419,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlBefore":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlBefore", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlBefore", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -429,8 +432,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlAfter":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlAfter", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlAfter", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -442,8 +445,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlText":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlText", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlText", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -455,8 +458,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVar":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVar", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVar", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -468,8 +471,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVarSpan":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVarSpan", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarSpan", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -481,8 +484,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVarForm":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVarForm", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarForm", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -494,8 +497,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVarInput":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVarInput", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarInput", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -507,8 +510,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlIfVarEquals":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlIfVarEquals", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlIfVarEquals", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -520,8 +523,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVarForEach":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVarForEach", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarForEach", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -533,8 +536,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVarHtml":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVarHtml", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarHtml", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -546,8 +549,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlExclude":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlExclude", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlExclude", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -559,8 +562,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "pdfExclude":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "pdfExclude", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "pdfExclude", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -572,8 +575,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "loginLogout":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "loginLogout", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "loginLogout", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -585,8 +588,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort1":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -598,8 +601,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort2":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -611,8 +614,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort3":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -624,8 +627,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort4":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -637,8 +640,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort5":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -650,8 +653,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort6":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -663,8 +666,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort7":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -676,8 +679,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort8":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -689,8 +692,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort9":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -702,8 +705,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort10":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -716,7 +719,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
@@ -779,7 +782,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -907,7 +910,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportHtmlPart(siteRequest, eventHandler);
@@ -969,7 +972,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1095,7 +1098,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergeHtmlPart(siteRequest, eventHandler);
@@ -1157,7 +1160,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1249,7 +1252,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listHtmlPart.size());
 				if(listHtmlPart.next()) {
@@ -1338,6 +1341,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			List<Future> futures = new ArrayList<>();
 
@@ -1348,8 +1352,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					switch(entityVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1361,8 +1365,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "archived":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1374,8 +1378,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "deleted":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1388,8 +1392,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "pageDesignKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(l, "htmlPartKeys", pk, "pageDesignKeys")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(l, "htmlPartKeys", pk, "pageDesignKeys")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1406,8 +1410,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlLink":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlLink", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlLink", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1419,8 +1423,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlElement":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlElement", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlElement", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1432,8 +1436,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlId":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1445,8 +1449,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlClasses":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlClasses", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlClasses", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1458,8 +1462,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlStyle":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlStyle", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlStyle", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1471,8 +1475,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlBefore":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlBefore", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlBefore", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1484,8 +1488,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlAfter":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlAfter", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlAfter", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1497,8 +1501,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlText":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlText", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlText", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1510,8 +1514,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVar":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVar", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVar", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1523,8 +1527,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVarSpan":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVarSpan", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarSpan", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1536,8 +1540,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVarForm":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVarForm", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarForm", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1549,8 +1553,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVarInput":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVarInput", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarInput", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1562,8 +1566,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlIfVarEquals":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlIfVarEquals", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlIfVarEquals", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1575,8 +1579,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVarForEach":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVarForEach", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarForEach", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1588,8 +1592,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlVarHtml":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlVarHtml", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarHtml", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1601,8 +1605,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "htmlExclude":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "htmlExclude", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "htmlExclude", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1614,8 +1618,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "pdfExclude":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "pdfExclude", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "pdfExclude", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1627,8 +1631,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "loginLogout":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "loginLogout", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "loginLogout", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1640,8 +1644,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort1":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1653,8 +1657,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort2":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1666,8 +1670,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort3":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1679,8 +1683,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort4":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1692,8 +1696,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort5":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1705,8 +1709,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort6":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1718,8 +1722,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort7":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1731,8 +1735,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort8":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1744,8 +1748,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort9":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1757,8 +1761,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 					case "sort10":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sort10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sort10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1771,7 +1775,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
@@ -1832,7 +1836,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1946,7 +1950,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listHtmlPart.next(dt)) {
 					listPATCHHtmlPart(apiRequest, listHtmlPart, dt, eventHandler);
@@ -2021,16 +2025,18 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
 			Set<String> methodNames = jsonObject.fieldNames();
 			HtmlPart o2 = new HtmlPart();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-							, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+							.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -2042,8 +2048,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -2059,8 +2065,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setInheritPk":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2072,8 +2078,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2087,8 +2093,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setArchived":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "archived")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "archived")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2100,8 +2106,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "archived", o2.jsonArchived())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "archived", o2.jsonArchived())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2115,8 +2121,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setDeleted":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "deleted")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "deleted")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2128,8 +2134,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "deleted", o2.jsonDeleted())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "deleted", o2.jsonDeleted())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2144,10 +2150,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+								SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
+								searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2155,8 +2161,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPageDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2179,10 +2185,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							for(Integer i = 0; i <  addAllPageDesignKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllPageDesignKeysValues.getString(i));
 								if(l != null) {
-									SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+									SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(PageDesign.class);
+									searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2190,8 +2196,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPageDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2216,10 +2222,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							for(Integer i = 0; i <  setPageDesignKeysValues.size(); i++) {
 								Long l = Long.parseLong(setPageDesignKeysValues.getString(i));
 								if(l != null) {
-									SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+									SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(PageDesign.class);
+									searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2229,8 +2235,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 										setPageDesignKeysValues2.add(l2);
 									if(l2 != null && !o.getPageDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2251,8 +2257,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							for(Long l :  o.getPageDesignKeys()) {
 								if(l != null && (setPageDesignKeysValues == null || !setPageDesignKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "htmlPartKeys", pk, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "htmlPartKeys", pk, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2269,10 +2275,10 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<PageDesign> searchList = new SearchList<PageDesign>();
+								SearchList<org.computate.scolaire.enUS.design.PageDesign> searchList = new SearchList<org.computate.scolaire.enUS.design.PageDesign>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(PageDesign.class);
+								searchList.setC(org.computate.scolaire.enUS.design.PageDesign.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2280,8 +2286,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPageDesignKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "htmlPartKeys", pk, "pageDesignKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2301,8 +2307,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlLink":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlLink")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlLink")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2314,8 +2320,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlLink(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlLink", o2.jsonHtmlLink())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlLink", o2.jsonHtmlLink())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2329,8 +2335,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlElement":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlElement")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlElement")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2342,8 +2348,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlElement(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlElement", o2.jsonHtmlElement())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlElement", o2.jsonHtmlElement())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2357,8 +2363,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlId":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlId")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlId")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2370,8 +2376,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlId(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlId", o2.jsonHtmlId())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlId", o2.jsonHtmlId())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2385,8 +2391,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlClasses":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlClasses")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlClasses")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2398,8 +2404,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlClasses(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlClasses", o2.jsonHtmlClasses())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlClasses", o2.jsonHtmlClasses())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2413,8 +2419,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlStyle":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlStyle")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlStyle")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2426,8 +2432,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlStyle(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlStyle", o2.jsonHtmlStyle())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlStyle", o2.jsonHtmlStyle())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2441,8 +2447,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlBefore":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlBefore")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlBefore")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2454,8 +2460,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlBefore(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlBefore", o2.jsonHtmlBefore())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlBefore", o2.jsonHtmlBefore())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2469,8 +2475,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlAfter":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlAfter")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlAfter")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2482,8 +2488,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlAfter(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlAfter", o2.jsonHtmlAfter())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlAfter", o2.jsonHtmlAfter())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2497,8 +2503,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlText":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlText")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlText")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2510,8 +2516,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlText(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlText", o2.jsonHtmlText())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlText", o2.jsonHtmlText())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2525,8 +2531,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlVar":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlVar")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVar")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2538,8 +2544,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlVar(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlVar", o2.jsonHtmlVar())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVar", o2.jsonHtmlVar())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2553,8 +2559,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlVarSpan":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlVarSpan")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVarSpan")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2566,8 +2572,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlVarSpan(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlVarSpan", o2.jsonHtmlVarSpan())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVarSpan", o2.jsonHtmlVarSpan())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2581,8 +2587,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlVarForm":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlVarForm")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVarForm")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2594,8 +2600,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlVarForm(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlVarForm", o2.jsonHtmlVarForm())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVarForm", o2.jsonHtmlVarForm())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2609,8 +2615,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlVarInput":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlVarInput")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVarInput")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2622,8 +2628,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlVarInput(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlVarInput", o2.jsonHtmlVarInput())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVarInput", o2.jsonHtmlVarInput())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2637,8 +2643,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlIfVarEquals":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlIfVarEquals")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlIfVarEquals")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2650,8 +2656,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlIfVarEquals(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlIfVarEquals", o2.jsonHtmlIfVarEquals())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlIfVarEquals", o2.jsonHtmlIfVarEquals())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2665,8 +2671,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlVarForEach":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlVarForEach")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVarForEach")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2678,8 +2684,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlVarForEach(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlVarForEach", o2.jsonHtmlVarForEach())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVarForEach", o2.jsonHtmlVarForEach())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2693,8 +2699,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlVarHtml":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlVarHtml")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVarHtml")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2706,8 +2712,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlVarHtml(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlVarHtml", o2.jsonHtmlVarHtml())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVarHtml", o2.jsonHtmlVarHtml())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2721,8 +2727,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setHtmlExclude":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "htmlExclude")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlExclude")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2734,8 +2740,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setHtmlExclude(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "htmlExclude", o2.jsonHtmlExclude())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "htmlExclude", o2.jsonHtmlExclude())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2749,8 +2755,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setPdfExclude":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "pdfExclude")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "pdfExclude")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2762,8 +2768,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setPdfExclude(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "pdfExclude", o2.jsonPdfExclude())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "pdfExclude", o2.jsonPdfExclude())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2777,8 +2783,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setLoginLogout":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "loginLogout")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "loginLogout")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2790,8 +2796,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setLoginLogout(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "loginLogout", o2.jsonLoginLogout())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "loginLogout", o2.jsonLoginLogout())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2805,8 +2811,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setSort1":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sort1")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sort1")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2818,8 +2824,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setSort1(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sort1", o2.jsonSort1())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sort1", o2.jsonSort1())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2833,8 +2839,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setSort2":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sort2")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sort2")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2846,8 +2852,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setSort2(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sort2", o2.jsonSort2())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sort2", o2.jsonSort2())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2861,8 +2867,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setSort3":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sort3")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sort3")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2874,8 +2880,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setSort3(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sort3", o2.jsonSort3())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sort3", o2.jsonSort3())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2889,8 +2895,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setSort4":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sort4")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sort4")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2902,8 +2908,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setSort4(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sort4", o2.jsonSort4())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sort4", o2.jsonSort4())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2917,8 +2923,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setSort5":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sort5")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sort5")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2930,8 +2936,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setSort5(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sort5", o2.jsonSort5())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sort5", o2.jsonSort5())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2945,8 +2951,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setSort6":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sort6")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sort6")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2958,8 +2964,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setSort6(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sort6", o2.jsonSort6())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sort6", o2.jsonSort6())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2973,8 +2979,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setSort7":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sort7")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sort7")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2986,8 +2992,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setSort7(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sort7", o2.jsonSort7())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sort7", o2.jsonSort7())
 										, b
 								-> {
 									if(b.succeeded())
@@ -3001,8 +3007,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setSort8":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sort8")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sort8")
 										, b
 								-> {
 									if(b.succeeded())
@@ -3014,8 +3020,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setSort8(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sort8", o2.jsonSort8())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sort8", o2.jsonSort8())
 										, b
 								-> {
 									if(b.succeeded())
@@ -3029,8 +3035,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setSort9":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sort9")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sort9")
 										, b
 								-> {
 									if(b.succeeded())
@@ -3042,8 +3048,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setSort9(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sort9", o2.jsonSort9())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sort9", o2.jsonSort9())
 										, b
 								-> {
 									if(b.succeeded())
@@ -3057,8 +3063,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					case "setSort10":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sort10")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sort10")
 										, b
 								-> {
 									if(b.succeeded())
@@ -3070,8 +3076,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						} else {
 							o2.setSort10(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sort10", o2.jsonSort10())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sort10", o2.jsonSort10())
 										, b
 								-> {
 									if(b.succeeded())
@@ -3084,7 +3090,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					HtmlPart o3 = new HtmlPart();
 					o3.setSiteRequest_(o.getSiteRequest_());
@@ -3150,7 +3156,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -3240,7 +3246,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -3375,7 +3381,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -3440,7 +3446,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			AllWriter w = AllWriter.create(listHtmlPart.getSiteRequest_(), buffer);
 			HtmlPartPage page = new HtmlPartPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/html-part");
@@ -3519,10 +3525,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			String userId = siteRequest.getUserId();
 			ZonedDateTime created = Optional.ofNullable(siteRequest.getJsonObject()).map(j -> j.getString("created")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())));
 
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_create
-					, Tuple.of(HtmlPart.class.getCanonicalName(), userId, created.toOffsetDateTime())
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_create)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(HtmlPart.class.getCanonicalName(), userId, created.toOffsetDateTime())
 					, createAsync
 			-> {
 				if(createAsync.succeeded()) {
@@ -3557,7 +3562,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
 				Buffer.buffer().appendString(json.encodePrettily())
-				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
+				, MultiMap.caseInsensitiveMultiMap().add("Content-Type", "application/json")
 		);
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
@@ -3739,10 +3744,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 						sqlTransactionHtmlPart(siteRequest, b -> {
 							if(b.succeeded()) {
 								Transaction tx = siteRequest.getTx();
-								tx.preparedQuery(
-										SiteContextEnUS.SQL_selectC
-										, Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
-										, Collectors.toList()
+								tx.preparedQuery(SiteContextEnUS.SQL_selectC)
+										.collecting(Collectors.toList())
+										.execute(Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
 										, selectCAsync
 								-> {
 									if(selectCAsync.succeeded()) {
@@ -3751,7 +3755,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 											SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
 											if(userValues == null) {
 												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContext.getAuthProvider(), userVertx);
+												JsonObject jsonPrincipal = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
@@ -3790,6 +3795,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
 																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
 																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																		siteRequest.setUserEmail(jsonPrincipal.getString("email"));
 																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
 																		siteRequest.setUserKey(siteUser.getPk());
 																		eventHandler.handle(Future.succeededFuture());
@@ -3817,7 +3823,8 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 												SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
 
 												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContext.getAuthProvider(), userVertx);
+												JsonObject jsonPrincipal = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
@@ -3826,8 +3833,6 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 												jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
 												jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
 												Boolean define = userHtmlPartDefine(siteRequest, jsonObject, true);
@@ -3929,19 +3934,11 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
-				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -4024,91 +4021,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 
 	public void aSearchHtmlPart(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<HtmlPart>>> eventHandler) {
 		try {
-			OperationRequest operationRequest = siteRequest.getOperationRequest();
-			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
-			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
-			searchList.setPopulate(populate);
-			searchList.setStore(store);
-			searchList.setQuery("*:*");
-			searchList.setC(HtmlPart.class);
-			searchList.setSiteRequest_(siteRequest);
-			if(entityList != null)
-				searchList.addFields(entityList);
-			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
-
-			String id = operationRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null) {
-				searchList.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
-				String entityVar = null;
-				String valueIndexed = null;
-				String varIndexed = null;
-				String valueSort = null;
-				Integer valueStart = null;
-				Integer valueRows = null;
-				String paramName = paramRequest.getKey();
-				Object paramValuesObject = paramRequest.getValue();
-				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
-
-				try {
-					for(Object paramObject : paramObjects) {
-						switch(paramName) {
-							case "q":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : HtmlPart.varSearchHtmlPart(entityVar);
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchHtmlPartQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "fq":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = HtmlPart.varIndexedHtmlPart(entityVar);
-								aSearchHtmlPartFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "sort":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = HtmlPart.varIndexedHtmlPart(entityVar);
-								aSearchHtmlPartSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "start":
-								valueStart = (Integer)paramObject;
-								aSearchHtmlPartStart(uri, apiMethod, searchList, valueStart);
-								break;
-							case "rows":
-								valueRows = (Integer)paramObject;
-								aSearchHtmlPartRows(uri, apiMethod, searchList, valueRows);
-								break;
-							case "var":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchHtmlPartVar(uri, apiMethod, searchList, entityVar, valueIndexed);
-								break;
-						}
-					}
-					aSearchHtmlPartUri(uri, apiMethod, searchList);
-				} catch(Exception e) {
-					LOGGER.error(String.format("aSearchHtmlPart failed. ", e));
-					eventHandler.handle(Future.failedFuture(e));
-				}
-			});
-			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-				searchList.addSort("sort1_indexed_double", ORDER.asc);
-				searchList.addSort("sort2_indexed_double", ORDER.asc);
-				searchList.addSort("sort3_indexed_double", ORDER.asc);
-				searchList.addSort("sort4_indexed_double", ORDER.asc);
-				searchList.addSort("sort5_indexed_double", ORDER.asc);
-				searchList.addSort("sort6_indexed_double", ORDER.asc);
-				searchList.addSort("sort7_indexed_double", ORDER.asc);
-				searchList.addSort("sort8_indexed_double", ORDER.asc);
-				searchList.addSort("sort9_indexed_double", ORDER.asc);
-				searchList.addSort("sort10_indexed_double", ORDER.asc);
-			}
-			searchList.initDeepForClass(siteRequest);
+			SearchList<HtmlPart> searchList = aSearchHtmlPartList(siteRequest, populate, store, modify, uri, apiMethod);
 			eventHandler.handle(Future.succeededFuture(searchList));
 		} catch(Exception e) {
 			LOGGER.error(String.format("aSearchHtmlPart failed. ", e));
@@ -4116,15 +4029,107 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 		}
 	}
 
+	public SearchList<HtmlPart> aSearchHtmlPartList(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod) {
+		OperationRequest operationRequest = siteRequest.getOperationRequest();
+		String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
+		String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
+		SearchList<HtmlPart> searchList = new SearchList<HtmlPart>();
+		searchList.setPopulate(populate);
+		searchList.setStore(store);
+		searchList.setQuery("*:*");
+		searchList.setC(HtmlPart.class);
+		searchList.setSiteRequest_(siteRequest);
+		if(entityList != null)
+			searchList.addFields(entityList);
+		searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
+
+		String id = operationRequest.getParams().getJsonObject("path").getString("id");
+		if(id != null && NumberUtils.isCreatable(id)) {
+			searchList.addFilterQuery("(pk_indexed_long:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		} else if(id != null) {
+			searchList.addFilterQuery("objectId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+		}
+
+		operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+			String entityVar = null;
+			String valueIndexed = null;
+			String varIndexed = null;
+			String valueSort = null;
+			Integer valueStart = null;
+			Integer valueRows = null;
+			String paramName = paramRequest.getKey();
+			Object paramValuesObject = paramRequest.getValue();
+			JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
+
+			try {
+				for(Object paramObject : paramObjects) {
+					switch(paramName) {
+						case "q":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							varIndexed = "*".equals(entityVar) ? entityVar : HtmlPart.varSearchHtmlPart(entityVar);
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
+							aSearchHtmlPartQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "fq":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							varIndexed = HtmlPart.varIndexedHtmlPart(entityVar);
+							aSearchHtmlPartFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "sort":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
+							valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+							varIndexed = HtmlPart.varIndexedHtmlPart(entityVar);
+							aSearchHtmlPartSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "start":
+							valueStart = paramObject instanceof Integer ? (Integer)paramObject : Integer.parseInt(paramObject.toString());
+							aSearchHtmlPartStart(uri, apiMethod, searchList, valueStart);
+							break;
+						case "rows":
+							valueRows = paramObject instanceof Integer ? (Integer)paramObject : Integer.parseInt(paramObject.toString());
+							aSearchHtmlPartRows(uri, apiMethod, searchList, valueRows);
+							break;
+						case "var":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							aSearchHtmlPartVar(uri, apiMethod, searchList, entityVar, valueIndexed);
+							break;
+					}
+				}
+				aSearchHtmlPartUri(uri, apiMethod, searchList);
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
+		if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
+			searchList.addSort("sort1_indexed_double", ORDER.asc);
+			searchList.addSort("sort2_indexed_double", ORDER.asc);
+			searchList.addSort("sort3_indexed_double", ORDER.asc);
+			searchList.addSort("sort4_indexed_double", ORDER.asc);
+			searchList.addSort("sort5_indexed_double", ORDER.asc);
+			searchList.addSort("sort6_indexed_double", ORDER.asc);
+			searchList.addSort("sort7_indexed_double", ORDER.asc);
+			searchList.addSort("sort8_indexed_double", ORDER.asc);
+			searchList.addSort("sort9_indexed_double", ORDER.asc);
+			searchList.addSort("sort10_indexed_double", ORDER.asc);
+		}
+		aSearchHtmlPart2(siteRequest, populate, store, modify, uri, apiMethod, searchList);
+		searchList.initDeepForClass(siteRequest);
+		return searchList;
+	}
+	public void aSearchHtmlPart2(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, SearchList<HtmlPart> searchList) {
+	}
+
 	public void defineHtmlPart(HtmlPart o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_define
-					, Tuple.of(pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_define)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
@@ -4158,10 +4163,9 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_attribute
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_attribute)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attributeAsync
 			-> {
 				try {
@@ -4263,7 +4267,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 					}
 				}
 
-				CompositeFuture.all(futures).setHandler(a -> {
+				CompositeFuture.all(futures).onComplete(a -> {
 					if(a.succeeded()) {
 						HtmlPartEnUSApiServiceImpl service = new HtmlPartEnUSApiServiceImpl(siteRequest.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
@@ -4281,7 +4285,7 @@ public class HtmlPartEnUSGenApiServiceImpl implements HtmlPartEnUSGenApiService 
 							);
 						}
 
-						CompositeFuture.all(futures2).setHandler(b -> {
+						CompositeFuture.all(futures2).onComplete(b -> {
 							if(b.succeeded()) {
 								eventHandler.handle(Future.succeededFuture());
 							} else {

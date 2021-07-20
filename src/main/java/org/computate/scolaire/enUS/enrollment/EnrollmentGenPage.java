@@ -274,6 +274,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmFamilyMarried("Page");
 			o.htmFamilySeparated("Page");
 			o.htmFamilyDivorced("Page");
+			o.htmEnrollmentPassphrase("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilyAddress("Page");
@@ -287,6 +288,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildDescription("Page");
 			o.htmChildObjectives("Page");
+			o.htmAdminNotes("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKey("Page");
@@ -333,6 +335,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmFamilyMarried("POST");
 			o.htmFamilySeparated("POST");
 			o.htmFamilyDivorced("POST");
+			o.htmEnrollmentPassphrase("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilyAddress("POST");
@@ -346,6 +349,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildDescription("POST");
 			o.htmChildObjectives("POST");
+			o.htmAdminNotes("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKey("POST");
@@ -414,6 +418,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmFamilyMarried("PUTCopy");
 			o.htmFamilySeparated("PUTCopy");
 			o.htmFamilyDivorced("PUTCopy");
+			o.htmEnrollmentPassphrase("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilyAddress("PUTCopy");
@@ -427,6 +432,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildDescription("PUTCopy");
 			o.htmChildObjectives("PUTCopy");
+			o.htmAdminNotes("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKey("PUTCopy");
@@ -471,6 +477,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmFamilyMarried("PATCH");
 			o.htmFamilySeparated("PATCH");
 			o.htmFamilyDivorced("PATCH");
+			o.htmEnrollmentPassphrase("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilyAddress("PATCH");
@@ -484,6 +491,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildDescription("PATCH");
 			o.htmChildObjectives("PATCH");
+			o.htmAdminNotes("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKey("PATCH");
@@ -529,6 +537,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 			o.htmFamilyMarried("Search");
 			o.htmFamilySeparated("Search");
 			o.htmFamilyDivorced("Search");
+			o.htmEnrollmentPassphrase("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilyAddress("Search");
@@ -542,6 +551,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmChildDescription("Search");
 			o.htmChildObjectives("Search");
+			o.htmAdminNotes("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmYearKey("Search");
@@ -640,7 +650,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("a");
 			} g("h1");
-			e("div").a("class", "").f();
+			{ e("div").a("class", "").f();
 				{ e("div").f();
 					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listSchoolEnrollment.getQueryResponse().getResults().getNumFound();
@@ -722,6 +732,7 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
 				} g("div");
 				table1EnrollmentGenPage();
+			} g("div");
 		}
 
 		if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -749,7 +760,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsEnrollmentGenPage();
-		g("div");
 	}
 
 	public void table1EnrollmentGenPage() {
@@ -851,7 +861,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-			e("div").a("class", "w3-margin-top ").f();
 
 			if(listSchoolEnrollment != null && listSchoolEnrollment.size() == 1) {
 				{ e("button")
@@ -1034,7 +1043,6 @@ public class EnrollmentGenPage extends EnrollmentGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
-			g("div");
 		}
 		htmlSuggestedEnrollmentGenPage(this, null, listSchoolEnrollment);
 	}

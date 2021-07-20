@@ -46,6 +46,7 @@ import java.util.Set;
 import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -70,7 +71,6 @@ import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.api.OperationResponse;
@@ -79,7 +79,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import java.nio.charset.Charset;
 import org.apache.http.NameValuePair;
 import io.vertx.ext.web.api.OperationRequest;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.auth.oauth2.impl.OAuth2TokenImpl;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
@@ -130,7 +130,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -236,14 +236,17 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
+			SchoolYear o2 = new SchoolYear();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(siteRequest.getSessionId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "sessionId", siteRequest.getSessionId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "sessionId", siteRequest.getSessionId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -255,8 +258,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			}
 			if(siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -268,8 +271,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			}
 			if(siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -286,8 +289,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					switch(entityVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -299,8 +302,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "archived":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -312,8 +315,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "deleted":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -327,10 +330,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(entityVar));
 							if(l != null) {
-								SearchList<School> searchList = new SearchList<School>();
+								SearchList<org.computate.scolaire.enUS.school.School> searchList = new SearchList<org.computate.scolaire.enUS.school.School>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(School.class);
+								searchList.setC(org.computate.scolaire.enUS.school.School.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -338,8 +341,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "schoolKey", l2, "yearKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "schoolKey", l2, "yearKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -359,10 +362,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "enrollmentKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+								SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment> searchList = new SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolEnrollment.class);
+								searchList.setC(org.computate.scolaire.enUS.enrollment.SchoolEnrollment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -370,8 +373,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "enrollmentKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "enrollmentKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -391,10 +394,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "seasonKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+								SearchList<org.computate.scolaire.enUS.season.SchoolSeason> searchList = new SearchList<org.computate.scolaire.enUS.season.SchoolSeason>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolSeason.class);
+								searchList.setC(org.computate.scolaire.enUS.season.SchoolSeason.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -402,8 +405,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "seasonKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "seasonKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -423,10 +426,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "ageKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
+								SearchList<org.computate.scolaire.enUS.age.SchoolAge> searchList = new SearchList<org.computate.scolaire.enUS.age.SchoolAge>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolAge.class);
+								searchList.setC(org.computate.scolaire.enUS.age.SchoolAge.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -434,8 +437,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "ageKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "ageKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -454,8 +457,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "sessionStartDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sessionStartDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sessionStartDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -467,8 +470,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "seasonStartDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "seasonStartDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "seasonStartDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -480,8 +483,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "sessionEndDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sessionEndDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sessionEndDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -493,8 +496,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "yearStart":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "yearStart", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "yearStart", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -506,8 +509,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "yearEnd":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "yearEnd", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "yearEnd", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -519,8 +522,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "yearEnrollmentFee":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "yearEnrollmentFee", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "yearEnrollmentFee", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -533,7 +536,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
@@ -596,7 +599,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -724,7 +727,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportSchoolYear(siteRequest, eventHandler);
@@ -786,7 +789,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -912,7 +915,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergeSchoolYear(siteRequest, eventHandler);
@@ -974,7 +977,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1066,7 +1069,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolYear.size());
 				if(listSchoolYear.next()) {
@@ -1155,6 +1158,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			List<Future> futures = new ArrayList<>();
 
@@ -1165,8 +1169,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					switch(entityVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1178,8 +1182,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "archived":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1191,8 +1195,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "deleted":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1206,8 +1210,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							{
 						Long l = Long.parseLong(jsonObject.getString(entityVar));
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_addA
-									, Tuple.of(pk, "schoolKey", l, "yearKeys")
+							tx.preparedQuery(SiteContextEnUS.SQL_addA)
+									.execute(Tuple.of(pk, "schoolKey", l, "yearKeys")
 									, b
 							-> {
 								if(b.succeeded())
@@ -1221,8 +1225,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "enrollmentKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(pk, "enrollmentKeys", l, "yearKey")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(pk, "enrollmentKeys", l, "yearKey")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1240,8 +1244,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "seasonKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(pk, "seasonKeys", l, "yearKey")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(pk, "seasonKeys", l, "yearKey")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1259,8 +1263,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "ageKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(pk, "ageKeys", l, "yearKey")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(pk, "ageKeys", l, "yearKey")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1277,8 +1281,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "sessionStartDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sessionStartDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sessionStartDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1290,8 +1294,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "seasonStartDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "seasonStartDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "seasonStartDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1303,8 +1307,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "sessionEndDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "sessionEndDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "sessionEndDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1316,8 +1320,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "yearStart":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "yearStart", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "yearStart", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1329,8 +1333,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "yearEnd":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "yearEnd", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "yearEnd", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1342,8 +1346,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 					case "yearEnrollmentFee":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "yearEnrollmentFee", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "yearEnrollmentFee", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1356,7 +1360,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
@@ -1417,7 +1421,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1531,7 +1535,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listSchoolYear.next(dt)) {
 					listPATCHSchoolYear(apiRequest, listSchoolYear, dt, eventHandler);
@@ -1606,16 +1610,18 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
 			Set<String> methodNames = jsonObject.fieldNames();
 			SchoolYear o2 = new SchoolYear();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-							, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+							.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1627,8 +1633,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1644,8 +1650,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setInheritPk":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1657,8 +1663,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1672,8 +1678,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setArchived":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "archived")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "archived")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1685,8 +1691,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "archived", o2.jsonArchived())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "archived", o2.jsonArchived())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1700,8 +1706,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setDeleted":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "deleted")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "deleted")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1713,8 +1719,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "deleted", o2.jsonDeleted())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "deleted", o2.jsonDeleted())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1730,10 +1736,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							o2.setSchoolKey(jsonObject.getString(methodName));
 							Long l = o2.getSchoolKey();
 							if(l != null) {
-								SearchList<School> searchList = new SearchList<School>();
+								SearchList<org.computate.scolaire.enUS.school.School> searchList = new SearchList<org.computate.scolaire.enUS.school.School>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(School.class);
+								searchList.setC(org.computate.scolaire.enUS.school.School.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1741,8 +1747,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getSchoolKey())) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "schoolKey", l2, "yearKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "schoolKey", l2, "yearKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1764,10 +1770,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							o2.setSchoolKey(jsonObject.getString(methodName));
 							Long l = o2.getSchoolKey();
 							if(l != null) {
-								SearchList<School> searchList = new SearchList<School>();
+								SearchList<org.computate.scolaire.enUS.school.School> searchList = new SearchList<org.computate.scolaire.enUS.school.School>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(School.class);
+								searchList.setC(org.computate.scolaire.enUS.school.School.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1775,8 +1781,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "schoolKey", l2, "yearKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "schoolKey", l2, "yearKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1797,10 +1803,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+								SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment> searchList = new SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolEnrollment.class);
+								searchList.setC(org.computate.scolaire.enUS.enrollment.SchoolEnrollment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1817,8 +1823,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getEnrollmentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "enrollmentKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "enrollmentKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1841,10 +1847,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							for(Integer i = 0; i <  addAllEnrollmentKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllEnrollmentKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+									SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment> searchList = new SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolEnrollment.class);
+									searchList.setC(org.computate.scolaire.enUS.enrollment.SchoolEnrollment.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1861,8 +1867,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getEnrollmentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "enrollmentKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "enrollmentKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1887,10 +1893,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							for(Integer i = 0; i <  setEnrollmentKeysValues.size(); i++) {
 								Long l = Long.parseLong(setEnrollmentKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+									SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment> searchList = new SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolEnrollment.class);
+									searchList.setC(org.computate.scolaire.enUS.enrollment.SchoolEnrollment.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1909,8 +1915,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 										setEnrollmentKeysValues2.add(l2);
 									if(l2 != null && !o.getEnrollmentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "enrollmentKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "enrollmentKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1931,8 +1937,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							for(Long l :  o.getEnrollmentKeys()) {
 								if(l != null && (setEnrollmentKeysValues2 == null || !setEnrollmentKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "enrollmentKeys", l, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "enrollmentKeys", l, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1949,10 +1955,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+								SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment> searchList = new SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolEnrollment.class);
+								searchList.setC(org.computate.scolaire.enUS.enrollment.SchoolEnrollment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1969,8 +1975,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getEnrollmentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "enrollmentKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "enrollmentKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1991,10 +1997,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+								SearchList<org.computate.scolaire.enUS.season.SchoolSeason> searchList = new SearchList<org.computate.scolaire.enUS.season.SchoolSeason>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolSeason.class);
+								searchList.setC(org.computate.scolaire.enUS.season.SchoolSeason.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2002,8 +2008,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getSeasonKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "seasonKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "seasonKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2026,10 +2032,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							for(Integer i = 0; i <  addAllSeasonKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllSeasonKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+									SearchList<org.computate.scolaire.enUS.season.SchoolSeason> searchList = new SearchList<org.computate.scolaire.enUS.season.SchoolSeason>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolSeason.class);
+									searchList.setC(org.computate.scolaire.enUS.season.SchoolSeason.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2037,8 +2043,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getSeasonKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "seasonKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "seasonKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2063,10 +2069,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							for(Integer i = 0; i <  setSeasonKeysValues.size(); i++) {
 								Long l = Long.parseLong(setSeasonKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+									SearchList<org.computate.scolaire.enUS.season.SchoolSeason> searchList = new SearchList<org.computate.scolaire.enUS.season.SchoolSeason>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolSeason.class);
+									searchList.setC(org.computate.scolaire.enUS.season.SchoolSeason.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2076,8 +2082,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 										setSeasonKeysValues2.add(l2);
 									if(l2 != null && !o.getSeasonKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "seasonKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "seasonKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2098,8 +2104,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							for(Long l :  o.getSeasonKeys()) {
 								if(l != null && (setSeasonKeysValues2 == null || !setSeasonKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "seasonKeys", l, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "seasonKeys", l, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2116,10 +2122,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolSeason> searchList = new SearchList<SchoolSeason>();
+								SearchList<org.computate.scolaire.enUS.season.SchoolSeason> searchList = new SearchList<org.computate.scolaire.enUS.season.SchoolSeason>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolSeason.class);
+								searchList.setC(org.computate.scolaire.enUS.season.SchoolSeason.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2127,8 +2133,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getSeasonKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "seasonKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "seasonKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2149,10 +2155,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
+								SearchList<org.computate.scolaire.enUS.age.SchoolAge> searchList = new SearchList<org.computate.scolaire.enUS.age.SchoolAge>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolAge.class);
+								searchList.setC(org.computate.scolaire.enUS.age.SchoolAge.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2160,8 +2166,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getAgeKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "ageKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "ageKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2184,10 +2190,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							for(Integer i = 0; i <  addAllAgeKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllAgeKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
+									SearchList<org.computate.scolaire.enUS.age.SchoolAge> searchList = new SearchList<org.computate.scolaire.enUS.age.SchoolAge>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolAge.class);
+									searchList.setC(org.computate.scolaire.enUS.age.SchoolAge.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2195,8 +2201,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getAgeKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "ageKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "ageKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2221,10 +2227,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							for(Integer i = 0; i <  setAgeKeysValues.size(); i++) {
 								Long l = Long.parseLong(setAgeKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
+									SearchList<org.computate.scolaire.enUS.age.SchoolAge> searchList = new SearchList<org.computate.scolaire.enUS.age.SchoolAge>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolAge.class);
+									searchList.setC(org.computate.scolaire.enUS.age.SchoolAge.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2234,8 +2240,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 										setAgeKeysValues2.add(l2);
 									if(l2 != null && !o.getAgeKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "ageKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "ageKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2256,8 +2262,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							for(Long l :  o.getAgeKeys()) {
 								if(l != null && (setAgeKeysValues2 == null || !setAgeKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "ageKeys", l, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "ageKeys", l, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2274,10 +2280,10 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolAge> searchList = new SearchList<SchoolAge>();
+								SearchList<org.computate.scolaire.enUS.age.SchoolAge> searchList = new SearchList<org.computate.scolaire.enUS.age.SchoolAge>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolAge.class);
+								searchList.setC(org.computate.scolaire.enUS.age.SchoolAge.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2285,8 +2291,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getAgeKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "ageKeys", l2, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "ageKeys", l2, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2306,8 +2312,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setSessionStartDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sessionStartDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sessionStartDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2319,8 +2325,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						} else {
 							o2.setSessionStartDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sessionStartDate", o2.jsonSessionStartDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sessionStartDate", o2.jsonSessionStartDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2334,8 +2340,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setSeasonStartDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "seasonStartDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "seasonStartDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2347,8 +2353,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						} else {
 							o2.setSeasonStartDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "seasonStartDate", o2.jsonSeasonStartDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "seasonStartDate", o2.jsonSeasonStartDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2362,8 +2368,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setSessionEndDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "sessionEndDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "sessionEndDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2375,8 +2381,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						} else {
 							o2.setSessionEndDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "sessionEndDate", o2.jsonSessionEndDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "sessionEndDate", o2.jsonSessionEndDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2390,8 +2396,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setYearStart":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "yearStart")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "yearStart")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2403,8 +2409,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						} else {
 							o2.setYearStart(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "yearStart", o2.jsonYearStart())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "yearStart", o2.jsonYearStart())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2418,8 +2424,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setYearEnd":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "yearEnd")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "yearEnd")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2431,8 +2437,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						} else {
 							o2.setYearEnd(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "yearEnd", o2.jsonYearEnd())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "yearEnd", o2.jsonYearEnd())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2446,8 +2452,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					case "setYearEnrollmentFee":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "yearEnrollmentFee")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "yearEnrollmentFee")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2459,8 +2465,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						} else {
 							o2.setYearEnrollmentFee(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "yearEnrollmentFee", o2.jsonYearEnrollmentFee())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "yearEnrollmentFee", o2.jsonYearEnrollmentFee())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2473,7 +2479,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					SchoolYear o3 = new SchoolYear();
 					o3.setSiteRequest_(o.getSiteRequest_());
@@ -2539,7 +2545,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -2629,7 +2635,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -2764,7 +2770,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 								.put("errorCode", "401")
 								.put("errorMessage", "roles required: " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -2829,7 +2835,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			AllWriter w = AllWriter.create(listSchoolYear.getSiteRequest_(), buffer);
 			YearPage page = new YearPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/year");
@@ -2908,10 +2914,9 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			String userId = siteRequest.getUserId();
 			ZonedDateTime created = Optional.ofNullable(siteRequest.getJsonObject()).map(j -> j.getString("created")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())));
 
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolYear.class.getCanonicalName(), userId, created.toOffsetDateTime())
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_create)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(SchoolYear.class.getCanonicalName(), userId, created.toOffsetDateTime())
 					, createAsync
 			-> {
 				if(createAsync.succeeded()) {
@@ -2946,7 +2951,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
 				Buffer.buffer().appendString(json.encodePrettily())
-				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
+				, MultiMap.caseInsensitiveMultiMap().add("Content-Type", "application/json")
 		);
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
@@ -3128,10 +3133,9 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 						sqlTransactionSchoolYear(siteRequest, b -> {
 							if(b.succeeded()) {
 								Transaction tx = siteRequest.getTx();
-								tx.preparedQuery(
-										SiteContextEnUS.SQL_selectC
-										, Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
-										, Collectors.toList()
+								tx.preparedQuery(SiteContextEnUS.SQL_selectC)
+										.collecting(Collectors.toList())
+										.execute(Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
 										, selectCAsync
 								-> {
 									if(selectCAsync.succeeded()) {
@@ -3140,7 +3144,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 											SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
 											if(userValues == null) {
 												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContext.getAuthProvider(), userVertx);
+												JsonObject jsonPrincipal = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
@@ -3179,6 +3184,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
 																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
 																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																		siteRequest.setUserEmail(jsonPrincipal.getString("email"));
 																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
 																		siteRequest.setUserKey(siteUser.getPk());
 																		eventHandler.handle(Future.succeededFuture());
@@ -3206,7 +3212,8 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 												SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
 
 												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContext.getAuthProvider(), userVertx);
+												JsonObject jsonPrincipal = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
@@ -3215,8 +3222,6 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 												jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
 												jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
 												Boolean define = userSchoolYearDefine(siteRequest, jsonObject, true);
@@ -3318,19 +3323,11 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
-				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -3413,82 +3410,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 
 	public void aSearchSchoolYear(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolYear>>> eventHandler) {
 		try {
-			OperationRequest operationRequest = siteRequest.getOperationRequest();
-			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
-			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
-			searchList.setPopulate(populate);
-			searchList.setStore(store);
-			searchList.setQuery("*:*");
-			searchList.setC(SchoolYear.class);
-			searchList.setSiteRequest_(siteRequest);
-			if(entityList != null)
-				searchList.addFields(entityList);
-			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
-
-			String id = operationRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null) {
-				searchList.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
-				String entityVar = null;
-				String valueIndexed = null;
-				String varIndexed = null;
-				String valueSort = null;
-				Integer valueStart = null;
-				Integer valueRows = null;
-				String paramName = paramRequest.getKey();
-				Object paramValuesObject = paramRequest.getValue();
-				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
-
-				try {
-					for(Object paramObject : paramObjects) {
-						switch(paramName) {
-							case "q":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : SchoolYear.varSearchSchoolYear(entityVar);
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchSchoolYearQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "fq":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-								aSearchSchoolYearFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "sort":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
-								aSearchSchoolYearSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "start":
-								valueStart = (Integer)paramObject;
-								aSearchSchoolYearStart(uri, apiMethod, searchList, valueStart);
-								break;
-							case "rows":
-								valueRows = (Integer)paramObject;
-								aSearchSchoolYearRows(uri, apiMethod, searchList, valueRows);
-								break;
-							case "var":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchSchoolYearVar(uri, apiMethod, searchList, entityVar, valueIndexed);
-								break;
-						}
-					}
-					aSearchSchoolYearUri(uri, apiMethod, searchList);
-				} catch(Exception e) {
-					LOGGER.error(String.format("aSearchSchoolYear failed. ", e));
-					eventHandler.handle(Future.failedFuture(e));
-				}
-			});
-			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-				searchList.addSort("created_indexed_date", ORDER.desc);
-			}
-			searchList.initDeepForClass(siteRequest);
+			SearchList<SchoolYear> searchList = aSearchSchoolYearList(siteRequest, populate, store, modify, uri, apiMethod);
 			eventHandler.handle(Future.succeededFuture(searchList));
 		} catch(Exception e) {
 			LOGGER.error(String.format("aSearchSchoolYear failed. ", e));
@@ -3496,15 +3418,98 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 		}
 	}
 
+	public SearchList<SchoolYear> aSearchSchoolYearList(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod) {
+		OperationRequest operationRequest = siteRequest.getOperationRequest();
+		String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
+		String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
+		SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+		searchList.setPopulate(populate);
+		searchList.setStore(store);
+		searchList.setQuery("*:*");
+		searchList.setC(SchoolYear.class);
+		searchList.setSiteRequest_(siteRequest);
+		if(entityList != null)
+			searchList.addFields(entityList);
+		searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
+
+		String id = operationRequest.getParams().getJsonObject("path").getString("id");
+		if(id != null && NumberUtils.isCreatable(id)) {
+			searchList.addFilterQuery("(pk_indexed_long:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		} else if(id != null) {
+			searchList.addFilterQuery("objectId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+		}
+
+		operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+			String entityVar = null;
+			String valueIndexed = null;
+			String varIndexed = null;
+			String valueSort = null;
+			Integer valueStart = null;
+			Integer valueRows = null;
+			String paramName = paramRequest.getKey();
+			Object paramValuesObject = paramRequest.getValue();
+			JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
+
+			try {
+				for(Object paramObject : paramObjects) {
+					switch(paramName) {
+						case "q":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							varIndexed = "*".equals(entityVar) ? entityVar : SchoolYear.varSearchSchoolYear(entityVar);
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
+							aSearchSchoolYearQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "fq":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
+							aSearchSchoolYearFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "sort":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
+							valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+							varIndexed = SchoolYear.varIndexedSchoolYear(entityVar);
+							aSearchSchoolYearSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "start":
+							valueStart = paramObject instanceof Integer ? (Integer)paramObject : Integer.parseInt(paramObject.toString());
+							aSearchSchoolYearStart(uri, apiMethod, searchList, valueStart);
+							break;
+						case "rows":
+							valueRows = paramObject instanceof Integer ? (Integer)paramObject : Integer.parseInt(paramObject.toString());
+							aSearchSchoolYearRows(uri, apiMethod, searchList, valueRows);
+							break;
+						case "var":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							aSearchSchoolYearVar(uri, apiMethod, searchList, entityVar, valueIndexed);
+							break;
+					}
+				}
+				aSearchSchoolYearUri(uri, apiMethod, searchList);
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
+		if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
+			searchList.addSort("created_indexed_date", ORDER.desc);
+		}
+		aSearchSchoolYear2(siteRequest, populate, store, modify, uri, apiMethod, searchList);
+		searchList.initDeepForClass(siteRequest);
+		return searchList;
+	}
+	public void aSearchSchoolYear2(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, SearchList<SchoolYear> searchList) {
+	}
+
 	public void defineSchoolYear(SchoolYear o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_define
-					, Tuple.of(pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_define)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
@@ -3538,10 +3543,9 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_attribute
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_attribute)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attributeAsync
 			-> {
 				try {
@@ -3751,7 +3755,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 					}
 				}
 
-				CompositeFuture.all(futures).setHandler(a -> {
+				CompositeFuture.all(futures).onComplete(a -> {
 					if(a.succeeded()) {
 						SchoolYearEnUSApiServiceImpl service = new SchoolYearEnUSApiServiceImpl(siteRequest.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
@@ -3769,7 +3773,7 @@ public class SchoolYearEnUSGenApiServiceImpl implements SchoolYearEnUSGenApiServ
 							);
 						}
 
-						CompositeFuture.all(futures2).setHandler(b -> {
+						CompositeFuture.all(futures2).onComplete(b -> {
 							if(b.succeeded()) {
 								eventHandler.handle(Future.succeededFuture());
 							} else {

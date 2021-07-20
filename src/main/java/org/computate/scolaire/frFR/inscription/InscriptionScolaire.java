@@ -9,11 +9,13 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
@@ -1699,6 +1701,20 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: enrollmentPassphrase
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: mot de passe
+	 * NomAffichage.enUS: passphrase
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 4
+	 */                   
+	protected void _inscriptionMotDePasse(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: familyAddress
 	 * Indexe: true
 	 * Stocke: true
@@ -1801,6 +1817,39 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 2
 	 */                   
 	protected void _enfantObjectifs(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: adminNotes
+	 * Indexe: true
+	 * Stocke: true
+	 * NomAffichage.frFR: notes d'administration
+	 * NomAffichage.enUS: admin notes
+	 * Multiligne: true
+	 * Definir: true
+	 * HtmlLigne: 8
+	 * HtmlCellule: 3
+	 */                   
+	protected void _adminNotes(Couverture<String> c) {
+	}
+	/**
+	 * r: requeteSite
+	 * r.enUS: siteRequest
+	 * r: UtilisateurRolesRessource
+	 * r.enUS: UserResourceRoles
+	 * r: UtilisateurRolesRoyaume
+	 * r.enUS: UserRealmRoles
+	 */
+	@Override public String htmAdminNotes() {
+		List<String> adminRoles = Arrays.asList("SiteAdmin");
+		if(
+				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), adminRoles)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), adminRoles)
+				) {
+			return super.htmAdminNotes();
+		}
+		return "";
 	}
 
 	/**

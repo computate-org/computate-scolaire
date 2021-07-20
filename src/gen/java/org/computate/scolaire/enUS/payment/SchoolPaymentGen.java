@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.lang.Long;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
+import java.util.Map;
 import java.time.LocalTime;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -159,6 +160,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return paymentKey == null ? "" : paymentKey.toString();
 	}
 
+	public Long sqlPaymentKey() {
+		return paymentKey;
+	}
+
 	public String jsonPaymentKey() {
 		return paymentKey == null ? "" : paymentKey.toString();
 	}
@@ -243,6 +248,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return enrollmentKey == null ? "" : enrollmentKey.toString();
 	}
 
+	public Long sqlEnrollmentKey() {
+		return enrollmentKey;
+	}
+
 	public String jsonEnrollmentKey() {
 		return enrollmentKey == null ? "" : enrollmentKey.toString();
 	}
@@ -283,7 +292,7 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 				.a("name", "setEnrollmentKey")
 				.a("id", classApiMethodMethod, "_enrollmentKey")
 				.a("autocomplete", "off");
-				a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? searchSchoolEnrollmentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'paymentKeys:" + pk + "'}", "], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestSchoolPaymentEnrollmentKey($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,enrollmentCompleteName' } ] : [", pk == null ? "" : "{'name':'fq','value':'paymentKeys:" + pk + "'}", "], $('#listSchoolPaymentEnrollmentKey_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
@@ -491,6 +500,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return schoolNumber == null ? "" : schoolNumber.toString();
 	}
 
+	public Integer sqlSchoolNumber() {
+		return schoolNumber;
+	}
+
 	public String jsonSchoolNumber() {
 		return schoolNumber == null ? "" : schoolNumber.toString();
 	}
@@ -604,6 +617,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return userKeys == null ? "" : userKeys.toString();
 	}
 
+	public List<Long> sqlUserKeys() {
+		return userKeys;
+	}
+
 	public String jsonUserKeys() {
 		return userKeys == null ? "" : userKeys.toString();
 	}
@@ -688,6 +705,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
 
+	public Long sqlSchoolKey() {
+		return schoolKey;
+	}
+
 	public String jsonSchoolKey() {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
@@ -764,6 +785,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return schoolAddress == null ? "" : schoolAddress;
 	}
 
+	public String sqlSchoolAddress() {
+		return schoolAddress;
+	}
+
 	public String jsonSchoolAddress() {
 		return schoolAddress == null ? "" : schoolAddress;
 	}
@@ -838,6 +863,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strSchoolPhoneNumber() {
 		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
+	}
+
+	public String sqlSchoolPhoneNumber() {
+		return schoolPhoneNumber;
 	}
 
 	public String jsonSchoolPhoneNumber() {
@@ -924,6 +953,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return yearKey == null ? "" : yearKey.toString();
 	}
 
+	public Long sqlYearKey() {
+		return yearKey;
+	}
+
 	public String jsonYearKey() {
 		return yearKey == null ? "" : yearKey.toString();
 	}
@@ -1006,6 +1039,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strSessionKey() {
 		return sessionKey == null ? "" : sessionKey.toString();
+	}
+
+	public Long sqlSessionKey() {
+		return sessionKey;
 	}
 
 	public String jsonSessionKey() {
@@ -1092,6 +1129,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return ageKey == null ? "" : ageKey.toString();
 	}
 
+	public Long sqlAgeKey() {
+		return ageKey;
+	}
+
 	public String jsonAgeKey() {
 		return ageKey == null ? "" : ageKey.toString();
 	}
@@ -1176,6 +1217,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return blockKey == null ? "" : blockKey.toString();
 	}
 
+	public Long sqlBlockKey() {
+		return blockKey;
+	}
+
 	public String jsonBlockKey() {
 		return blockKey == null ? "" : blockKey.toString();
 	}
@@ -1258,6 +1303,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strChildKey() {
 		return childKey == null ? "" : childKey.toString();
+	}
+
+	public Long sqlChildKey() {
+		return childKey;
 	}
 
 	public String jsonChildKey() {
@@ -1373,6 +1422,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return momKeys == null ? "" : momKeys.toString();
 	}
 
+	public List<Long> sqlMomKeys() {
+		return momKeys;
+	}
+
 	public String jsonMomKeys() {
 		return momKeys == null ? "" : momKeys.toString();
 	}
@@ -1484,6 +1537,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strDadKeys() {
 		return dadKeys == null ? "" : dadKeys.toString();
+	}
+
+	public List<Long> sqlDadKeys() {
+		return dadKeys;
 	}
 
 	public String jsonDadKeys() {
@@ -1599,6 +1656,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return guardianKeys == null ? "" : guardianKeys.toString();
 	}
 
+	public List<Long> sqlGuardianKeys() {
+		return guardianKeys;
+	}
+
 	public String jsonGuardianKeys() {
 		return guardianKeys == null ? "" : guardianKeys.toString();
 	}
@@ -1673,6 +1734,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strChildCompleteNamePreferred() {
 		return childCompleteNamePreferred == null ? "" : childCompleteNamePreferred;
+	}
+
+	public String sqlChildCompleteNamePreferred() {
+		return childCompleteNamePreferred;
 	}
 
 	public String jsonChildCompleteNamePreferred() {
@@ -1768,6 +1833,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return childBirthDate == null ? "" : childBirthDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlChildBirthDate() {
+		return childBirthDate;
+	}
+
 	public String jsonChildBirthDate() {
 		return childBirthDate == null ? "" : childBirthDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -1842,6 +1911,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strMomCompleteNamePreferred() {
 		return momCompleteNamePreferred == null ? "" : momCompleteNamePreferred;
+	}
+
+	public String sqlMomCompleteNamePreferred() {
+		return momCompleteNamePreferred;
 	}
 
 	public String jsonMomCompleteNamePreferred() {
@@ -1920,6 +1993,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return dadCompleteNamePreferred == null ? "" : dadCompleteNamePreferred;
 	}
 
+	public String sqlDadCompleteNamePreferred() {
+		return dadCompleteNamePreferred;
+	}
+
 	public String jsonDadCompleteNamePreferred() {
 		return dadCompleteNamePreferred == null ? "" : dadCompleteNamePreferred;
 	}
@@ -1994,6 +2071,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strSchoolName() {
 		return schoolName == null ? "" : schoolName;
+	}
+
+	public String sqlSchoolName() {
+		return schoolName;
 	}
 
 	public String jsonSchoolName() {
@@ -2072,6 +2153,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
 
+	public String sqlSchoolCompleteName() {
+		return schoolCompleteName;
+	}
+
 	public String jsonSchoolCompleteName() {
 		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
@@ -2146,6 +2231,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strSchoolLocation() {
 		return schoolLocation == null ? "" : schoolLocation;
+	}
+
+	public String sqlSchoolLocation() {
+		return schoolLocation;
 	}
 
 	public String jsonSchoolLocation() {
@@ -2232,6 +2321,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return yearStart == null ? "" : yearStart.toString();
 	}
 
+	public Integer sqlYearStart() {
+		return yearStart;
+	}
+
 	public String jsonYearStart() {
 		return yearStart == null ? "" : yearStart.toString();
 	}
@@ -2314,6 +2407,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strYearEnd() {
 		return yearEnd == null ? "" : yearEnd.toString();
+	}
+
+	public Integer sqlYearEnd() {
+		return yearEnd;
 	}
 
 	public String jsonYearEnd() {
@@ -2409,6 +2506,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlSeasonStartDate() {
+		return seasonStartDate;
+	}
+
 	public String jsonSeasonStartDate() {
 		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -2500,6 +2601,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strYearEnrollmentFee() {
 		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlYearEnrollmentFee() {
+		return yearEnrollmentFee;
 	}
 
 	public String jsonYearEnrollmentFee() {
@@ -2595,6 +2700,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlSessionStartDate() {
+		return sessionStartDate;
+	}
+
 	public String jsonSessionStartDate() {
 		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -2688,6 +2797,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlSessionEndDate() {
+		return sessionEndDate;
+	}
+
 	public String jsonSessionEndDate() {
 		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -2770,6 +2883,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strAgeStart() {
 		return ageStart == null ? "" : ageStart.toString();
+	}
+
+	public Integer sqlAgeStart() {
+		return ageStart;
 	}
 
 	public String jsonAgeStart() {
@@ -2856,6 +2973,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return ageEnd == null ? "" : ageEnd.toString();
 	}
 
+	public Integer sqlAgeEnd() {
+		return ageEnd;
+	}
+
 	public String jsonAgeEnd() {
 		return ageEnd == null ? "" : ageEnd.toString();
 	}
@@ -2930,6 +3051,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strBlockCompleteName() {
 		return blockCompleteName == null ? "" : blockCompleteName;
+	}
+
+	public String sqlBlockCompleteName() {
+		return blockCompleteName;
 	}
 
 	public String jsonBlockCompleteName() {
@@ -3019,6 +3144,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return blockStartTime == null ? "" : blockStartTime.format(DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalTime sqlBlockStartTime() {
+		return blockStartTime;
+	}
+
 	public String jsonBlockStartTime() {
 		return blockStartTime == null ? "" : blockStartTime.format(DateTimeFormatter.ISO_TIME);
 	}
@@ -3104,6 +3233,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strBlockEndTime() {
 		return blockEndTime == null ? "" : blockEndTime.format(DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalTime sqlBlockEndTime() {
+		return blockEndTime;
 	}
 
 	public String jsonBlockEndTime() {
@@ -3199,6 +3332,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return blockPricePerMonth == null ? "" : blockPricePerMonth.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlBlockPricePerMonth() {
+		return blockPricePerMonth;
+	}
+
 	public String jsonBlockPricePerMonth() {
 		return blockPricePerMonth == null ? "" : blockPricePerMonth.toString();
 	}
@@ -3273,6 +3410,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strEnrollmentGroupName() {
 		return enrollmentGroupName == null ? "" : enrollmentGroupName;
+	}
+
+	public String sqlEnrollmentGroupName() {
+		return enrollmentGroupName;
 	}
 
 	public String jsonEnrollmentGroupName() {
@@ -3368,6 +3509,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return blockTotalPrice == null ? "" : blockTotalPrice.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlBlockTotalPrice() {
+		return blockTotalPrice;
+	}
+
 	public String jsonBlockTotalPrice() {
 		return blockTotalPrice == null ? "" : blockTotalPrice.toString();
 	}
@@ -3447,6 +3592,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strEnrollmentPaymentEachMonth() {
 		return enrollmentPaymentEachMonth == null ? "" : enrollmentPaymentEachMonth.toString();
+	}
+
+	public Boolean sqlEnrollmentPaymentEachMonth() {
+		return enrollmentPaymentEachMonth;
 	}
 
 	public String jsonEnrollmentPaymentEachMonth() {
@@ -3586,6 +3735,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strPaymentDescription() {
 		return paymentDescription == null ? "" : paymentDescription;
+	}
+
+	public String sqlPaymentDescription() {
+		return paymentDescription;
 	}
 
 	public String jsonPaymentDescription() {
@@ -3747,6 +3900,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return paymentDate == null ? "" : paymentDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlPaymentDate() {
+		return paymentDate;
+	}
+
 	public String jsonPaymentDate() {
 		return paymentDate == null ? "" : paymentDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -3899,6 +4056,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return lateFeeDate == null ? "" : lateFeeDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlLateFeeDate() {
+		return lateFeeDate;
+	}
+
 	public String jsonLateFeeDate() {
 		return lateFeeDate == null ? "" : lateFeeDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -4042,6 +4203,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return paymentYear == null ? "" : paymentYear.toString();
 	}
 
+	public Integer sqlPaymentYear() {
+		return paymentYear;
+	}
+
 	public String jsonPaymentYear() {
 		return paymentYear == null ? "" : paymentYear.toString();
 	}
@@ -4133,6 +4298,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strPaymentAmount() {
 		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlPaymentAmount() {
+		return paymentAmount;
 	}
 
 	public String jsonPaymentAmount() {
@@ -4282,6 +4451,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return paymentCash == null ? "" : paymentCash.toString();
 	}
 
+	public Boolean sqlPaymentCash() {
+		return paymentCash;
+	}
+
 	public String jsonPaymentCash() {
 		return paymentCash == null ? "" : paymentCash.toString();
 	}
@@ -4424,6 +4597,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strPaymentCheck() {
 		return paymentCheck == null ? "" : paymentCheck.toString();
+	}
+
+	public Boolean sqlPaymentCheck() {
+		return paymentCheck;
 	}
 
 	public String jsonPaymentCheck() {
@@ -4570,6 +4747,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return paymentECheck == null ? "" : paymentECheck.toString();
 	}
 
+	public Boolean sqlPaymentECheck() {
+		return paymentECheck;
+	}
+
 	public String jsonPaymentECheck() {
 		return paymentECheck == null ? "" : paymentECheck.toString();
 	}
@@ -4714,6 +4895,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return paymentSystem == null ? "" : paymentSystem.toString();
 	}
 
+	public Boolean sqlPaymentSystem() {
+		return paymentSystem;
+	}
+
 	public String jsonPaymentSystem() {
 		return paymentSystem == null ? "" : paymentSystem.toString();
 	}
@@ -4853,6 +5038,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return paymentType == null ? "" : paymentType;
 	}
 
+	public String sqlPaymentType() {
+		return paymentType;
+	}
+
 	public String jsonPaymentType() {
 		return paymentType == null ? "" : paymentType;
 	}
@@ -4927,6 +5116,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strPaymentBy() {
 		return paymentBy == null ? "" : paymentBy;
+	}
+
+	public String sqlPaymentBy() {
+		return paymentBy;
 	}
 
 	public String jsonPaymentBy() {
@@ -5071,6 +5264,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return transactionId == null ? "" : transactionId;
 	}
 
+	public String sqlTransactionId() {
+		return transactionId;
+	}
+
 	public String jsonTransactionId() {
 		return transactionId == null ? "" : transactionId;
 	}
@@ -5213,6 +5410,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return customerProfileId == null ? "" : customerProfileId;
 	}
 
+	public String sqlCustomerProfileId() {
+		return customerProfileId;
+	}
+
 	public String jsonCustomerProfileId() {
 		return customerProfileId == null ? "" : customerProfileId;
 	}
@@ -5353,6 +5554,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strTransactionStatus() {
 		return transactionStatus == null ? "" : transactionStatus;
+	}
+
+	public String sqlTransactionStatus() {
+		return transactionStatus;
 	}
 
 	public String jsonTransactionStatus() {
@@ -5500,6 +5705,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strPaymentRecieved() {
 		return paymentRecieved == null ? "" : paymentRecieved.toString();
+	}
+
+	public Boolean sqlPaymentRecieved() {
+		return paymentRecieved;
 	}
 
 	public String jsonPaymentRecieved() {
@@ -5658,6 +5867,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return chargeAmount == null ? "" : chargeAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargeAmount() {
+		return chargeAmount;
+	}
+
 	public String jsonChargeAmount() {
 		return chargeAmount == null ? "" : chargeAmount.toString();
 	}
@@ -5805,6 +6018,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return chargeFirstLast == null ? "" : chargeFirstLast.toString();
 	}
 
+	public Boolean sqlChargeFirstLast() {
+		return chargeFirstLast;
+	}
+
 	public String jsonChargeFirstLast() {
 		return chargeFirstLast == null ? "" : chargeFirstLast.toString();
 	}
@@ -5947,6 +6164,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strChargeEnrollment() {
 		return chargeEnrollment == null ? "" : chargeEnrollment.toString();
+	}
+
+	public Boolean sqlChargeEnrollment() {
+		return chargeEnrollment;
 	}
 
 	public String jsonChargeEnrollment() {
@@ -6093,6 +6314,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return chargeMonth == null ? "" : chargeMonth.toString();
 	}
 
+	public Boolean sqlChargeMonth() {
+		return chargeMonth;
+	}
+
 	public String jsonChargeMonth() {
 		return chargeMonth == null ? "" : chargeMonth.toString();
 	}
@@ -6235,6 +6460,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strChargeLateFee() {
 		return chargeLateFee == null ? "" : chargeLateFee.toString();
+	}
+
+	public Boolean sqlChargeLateFee() {
+		return chargeLateFee;
 	}
 
 	public String jsonChargeLateFee() {
@@ -6393,6 +6622,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return now == null ? "" : now.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlNow() {
+		return now;
+	}
+
 	public String jsonNow() {
 		return now == null ? "" : now.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -6475,6 +6708,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strPaymentDay() {
 		return paymentDay == null ? "" : paymentDay.toString();
+	}
+
+	public Integer sqlPaymentDay() {
+		return paymentDay;
 	}
 
 	public String jsonPaymentDay() {
@@ -6570,6 +6807,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlPaymentNext() {
+		return paymentNext;
+	}
+
 	public String jsonPaymentNext() {
 		return paymentNext == null ? "" : paymentNext.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -6661,6 +6902,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strChargeAmountDue() {
 		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlChargeAmountDue() {
+		return chargeAmountDue;
 	}
 
 	public String jsonChargeAmountDue() {
@@ -6756,6 +7001,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return chargeAmountPassed == null ? "" : chargeAmountPassed.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargeAmountPassed() {
+		return chargeAmountPassed;
+	}
+
 	public String jsonChargeAmountPassed() {
 		return chargeAmountPassed == null ? "" : chargeAmountPassed.toString();
 	}
@@ -6847,6 +7096,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strChargeAmountNotPassed() {
 		return chargeAmountNotPassed == null ? "" : chargeAmountNotPassed.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlChargeAmountNotPassed() {
+		return chargeAmountNotPassed;
 	}
 
 	public String jsonChargeAmountNotPassed() {
@@ -6942,6 +7195,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargeAmountFuture() {
+		return chargeAmountFuture;
+	}
+
 	public String jsonChargeAmountFuture() {
 		return chargeAmountFuture == null ? "" : chargeAmountFuture.toString();
 	}
@@ -7016,6 +7273,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strPaymentShortName() {
 		return paymentShortName == null ? "" : paymentShortName;
+	}
+
+	public String sqlPaymentShortName() {
+		return paymentShortName;
 	}
 
 	public String jsonPaymentShortName() {
@@ -7158,6 +7419,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 
 	public String strPaymentCompleteName() {
 		return paymentCompleteName == null ? "" : paymentCompleteName;
+	}
+
+	public String sqlPaymentCompleteName() {
+		return paymentCompleteName;
 	}
 
 	public String jsonPaymentCompleteName() {
@@ -7344,6 +7609,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return paymentNumber == null ? "" : paymentNumber.toString();
 	}
 
+	public Integer sqlPaymentNumber() {
+		return paymentNumber;
+	}
+
 	public String jsonPaymentNumber() {
 		return paymentNumber == null ? "" : paymentNumber.toString();
 	}
@@ -7485,6 +7754,10 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
+			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
 			}
 		}
 		return o;
@@ -7662,8 +7935,8 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 			case "enrollmentKey":
 				if(oSchoolPayment.getEnrollmentKey() == null)
 					oSchoolPayment.setEnrollmentKey((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("enrollmentKey"))
+					saves.add("enrollmentKey");
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -8282,106 +8555,238 @@ public abstract class SchoolPaymentGen<DEV> extends Cluster {
 		return o != null;
 	}
 	public Object defineSchoolPayment(String var, String val) {
-		switch(var) {
-			case "enrollmentPaymentEachMonth":
+		switch(var.toLowerCase()) {
+			case "enrollmentkey":
+				if(val != null)
+					setEnrollmentKey(val);
+				saves.add("enrollmentKey");
+				return val;
+			case "enrollmentpaymenteachmonth":
 				if(val != null)
 					setEnrollmentPaymentEachMonth(val);
-				saves.add(var);
+				saves.add("enrollmentPaymentEachMonth");
 				return val;
-			case "paymentDescription":
+			case "paymentdescription":
 				if(val != null)
 					setPaymentDescription(val);
-				saves.add(var);
+				saves.add("paymentDescription");
 				return val;
-			case "paymentDate":
+			case "paymentdate":
 				if(val != null)
 					setPaymentDate(val);
-				saves.add(var);
+				saves.add("paymentDate");
 				return val;
-			case "lateFeeDate":
+			case "latefeedate":
 				if(val != null)
 					setLateFeeDate(val);
-				saves.add(var);
+				saves.add("lateFeeDate");
 				return val;
-			case "paymentAmount":
+			case "paymentamount":
 				if(val != null)
 					setPaymentAmount(val);
-				saves.add(var);
+				saves.add("paymentAmount");
 				return val;
-			case "paymentCash":
+			case "paymentcash":
 				if(val != null)
 					setPaymentCash(val);
-				saves.add(var);
+				saves.add("paymentCash");
 				return val;
-			case "paymentCheck":
+			case "paymentcheck":
 				if(val != null)
 					setPaymentCheck(val);
-				saves.add(var);
+				saves.add("paymentCheck");
 				return val;
-			case "paymentECheck":
+			case "paymentecheck":
 				if(val != null)
 					setPaymentECheck(val);
-				saves.add(var);
+				saves.add("paymentECheck");
 				return val;
-			case "paymentSystem":
+			case "paymentsystem":
 				if(val != null)
 					setPaymentSystem(val);
-				saves.add(var);
+				saves.add("paymentSystem");
 				return val;
-			case "paymentBy":
+			case "paymentby":
 				if(val != null)
 					setPaymentBy(val);
-				saves.add(var);
+				saves.add("paymentBy");
 				return val;
-			case "transactionId":
+			case "transactionid":
 				if(val != null)
 					setTransactionId(val);
-				saves.add(var);
+				saves.add("transactionId");
 				return val;
-			case "customerProfileId":
+			case "customerprofileid":
 				if(val != null)
 					setCustomerProfileId(val);
-				saves.add(var);
+				saves.add("customerProfileId");
 				return val;
-			case "transactionStatus":
+			case "transactionstatus":
 				if(val != null)
 					setTransactionStatus(val);
-				saves.add(var);
+				saves.add("transactionStatus");
 				return val;
-			case "paymentRecieved":
+			case "paymentrecieved":
 				if(val != null)
 					setPaymentRecieved(val);
-				saves.add(var);
+				saves.add("paymentRecieved");
 				return val;
-			case "chargeAmount":
+			case "chargeamount":
 				if(val != null)
 					setChargeAmount(val);
-				saves.add(var);
+				saves.add("chargeAmount");
 				return val;
-			case "chargeFirstLast":
+			case "chargefirstlast":
 				if(val != null)
 					setChargeFirstLast(val);
-				saves.add(var);
+				saves.add("chargeFirstLast");
 				return val;
-			case "chargeEnrollment":
+			case "chargeenrollment":
 				if(val != null)
 					setChargeEnrollment(val);
-				saves.add(var);
+				saves.add("chargeEnrollment");
 				return val;
-			case "chargeMonth":
+			case "chargemonth":
 				if(val != null)
 					setChargeMonth(val);
-				saves.add(var);
+				saves.add("chargeMonth");
 				return val;
-			case "chargeLateFee":
+			case "chargelatefee":
 				if(val != null)
 					setChargeLateFee(val);
-				saves.add(var);
+				saves.add("chargeLateFee");
 				return val;
-			case "paymentShortName":
+			case "paymentshortname":
 				if(val != null)
 					setPaymentShortName(val);
-				saves.add(var);
+				saves.add("paymentShortName");
+				return val;
+			default:
+				return super.defineCluster(var, val);
+		}
+	}
+
+	@Override public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineSchoolPayment(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineSchoolPayment(String var, Object val) {
+		switch(var.toLowerCase()) {
+			case "enrollmentkey":
+				if(val instanceof Long)
+					setEnrollmentKey((Long)val);
+				saves.add("enrollmentKey");
+				return val;
+			case "enrollmentpaymenteachmonth":
+				if(val instanceof Boolean)
+					setEnrollmentPaymentEachMonth((Boolean)val);
+				saves.add("enrollmentPaymentEachMonth");
+				return val;
+			case "paymentdescription":
+				if(val instanceof String)
+					setPaymentDescription((String)val);
+				saves.add("paymentDescription");
+				return val;
+			case "paymentdate":
+				if(val instanceof LocalDate)
+					setPaymentDate((LocalDate)val);
+				saves.add("paymentDate");
+				return val;
+			case "latefeedate":
+				if(val instanceof LocalDate)
+					setLateFeeDate((LocalDate)val);
+				saves.add("lateFeeDate");
+				return val;
+			case "paymentamount":
+				if(val instanceof BigDecimal)
+					setPaymentAmount((BigDecimal)val);
+				saves.add("paymentAmount");
+				return val;
+			case "paymentcash":
+				if(val instanceof Boolean)
+					setPaymentCash((Boolean)val);
+				saves.add("paymentCash");
+				return val;
+			case "paymentcheck":
+				if(val instanceof Boolean)
+					setPaymentCheck((Boolean)val);
+				saves.add("paymentCheck");
+				return val;
+			case "paymentecheck":
+				if(val instanceof Boolean)
+					setPaymentECheck((Boolean)val);
+				saves.add("paymentECheck");
+				return val;
+			case "paymentsystem":
+				if(val instanceof Boolean)
+					setPaymentSystem((Boolean)val);
+				saves.add("paymentSystem");
+				return val;
+			case "paymentby":
+				if(val instanceof String)
+					setPaymentBy((String)val);
+				saves.add("paymentBy");
+				return val;
+			case "transactionid":
+				if(val instanceof String)
+					setTransactionId((String)val);
+				saves.add("transactionId");
+				return val;
+			case "customerprofileid":
+				if(val instanceof String)
+					setCustomerProfileId((String)val);
+				saves.add("customerProfileId");
+				return val;
+			case "transactionstatus":
+				if(val instanceof String)
+					setTransactionStatus((String)val);
+				saves.add("transactionStatus");
+				return val;
+			case "paymentrecieved":
+				if(val instanceof Boolean)
+					setPaymentRecieved((Boolean)val);
+				saves.add("paymentRecieved");
+				return val;
+			case "chargeamount":
+				if(val instanceof BigDecimal)
+					setChargeAmount((BigDecimal)val);
+				saves.add("chargeAmount");
+				return val;
+			case "chargefirstlast":
+				if(val instanceof Boolean)
+					setChargeFirstLast((Boolean)val);
+				saves.add("chargeFirstLast");
+				return val;
+			case "chargeenrollment":
+				if(val instanceof Boolean)
+					setChargeEnrollment((Boolean)val);
+				saves.add("chargeEnrollment");
+				return val;
+			case "chargemonth":
+				if(val instanceof Boolean)
+					setChargeMonth((Boolean)val);
+				saves.add("chargeMonth");
+				return val;
+			case "chargelatefee":
+				if(val instanceof Boolean)
+					setChargeLateFee((Boolean)val);
+				saves.add("chargeLateFee");
+				return val;
+			case "paymentshortname":
+				if(val instanceof String)
+					setPaymentShortName((String)val);
+				saves.add("paymentShortName");
 				return val;
 			default:
 				return super.defineCluster(var, val);

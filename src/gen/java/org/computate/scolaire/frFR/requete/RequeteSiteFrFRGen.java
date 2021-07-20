@@ -2,6 +2,7 @@ package org.computate.scolaire.frFR.requete;
 
 import java.util.Arrays;
 import org.apache.solr.common.SolrDocumentList;
+import io.vertx.core.MultiMap;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +15,6 @@ import io.vertx.sqlclient.Transaction;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 import java.math.RoundingMode;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -652,6 +652,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurId == null ? "" : utilisateurId;
 	}
 
+	public String sqlUtilisateurId() {
+		return utilisateurId;
+	}
+
 	public String jsonUtilisateurId() {
 		return utilisateurId == null ? "" : utilisateurId;
 	}
@@ -736,6 +740,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurCle == null ? "" : utilisateurCle.toString();
 	}
 
+	public Long sqlUtilisateurCle() {
+		return utilisateurCle;
+	}
+
 	public String jsonUtilisateurCle() {
 		return utilisateurCle == null ? "" : utilisateurCle.toString();
 	}
@@ -810,6 +818,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 
 	public String strSessionId() {
 		return sessionId == null ? "" : sessionId;
+	}
+
+	public String sqlSessionId() {
+		return sessionId;
 	}
 
 	public String jsonSessionId() {
@@ -888,6 +900,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return sessionIdAvant == null ? "" : sessionIdAvant;
 	}
 
+	public String sqlSessionIdAvant() {
+		return sessionIdAvant;
+	}
+
 	public String jsonSessionIdAvant() {
 		return sessionIdAvant == null ? "" : sessionIdAvant;
 	}
@@ -964,6 +980,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurNom == null ? "" : utilisateurNom;
 	}
 
+	public String sqlUtilisateurNom() {
+		return utilisateurNom;
+	}
+
 	public String jsonUtilisateurNom() {
 		return utilisateurNom == null ? "" : utilisateurNom;
 	}
@@ -978,6 +998,86 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 
 	public String htmUtilisateurNom() {
 		return utilisateurNom == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurNom());
+	}
+
+	/////////////////////
+	// utilisateurMail //
+	/////////////////////
+
+	/**	 L'entité utilisateurMail
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String utilisateurMail;
+	@JsonIgnore
+	public Couverture<String> utilisateurMailCouverture = new Couverture<String>().p(this).c(String.class).var("utilisateurMail").o(utilisateurMail);
+
+	/**	<br/> L'entité utilisateurMail
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.requete.RequeteSiteFrFR&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:utilisateurMail">Trouver l'entité utilisateurMail dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _utilisateurMail(Couverture<String> c);
+
+	public String getUtilisateurMail() {
+		return utilisateurMail;
+	}
+	public void setUtilisateurMail(String o) {
+		this.utilisateurMail = RequeteSiteFrFR.staticSetUtilisateurMail(requeteSite_, o);
+		this.utilisateurMailCouverture.dejaInitialise = true;
+	}
+	public static String staticSetUtilisateurMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected RequeteSiteFrFR utilisateurMailInit() {
+		if(!utilisateurMailCouverture.dejaInitialise) {
+			_utilisateurMail(utilisateurMailCouverture);
+			if(utilisateurMail == null)
+				setUtilisateurMail(utilisateurMailCouverture.o);
+		}
+		utilisateurMailCouverture.dejaInitialise(true);
+		return (RequeteSiteFrFR)this;
+	}
+
+	public static String staticSolrUtilisateurMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUtilisateurMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUtilisateurMail(RequeteSiteFrFR requeteSite_, String o) {
+		return RequeteSiteFrFR.staticSolrStrUtilisateurMail(requeteSite_, RequeteSiteFrFR.staticSolrUtilisateurMail(requeteSite_, RequeteSiteFrFR.staticSetUtilisateurMail(requeteSite_, o)));
+	}
+
+	public String solrUtilisateurMail() {
+		return RequeteSiteFrFR.staticSolrUtilisateurMail(requeteSite_, utilisateurMail);
+	}
+
+	public String strUtilisateurMail() {
+		return utilisateurMail == null ? "" : utilisateurMail;
+	}
+
+	public String sqlUtilisateurMail() {
+		return utilisateurMail;
+	}
+
+	public String jsonUtilisateurMail() {
+		return utilisateurMail == null ? "" : utilisateurMail;
+	}
+
+	public String nomAffichageUtilisateurMail() {
+		return null;
+	}
+
+	public String htmTooltipUtilisateurMail() {
+		return null;
+	}
+
+	public String htmUtilisateurMail() {
+		return utilisateurMail == null ? "" : StringEscapeUtils.escapeHtml4(strUtilisateurMail());
 	}
 
 	///////////////////////////
@@ -1038,6 +1138,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 
 	public String strUtilisateurNomFamille() {
 		return utilisateurNomFamille == null ? "" : utilisateurNomFamille;
+	}
+
+	public String sqlUtilisateurNomFamille() {
+		return utilisateurNomFamille;
 	}
 
 	public String jsonUtilisateurNomFamille() {
@@ -1116,6 +1220,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return utilisateurPrenom == null ? "" : utilisateurPrenom;
 	}
 
+	public String sqlUtilisateurPrenom() {
+		return utilisateurPrenom;
+	}
+
 	public String jsonUtilisateurPrenom() {
 		return utilisateurPrenom == null ? "" : utilisateurPrenom;
 	}
@@ -1190,6 +1298,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 
 	public String strUtilisateurNomComplet() {
 		return utilisateurNomComplet == null ? "" : utilisateurNomComplet;
+	}
+
+	public String sqlUtilisateurNomComplet() {
+		return utilisateurNomComplet;
 	}
 
 	public String jsonUtilisateurNomComplet() {
@@ -1287,6 +1399,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 
 	public String strUtilisateurRolesRoyaume() {
 		return utilisateurRolesRoyaume == null ? "" : utilisateurRolesRoyaume.toString();
+	}
+
+	public List<String> sqlUtilisateurRolesRoyaume() {
+		return utilisateurRolesRoyaume;
 	}
 
 	public String jsonUtilisateurRolesRoyaume() {
@@ -1425,6 +1541,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 
 	public String strUtilisateurRolesRessource() {
 		return utilisateurRolesRessource == null ? "" : utilisateurRolesRessource.toString();
+	}
+
+	public List<String> sqlUtilisateurRolesRessource() {
+		return utilisateurRolesRessource;
 	}
 
 	public String jsonUtilisateurRolesRessource() {
@@ -1631,6 +1751,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return pageAdmin == null ? "" : pageAdmin.toString();
 	}
 
+	public Boolean sqlPageAdmin() {
+		return pageAdmin;
+	}
+
 	public String jsonPageAdmin() {
 		return pageAdmin == null ? "" : pageAdmin.toString();
 	}
@@ -1715,6 +1839,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return requetePk == null ? "" : requetePk.toString();
 	}
 
+	public Long sqlRequetePk() {
+		return requetePk;
+	}
+
 	public String jsonRequetePk() {
 		return requetePk == null ? "" : requetePk.toString();
 	}
@@ -1791,6 +1919,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return requeteUri == null ? "" : requeteUri;
 	}
 
+	public String sqlRequeteUri() {
+		return requeteUri;
+	}
+
 	public String jsonRequeteUri() {
 		return requeteUri == null ? "" : requeteUri;
 	}
@@ -1865,6 +1997,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 
 	public String strRequeteMethode() {
 		return requeteMethode == null ? "" : requeteMethode;
+	}
+
+	public String sqlRequeteMethode() {
+		return requeteMethode;
 	}
 
 	public String jsonRequeteMethode() {
@@ -1976,9 +2112,9 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected CaseInsensitiveHeaders requeteEnTetes;
+	protected MultiMap requeteEnTetes;
 	@JsonIgnore
-	public Couverture<CaseInsensitiveHeaders> requeteEnTetesCouverture = new Couverture<CaseInsensitiveHeaders>().p(this).c(CaseInsensitiveHeaders.class).var("requeteEnTetes").o(requeteEnTetes);
+	public Couverture<MultiMap> requeteEnTetesCouverture = new Couverture<MultiMap>().p(this).c(MultiMap.class).var("requeteEnTetes").o(requeteEnTetes);
 
 	/**	<br/> L'entité requeteEnTetes
 	 *  est défini comme null avant d'être initialisé. 
@@ -1986,17 +2122,17 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 	 * <br/>
 	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
 	 **/
-	protected abstract void _requeteEnTetes(Couverture<CaseInsensitiveHeaders> c);
+	protected abstract void _requeteEnTetes(Couverture<MultiMap> c);
 
-	public CaseInsensitiveHeaders getRequeteEnTetes() {
+	public MultiMap getRequeteEnTetes() {
 		return requeteEnTetes;
 	}
 
-	public void setRequeteEnTetes(CaseInsensitiveHeaders requeteEnTetes) {
+	public void setRequeteEnTetes(MultiMap requeteEnTetes) {
 		this.requeteEnTetes = requeteEnTetes;
 		this.requeteEnTetesCouverture.dejaInitialise = true;
 	}
-	public static CaseInsensitiveHeaders staticSetRequeteEnTetes(RequeteSiteFrFR requeteSite_, String o) {
+	public static MultiMap staticSetRequeteEnTetes(RequeteSiteFrFR requeteSite_, String o) {
 		return null;
 	}
 	protected RequeteSiteFrFR requeteEnTetesInit() {
@@ -2087,6 +2223,7 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		sessionIdInit();
 		sessionIdAvantInit();
 		utilisateurNomInit();
+		utilisateurMailInit();
 		utilisateurNomFamilleInit();
 		utilisateurPrenomInit();
 		utilisateurNomCompletInit();
@@ -2139,6 +2276,10 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -2181,6 +2322,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 				return oRequeteSiteFrFR.sessionIdAvant;
 			case "utilisateurNom":
 				return oRequeteSiteFrFR.utilisateurNom;
+			case "utilisateurMail":
+				return oRequeteSiteFrFR.utilisateurMail;
 			case "utilisateurNomFamille":
 				return oRequeteSiteFrFR.utilisateurNomFamille;
 			case "utilisateurPrenom":
@@ -2264,6 +2407,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 			return RequeteSiteFrFR.staticSetSessionIdAvant(requeteSite_, o);
 		case "utilisateurNom":
 			return RequeteSiteFrFR.staticSetUtilisateurNom(requeteSite_, o);
+		case "utilisateurMail":
+			return RequeteSiteFrFR.staticSetUtilisateurMail(requeteSite_, o);
 		case "utilisateurNomFamille":
 			return RequeteSiteFrFR.staticSetUtilisateurNomFamille(requeteSite_, o);
 		case "utilisateurPrenom":
@@ -2306,6 +2451,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 			return RequeteSiteFrFR.staticSolrSessionIdAvant(requeteSite_, (String)o);
 		case "utilisateurNom":
 			return RequeteSiteFrFR.staticSolrUtilisateurNom(requeteSite_, (String)o);
+		case "utilisateurMail":
+			return RequeteSiteFrFR.staticSolrUtilisateurMail(requeteSite_, (String)o);
 		case "utilisateurNomFamille":
 			return RequeteSiteFrFR.staticSolrUtilisateurNomFamille(requeteSite_, (String)o);
 		case "utilisateurPrenom":
@@ -2348,6 +2495,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 			return RequeteSiteFrFR.staticSolrStrSessionIdAvant(requeteSite_, (String)o);
 		case "utilisateurNom":
 			return RequeteSiteFrFR.staticSolrStrUtilisateurNom(requeteSite_, (String)o);
+		case "utilisateurMail":
+			return RequeteSiteFrFR.staticSolrStrUtilisateurMail(requeteSite_, (String)o);
 		case "utilisateurNomFamille":
 			return RequeteSiteFrFR.staticSolrStrUtilisateurNomFamille(requeteSite_, (String)o);
 		case "utilisateurPrenom":
@@ -2390,6 +2539,8 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 			return RequeteSiteFrFR.staticSolrFqSessionIdAvant(requeteSite_, o);
 		case "utilisateurNom":
 			return RequeteSiteFrFR.staticSolrFqUtilisateurNom(requeteSite_, o);
+		case "utilisateurMail":
+			return RequeteSiteFrFR.staticSolrFqUtilisateurMail(requeteSite_, o);
 		case "utilisateurNomFamille":
 			return RequeteSiteFrFR.staticSolrFqUtilisateurNomFamille(requeteSite_, o);
 		case "utilisateurPrenom":
@@ -2433,7 +2584,29 @@ public abstract class RequeteSiteFrFRGen<DEV> extends Object {
 		return o != null;
 	}
 	public Object definirRequeteSiteFrFR(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return null;
+		}
+	}
+
+	public boolean definirPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirRequeteSiteFrFR(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirRequeteSiteFrFR(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return null;
 		}

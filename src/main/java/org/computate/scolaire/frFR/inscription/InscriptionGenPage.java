@@ -275,6 +275,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmFamilleMarie("Page");
 			o.htmFamilleSepare("Page");
 			o.htmFamilleDivorce("Page");
+			o.htmInscriptionMotDePasse("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleAddresse("Page");
@@ -288,6 +289,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantDescription("Page");
 			o.htmEnfantObjectifs("Page");
+			o.htmAdminNotes("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCle("Page");
@@ -334,6 +336,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmFamilleMarie("POST");
 			o.htmFamilleSepare("POST");
 			o.htmFamilleDivorce("POST");
+			o.htmInscriptionMotDePasse("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleAddresse("POST");
@@ -347,6 +350,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantDescription("POST");
 			o.htmEnfantObjectifs("POST");
+			o.htmAdminNotes("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCle("POST");
@@ -415,6 +419,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmFamilleMarie("PUTCopie");
 			o.htmFamilleSepare("PUTCopie");
 			o.htmFamilleDivorce("PUTCopie");
+			o.htmInscriptionMotDePasse("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleAddresse("PUTCopie");
@@ -428,6 +433,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantDescription("PUTCopie");
 			o.htmEnfantObjectifs("PUTCopie");
+			o.htmAdminNotes("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCle("PUTCopie");
@@ -472,6 +478,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmFamilleMarie("PATCH");
 			o.htmFamilleSepare("PATCH");
 			o.htmFamilleDivorce("PATCH");
+			o.htmInscriptionMotDePasse("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleAddresse("PATCH");
@@ -485,6 +492,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantDescription("PATCH");
 			o.htmEnfantObjectifs("PATCH");
+			o.htmAdminNotes("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCle("PATCH");
@@ -530,6 +538,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 			o.htmFamilleMarie("Recherche");
 			o.htmFamilleSepare("Recherche");
 			o.htmFamilleDivorce("Recherche");
+			o.htmInscriptionMotDePasse("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmFamilleAddresse("Recherche");
@@ -543,6 +552,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmEnfantDescription("Recherche");
 			o.htmEnfantObjectifs("Recherche");
+			o.htmAdminNotes("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmAnneeCle("Recherche");
@@ -641,7 +651,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("a");
 			} g("h1");
-			e("div").a("class", "").f();
+			{ e("div").a("class", "").f();
 				{ e("div").f();
 					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeInscriptionScolaire.getQueryResponse().getResults().getNumFound();
@@ -723,6 +733,7 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
 				table1InscriptionGenPage();
+			} g("div");
 		}
 
 		if(listeInscriptionScolaire != null && listeInscriptionScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -750,7 +761,6 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsInscriptionGenPage();
-		g("div");
 	}
 
 	public void table1InscriptionGenPage() {
@@ -852,7 +862,6 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			e("div").a("class", "w3-margin-top ").f();
 
 			if(listeInscriptionScolaire != null && listeInscriptionScolaire.size() == 1) {
 				{ e("button")
@@ -1035,7 +1044,6 @@ public class InscriptionGenPage extends InscriptionGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
-			g("div");
 		}
 		htmlSuggereInscriptionGenPage(this, null, listeInscriptionScolaire);
 	}

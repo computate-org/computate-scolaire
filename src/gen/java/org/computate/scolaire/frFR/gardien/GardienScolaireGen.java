@@ -19,6 +19,7 @@ import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
@@ -149,6 +150,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return gardienCle == null ? "" : gardienCle.toString();
 	}
 
+	public Long sqlGardienCle() {
+		return gardienCle;
+	}
+
 	public String jsonGardienCle() {
 		return gardienCle == null ? "" : gardienCle.toString();
 	}
@@ -262,6 +267,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return inscriptionCles == null ? "" : inscriptionCles.toString();
 	}
 
+	public List<Long> sqlInscriptionCles() {
+		return inscriptionCles;
+	}
+
 	public String jsonInscriptionCles() {
 		return inscriptionCles == null ? "" : inscriptionCles.toString();
 	}
@@ -300,11 +309,11 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "inscriptions")
-				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setInscriptionCles")
 				.a("id", classeApiMethodeMethode, "_inscriptionCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereGardienScolaireInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'gardienCles:" + pk + "'}", "], $('#listGardienScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereGardienScolaireInscriptionCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,inscriptionNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'gardienCles:" + pk + "'}", "], $('#listGardienScolaireInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
@@ -429,6 +438,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return familleTri == null ? "" : familleTri.toString();
 	}
 
+	public Integer sqlFamilleTri() {
+		return familleTri;
+	}
+
 	public String jsonFamilleTri() {
 		return familleTri == null ? "" : familleTri.toString();
 	}
@@ -511,6 +524,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String strGardienTri() {
 		return gardienTri == null ? "" : gardienTri.toString();
+	}
+
+	public Integer sqlGardienTri() {
+		return gardienTri;
 	}
 
 	public String jsonGardienTri() {
@@ -718,6 +735,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return utilisateurCles == null ? "" : utilisateurCles.toString();
 	}
 
+	public List<Long> sqlUtilisateurCles() {
+		return utilisateurCles;
+	}
+
 	public String jsonUtilisateurCles() {
 		return utilisateurCles == null ? "" : utilisateurCles.toString();
 	}
@@ -829,6 +850,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String strEcoleCles() {
 		return ecoleCles == null ? "" : ecoleCles.toString();
+	}
+
+	public List<Long> sqlEcoleCles() {
+		return ecoleCles;
 	}
 
 	public String jsonEcoleCles() {
@@ -944,6 +969,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return anneeCles == null ? "" : anneeCles.toString();
 	}
 
+	public List<Long> sqlAnneeCles() {
+		return anneeCles;
+	}
+
 	public String jsonAnneeCles() {
 		return anneeCles == null ? "" : anneeCles.toString();
 	}
@@ -1055,6 +1084,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String strSaisonCles() {
 		return saisonCles == null ? "" : saisonCles.toString();
+	}
+
+	public List<Long> sqlSaisonCles() {
+		return saisonCles;
 	}
 
 	public String jsonSaisonCles() {
@@ -1170,6 +1203,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return sessionCles == null ? "" : sessionCles.toString();
 	}
 
+	public List<Long> sqlSessionCles() {
+		return sessionCles;
+	}
+
 	public String jsonSessionCles() {
 		return sessionCles == null ? "" : sessionCles.toString();
 	}
@@ -1283,6 +1320,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return ageCles == null ? "" : ageCles.toString();
 	}
 
+	public List<Long> sqlAgeCles() {
+		return ageCles;
+	}
+
 	public String jsonAgeCles() {
 		return ageCles == null ? "" : ageCles.toString();
 	}
@@ -1357,6 +1398,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String strPersonnePrenom() {
 		return personnePrenom == null ? "" : personnePrenom;
+	}
+
+	public String sqlPersonnePrenom() {
+		return personnePrenom;
 	}
 
 	public String jsonPersonnePrenom() {
@@ -1505,6 +1550,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personnePrenomPrefere == null ? "" : personnePrenomPrefere;
 	}
 
+	public String sqlPersonnePrenomPrefere() {
+		return personnePrenomPrefere;
+	}
+
 	public String jsonPersonnePrenomPrefere() {
 		return personnePrenomPrefere == null ? "" : personnePrenomPrefere;
 	}
@@ -1649,6 +1698,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String strFamilleNom() {
 		return familleNom == null ? "" : familleNom;
+	}
+
+	public String sqlFamilleNom() {
+		return familleNom;
 	}
 
 	public String jsonFamilleNom() {
@@ -1797,6 +1850,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personneNomComplet == null ? "" : personneNomComplet;
 	}
 
+	public String sqlPersonneNomComplet() {
+		return personneNomComplet;
+	}
+
 	public String jsonPersonneNomComplet() {
 		return personneNomComplet == null ? "" : personneNomComplet;
 	}
@@ -1871,6 +1928,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String strPersonneNomCompletPrefere() {
 		return personneNomCompletPrefere == null ? "" : personneNomCompletPrefere;
+	}
+
+	public String sqlPersonneNomCompletPrefere() {
+		return personneNomCompletPrefere;
 	}
 
 	public String jsonPersonneNomCompletPrefere() {
@@ -1949,6 +2010,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personneNomFormel == null ? "" : personneNomFormel;
 	}
 
+	public String sqlPersonneNomFormel() {
+		return personneNomFormel;
+	}
+
 	public String jsonPersonneNomFormel() {
 		return personneNomFormel == null ? "" : personneNomFormel;
 	}
@@ -2025,6 +2090,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personneOccupation == null ? "" : personneOccupation;
 	}
 
+	public String sqlPersonneOccupation() {
+		return personneOccupation;
+	}
+
 	public String jsonPersonneOccupation() {
 		return personneOccupation == null ? "" : personneOccupation;
 	}
@@ -2099,6 +2168,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String strPersonneNumeroTelephone() {
 		return personneNumeroTelephone == null ? "" : personneNumeroTelephone;
+	}
+
+	public String sqlPersonneNumeroTelephone() {
+		return personneNumeroTelephone;
 	}
 
 	public String jsonPersonneNumeroTelephone() {
@@ -2247,6 +2320,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personneMail == null ? "" : personneMail;
 	}
 
+	public String sqlPersonneMail() {
+		return personneMail;
+	}
+
 	public String jsonPersonneMail() {
 		return personneMail == null ? "" : personneMail;
 	}
@@ -2321,6 +2398,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String strPersonneRelation() {
 		return personneRelation == null ? "" : personneRelation;
+	}
+
+	public String sqlPersonneRelation() {
+		return personneRelation;
 	}
 
 	public String jsonPersonneRelation() {
@@ -2474,6 +2555,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personneSms == null ? "" : personneSms.toString();
 	}
 
+	public Boolean sqlPersonneSms() {
+		return personneSms;
+	}
+
 	public String jsonPersonneSms() {
 		return personneSms == null ? "" : personneSms.toString();
 	}
@@ -2555,6 +2640,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personneRecevoirMail == null ? "" : personneRecevoirMail.toString();
 	}
 
+	public Boolean sqlPersonneRecevoirMail() {
+		return personneRecevoirMail;
+	}
+
 	public String jsonPersonneRecevoirMail() {
 		return personneRecevoirMail == null ? "" : personneRecevoirMail.toString();
 	}
@@ -2634,6 +2723,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String strPersonneContactUrgence() {
 		return personneContactUrgence == null ? "" : personneContactUrgence.toString();
+	}
+
+	public Boolean sqlPersonneContactUrgence() {
+		return personneContactUrgence;
 	}
 
 	public String jsonPersonneContactUrgence() {
@@ -2782,6 +2875,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return personneChercher == null ? "" : personneChercher.toString();
 	}
 
+	public Boolean sqlPersonneChercher() {
+		return personneChercher;
+	}
+
 	public String jsonPersonneChercher() {
 		return personneChercher == null ? "" : personneChercher.toString();
 	}
@@ -2921,6 +3018,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 
 	public String strPhoto() {
 		return photo == null ? "" : photo;
+	}
+
+	public String sqlPhoto() {
+		return photo;
 	}
 
 	public String jsonPhoto() {
@@ -3063,6 +3164,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return gardienNomComplet == null ? "" : gardienNomComplet;
 	}
 
+	public String sqlGardienNomComplet() {
+		return gardienNomComplet;
+	}
+
 	public String jsonGardienNomComplet() {
 		return gardienNomComplet == null ? "" : gardienNomComplet;
 	}
@@ -3162,6 +3267,10 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -3251,8 +3360,8 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		switch(var) {
 			case "inscriptionCles":
 				oGardienScolaire.addInscriptionCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("inscriptionCles"))
+					sauvegardes.add("inscriptionCles");
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -3543,46 +3652,108 @@ public abstract class GardienScolaireGen<DEV> extends Cluster {
 		return o != null;
 	}
 	public Object definirGardienScolaire(String var, String val) {
-		switch(var) {
-			case "personnePrenom":
+		switch(var.toLowerCase()) {
+			case "personneprenom":
 				if(val != null)
 					setPersonnePrenom(val);
-				sauvegardes.add(var);
+				sauvegardes.add("personnePrenom");
 				return val;
-			case "personnePrenomPrefere":
+			case "personneprenomprefere":
 				if(val != null)
 					setPersonnePrenomPrefere(val);
-				sauvegardes.add(var);
+				sauvegardes.add("personnePrenomPrefere");
 				return val;
-			case "familleNom":
+			case "famillenom":
 				if(val != null)
 					setFamilleNom(val);
-				sauvegardes.add(var);
+				sauvegardes.add("familleNom");
 				return val;
-			case "personneNumeroTelephone":
+			case "personnenumerotelephone":
 				if(val != null)
 					setPersonneNumeroTelephone(val);
-				sauvegardes.add(var);
+				sauvegardes.add("personneNumeroTelephone");
 				return val;
-			case "personneRelation":
+			case "personnerelation":
 				if(val != null)
 					setPersonneRelation(val);
-				sauvegardes.add(var);
+				sauvegardes.add("personneRelation");
 				return val;
-			case "personneContactUrgence":
+			case "personnecontacturgence":
 				if(val != null)
 					setPersonneContactUrgence(val);
-				sauvegardes.add(var);
+				sauvegardes.add("personneContactUrgence");
 				return val;
-			case "personneChercher":
+			case "personnechercher":
 				if(val != null)
 					setPersonneChercher(val);
-				sauvegardes.add(var);
+				sauvegardes.add("personneChercher");
 				return val;
 			case "photo":
 				if(val != null)
 					setPhoto(val);
-				sauvegardes.add(var);
+				sauvegardes.add("photo");
+				return val;
+			default:
+				return super.definirCluster(var, val);
+		}
+	}
+
+	@Override public boolean definirPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirGardienScolaire(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirGardienScolaire(String var, Object val) {
+		switch(var.toLowerCase()) {
+			case "personneprenom":
+				if(val instanceof String)
+					setPersonnePrenom((String)val);
+				sauvegardes.add("personnePrenom");
+				return val;
+			case "personneprenomprefere":
+				if(val instanceof String)
+					setPersonnePrenomPrefere((String)val);
+				sauvegardes.add("personnePrenomPrefere");
+				return val;
+			case "famillenom":
+				if(val instanceof String)
+					setFamilleNom((String)val);
+				sauvegardes.add("familleNom");
+				return val;
+			case "personnenumerotelephone":
+				if(val instanceof String)
+					setPersonneNumeroTelephone((String)val);
+				sauvegardes.add("personneNumeroTelephone");
+				return val;
+			case "personnerelation":
+				if(val instanceof String)
+					setPersonneRelation((String)val);
+				sauvegardes.add("personneRelation");
+				return val;
+			case "personnecontacturgence":
+				if(val instanceof Boolean)
+					setPersonneContactUrgence((Boolean)val);
+				sauvegardes.add("personneContactUrgence");
+				return val;
+			case "personnechercher":
+				if(val instanceof Boolean)
+					setPersonneChercher((Boolean)val);
+				sauvegardes.add("personneChercher");
+				return val;
+			case "photo":
+				if(val instanceof String)
+					setPhoto((String)val);
+				sauvegardes.add("photo");
 				return val;
 			default:
 				return super.definirCluster(var, val);

@@ -11,7 +11,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.writer.AllWriter;
 import org.computate.scolaire.enUS.page.PageLayout;
-import org.computate.scolaire.enUS.page.part.PagePart;
+import org.computate.scolaire.frFR.page.part.PagePart;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.xml.UtilXml;
 

@@ -13,6 +13,7 @@ import org.computate.scolaire.enUS.wrap.Wrap;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -143,6 +144,10 @@ public abstract class AllWriterGen<DEV> extends Object {
 
 	public String strTabStr() {
 		return tabStr == null ? "" : tabStr;
+	}
+
+	public String sqlTabStr() {
+		return tabStr;
 	}
 
 	public String jsonTabStr() {
@@ -390,6 +395,10 @@ public abstract class AllWriterGen<DEV> extends Object {
 		return empty == null ? "" : empty.toString();
 	}
 
+	public Boolean sqlEmpty() {
+		return empty;
+	}
+
 	public String jsonEmpty() {
 		return empty == null ? "" : empty.toString();
 	}
@@ -463,6 +472,10 @@ public abstract class AllWriterGen<DEV> extends Object {
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
+			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
 			}
 		}
 		return o;
@@ -606,7 +619,29 @@ public abstract class AllWriterGen<DEV> extends Object {
 		return o != null;
 	}
 	public Object defineAllWriter(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return null;
+		}
+	}
+
+	public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineAllWriter(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineAllWriter(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return null;
 		}

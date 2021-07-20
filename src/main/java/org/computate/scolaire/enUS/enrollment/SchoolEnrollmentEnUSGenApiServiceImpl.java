@@ -54,6 +54,7 @@ import java.util.Set;
 import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -78,7 +79,6 @@ import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.api.OperationResponse;
@@ -87,7 +87,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import java.nio.charset.Charset;
 import org.apache.http.NameValuePair;
 import io.vertx.ext.web.api.OperationRequest;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.auth.oauth2.impl.OAuth2TokenImpl;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
@@ -227,14 +227,17 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
+			SchoolEnrollment o2 = new SchoolEnrollment();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(siteRequest.getSessionId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "sessionId", siteRequest.getSessionId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "sessionId", siteRequest.getSessionId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -246,8 +249,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 			if(siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -259,8 +262,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 			if(siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -283,8 +286,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					switch(entityVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -296,8 +299,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "archived":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -309,8 +312,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "deleted":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -324,10 +327,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(entityVar));
 							if(l != null) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+								SearchList<org.computate.scolaire.enUS.year.SchoolYear> searchList = new SearchList<org.computate.scolaire.enUS.year.SchoolYear>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
+								searchList.setC(org.computate.scolaire.enUS.year.SchoolYear.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -335,8 +338,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -356,10 +359,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "blockKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+								SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolBlock.class);
+								searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -367,8 +370,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -389,10 +392,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(entityVar));
 							if(l != null) {
-								SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+								SearchList<org.computate.scolaire.enUS.child.SchoolChild> searchList = new SearchList<org.computate.scolaire.enUS.child.SchoolChild>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolChild.class);
+								searchList.setC(org.computate.scolaire.enUS.child.SchoolChild.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -400,8 +403,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "childKey", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -421,10 +424,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "momKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+								SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolMom.class);
+								searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -432,8 +435,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -453,10 +456,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "dadKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+								SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolDad.class);
+								searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -464,8 +467,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -485,10 +488,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "guardianKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+								SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolGuardian.class);
+								searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -496,8 +499,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -517,10 +520,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "paymentKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+								SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolPayment.class);
+								searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -528,8 +531,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -549,10 +552,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "userKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SiteUser.class);
+								searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -560,8 +563,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -580,8 +583,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childCompleteName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childCompleteName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childCompleteName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -593,8 +596,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childCompleteNamePreferred":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -606,8 +609,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childBirthDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childBirthDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childBirthDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -619,8 +622,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "schoolAddress":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "schoolAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "schoolAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -632,8 +635,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentApproved":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentApproved", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentApproved", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -645,8 +648,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentImmunizations":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentImmunizations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentImmunizations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -658,8 +661,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "photo":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "photo", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "photo", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -671,8 +674,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "familyMarried":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "familyMarried", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "familyMarried", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -684,8 +687,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "familySeparated":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "familySeparated", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "familySeparated", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -697,8 +700,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "familyDivorced":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "familyDivorced", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "familyDivorced", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -708,10 +711,23 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							});
 						}));
 						break;
+					case "enrollmentPassphrase":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentPassphrase", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPassphrase failed", b.cause())));
+							});
+						}));
+						break;
 					case "familyAddress":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "familyAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "familyAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -723,8 +739,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "familyHowDoYouKnowTheSchool":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "familyHowDoYouKnowTheSchool", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "familyHowDoYouKnowTheSchool", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -736,8 +752,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSpecialConsiderations":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSpecialConsiderations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSpecialConsiderations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -749,8 +765,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childMedicalConditions":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childMedicalConditions", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childMedicalConditions", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -762,8 +778,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childPreviousSchoolsAttended":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childPreviousSchoolsAttended", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childPreviousSchoolsAttended", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -775,8 +791,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childDescription":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childDescription", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childDescription", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -788,8 +804,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childObjectives":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childObjectives", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childObjectives", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -799,10 +815,23 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							});
 						}));
 						break;
+					case "adminNotes":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "adminNotes", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.adminNotes failed", b.cause())));
+							});
+						}));
+						break;
 					case "childPottyTrained":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childPottyTrained", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childPottyTrained", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -814,8 +843,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentGroupName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentGroupName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentGroupName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -827,8 +856,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentPaymentEachMonth":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentPaymentEachMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentPaymentEachMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -840,8 +869,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentPaymentComplete":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentPaymentComplete", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentPaymentComplete", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -853,8 +882,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "customerProfileId":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -866,8 +895,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentChargeDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentChargeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentChargeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -879,8 +908,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentParentNames":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentParentNames", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentParentNames", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -892,8 +921,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature1":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -905,8 +934,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature2":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -918,8 +947,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature3":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -931,8 +960,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature4":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -944,8 +973,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature5":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -957,8 +986,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature6":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -970,8 +999,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature7":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -983,8 +1012,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature8":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -996,8 +1025,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature9":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1009,8 +1038,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature10":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1022,8 +1051,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate1":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1035,8 +1064,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate2":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1048,8 +1077,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate3":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1061,8 +1090,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate4":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1074,8 +1103,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate5":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1087,8 +1116,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate6":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1100,8 +1129,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate7":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1113,8 +1142,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate8":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1126,8 +1155,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate9":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1139,8 +1168,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate10":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1153,7 +1182,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
@@ -1327,7 +1356,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportSchoolEnrollment(siteRequest, eventHandler);
@@ -1498,7 +1527,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergeSchoolEnrollment(siteRequest, eventHandler);
@@ -1635,7 +1664,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolEnrollment.size());
 				if(listSchoolEnrollment.next()) {
@@ -1724,6 +1753,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			List<Future> futures = new ArrayList<>();
 
@@ -1734,8 +1764,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					switch(entityVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1747,8 +1777,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "archived":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1760,8 +1790,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "deleted":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1775,8 +1805,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							{
 						Long l = Long.parseLong(jsonObject.getString(entityVar));
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_addA
-									, Tuple.of(l, "enrollmentKeys", pk, "yearKey")
+							tx.preparedQuery(SiteContextEnUS.SQL_addA)
+									.execute(Tuple.of(l, "enrollmentKeys", pk, "yearKey")
 									, b
 							-> {
 								if(b.succeeded())
@@ -1790,8 +1820,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "blockKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1810,8 +1840,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							{
 						Long l = Long.parseLong(jsonObject.getString(entityVar));
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_addA
-									, Tuple.of(pk, "childKey", l, "enrollmentKeys")
+							tx.preparedQuery(SiteContextEnUS.SQL_addA)
+									.execute(Tuple.of(pk, "childKey", l, "enrollmentKeys")
 									, b
 							-> {
 								if(b.succeeded())
@@ -1825,8 +1855,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "momKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(l, "enrollmentKeys", pk, "momKeys")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(l, "enrollmentKeys", pk, "momKeys")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1844,8 +1874,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "dadKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1863,8 +1893,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "guardianKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1882,8 +1912,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "paymentKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1901,8 +1931,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "userKeys":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entityVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_addA
-										, Tuple.of(l, "enrollmentKeys", pk, "userKeys")
+								tx.preparedQuery(SiteContextEnUS.SQL_addA)
+										.execute(Tuple.of(l, "enrollmentKeys", pk, "userKeys")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1919,8 +1949,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childCompleteName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childCompleteName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childCompleteName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1932,8 +1962,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childCompleteNamePreferred":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childCompleteNamePreferred", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1945,8 +1975,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childBirthDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childBirthDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childBirthDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1958,8 +1988,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "schoolAddress":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "schoolAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "schoolAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1971,8 +2001,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentApproved":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentApproved", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentApproved", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1984,8 +2014,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentImmunizations":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentImmunizations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentImmunizations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1997,8 +2027,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "photo":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "photo", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "photo", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2010,8 +2040,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "familyMarried":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "familyMarried", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "familyMarried", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2023,8 +2053,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "familySeparated":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "familySeparated", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "familySeparated", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2036,8 +2066,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "familyDivorced":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "familyDivorced", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "familyDivorced", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2047,10 +2077,23 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							});
 						}));
 						break;
+					case "enrollmentPassphrase":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentPassphrase", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPassphrase failed", b.cause())));
+							});
+						}));
+						break;
 					case "familyAddress":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "familyAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "familyAddress", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2062,8 +2105,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "familyHowDoYouKnowTheSchool":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "familyHowDoYouKnowTheSchool", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "familyHowDoYouKnowTheSchool", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2075,8 +2118,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSpecialConsiderations":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSpecialConsiderations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSpecialConsiderations", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2088,8 +2131,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childMedicalConditions":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childMedicalConditions", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childMedicalConditions", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2101,8 +2144,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childPreviousSchoolsAttended":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childPreviousSchoolsAttended", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childPreviousSchoolsAttended", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2114,8 +2157,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childDescription":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childDescription", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childDescription", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2127,8 +2170,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "childObjectives":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childObjectives", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childObjectives", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2138,10 +2181,23 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							});
 						}));
 						break;
+					case "adminNotes":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "adminNotes", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.adminNotes failed", b.cause())));
+							});
+						}));
+						break;
 					case "childPottyTrained":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "childPottyTrained", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "childPottyTrained", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2153,8 +2209,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentGroupName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentGroupName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentGroupName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2166,8 +2222,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentPaymentEachMonth":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentPaymentEachMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentPaymentEachMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2179,8 +2235,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentPaymentComplete":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentPaymentComplete", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentPaymentComplete", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2192,8 +2248,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "customerProfileId":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2205,8 +2261,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentChargeDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentChargeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentChargeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2218,8 +2274,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentParentNames":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentParentNames", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentParentNames", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2231,8 +2287,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature1":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2244,8 +2300,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature2":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2257,8 +2313,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature3":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2270,8 +2326,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature4":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2283,8 +2339,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature5":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2296,8 +2352,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature6":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2309,8 +2365,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature7":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2322,8 +2378,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature8":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2335,8 +2391,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature9":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2348,8 +2404,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentSignature10":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentSignature10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentSignature10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2361,8 +2417,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate1":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate1", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2374,8 +2430,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate2":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate2", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2387,8 +2443,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate3":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate3", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2400,8 +2456,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate4":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate4", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2413,8 +2469,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate5":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate5", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2426,8 +2482,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate6":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate6", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2439,8 +2495,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate7":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate7", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2452,8 +2508,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate8":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate8", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2465,8 +2521,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate9":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate9", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2478,8 +2534,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 					case "enrollmentDate10":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentDate10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentDate10", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -2492,7 +2548,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
@@ -2650,7 +2706,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listSchoolEnrollment.next(dt)) {
 					listPATCHSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, eventHandler);
@@ -2725,16 +2781,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
 			Set<String> methodNames = jsonObject.fieldNames();
 			SchoolEnrollment o2 = new SchoolEnrollment();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-							, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+							.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -2746,8 +2804,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -2769,8 +2827,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setInheritPk":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2782,8 +2840,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2797,8 +2855,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setArchived":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "archived")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "archived")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2810,8 +2868,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "archived", o2.jsonArchived())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "archived", o2.jsonArchived())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2825,8 +2883,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setDeleted":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "deleted")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "deleted")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2838,8 +2896,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "deleted", o2.jsonDeleted())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "deleted", o2.jsonDeleted())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2855,10 +2913,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setYearKey(jsonObject.getString(methodName));
 							Long l = o2.getYearKey();
 							if(l != null && !l.equals(o.getYearKey())) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+								SearchList<org.computate.scolaire.enUS.year.SchoolYear> searchList = new SearchList<org.computate.scolaire.enUS.year.SchoolYear>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
+								searchList.setC(org.computate.scolaire.enUS.year.SchoolYear.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2866,8 +2924,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2889,10 +2947,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setYearKey(jsonObject.getString(methodName));
 							Long l = o2.getYearKey();
 							if(l != null) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+								SearchList<org.computate.scolaire.enUS.year.SchoolYear> searchList = new SearchList<org.computate.scolaire.enUS.year.SchoolYear>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
+								searchList.setC(org.computate.scolaire.enUS.year.SchoolYear.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2900,8 +2958,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2922,10 +2980,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+								SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolBlock.class);
+								searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2933,8 +2991,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2957,10 +3015,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllBlockKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllBlockKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+									SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolBlock.class);
+									searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2968,8 +3026,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2994,10 +3052,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
 								Long l = Long.parseLong(setBlockKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+									SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolBlock.class);
+									searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3007,8 +3065,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setBlockKeysValues2.add(l2);
 									if(l2 != null && !o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3029,8 +3087,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getBlockKeys()) {
 								if(l != null && (setBlockKeysValues2 == null || !setBlockKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3047,10 +3105,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+								SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolBlock.class);
+								searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3058,8 +3116,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3081,10 +3139,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setChildKey(jsonObject.getString(methodName));
 							Long l = o2.getChildKey();
 							if(l != null) {
-								SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+								SearchList<org.computate.scolaire.enUS.child.SchoolChild> searchList = new SearchList<org.computate.scolaire.enUS.child.SchoolChild>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolChild.class);
+								searchList.setC(org.computate.scolaire.enUS.child.SchoolChild.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3101,8 +3159,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getChildKey())) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "childKey", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3124,10 +3182,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setChildKey(jsonObject.getString(methodName));
 							Long l = o2.getChildKey();
 							if(l != null) {
-								SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+								SearchList<org.computate.scolaire.enUS.child.SchoolChild> searchList = new SearchList<org.computate.scolaire.enUS.child.SchoolChild>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolChild.class);
+								searchList.setC(org.computate.scolaire.enUS.child.SchoolChild.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3144,8 +3202,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "childKey", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3166,10 +3224,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+								SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolMom.class);
+								searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3186,8 +3244,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3210,10 +3268,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllMomKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllMomKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+									SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolMom.class);
+									searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3230,8 +3288,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3256,10 +3314,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setMomKeysValues.size(); i++) {
 								Long l = Long.parseLong(setMomKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+									SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolMom.class);
+									searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3278,8 +3336,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setMomKeysValues2.add(l2);
 									if(l2 != null && !o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3300,8 +3358,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getMomKeys()) {
 								if(l != null && (setMomKeysValues == null || !setMomKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3318,10 +3376,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+								SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolMom.class);
+								searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3338,8 +3396,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3360,10 +3418,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+								SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolDad.class);
+								searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3380,8 +3438,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3404,10 +3462,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllDadKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllDadKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+									SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolDad.class);
+									searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3424,8 +3482,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3450,10 +3508,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setDadKeysValues.size(); i++) {
 								Long l = Long.parseLong(setDadKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+									SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolDad.class);
+									searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3472,8 +3530,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setDadKeysValues2.add(l2);
 									if(l2 != null && !o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3494,8 +3552,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getDadKeys()) {
 								if(l != null && (setDadKeysValues2 == null || !setDadKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3512,10 +3570,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+								SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolDad.class);
+								searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3532,8 +3590,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3554,10 +3612,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+								SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolGuardian.class);
+								searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3574,8 +3632,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3598,10 +3656,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllGuardianKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllGuardianKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+									SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolGuardian.class);
+									searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3618,8 +3676,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3644,10 +3702,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setGuardianKeysValues.size(); i++) {
 								Long l = Long.parseLong(setGuardianKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+									SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolGuardian.class);
+									searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3666,8 +3724,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setGuardianKeysValues2.add(l2);
 									if(l2 != null && !o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3688,8 +3746,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getGuardianKeys()) {
 								if(l != null && (setGuardianKeysValues == null || !setGuardianKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3706,10 +3764,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+								SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolGuardian.class);
+								searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3726,8 +3784,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3748,10 +3806,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+								SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolPayment.class);
+								searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3768,8 +3826,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3792,10 +3850,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllPaymentKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllPaymentKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+									SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolPayment.class);
+									searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3812,8 +3870,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3838,10 +3896,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
 								Long l = Long.parseLong(setPaymentKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+									SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolPayment.class);
+									searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3860,8 +3918,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setPaymentKeysValues2.add(l2);
 									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3882,8 +3940,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getPaymentKeys()) {
 								if(l != null && (setPaymentKeysValues == null || !setPaymentKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3900,10 +3958,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+								SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolPayment.class);
+								searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3920,8 +3978,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3942,10 +4000,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SiteUser.class);
+								searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -3962,8 +4020,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -3986,10 +4044,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllUserKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllUserKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+									SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SiteUser.class);
+									searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -4006,8 +4064,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -4032,10 +4090,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setUserKeysValues.size(); i++) {
 								Long l = Long.parseLong(setUserKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+									SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SiteUser.class);
+									searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -4054,8 +4112,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setUserKeysValues2.add(l2);
 									if(l2 != null && !o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -4076,8 +4134,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getUserKeys()) {
 								if(l != null && (setUserKeysValues == null || !setUserKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -4094,10 +4152,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SiteUser.class);
+								searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -4114,8 +4172,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -4135,8 +4193,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildCompleteName":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childCompleteName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childCompleteName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4148,8 +4206,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildCompleteName(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childCompleteName", o2.jsonChildCompleteName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childCompleteName", o2.jsonChildCompleteName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4163,8 +4221,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildCompleteNamePreferred":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childCompleteNamePreferred")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childCompleteNamePreferred")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4176,8 +4234,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildCompleteNamePreferred(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4191,8 +4249,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildBirthDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childBirthDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childBirthDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4204,8 +4262,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildBirthDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childBirthDate", o2.jsonChildBirthDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childBirthDate", o2.jsonChildBirthDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4219,8 +4277,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setSchoolAddress":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "schoolAddress")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "schoolAddress")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4232,8 +4290,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setSchoolAddress(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "schoolAddress", o2.jsonSchoolAddress())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "schoolAddress", o2.jsonSchoolAddress())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4247,8 +4305,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentApproved":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentApproved")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentApproved")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4260,8 +4318,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentApproved(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentApproved", o2.jsonEnrollmentApproved())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentApproved", o2.jsonEnrollmentApproved())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4275,8 +4333,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentImmunizations":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentImmunizations")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentImmunizations")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4288,8 +4346,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentImmunizations(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentImmunizations", o2.jsonEnrollmentImmunizations())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentImmunizations", o2.jsonEnrollmentImmunizations())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4303,8 +4361,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setPhoto":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "photo")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "photo")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4316,8 +4374,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setPhoto(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "photo", o2.jsonPhoto())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "photo", o2.jsonPhoto())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4331,8 +4389,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilyMarried":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyMarried")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyMarried")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4344,8 +4402,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyMarried(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyMarried", o2.jsonFamilyMarried())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyMarried", o2.jsonFamilyMarried())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4359,8 +4417,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilySeparated":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familySeparated")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familySeparated")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4372,8 +4430,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilySeparated(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familySeparated", o2.jsonFamilySeparated())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familySeparated", o2.jsonFamilySeparated())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4387,8 +4445,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilyDivorced":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyDivorced")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyDivorced")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4400,8 +4458,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyDivorced(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyDivorced", o2.jsonFamilyDivorced())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyDivorced", o2.jsonFamilyDivorced())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4412,11 +4470,39 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							}));
 						}
 						break;
+					case "setEnrollmentPassphrase":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentPassphrase")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPassphrase failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnrollmentPassphrase(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentPassphrase", o2.jsonEnrollmentPassphrase())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPassphrase failed", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setFamilyAddress":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyAddress")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyAddress")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4428,8 +4514,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyAddress(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyAddress", o2.jsonFamilyAddress())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyAddress", o2.jsonFamilyAddress())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4443,8 +4529,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilyHowDoYouKnowTheSchool":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyHowDoYouKnowTheSchool")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyHowDoYouKnowTheSchool")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4456,8 +4542,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyHowDoYouKnowTheSchool(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4471,8 +4557,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSpecialConsiderations":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSpecialConsiderations")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSpecialConsiderations")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4484,8 +4570,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSpecialConsiderations(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4499,8 +4585,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildMedicalConditions":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childMedicalConditions")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childMedicalConditions")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4512,8 +4598,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildMedicalConditions(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childMedicalConditions", o2.jsonChildMedicalConditions())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childMedicalConditions", o2.jsonChildMedicalConditions())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4527,8 +4613,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildPreviousSchoolsAttended":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childPreviousSchoolsAttended")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childPreviousSchoolsAttended")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4540,8 +4626,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildPreviousSchoolsAttended(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4555,8 +4641,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildDescription":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childDescription")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childDescription")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4568,8 +4654,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildDescription(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childDescription", o2.jsonChildDescription())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childDescription", o2.jsonChildDescription())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4583,8 +4669,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildObjectives":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childObjectives")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childObjectives")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4596,8 +4682,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildObjectives(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childObjectives", o2.jsonChildObjectives())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childObjectives", o2.jsonChildObjectives())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4608,11 +4694,39 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							}));
 						}
 						break;
+					case "setAdminNotes":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "adminNotes")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.adminNotes failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setAdminNotes(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "adminNotes", o2.jsonAdminNotes())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.adminNotes failed", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setChildPottyTrained":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childPottyTrained")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childPottyTrained")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4624,8 +4738,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildPottyTrained(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childPottyTrained", o2.jsonChildPottyTrained())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childPottyTrained", o2.jsonChildPottyTrained())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4639,8 +4753,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentGroupName":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentGroupName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentGroupName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4652,8 +4766,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentGroupName(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentGroupName", o2.jsonEnrollmentGroupName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentGroupName", o2.jsonEnrollmentGroupName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4667,8 +4781,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentPaymentEachMonth":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentPaymentEachMonth")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentPaymentEachMonth")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4680,8 +4794,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentPaymentEachMonth(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4695,8 +4809,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentPaymentComplete":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentPaymentComplete")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentPaymentComplete")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4708,8 +4822,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentPaymentComplete(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4723,8 +4837,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setCustomerProfileId":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "customerProfileId")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4736,8 +4850,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setCustomerProfileId(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4751,8 +4865,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentChargeDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentChargeDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentChargeDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4764,8 +4878,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentChargeDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentChargeDate", o2.jsonEnrollmentChargeDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentChargeDate", o2.jsonEnrollmentChargeDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4779,8 +4893,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentParentNames":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentParentNames")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentParentNames")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4792,8 +4906,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentParentNames(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentParentNames", o2.jsonEnrollmentParentNames())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentParentNames", o2.jsonEnrollmentParentNames())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4807,8 +4921,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature1":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature1")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature1")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4820,8 +4934,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature1(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature1", o2.jsonEnrollmentSignature1())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature1", o2.jsonEnrollmentSignature1())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4835,8 +4949,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature2":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature2")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature2")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4848,8 +4962,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature2(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature2", o2.jsonEnrollmentSignature2())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature2", o2.jsonEnrollmentSignature2())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4863,8 +4977,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature3":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature3")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature3")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4876,8 +4990,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature3(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature3", o2.jsonEnrollmentSignature3())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature3", o2.jsonEnrollmentSignature3())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4891,8 +5005,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature4":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature4")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature4")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4904,8 +5018,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature4(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature4", o2.jsonEnrollmentSignature4())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature4", o2.jsonEnrollmentSignature4())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4919,8 +5033,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature5":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature5")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature5")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4932,8 +5046,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature5(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature5", o2.jsonEnrollmentSignature5())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature5", o2.jsonEnrollmentSignature5())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4947,8 +5061,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature6":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature6")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature6")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4960,8 +5074,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature6(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature6", o2.jsonEnrollmentSignature6())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature6", o2.jsonEnrollmentSignature6())
 										, b
 								-> {
 									if(b.succeeded())
@@ -4975,8 +5089,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature7":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature7")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature7")
 										, b
 								-> {
 									if(b.succeeded())
@@ -4988,8 +5102,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature7(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature7", o2.jsonEnrollmentSignature7())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature7", o2.jsonEnrollmentSignature7())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5003,8 +5117,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature8":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature8")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature8")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5016,8 +5130,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature8(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature8", o2.jsonEnrollmentSignature8())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature8", o2.jsonEnrollmentSignature8())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5031,8 +5145,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature9":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature9")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature9")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5044,8 +5158,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature9(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature9", o2.jsonEnrollmentSignature9())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature9", o2.jsonEnrollmentSignature9())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5059,8 +5173,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature10":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature10")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature10")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5072,8 +5186,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature10(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature10", o2.jsonEnrollmentSignature10())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature10", o2.jsonEnrollmentSignature10())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5087,8 +5201,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate1":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate1")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate1")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5100,8 +5214,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate1(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate1", o2.jsonEnrollmentDate1())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate1", o2.jsonEnrollmentDate1())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5115,8 +5229,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate2":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate2")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate2")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5128,8 +5242,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate2(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate2", o2.jsonEnrollmentDate2())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate2", o2.jsonEnrollmentDate2())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5143,8 +5257,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate3":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate3")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate3")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5156,8 +5270,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate3(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate3", o2.jsonEnrollmentDate3())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate3", o2.jsonEnrollmentDate3())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5171,8 +5285,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate4":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate4")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate4")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5184,8 +5298,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate4(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate4", o2.jsonEnrollmentDate4())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate4", o2.jsonEnrollmentDate4())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5199,8 +5313,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate5":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate5")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate5")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5212,8 +5326,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate5(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate5", o2.jsonEnrollmentDate5())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate5", o2.jsonEnrollmentDate5())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5227,8 +5341,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate6":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate6")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate6")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5240,8 +5354,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate6(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate6", o2.jsonEnrollmentDate6())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate6", o2.jsonEnrollmentDate6())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5255,8 +5369,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate7":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate7")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate7")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5268,8 +5382,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate7(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate7", o2.jsonEnrollmentDate7())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate7", o2.jsonEnrollmentDate7())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5283,8 +5397,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate8":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate8")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate8")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5296,8 +5410,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate8(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate8", o2.jsonEnrollmentDate8())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate8", o2.jsonEnrollmentDate8())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5311,8 +5425,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate9":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate9")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate9")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5324,8 +5438,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate9(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate9", o2.jsonEnrollmentDate9())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate9", o2.jsonEnrollmentDate9())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5339,8 +5453,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate10":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate10")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate10")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5352,8 +5466,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate10(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate10", o2.jsonEnrollmentDate10())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate10", o2.jsonEnrollmentDate10())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5366,7 +5480,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					SchoolEnrollment o3 = new SchoolEnrollment();
 					o3.setSiteRequest_(o.getSiteRequest_());
@@ -5817,7 +5931,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listSchoolEnrollment.next(dt)) {
 					listAdminPATCHSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, eventHandler);
@@ -5892,16 +6006,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
 			Set<String> methodNames = jsonObject.fieldNames();
 			SchoolEnrollment o2 = new SchoolEnrollment();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-							, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+							.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -5913,8 +6029,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -5936,8 +6052,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setInheritPk":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5949,8 +6065,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5964,8 +6080,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setArchived":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "archived")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "archived")
 										, b
 								-> {
 									if(b.succeeded())
@@ -5977,8 +6093,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "archived", o2.jsonArchived())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "archived", o2.jsonArchived())
 										, b
 								-> {
 									if(b.succeeded())
@@ -5992,8 +6108,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setDeleted":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "deleted")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "deleted")
 										, b
 								-> {
 									if(b.succeeded())
@@ -6005,8 +6121,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "deleted", o2.jsonDeleted())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "deleted", o2.jsonDeleted())
 										, b
 								-> {
 									if(b.succeeded())
@@ -6022,10 +6138,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setYearKey(jsonObject.getString(methodName));
 							Long l = o2.getYearKey();
 							if(l != null && !l.equals(o.getYearKey())) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+								SearchList<org.computate.scolaire.enUS.year.SchoolYear> searchList = new SearchList<org.computate.scolaire.enUS.year.SchoolYear>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
+								searchList.setC(org.computate.scolaire.enUS.year.SchoolYear.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6033,8 +6149,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6056,10 +6172,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setYearKey(jsonObject.getString(methodName));
 							Long l = o2.getYearKey();
 							if(l != null) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+								SearchList<org.computate.scolaire.enUS.year.SchoolYear> searchList = new SearchList<org.computate.scolaire.enUS.year.SchoolYear>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
+								searchList.setC(org.computate.scolaire.enUS.year.SchoolYear.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6067,8 +6183,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6089,10 +6205,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+								SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolBlock.class);
+								searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6100,8 +6216,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6124,10 +6240,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllBlockKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllBlockKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+									SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolBlock.class);
+									searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6135,8 +6251,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6161,10 +6277,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
 								Long l = Long.parseLong(setBlockKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+									SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolBlock.class);
+									searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6174,8 +6290,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setBlockKeysValues2.add(l2);
 									if(l2 != null && !o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6196,8 +6312,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getBlockKeys()) {
 								if(l != null && (setBlockKeysValues2 == null || !setBlockKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6214,10 +6330,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+								SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolBlock.class);
+								searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6225,8 +6341,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6248,10 +6364,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setChildKey(jsonObject.getString(methodName));
 							Long l = o2.getChildKey();
 							if(l != null) {
-								SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+								SearchList<org.computate.scolaire.enUS.child.SchoolChild> searchList = new SearchList<org.computate.scolaire.enUS.child.SchoolChild>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolChild.class);
+								searchList.setC(org.computate.scolaire.enUS.child.SchoolChild.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6268,8 +6384,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getChildKey())) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "childKey", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6291,10 +6407,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setChildKey(jsonObject.getString(methodName));
 							Long l = o2.getChildKey();
 							if(l != null) {
-								SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+								SearchList<org.computate.scolaire.enUS.child.SchoolChild> searchList = new SearchList<org.computate.scolaire.enUS.child.SchoolChild>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolChild.class);
+								searchList.setC(org.computate.scolaire.enUS.child.SchoolChild.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6311,8 +6427,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "childKey", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6333,10 +6449,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+								SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolMom.class);
+								searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6353,8 +6469,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6377,10 +6493,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllMomKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllMomKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+									SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolMom.class);
+									searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6397,8 +6513,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6423,10 +6539,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setMomKeysValues.size(); i++) {
 								Long l = Long.parseLong(setMomKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+									SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolMom.class);
+									searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6445,8 +6561,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setMomKeysValues2.add(l2);
 									if(l2 != null && !o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6467,8 +6583,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getMomKeys()) {
 								if(l != null && (setMomKeysValues == null || !setMomKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6485,10 +6601,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+								SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolMom.class);
+								searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6505,8 +6621,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6527,10 +6643,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+								SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolDad.class);
+								searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6547,8 +6663,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6571,10 +6687,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllDadKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllDadKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+									SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolDad.class);
+									searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6591,8 +6707,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6617,10 +6733,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setDadKeysValues.size(); i++) {
 								Long l = Long.parseLong(setDadKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+									SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolDad.class);
+									searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6639,8 +6755,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setDadKeysValues2.add(l2);
 									if(l2 != null && !o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6661,8 +6777,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getDadKeys()) {
 								if(l != null && (setDadKeysValues2 == null || !setDadKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6679,10 +6795,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+								SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolDad.class);
+								searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6699,8 +6815,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6721,10 +6837,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+								SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolGuardian.class);
+								searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6741,8 +6857,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6765,10 +6881,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllGuardianKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllGuardianKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+									SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolGuardian.class);
+									searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6785,8 +6901,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6811,10 +6927,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setGuardianKeysValues.size(); i++) {
 								Long l = Long.parseLong(setGuardianKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+									SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolGuardian.class);
+									searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6833,8 +6949,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setGuardianKeysValues2.add(l2);
 									if(l2 != null && !o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6855,8 +6971,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getGuardianKeys()) {
 								if(l != null && (setGuardianKeysValues == null || !setGuardianKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6873,10 +6989,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+								SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolGuardian.class);
+								searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6893,8 +7009,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6915,10 +7031,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+								SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolPayment.class);
+								searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6935,8 +7051,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -6959,10 +7075,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllPaymentKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllPaymentKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+									SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolPayment.class);
+									searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -6979,8 +7095,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -7005,10 +7121,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
 								Long l = Long.parseLong(setPaymentKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+									SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolPayment.class);
+									searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -7027,8 +7143,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setPaymentKeysValues2.add(l2);
 									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -7049,8 +7165,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getPaymentKeys()) {
 								if(l != null && (setPaymentKeysValues == null || !setPaymentKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -7067,10 +7183,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+								SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolPayment.class);
+								searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -7087,8 +7203,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -7109,10 +7225,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SiteUser.class);
+								searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -7129,8 +7245,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -7153,10 +7269,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllUserKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllUserKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+									SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SiteUser.class);
+									searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -7173,8 +7289,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -7199,10 +7315,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setUserKeysValues.size(); i++) {
 								Long l = Long.parseLong(setUserKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+									SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SiteUser.class);
+									searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -7221,8 +7337,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setUserKeysValues2.add(l2);
 									if(l2 != null && !o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -7243,8 +7359,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getUserKeys()) {
 								if(l != null && (setUserKeysValues == null || !setUserKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -7261,10 +7377,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SiteUser.class);
+								searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -7281,8 +7397,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -7302,8 +7418,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildCompleteName":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childCompleteName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childCompleteName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7315,8 +7431,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildCompleteName(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childCompleteName", o2.jsonChildCompleteName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childCompleteName", o2.jsonChildCompleteName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7330,8 +7446,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildCompleteNamePreferred":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childCompleteNamePreferred")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childCompleteNamePreferred")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7343,8 +7459,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildCompleteNamePreferred(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7358,8 +7474,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildBirthDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childBirthDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childBirthDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7371,8 +7487,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildBirthDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childBirthDate", o2.jsonChildBirthDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childBirthDate", o2.jsonChildBirthDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7386,8 +7502,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setSchoolAddress":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "schoolAddress")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "schoolAddress")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7399,8 +7515,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setSchoolAddress(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "schoolAddress", o2.jsonSchoolAddress())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "schoolAddress", o2.jsonSchoolAddress())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7414,8 +7530,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentApproved":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentApproved")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentApproved")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7427,8 +7543,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentApproved(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentApproved", o2.jsonEnrollmentApproved())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentApproved", o2.jsonEnrollmentApproved())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7442,8 +7558,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentImmunizations":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentImmunizations")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentImmunizations")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7455,8 +7571,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentImmunizations(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentImmunizations", o2.jsonEnrollmentImmunizations())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentImmunizations", o2.jsonEnrollmentImmunizations())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7470,8 +7586,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setPhoto":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "photo")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "photo")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7483,8 +7599,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setPhoto(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "photo", o2.jsonPhoto())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "photo", o2.jsonPhoto())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7498,8 +7614,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilyMarried":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyMarried")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyMarried")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7511,8 +7627,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyMarried(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyMarried", o2.jsonFamilyMarried())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyMarried", o2.jsonFamilyMarried())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7526,8 +7642,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilySeparated":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familySeparated")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familySeparated")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7539,8 +7655,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilySeparated(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familySeparated", o2.jsonFamilySeparated())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familySeparated", o2.jsonFamilySeparated())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7554,8 +7670,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilyDivorced":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyDivorced")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyDivorced")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7567,8 +7683,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyDivorced(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyDivorced", o2.jsonFamilyDivorced())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyDivorced", o2.jsonFamilyDivorced())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7579,11 +7695,39 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							}));
 						}
 						break;
+					case "setEnrollmentPassphrase":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentPassphrase")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPassphrase failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnrollmentPassphrase(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentPassphrase", o2.jsonEnrollmentPassphrase())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPassphrase failed", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setFamilyAddress":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyAddress")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyAddress")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7595,8 +7739,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyAddress(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyAddress", o2.jsonFamilyAddress())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyAddress", o2.jsonFamilyAddress())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7610,8 +7754,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilyHowDoYouKnowTheSchool":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyHowDoYouKnowTheSchool")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyHowDoYouKnowTheSchool")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7623,8 +7767,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyHowDoYouKnowTheSchool(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7638,8 +7782,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSpecialConsiderations":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSpecialConsiderations")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSpecialConsiderations")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7651,8 +7795,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSpecialConsiderations(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7666,8 +7810,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildMedicalConditions":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childMedicalConditions")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childMedicalConditions")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7679,8 +7823,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildMedicalConditions(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childMedicalConditions", o2.jsonChildMedicalConditions())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childMedicalConditions", o2.jsonChildMedicalConditions())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7694,8 +7838,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildPreviousSchoolsAttended":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childPreviousSchoolsAttended")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childPreviousSchoolsAttended")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7707,8 +7851,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildPreviousSchoolsAttended(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7722,8 +7866,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildDescription":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childDescription")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childDescription")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7735,8 +7879,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildDescription(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childDescription", o2.jsonChildDescription())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childDescription", o2.jsonChildDescription())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7750,8 +7894,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildObjectives":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childObjectives")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childObjectives")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7763,8 +7907,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildObjectives(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childObjectives", o2.jsonChildObjectives())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childObjectives", o2.jsonChildObjectives())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7775,11 +7919,39 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							}));
 						}
 						break;
+					case "setAdminNotes":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "adminNotes")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.adminNotes failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setAdminNotes(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "adminNotes", o2.jsonAdminNotes())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.adminNotes failed", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setChildPottyTrained":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childPottyTrained")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childPottyTrained")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7791,8 +7963,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildPottyTrained(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childPottyTrained", o2.jsonChildPottyTrained())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childPottyTrained", o2.jsonChildPottyTrained())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7806,8 +7978,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentGroupName":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentGroupName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentGroupName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7819,8 +7991,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentGroupName(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentGroupName", o2.jsonEnrollmentGroupName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentGroupName", o2.jsonEnrollmentGroupName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7834,8 +8006,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentPaymentEachMonth":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentPaymentEachMonth")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentPaymentEachMonth")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7847,8 +8019,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentPaymentEachMonth(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7862,8 +8034,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentPaymentComplete":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentPaymentComplete")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentPaymentComplete")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7875,8 +8047,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentPaymentComplete(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7890,8 +8062,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setCustomerProfileId":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "customerProfileId")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7903,8 +8075,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setCustomerProfileId(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7918,8 +8090,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentChargeDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentChargeDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentChargeDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7931,8 +8103,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentChargeDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentChargeDate", o2.jsonEnrollmentChargeDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentChargeDate", o2.jsonEnrollmentChargeDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7946,8 +8118,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentParentNames":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentParentNames")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentParentNames")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7959,8 +8131,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentParentNames(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentParentNames", o2.jsonEnrollmentParentNames())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentParentNames", o2.jsonEnrollmentParentNames())
 										, b
 								-> {
 									if(b.succeeded())
@@ -7974,8 +8146,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature1":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature1")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature1")
 										, b
 								-> {
 									if(b.succeeded())
@@ -7987,8 +8159,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature1(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature1", o2.jsonEnrollmentSignature1())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature1", o2.jsonEnrollmentSignature1())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8002,8 +8174,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature2":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature2")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature2")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8015,8 +8187,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature2(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature2", o2.jsonEnrollmentSignature2())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature2", o2.jsonEnrollmentSignature2())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8030,8 +8202,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature3":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature3")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature3")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8043,8 +8215,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature3(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature3", o2.jsonEnrollmentSignature3())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature3", o2.jsonEnrollmentSignature3())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8058,8 +8230,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature4":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature4")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature4")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8071,8 +8243,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature4(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature4", o2.jsonEnrollmentSignature4())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature4", o2.jsonEnrollmentSignature4())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8086,8 +8258,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature5":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature5")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature5")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8099,8 +8271,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature5(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature5", o2.jsonEnrollmentSignature5())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature5", o2.jsonEnrollmentSignature5())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8114,8 +8286,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature6":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature6")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature6")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8127,8 +8299,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature6(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature6", o2.jsonEnrollmentSignature6())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature6", o2.jsonEnrollmentSignature6())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8142,8 +8314,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature7":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature7")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature7")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8155,8 +8327,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature7(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature7", o2.jsonEnrollmentSignature7())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature7", o2.jsonEnrollmentSignature7())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8170,8 +8342,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature8":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature8")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature8")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8183,8 +8355,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature8(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature8", o2.jsonEnrollmentSignature8())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature8", o2.jsonEnrollmentSignature8())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8198,8 +8370,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature9":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature9")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature9")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8211,8 +8383,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature9(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature9", o2.jsonEnrollmentSignature9())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature9", o2.jsonEnrollmentSignature9())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8226,8 +8398,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature10":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature10")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature10")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8239,8 +8411,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature10(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature10", o2.jsonEnrollmentSignature10())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature10", o2.jsonEnrollmentSignature10())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8254,8 +8426,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate1":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate1")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate1")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8267,8 +8439,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate1(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate1", o2.jsonEnrollmentDate1())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate1", o2.jsonEnrollmentDate1())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8282,8 +8454,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate2":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate2")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate2")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8295,8 +8467,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate2(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate2", o2.jsonEnrollmentDate2())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate2", o2.jsonEnrollmentDate2())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8310,8 +8482,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate3":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate3")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate3")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8323,8 +8495,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate3(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate3", o2.jsonEnrollmentDate3())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate3", o2.jsonEnrollmentDate3())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8338,8 +8510,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate4":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate4")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate4")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8351,8 +8523,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate4(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate4", o2.jsonEnrollmentDate4())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate4", o2.jsonEnrollmentDate4())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8366,8 +8538,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate5":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate5")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate5")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8379,8 +8551,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate5(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate5", o2.jsonEnrollmentDate5())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate5", o2.jsonEnrollmentDate5())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8394,8 +8566,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate6":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate6")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate6")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8407,8 +8579,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate6(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate6", o2.jsonEnrollmentDate6())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate6", o2.jsonEnrollmentDate6())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8422,8 +8594,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate7":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate7")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate7")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8435,8 +8607,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate7(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate7", o2.jsonEnrollmentDate7())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate7", o2.jsonEnrollmentDate7())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8450,8 +8622,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate8":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate8")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate8")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8463,8 +8635,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate8(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate8", o2.jsonEnrollmentDate8())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate8", o2.jsonEnrollmentDate8())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8478,8 +8650,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate9":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate9")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate9")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8491,8 +8663,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate9(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate9", o2.jsonEnrollmentDate9())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate9", o2.jsonEnrollmentDate9())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8506,8 +8678,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate10":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate10")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate10")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8519,8 +8691,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate10(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate10", o2.jsonEnrollmentDate10())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate10", o2.jsonEnrollmentDate10())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8533,7 +8705,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					SchoolEnrollment o3 = new SchoolEnrollment();
 					o3.setSiteRequest_(o.getSiteRequest_());
@@ -8694,7 +8866,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listSchoolEnrollment.next(dt)) {
 					listPATCHPaymentsSchoolEnrollment(apiRequest, listSchoolEnrollment, dt, eventHandler);
@@ -8769,16 +8941,18 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
 			Set<String> methodNames = jsonObject.fieldNames();
 			SchoolEnrollment o2 = new SchoolEnrollment();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-							, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+							.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -8790,8 +8964,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -8813,8 +8987,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setInheritPk":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8826,8 +9000,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8841,8 +9015,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setArchived":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "archived")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "archived")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8854,8 +9028,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "archived", o2.jsonArchived())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "archived", o2.jsonArchived())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8869,8 +9043,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setDeleted":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "deleted")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "deleted")
 										, b
 								-> {
 									if(b.succeeded())
@@ -8882,8 +9056,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "deleted", o2.jsonDeleted())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "deleted", o2.jsonDeleted())
 										, b
 								-> {
 									if(b.succeeded())
@@ -8899,10 +9073,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setYearKey(jsonObject.getString(methodName));
 							Long l = o2.getYearKey();
 							if(l != null && !l.equals(o.getYearKey())) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+								SearchList<org.computate.scolaire.enUS.year.SchoolYear> searchList = new SearchList<org.computate.scolaire.enUS.year.SchoolYear>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
+								searchList.setC(org.computate.scolaire.enUS.year.SchoolYear.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -8910,8 +9084,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -8933,10 +9107,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setYearKey(jsonObject.getString(methodName));
 							Long l = o2.getYearKey();
 							if(l != null) {
-								SearchList<SchoolYear> searchList = new SearchList<SchoolYear>();
+								SearchList<org.computate.scolaire.enUS.year.SchoolYear> searchList = new SearchList<org.computate.scolaire.enUS.year.SchoolYear>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolYear.class);
+								searchList.setC(org.computate.scolaire.enUS.year.SchoolYear.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -8944,8 +9118,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "yearKey")
 												, b
 										-> {
 											if(b.succeeded())
@@ -8966,10 +9140,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+								SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolBlock.class);
+								searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -8977,8 +9151,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9001,10 +9175,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllBlockKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllBlockKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+									SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolBlock.class);
+									searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9012,8 +9186,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9038,10 +9212,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setBlockKeysValues.size(); i++) {
 								Long l = Long.parseLong(setBlockKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+									SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolBlock.class);
+									searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9051,8 +9225,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setBlockKeysValues2.add(l2);
 									if(l2 != null && !o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9073,8 +9247,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getBlockKeys()) {
 								if(l != null && (setBlockKeysValues2 == null || !setBlockKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "blockKeys", l, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9091,10 +9265,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolBlock> searchList = new SearchList<SchoolBlock>();
+								SearchList<org.computate.scolaire.enUS.block.SchoolBlock> searchList = new SearchList<org.computate.scolaire.enUS.block.SchoolBlock>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolBlock.class);
+								searchList.setC(org.computate.scolaire.enUS.block.SchoolBlock.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9102,8 +9276,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getBlockKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "blockKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9125,10 +9299,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setChildKey(jsonObject.getString(methodName));
 							Long l = o2.getChildKey();
 							if(l != null) {
-								SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+								SearchList<org.computate.scolaire.enUS.child.SchoolChild> searchList = new SearchList<org.computate.scolaire.enUS.child.SchoolChild>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolChild.class);
+								searchList.setC(org.computate.scolaire.enUS.child.SchoolChild.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9145,8 +9319,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getChildKey())) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "childKey", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9168,10 +9342,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							o2.setChildKey(jsonObject.getString(methodName));
 							Long l = o2.getChildKey();
 							if(l != null) {
-								SearchList<SchoolChild> searchList = new SearchList<SchoolChild>();
+								SearchList<org.computate.scolaire.enUS.child.SchoolChild> searchList = new SearchList<org.computate.scolaire.enUS.child.SchoolChild>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolChild.class);
+								searchList.setC(org.computate.scolaire.enUS.child.SchoolChild.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9188,8 +9362,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "childKey", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "childKey", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9210,10 +9384,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+								SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolMom.class);
+								searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9230,8 +9404,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9254,10 +9428,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllMomKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllMomKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+									SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolMom.class);
+									searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9274,8 +9448,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9300,10 +9474,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setMomKeysValues.size(); i++) {
 								Long l = Long.parseLong(setMomKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+									SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolMom.class);
+									searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9322,8 +9496,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setMomKeysValues2.add(l2);
 									if(l2 != null && !o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9344,8 +9518,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getMomKeys()) {
 								if(l != null && (setMomKeysValues == null || !setMomKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9362,10 +9536,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolMom> searchList = new SearchList<SchoolMom>();
+								SearchList<org.computate.scolaire.enUS.mom.SchoolMom> searchList = new SearchList<org.computate.scolaire.enUS.mom.SchoolMom>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolMom.class);
+								searchList.setC(org.computate.scolaire.enUS.mom.SchoolMom.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9382,8 +9556,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getMomKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "momKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9404,10 +9578,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+								SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolDad.class);
+								searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9424,8 +9598,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9448,10 +9622,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllDadKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllDadKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+									SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolDad.class);
+									searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9468,8 +9642,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9494,10 +9668,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setDadKeysValues.size(); i++) {
 								Long l = Long.parseLong(setDadKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+									SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolDad.class);
+									searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9516,8 +9690,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setDadKeysValues2.add(l2);
 									if(l2 != null && !o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9538,8 +9712,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getDadKeys()) {
 								if(l != null && (setDadKeysValues2 == null || !setDadKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "dadKeys", l, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9556,10 +9730,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolDad> searchList = new SearchList<SchoolDad>();
+								SearchList<org.computate.scolaire.enUS.dad.SchoolDad> searchList = new SearchList<org.computate.scolaire.enUS.dad.SchoolDad>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolDad.class);
+								searchList.setC(org.computate.scolaire.enUS.dad.SchoolDad.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9576,8 +9750,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getDadKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "dadKeys", l2, "enrollmentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9598,10 +9772,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+								SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolGuardian.class);
+								searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9618,8 +9792,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9642,10 +9816,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllGuardianKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllGuardianKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+									SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolGuardian.class);
+									searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9662,8 +9836,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9688,10 +9862,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setGuardianKeysValues.size(); i++) {
 								Long l = Long.parseLong(setGuardianKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+									SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolGuardian.class);
+									searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9710,8 +9884,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setGuardianKeysValues2.add(l2);
 									if(l2 != null && !o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9732,8 +9906,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getGuardianKeys()) {
 								if(l != null && (setGuardianKeysValues == null || !setGuardianKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9750,10 +9924,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolGuardian> searchList = new SearchList<SchoolGuardian>();
+								SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian> searchList = new SearchList<org.computate.scolaire.enUS.guardian.SchoolGuardian>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolGuardian.class);
+								searchList.setC(org.computate.scolaire.enUS.guardian.SchoolGuardian.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9770,8 +9944,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getGuardianKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "guardianKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9792,10 +9966,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+								SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolPayment.class);
+								searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9812,8 +9986,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9836,10 +10010,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllPaymentKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllPaymentKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+									SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolPayment.class);
+									searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9856,8 +10030,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9882,10 +10056,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setPaymentKeysValues.size(); i++) {
 								Long l = Long.parseLong(setPaymentKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+									SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SchoolPayment.class);
+									searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9904,8 +10078,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setPaymentKeysValues2.add(l2);
 									if(l2 != null && !o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9926,8 +10100,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getPaymentKeys()) {
 								if(l != null && (setPaymentKeysValues == null || !setPaymentKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9944,10 +10118,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+								SearchList<org.computate.scolaire.enUS.payment.SchoolPayment> searchList = new SearchList<org.computate.scolaire.enUS.payment.SchoolPayment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolPayment.class);
+								searchList.setC(org.computate.scolaire.enUS.payment.SchoolPayment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -9964,8 +10138,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPaymentKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKey", pk, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -9986,10 +10160,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SiteUser.class);
+								searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -10006,8 +10180,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -10030,10 +10204,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  addAllUserKeysValues.size(); i++) {
 								Long l = Long.parseLong(addAllUserKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+									SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SiteUser.class);
+									searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -10050,8 +10224,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 									Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -10076,10 +10250,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Integer i = 0; i <  setUserKeysValues.size(); i++) {
 								Long l = Long.parseLong(setUserKeysValues.getString(i));
 								if(l != null) {
-									SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+									SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 									searchList.setQuery("*:*");
 									searchList.setStore(true);
-									searchList.setC(SiteUser.class);
+									searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 									searchList.addFilterQuery("deleted_indexed_boolean:false");
 									searchList.addFilterQuery("archived_indexed_boolean:false");
 									searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -10098,8 +10272,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 										setUserKeysValues2.add(l2);
 									if(l2 != null && !o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -10120,8 +10294,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							for(Long l :  o.getUserKeys()) {
 								if(l != null && (setUserKeysValues == null || !setUserKeysValues2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -10138,10 +10312,10 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodName));
 							if(l != null) {
-								SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+								SearchList<org.computate.scolaire.enUS.user.SiteUser> searchList = new SearchList<org.computate.scolaire.enUS.user.SiteUser>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SiteUser.class);
+								searchList.setC(org.computate.scolaire.enUS.user.SiteUser.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -10158,8 +10332,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getUserKeys().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(l2, "enrollmentKeys", pk, "userKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -10179,8 +10353,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildCompleteName":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childCompleteName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childCompleteName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10192,8 +10366,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildCompleteName(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childCompleteName", o2.jsonChildCompleteName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childCompleteName", o2.jsonChildCompleteName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10207,8 +10381,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildCompleteNamePreferred":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childCompleteNamePreferred")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childCompleteNamePreferred")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10220,8 +10394,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildCompleteNamePreferred(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childCompleteNamePreferred", o2.jsonChildCompleteNamePreferred())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10235,8 +10409,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildBirthDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childBirthDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childBirthDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10248,8 +10422,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildBirthDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childBirthDate", o2.jsonChildBirthDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childBirthDate", o2.jsonChildBirthDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10263,8 +10437,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setSchoolAddress":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "schoolAddress")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "schoolAddress")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10276,8 +10450,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setSchoolAddress(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "schoolAddress", o2.jsonSchoolAddress())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "schoolAddress", o2.jsonSchoolAddress())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10291,8 +10465,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentApproved":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentApproved")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentApproved")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10304,8 +10478,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentApproved(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentApproved", o2.jsonEnrollmentApproved())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentApproved", o2.jsonEnrollmentApproved())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10319,8 +10493,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentImmunizations":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentImmunizations")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentImmunizations")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10332,8 +10506,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentImmunizations(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentImmunizations", o2.jsonEnrollmentImmunizations())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentImmunizations", o2.jsonEnrollmentImmunizations())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10347,8 +10521,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setPhoto":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "photo")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "photo")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10360,8 +10534,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setPhoto(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "photo", o2.jsonPhoto())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "photo", o2.jsonPhoto())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10375,8 +10549,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilyMarried":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyMarried")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyMarried")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10388,8 +10562,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyMarried(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyMarried", o2.jsonFamilyMarried())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyMarried", o2.jsonFamilyMarried())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10403,8 +10577,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilySeparated":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familySeparated")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familySeparated")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10416,8 +10590,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilySeparated(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familySeparated", o2.jsonFamilySeparated())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familySeparated", o2.jsonFamilySeparated())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10431,8 +10605,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilyDivorced":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyDivorced")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyDivorced")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10444,8 +10618,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyDivorced(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyDivorced", o2.jsonFamilyDivorced())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyDivorced", o2.jsonFamilyDivorced())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10456,11 +10630,39 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							}));
 						}
 						break;
+					case "setEnrollmentPassphrase":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentPassphrase")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPassphrase failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setEnrollmentPassphrase(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentPassphrase", o2.jsonEnrollmentPassphrase())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.enrollmentPassphrase failed", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setFamilyAddress":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyAddress")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyAddress")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10472,8 +10674,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyAddress(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyAddress", o2.jsonFamilyAddress())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyAddress", o2.jsonFamilyAddress())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10487,8 +10689,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setFamilyHowDoYouKnowTheSchool":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "familyHowDoYouKnowTheSchool")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "familyHowDoYouKnowTheSchool")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10500,8 +10702,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setFamilyHowDoYouKnowTheSchool(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "familyHowDoYouKnowTheSchool", o2.jsonFamilyHowDoYouKnowTheSchool())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10515,8 +10717,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSpecialConsiderations":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSpecialConsiderations")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSpecialConsiderations")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10528,8 +10730,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSpecialConsiderations(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSpecialConsiderations", o2.jsonEnrollmentSpecialConsiderations())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10543,8 +10745,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildMedicalConditions":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childMedicalConditions")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childMedicalConditions")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10556,8 +10758,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildMedicalConditions(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childMedicalConditions", o2.jsonChildMedicalConditions())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childMedicalConditions", o2.jsonChildMedicalConditions())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10571,8 +10773,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildPreviousSchoolsAttended":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childPreviousSchoolsAttended")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childPreviousSchoolsAttended")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10584,8 +10786,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildPreviousSchoolsAttended(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childPreviousSchoolsAttended", o2.jsonChildPreviousSchoolsAttended())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10599,8 +10801,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildDescription":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childDescription")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childDescription")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10612,8 +10814,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildDescription(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childDescription", o2.jsonChildDescription())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childDescription", o2.jsonChildDescription())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10627,8 +10829,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setChildObjectives":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childObjectives")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childObjectives")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10640,8 +10842,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildObjectives(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childObjectives", o2.jsonChildObjectives())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childObjectives", o2.jsonChildObjectives())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10652,11 +10854,39 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							}));
 						}
 						break;
+					case "setAdminNotes":
+						if(jsonObject.getString(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "adminNotes")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.adminNotes failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setAdminNotes(jsonObject.getString(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "adminNotes", o2.jsonAdminNotes())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value SchoolEnrollment.adminNotes failed", b.cause())));
+								});
+							}));
+						}
+						break;
 					case "setChildPottyTrained":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "childPottyTrained")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "childPottyTrained")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10668,8 +10898,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setChildPottyTrained(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "childPottyTrained", o2.jsonChildPottyTrained())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "childPottyTrained", o2.jsonChildPottyTrained())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10683,8 +10913,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentGroupName":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentGroupName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentGroupName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10696,8 +10926,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentGroupName(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentGroupName", o2.jsonEnrollmentGroupName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentGroupName", o2.jsonEnrollmentGroupName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10711,8 +10941,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentPaymentEachMonth":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentPaymentEachMonth")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentPaymentEachMonth")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10724,8 +10954,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentPaymentEachMonth(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10739,8 +10969,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentPaymentComplete":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentPaymentComplete")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentPaymentComplete")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10752,8 +10982,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentPaymentComplete(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentPaymentComplete", o2.jsonEnrollmentPaymentComplete())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10767,8 +10997,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setCustomerProfileId":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "customerProfileId")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10780,8 +11010,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setCustomerProfileId(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10795,8 +11025,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentChargeDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentChargeDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentChargeDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10808,8 +11038,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentChargeDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentChargeDate", o2.jsonEnrollmentChargeDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentChargeDate", o2.jsonEnrollmentChargeDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10823,8 +11053,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentParentNames":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentParentNames")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentParentNames")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10836,8 +11066,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentParentNames(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentParentNames", o2.jsonEnrollmentParentNames())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentParentNames", o2.jsonEnrollmentParentNames())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10851,8 +11081,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature1":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature1")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature1")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10864,8 +11094,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature1(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature1", o2.jsonEnrollmentSignature1())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature1", o2.jsonEnrollmentSignature1())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10879,8 +11109,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature2":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature2")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature2")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10892,8 +11122,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature2(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature2", o2.jsonEnrollmentSignature2())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature2", o2.jsonEnrollmentSignature2())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10907,8 +11137,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature3":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature3")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature3")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10920,8 +11150,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature3(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature3", o2.jsonEnrollmentSignature3())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature3", o2.jsonEnrollmentSignature3())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10935,8 +11165,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature4":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature4")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature4")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10948,8 +11178,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature4(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature4", o2.jsonEnrollmentSignature4())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature4", o2.jsonEnrollmentSignature4())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10963,8 +11193,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature5":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature5")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature5")
 										, b
 								-> {
 									if(b.succeeded())
@@ -10976,8 +11206,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature5(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature5", o2.jsonEnrollmentSignature5())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature5", o2.jsonEnrollmentSignature5())
 										, b
 								-> {
 									if(b.succeeded())
@@ -10991,8 +11221,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature6":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature6")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature6")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11004,8 +11234,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature6(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature6", o2.jsonEnrollmentSignature6())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature6", o2.jsonEnrollmentSignature6())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11019,8 +11249,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature7":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature7")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature7")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11032,8 +11262,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature7(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature7", o2.jsonEnrollmentSignature7())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature7", o2.jsonEnrollmentSignature7())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11047,8 +11277,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature8":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature8")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature8")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11060,8 +11290,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature8(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature8", o2.jsonEnrollmentSignature8())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature8", o2.jsonEnrollmentSignature8())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11075,8 +11305,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature9":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature9")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature9")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11088,8 +11318,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature9(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature9", o2.jsonEnrollmentSignature9())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature9", o2.jsonEnrollmentSignature9())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11103,8 +11333,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentSignature10":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentSignature10")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentSignature10")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11116,8 +11346,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentSignature10(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentSignature10", o2.jsonEnrollmentSignature10())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentSignature10", o2.jsonEnrollmentSignature10())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11131,8 +11361,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate1":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate1")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate1")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11144,8 +11374,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate1(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate1", o2.jsonEnrollmentDate1())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate1", o2.jsonEnrollmentDate1())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11159,8 +11389,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate2":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate2")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate2")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11172,8 +11402,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate2(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate2", o2.jsonEnrollmentDate2())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate2", o2.jsonEnrollmentDate2())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11187,8 +11417,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate3":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate3")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate3")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11200,8 +11430,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate3(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate3", o2.jsonEnrollmentDate3())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate3", o2.jsonEnrollmentDate3())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11215,8 +11445,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate4":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate4")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate4")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11228,8 +11458,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate4(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate4", o2.jsonEnrollmentDate4())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate4", o2.jsonEnrollmentDate4())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11243,8 +11473,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate5":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate5")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate5")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11256,8 +11486,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate5(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate5", o2.jsonEnrollmentDate5())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate5", o2.jsonEnrollmentDate5())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11271,8 +11501,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate6":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate6")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate6")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11284,8 +11514,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate6(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate6", o2.jsonEnrollmentDate6())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate6", o2.jsonEnrollmentDate6())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11299,8 +11529,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate7":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate7")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate7")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11312,8 +11542,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate7(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate7", o2.jsonEnrollmentDate7())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate7", o2.jsonEnrollmentDate7())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11327,8 +11557,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate8":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate8")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate8")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11340,8 +11570,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate8(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate8", o2.jsonEnrollmentDate8())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate8", o2.jsonEnrollmentDate8())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11355,8 +11585,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate9":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate9")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate9")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11368,8 +11598,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate9(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate9", o2.jsonEnrollmentDate9())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate9", o2.jsonEnrollmentDate9())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11383,8 +11613,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					case "setEnrollmentDate10":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentDate10")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentDate10")
 										, b
 								-> {
 									if(b.succeeded())
@@ -11396,8 +11626,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						} else {
 							o2.setEnrollmentDate10(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentDate10", o2.jsonEnrollmentDate10())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentDate10", o2.jsonEnrollmentDate10())
 										, b
 								-> {
 									if(b.succeeded())
@@ -11410,7 +11640,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					SchoolEnrollment o3 = new SchoolEnrollment();
 					o3.setSiteRequest_(o.getSiteRequest_());
@@ -11526,7 +11756,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			AllWriter w = AllWriter.create(listSchoolEnrollment.getSiteRequest_(), buffer);
 			EnrollmentPage page = new EnrollmentPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/enrollment");
@@ -11621,7 +11851,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			AllWriter w = AllWriter.create(listSchoolEnrollment.getSiteRequest_(), buffer);
 			EnrollmentPage page = new EnrollmentPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/refresh-enrollment");
@@ -11700,10 +11930,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			String userId = siteRequest.getUserId();
 			ZonedDateTime created = Optional.ofNullable(siteRequest.getJsonObject()).map(j -> j.getString("created")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())));
 
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolEnrollment.class.getCanonicalName(), userId, created.toOffsetDateTime())
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_create)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(SchoolEnrollment.class.getCanonicalName(), userId, created.toOffsetDateTime())
 					, createAsync
 			-> {
 				if(createAsync.succeeded()) {
@@ -11738,7 +11967,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
 				Buffer.buffer().appendString(json.encodePrettily())
-				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
+				, MultiMap.caseInsensitiveMultiMap().add("Content-Type", "application/json")
 		);
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
@@ -11920,10 +12149,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 						sqlTransactionSchoolEnrollment(siteRequest, b -> {
 							if(b.succeeded()) {
 								Transaction tx = siteRequest.getTx();
-								tx.preparedQuery(
-										SiteContextEnUS.SQL_selectC
-										, Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
-										, Collectors.toList()
+								tx.preparedQuery(SiteContextEnUS.SQL_selectC)
+										.collecting(Collectors.toList())
+										.execute(Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
 										, selectCAsync
 								-> {
 									if(selectCAsync.succeeded()) {
@@ -11932,7 +12160,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 											SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
 											if(userValues == null) {
 												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContext.getAuthProvider(), userVertx);
+												JsonObject jsonPrincipal = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
@@ -11971,6 +12200,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
 																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
 																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																		siteRequest.setUserEmail(jsonPrincipal.getString("email"));
 																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
 																		siteRequest.setUserKey(siteUser.getPk());
 																		eventHandler.handle(Future.succeededFuture());
@@ -11998,7 +12228,8 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 												SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
 
 												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContext.getAuthProvider(), userVertx);
+												JsonObject jsonPrincipal = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
@@ -12007,8 +12238,6 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 												jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
 												jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
 												Boolean define = userSchoolEnrollmentDefine(siteRequest, jsonObject, true);
@@ -12110,19 +12339,11 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
-				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -12205,94 +12426,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 
 	public void aSearchSchoolEnrollment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolEnrollment>>> eventHandler) {
 		try {
-			OperationRequest operationRequest = siteRequest.getOperationRequest();
-			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
-			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
-			searchList.setPopulate(populate);
-			searchList.setStore(store);
-			searchList.setQuery("*:*");
-			searchList.setC(SchoolEnrollment.class);
-			searchList.setSiteRequest_(siteRequest);
-			if(entityList != null)
-				searchList.addFields(entityList);
-			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
-
-			String id = operationRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null) {
-				searchList.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			List<String> roles = Arrays.asList("SiteManager");
-			List<String> roleLires = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires))
-					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires))
-					) {
-				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
-						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
-			}
-
-			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
-				String entityVar = null;
-				String valueIndexed = null;
-				String varIndexed = null;
-				String valueSort = null;
-				Integer valueStart = null;
-				Integer valueRows = null;
-				String paramName = paramRequest.getKey();
-				Object paramValuesObject = paramRequest.getValue();
-				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
-
-				try {
-					for(Object paramObject : paramObjects) {
-						switch(paramName) {
-							case "q":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : SchoolEnrollment.varSearchSchoolEnrollment(entityVar);
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchSchoolEnrollmentQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "fq":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(entityVar);
-								aSearchSchoolEnrollmentFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "sort":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(entityVar);
-								aSearchSchoolEnrollmentSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "start":
-								valueStart = (Integer)paramObject;
-								aSearchSchoolEnrollmentStart(uri, apiMethod, searchList, valueStart);
-								break;
-							case "rows":
-								valueRows = (Integer)paramObject;
-								aSearchSchoolEnrollmentRows(uri, apiMethod, searchList, valueRows);
-								break;
-							case "var":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchSchoolEnrollmentVar(uri, apiMethod, searchList, entityVar, valueIndexed);
-								break;
-						}
-					}
-					aSearchSchoolEnrollmentUri(uri, apiMethod, searchList);
-				} catch(Exception e) {
-					LOGGER.error(String.format("aSearchSchoolEnrollment failed. ", e));
-					eventHandler.handle(Future.failedFuture(e));
-				}
-			});
-			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-				searchList.addSort("created_indexed_date", ORDER.desc);
-			}
-			searchList.initDeepForClass(siteRequest);
+			SearchList<SchoolEnrollment> searchList = aSearchSchoolEnrollmentList(siteRequest, populate, store, modify, uri, apiMethod);
 			eventHandler.handle(Future.succeededFuture(searchList));
 		} catch(Exception e) {
 			LOGGER.error(String.format("aSearchSchoolEnrollment failed. ", e));
@@ -12300,15 +12434,110 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 		}
 	}
 
+	public SearchList<SchoolEnrollment> aSearchSchoolEnrollmentList(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod) {
+		OperationRequest operationRequest = siteRequest.getOperationRequest();
+		String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
+		String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
+		SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+		searchList.setPopulate(populate);
+		searchList.setStore(store);
+		searchList.setQuery("*:*");
+		searchList.setC(SchoolEnrollment.class);
+		searchList.setSiteRequest_(siteRequest);
+		if(entityList != null)
+			searchList.addFields(entityList);
+		searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
+
+		String id = operationRequest.getParams().getJsonObject("path").getString("id");
+		if(id != null && NumberUtils.isCreatable(id)) {
+			searchList.addFilterQuery("(pk_indexed_long:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		} else if(id != null) {
+			searchList.addFilterQuery("objectId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+		}
+
+		List<String> roles = Arrays.asList("SiteManager");
+		List<String> roleLires = Arrays.asList("");
+		if(
+				!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+				&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+				&& (modify || !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires))
+				&& (modify || !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires))
+				) {
+			searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+					+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+		}
+
+		operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+			String entityVar = null;
+			String valueIndexed = null;
+			String varIndexed = null;
+			String valueSort = null;
+			Integer valueStart = null;
+			Integer valueRows = null;
+			String paramName = paramRequest.getKey();
+			Object paramValuesObject = paramRequest.getValue();
+			JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
+
+			try {
+				for(Object paramObject : paramObjects) {
+					switch(paramName) {
+						case "q":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							varIndexed = "*".equals(entityVar) ? entityVar : SchoolEnrollment.varSearchSchoolEnrollment(entityVar);
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
+							aSearchSchoolEnrollmentQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "fq":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(entityVar);
+							aSearchSchoolEnrollmentFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "sort":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
+							valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+							varIndexed = SchoolEnrollment.varIndexedSchoolEnrollment(entityVar);
+							aSearchSchoolEnrollmentSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "start":
+							valueStart = paramObject instanceof Integer ? (Integer)paramObject : Integer.parseInt(paramObject.toString());
+							aSearchSchoolEnrollmentStart(uri, apiMethod, searchList, valueStart);
+							break;
+						case "rows":
+							valueRows = paramObject instanceof Integer ? (Integer)paramObject : Integer.parseInt(paramObject.toString());
+							aSearchSchoolEnrollmentRows(uri, apiMethod, searchList, valueRows);
+							break;
+						case "var":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							aSearchSchoolEnrollmentVar(uri, apiMethod, searchList, entityVar, valueIndexed);
+							break;
+					}
+				}
+				aSearchSchoolEnrollmentUri(uri, apiMethod, searchList);
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
+		if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
+			searchList.addSort("created_indexed_date", ORDER.desc);
+		}
+		aSearchSchoolEnrollment2(siteRequest, populate, store, modify, uri, apiMethod, searchList);
+		searchList.initDeepForClass(siteRequest);
+		return searchList;
+	}
+	public void aSearchSchoolEnrollment2(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, SearchList<SchoolEnrollment> searchList) {
+	}
+
 	public void defineSchoolEnrollment(SchoolEnrollment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
 		try {
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_define
-					, Tuple.of(pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_define)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
@@ -12342,10 +12571,9 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_attribute
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_attribute)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attributeAsync
 			-> {
 				try {
@@ -12699,7 +12927,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 					}
 				}
 
-				CompositeFuture.all(futures).setHandler(a -> {
+				CompositeFuture.all(futures).onComplete(a -> {
 					if(a.succeeded()) {
 						SchoolEnrollmentEnUSApiServiceImpl service = new SchoolEnrollmentEnUSApiServiceImpl(siteRequest.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
@@ -12717,7 +12945,7 @@ public class SchoolEnrollmentEnUSGenApiServiceImpl implements SchoolEnrollmentEn
 							);
 						}
 
-						CompositeFuture.all(futures2).setHandler(b -> {
+						CompositeFuture.all(futures2).onComplete(b -> {
 							if(b.succeeded()) {
 								eventHandler.handle(Future.succeededFuture());
 							} else {

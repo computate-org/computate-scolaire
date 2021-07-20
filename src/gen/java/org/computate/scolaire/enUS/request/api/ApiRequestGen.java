@@ -19,6 +19,7 @@ import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
@@ -37,6 +38,7 @@ import java.util.Objects;
 import io.vertx.core.json.JsonArray;
 import java.util.List;
 import java.time.temporal.ChronoUnit;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import org.apache.commons.lang3.math.NumberUtils;
 import java.util.Optional;
@@ -169,6 +171,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 		return created == null ? "" : created.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy H:mm:ss a zz", Locale.forLanguageTag("en-US")));
 	}
 
+	public OffsetDateTime sqlCreated() {
+		return created == null ? null : created.toOffsetDateTime();
+	}
+
 	public String jsonCreated() {
 		return created == null ? "" : created.format(DateTimeFormatter.ISO_DATE_TIME);
 	}
@@ -251,6 +257,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 
 	public String strRows() {
 		return rows == null ? "" : rows.toString();
+	}
+
+	public Integer sqlRows() {
+		return rows;
 	}
 
 	public String jsonRows() {
@@ -337,6 +347,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 		return numFound == null ? "" : numFound.toString();
 	}
 
+	public Long sqlNumFound() {
+		return numFound;
+	}
+
 	public String jsonNumFound() {
 		return numFound == null ? "" : numFound.toString();
 	}
@@ -421,6 +435,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 		return numPATCH == null ? "" : numPATCH.toString();
 	}
 
+	public Long sqlNumPATCH() {
+		return numPATCH;
+	}
+
 	public String jsonNumPATCH() {
 		return numPATCH == null ? "" : numPATCH.toString();
 	}
@@ -497,6 +515,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 		return uuid == null ? "" : uuid;
 	}
 
+	public String sqlUuid() {
+		return uuid;
+	}
+
 	public String jsonUuid() {
 		return uuid == null ? "" : uuid;
 	}
@@ -571,6 +593,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 
 	public String strId() {
 		return id == null ? "" : id;
+	}
+
+	public String sqlId() {
+		return id;
 	}
 
 	public String jsonId() {
@@ -652,6 +678,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 
 	public String strEmpty() {
 		return empty == null ? "" : empty.toString();
+	}
+
+	public Boolean sqlEmpty() {
+		return empty;
 	}
 
 	public String jsonEmpty() {
@@ -736,6 +766,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 
 	public String strPk() {
 		return pk == null ? "" : pk.toString();
+	}
+
+	public Long sqlPk() {
+		return pk;
 	}
 
 	public String jsonPk() {
@@ -893,6 +927,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 		return pks == null ? "" : pks.toString();
 	}
 
+	public List<Long> sqlPks() {
+		return pks;
+	}
+
 	public String jsonPks() {
 		return pks == null ? "" : pks.toString();
 	}
@@ -988,6 +1026,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 
 	public String strClasses() {
 		return classes == null ? "" : classes.toString();
+	}
+
+	public List<String> sqlClasses() {
+		return classes;
 	}
 
 	public String jsonClasses() {
@@ -1087,6 +1129,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 		return vars == null ? "" : vars.toString();
 	}
 
+	public List<String> sqlVars() {
+		return vars;
+	}
+
 	public String jsonVars() {
 		return vars == null ? "" : vars.toString();
 	}
@@ -1166,6 +1212,10 @@ public abstract class ApiRequestGen<DEV> extends Object {
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
+			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
 			}
 		}
 		return o;
@@ -1393,7 +1443,29 @@ public abstract class ApiRequestGen<DEV> extends Object {
 		return o != null;
 	}
 	public Object defineApiRequest(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return null;
+		}
+	}
+
+	public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineApiRequest(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineApiRequest(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return null;
 		}

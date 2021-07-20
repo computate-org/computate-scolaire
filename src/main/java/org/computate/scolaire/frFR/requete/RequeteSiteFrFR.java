@@ -23,8 +23,8 @@ import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.computate.scolaire.frFR.utilisateur.UtilisateurSite;
 
+import io.vertx.core.MultiMap;
 import io.vertx.core.Vertx;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.oauth2.KeycloakHelper;
@@ -243,8 +243,16 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * Le nom d'utilisateur prefere de l'utilisateur. 
 	 * **/
 	protected void _utilisateurNom(Couverture<String> c) {
+	}
+
+	/**	
+	 * Var.enUS: userEmail
+	 * r: principalJson
+	 * r.enUS: jsonPrincipal
+	 * **/
+	protected void _utilisateurMail(Couverture<String> c) {
 		if(principalJson != null) {
-			String o = principalJson.getString("preferred_username");
+			String o = principalJson.getString("email");
 			c.o(o);
 		}
 	}
@@ -438,7 +446,7 @@ public class RequeteSiteFrFR extends RequeteSiteFrFRGen<Object> implements Seria
 	 * Var.enUS: requestHeaders
 	 * Ignorer: true
 	 **/
-	protected void _requeteEnTetes(Couverture<CaseInsensitiveHeaders> c) {
+	protected void _requeteEnTetes(Couverture<MultiMap> c) {
 	}
 	
 	/**

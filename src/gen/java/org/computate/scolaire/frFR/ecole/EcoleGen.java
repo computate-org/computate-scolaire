@@ -17,6 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.core.json.JsonObject;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -148,6 +149,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
 
+	public Long sqlEcoleCle() {
+		return ecoleCle;
+	}
+
 	public String jsonEcoleCle() {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
@@ -261,6 +266,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return anneeCles == null ? "" : anneeCles.toString();
 	}
 
+	public List<Long> sqlAnneeCles() {
+		return anneeCles;
+	}
+
 	public String jsonAnneeCles() {
 		return anneeCles == null ? "" : anneeCles.toString();
 	}
@@ -298,21 +307,15 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "années")
 				.a("title", "Description.enUS: ")
-				.a("class", "valeur suggereAnneeCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereAnneeCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setAnneeCles")
 				.a("id", classeApiMethodeMethode, "_anneeCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereEcoleAnneeCles($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereEcoleAnneeCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,anneeNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleAnneeCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-				e("span").a("class", "varEcole", pk, "AnneeCles ").f().sx(htmAnneeCles()).g("span");
-			}
 		}
 	}
 
@@ -465,6 +468,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return recuCles == null ? "" : recuCles.toString();
 	}
 
+	public List<Long> sqlRecuCles() {
+		return recuCles;
+	}
+
 	public String jsonRecuCles() {
 		return recuCles == null ? "" : recuCles.toString();
 	}
@@ -502,21 +509,15 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "reçus")
 				.a("title", "Description.enUS: ")
-				.a("class", "valeur suggereRecuCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereRecuCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setRecuCles")
 				.a("id", classeApiMethodeMethode, "_recuCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereEcoleRecuCles($(this).val() ? rechercherRecuScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleRecuCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereEcoleRecuCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,paiementNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'ecoleCle:" + pk + "'}", "], $('#listEcoleRecuCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-				) {
-				e("span").a("class", "varEcole", pk, "RecuCles ").f().sx(htmRecuCles()).g("span");
-			}
 		}
 	}
 
@@ -669,6 +670,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return saisonCles == null ? "" : saisonCles.toString();
 	}
 
+	public List<Long> sqlSaisonCles() {
+		return saisonCles;
+	}
+
 	public String jsonSaisonCles() {
 		return saisonCles == null ? "" : saisonCles.toString();
 	}
@@ -780,6 +785,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String strSessionCles() {
 		return sessionCles == null ? "" : sessionCles.toString();
+	}
+
+	public List<Long> sqlSessionCles() {
+		return sessionCles;
 	}
 
 	public String jsonSessionCles() {
@@ -895,6 +904,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return groupeAgeCles == null ? "" : groupeAgeCles.toString();
 	}
 
+	public List<Long> sqlGroupeAgeCles() {
+		return groupeAgeCles;
+	}
+
 	public String jsonGroupeAgeCles() {
 		return groupeAgeCles == null ? "" : groupeAgeCles.toString();
 	}
@@ -1006,6 +1019,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String strBlocCles() {
 		return blocCles == null ? "" : blocCles.toString();
+	}
+
+	public List<Long> sqlBlocCles() {
+		return blocCles;
 	}
 
 	public String jsonBlocCles() {
@@ -1121,6 +1138,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return enfantCles == null ? "" : enfantCles.toString();
 	}
 
+	public List<Long> sqlEnfantCles() {
+		return enfantCles;
+	}
+
 	public String jsonEnfantCles() {
 		return enfantCles == null ? "" : enfantCles.toString();
 	}
@@ -1203,6 +1224,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String strScolaireTri() {
 		return scolaireTri == null ? "" : scolaireTri.toString();
+	}
+
+	public Integer sqlScolaireTri() {
+		return scolaireTri;
 	}
 
 	public String jsonScolaireTri() {
@@ -1289,6 +1314,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleTri == null ? "" : ecoleTri.toString();
 	}
 
+	public Integer sqlEcoleTri() {
+		return ecoleTri;
+	}
+
 	public String jsonEcoleTri() {
 		return ecoleTri == null ? "" : ecoleTri.toString();
 	}
@@ -1363,6 +1392,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String strEcoleNom() {
 		return ecoleNom == null ? "" : ecoleNom;
+	}
+
+	public String sqlEcoleNom() {
+		return ecoleNom;
 	}
 
 	public String jsonEcoleNom() {
@@ -1513,6 +1546,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
 	}
 
+	public String sqlEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone;
+	}
+
 	public String jsonEcoleNumeroTelephone() {
 		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
 	}
@@ -1659,6 +1696,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String strEcoleForm() {
 		return ecoleForm == null ? "" : ecoleForm;
+	}
+
+	public String sqlEcoleForm() {
+		return ecoleForm;
 	}
 
 	public String jsonEcoleForm() {
@@ -1817,6 +1858,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleNumero == null ? "" : ecoleNumero.toString();
 	}
 
+	public Integer sqlEcoleNumero() {
+		return ecoleNumero;
+	}
+
 	public String jsonEcoleNumero() {
 		return ecoleNumero == null ? "" : ecoleNumero.toString();
 	}
@@ -1963,6 +2008,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String strEcoleAdministrateurNom() {
 		return ecoleAdministrateurNom == null ? "" : ecoleAdministrateurNom;
+	}
+
+	public String sqlEcoleAdministrateurNom() {
+		return ecoleAdministrateurNom;
 	}
 
 	public String jsonEcoleAdministrateurNom() {
@@ -2113,6 +2162,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleMail == null ? "" : ecoleMail;
 	}
 
+	public String sqlEcoleMail() {
+		return ecoleMail;
+	}
+
 	public String jsonEcoleMail() {
 		return ecoleMail == null ? "" : ecoleMail;
 	}
@@ -2259,6 +2312,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String strEcoleMailDe() {
 		return ecoleMailDe == null ? "" : ecoleMailDe;
+	}
+
+	public String sqlEcoleMailDe() {
+		return ecoleMailDe;
 	}
 
 	public String jsonEcoleMailDe() {
@@ -2409,6 +2466,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleMailA == null ? "" : ecoleMailA;
 	}
 
+	public String sqlEcoleMailA() {
+		return ecoleMailA;
+	}
+
 	public String jsonEcoleMailA() {
 		return ecoleMailA == null ? "" : ecoleMailA;
 	}
@@ -2555,6 +2616,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String strEcoleEmplacement() {
 		return ecoleEmplacement == null ? "" : ecoleEmplacement;
+	}
+
+	public String sqlEcoleEmplacement() {
+		return ecoleEmplacement;
 	}
 
 	public String jsonEcoleEmplacement() {
@@ -2705,6 +2770,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleAddresse == null ? "" : ecoleAddresse;
 	}
 
+	public String sqlEcoleAddresse() {
+		return ecoleAddresse;
+	}
+
 	public String jsonEcoleAddresse() {
 		return ecoleAddresse == null ? "" : ecoleAddresse;
 	}
@@ -2851,6 +2920,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return ecoleNomCourt == null ? "" : ecoleNomCourt;
 	}
 
+	public String sqlEcoleNomCourt() {
+		return ecoleNomCourt;
+	}
+
 	public String jsonEcoleNomCourt() {
 		return ecoleNomCourt == null ? "" : ecoleNomCourt;
 	}
@@ -2925,6 +2998,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 
 	public String strEcoleNomComplet() {
 		return ecoleNomComplet == null ? "" : ecoleNomComplet;
+	}
+
+	public String sqlEcoleNomComplet() {
+		return ecoleNomComplet;
 	}
 
 	public String jsonEcoleNomComplet() {
@@ -3018,6 +3095,10 @@ public abstract class EcoleGen<DEV> extends Cluster {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -3095,13 +3176,13 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		switch(var) {
 			case "anneeCles":
 				oEcole.addAnneeCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("anneeCles"))
+					sauvegardes.add("anneeCles");
 				return val;
 			case "recuCles":
 				oEcole.addRecuCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("recuCles"))
+					sauvegardes.add("recuCles");
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -3360,56 +3441,128 @@ public abstract class EcoleGen<DEV> extends Cluster {
 		return o != null;
 	}
 	public Object definirEcole(String var, String val) {
-		switch(var) {
-			case "ecoleNom":
+		switch(var.toLowerCase()) {
+			case "ecolenom":
 				if(val != null)
 					setEcoleNom(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleNom");
 				return val;
-			case "ecoleNumeroTelephone":
+			case "ecolenumerotelephone":
 				if(val != null)
 					setEcoleNumeroTelephone(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleNumeroTelephone");
 				return val;
-			case "ecoleForm":
+			case "ecoleform":
 				if(val != null)
 					setEcoleForm(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleForm");
 				return val;
-			case "ecoleNumero":
+			case "ecolenumero":
 				if(val != null)
 					setEcoleNumero(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleNumero");
 				return val;
-			case "ecoleAdministrateurNom":
+			case "ecoleadministrateurnom":
 				if(val != null)
 					setEcoleAdministrateurNom(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleAdministrateurNom");
 				return val;
-			case "ecoleMail":
+			case "ecolemail":
 				if(val != null)
 					setEcoleMail(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleMail");
 				return val;
-			case "ecoleMailDe":
+			case "ecolemailde":
 				if(val != null)
 					setEcoleMailDe(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleMailDe");
 				return val;
-			case "ecoleMailA":
+			case "ecolemaila":
 				if(val != null)
 					setEcoleMailA(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleMailA");
 				return val;
-			case "ecoleEmplacement":
+			case "ecoleemplacement":
 				if(val != null)
 					setEcoleEmplacement(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleEmplacement");
 				return val;
-			case "ecoleAddresse":
+			case "ecoleaddresse":
 				if(val != null)
 					setEcoleAddresse(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleAddresse");
+				return val;
+			default:
+				return super.definirCluster(var, val);
+		}
+	}
+
+	@Override public boolean definirPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirEcole(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirEcole(String var, Object val) {
+		switch(var.toLowerCase()) {
+			case "ecolenom":
+				if(val instanceof String)
+					setEcoleNom((String)val);
+				sauvegardes.add("ecoleNom");
+				return val;
+			case "ecolenumerotelephone":
+				if(val instanceof String)
+					setEcoleNumeroTelephone((String)val);
+				sauvegardes.add("ecoleNumeroTelephone");
+				return val;
+			case "ecoleform":
+				if(val instanceof String)
+					setEcoleForm((String)val);
+				sauvegardes.add("ecoleForm");
+				return val;
+			case "ecolenumero":
+				if(val instanceof Integer)
+					setEcoleNumero((Integer)val);
+				sauvegardes.add("ecoleNumero");
+				return val;
+			case "ecoleadministrateurnom":
+				if(val instanceof String)
+					setEcoleAdministrateurNom((String)val);
+				sauvegardes.add("ecoleAdministrateurNom");
+				return val;
+			case "ecolemail":
+				if(val instanceof String)
+					setEcoleMail((String)val);
+				sauvegardes.add("ecoleMail");
+				return val;
+			case "ecolemailde":
+				if(val instanceof String)
+					setEcoleMailDe((String)val);
+				sauvegardes.add("ecoleMailDe");
+				return val;
+			case "ecolemaila":
+				if(val instanceof String)
+					setEcoleMailA((String)val);
+				sauvegardes.add("ecoleMailA");
+				return val;
+			case "ecoleemplacement":
+				if(val instanceof String)
+					setEcoleEmplacement((String)val);
+				sauvegardes.add("ecoleEmplacement");
+				return val;
+			case "ecoleaddresse":
+				if(val instanceof String)
+					setEcoleAddresse((String)val);
+				sauvegardes.add("ecoleAddresse");
 				return val;
 			default:
 				return super.definirCluster(var, val);

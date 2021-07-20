@@ -349,7 +349,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("a");
 			} g("h1");
-			e("div").a("class", "").f();
+			{ e("div").a("class", "").f();
 				{ e("div").f();
 					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listSchoolChild.getQueryResponse().getResults().getNumFound();
@@ -431,6 +431,7 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
 				} g("div");
 				table1ChildGenPage();
+			} g("div");
 		}
 
 		if(listSchoolChild != null && listSchoolChild.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -458,7 +459,6 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsChildGenPage();
-		g("div");
 	}
 
 	public void table1ChildGenPage() {
@@ -560,7 +560,6 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-			e("div").a("class", "w3-margin-top ").f();
 
 			if(listSchoolChild != null && listSchoolChild.size() == 1) {
 				{ e("button")
@@ -743,7 +742,6 @@ public class ChildGenPage extends ChildGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
-			g("div");
 		}
 		htmlSuggestedChildGenPage(this, null, listSchoolChild);
 	}

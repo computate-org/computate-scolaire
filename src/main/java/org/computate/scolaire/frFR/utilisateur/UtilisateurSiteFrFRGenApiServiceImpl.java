@@ -42,6 +42,7 @@ import java.util.Set;
 import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -66,7 +67,6 @@ import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.api.OperationResponse;
@@ -75,7 +75,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import java.nio.charset.Charset;
 import org.apache.http.NameValuePair;
 import io.vertx.ext.web.api.OperationRequest;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.auth.oauth2.impl.OAuth2TokenImpl;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
@@ -333,7 +333,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listeUtilisateurSite.next(dt)) {
 					listePATCHUtilisateurSite(requeteApi, listeUtilisateurSite, dt, gestionnaireEvenements);
@@ -408,16 +408,18 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
 			Set<String> methodeNoms = jsonObject.fieldNames();
 			UtilisateurSite o2 = new UtilisateurSite();
+			o2.setRequeteSite_(requeteSite);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-							, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+							.execute(Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -429,8 +431,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -452,8 +454,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setInheritPk":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -465,8 +467,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -480,8 +482,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setArchive":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "archive")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "archive")
 										, b
 								-> {
 									if(b.succeeded())
@@ -493,8 +495,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "archive", o2.jsonArchive())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "archive", o2.jsonArchive())
 										, b
 								-> {
 									if(b.succeeded())
@@ -508,8 +510,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setSupprime":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "supprime")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "supprime")
 										, b
 								-> {
 									if(b.succeeded())
@@ -521,8 +523,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "supprime", o2.jsonSupprime())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "supprime", o2.jsonSupprime())
 										, b
 								-> {
 									if(b.succeeded())
@@ -537,10 +539,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.inscription.InscriptionScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -557,8 +559,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -581,10 +583,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							for(Integer i = 0; i <  addAllInscriptionClesValeurs.size(); i++) {
 								Long l = Long.parseLong(addAllInscriptionClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(InscriptionScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.inscription.InscriptionScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -601,8 +603,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -627,10 +629,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setInscriptionClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(InscriptionScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.inscription.InscriptionScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -649,8 +651,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 										setInscriptionClesValeurs2.add(l2);
 									if(l2 != null && !o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -671,8 +673,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							for(Long l :  o.getInscriptionCles()) {
 								if(l != null && (setInscriptionClesValeurs2 == null || !setInscriptionClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "inscriptionCles", l, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "inscriptionCles", l, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -689,10 +691,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.inscription.InscriptionScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -709,8 +711,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -731,10 +733,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.paiement.PaiementScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.paiement.PaiementScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(PaiementScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.paiement.PaiementScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -751,8 +753,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getPaiementCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -775,10 +777,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							for(Integer i = 0; i <  addAllPaiementClesValeurs.size(); i++) {
 								Long l = Long.parseLong(addAllPaiementClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.paiement.PaiementScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.paiement.PaiementScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(PaiementScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.paiement.PaiementScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -795,8 +797,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getPaiementCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -821,10 +823,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							for(Integer i = 0; i <  setPaiementClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setPaiementClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.paiement.PaiementScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.paiement.PaiementScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(PaiementScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.paiement.PaiementScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -843,8 +845,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 										setPaiementClesValeurs2.add(l2);
 									if(l2 != null && !o.getPaiementCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -865,8 +867,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							for(Long l :  o.getPaiementCles()) {
 								if(l != null && (setPaiementClesValeurs2 == null || !setPaiementClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "paiementCles", l, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "paiementCles", l, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -883,10 +885,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.paiement.PaiementScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.paiement.PaiementScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(PaiementScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.paiement.PaiementScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -903,8 +905,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getPaiementCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -924,8 +926,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setUtilisateurNom":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "utilisateurNom")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "utilisateurNom")
 										, b
 								-> {
 									if(b.succeeded())
@@ -937,8 +939,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setUtilisateurNom(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "utilisateurNom", o2.jsonUtilisateurNom())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "utilisateurNom", o2.jsonUtilisateurNom())
 										, b
 								-> {
 									if(b.succeeded())
@@ -952,8 +954,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setUtilisateurMail":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "utilisateurMail")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "utilisateurMail")
 										, b
 								-> {
 									if(b.succeeded())
@@ -965,8 +967,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setUtilisateurMail(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "utilisateurMail", o2.jsonUtilisateurMail())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "utilisateurMail", o2.jsonUtilisateurMail())
 										, b
 								-> {
 									if(b.succeeded())
@@ -980,8 +982,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setCustomerProfileId1":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId1")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId1")
 										, b
 								-> {
 									if(b.succeeded())
@@ -993,8 +995,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId1(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId1", o2.jsonCustomerProfileId1())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId1", o2.jsonCustomerProfileId1())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1008,8 +1010,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setCustomerProfileId2":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId2")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId2")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1021,8 +1023,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId2(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId2", o2.jsonCustomerProfileId2())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId2", o2.jsonCustomerProfileId2())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1036,8 +1038,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setCustomerProfileId3":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId3")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId3")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1049,8 +1051,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId3(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId3", o2.jsonCustomerProfileId3())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId3", o2.jsonCustomerProfileId3())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1064,8 +1066,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setCustomerProfileId4":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId4")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId4")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1077,8 +1079,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId4(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId4", o2.jsonCustomerProfileId4())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId4", o2.jsonCustomerProfileId4())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1092,8 +1094,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setCustomerProfileId5":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId5")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId5")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1105,8 +1107,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId5(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId5", o2.jsonCustomerProfileId5())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId5", o2.jsonCustomerProfileId5())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1120,8 +1122,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setCustomerProfileId6":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId6")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId6")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1133,8 +1135,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId6(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId6", o2.jsonCustomerProfileId6())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId6", o2.jsonCustomerProfileId6())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1148,8 +1150,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setCustomerProfileId7":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId7")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId7")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1161,8 +1163,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId7(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId7", o2.jsonCustomerProfileId7())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId7", o2.jsonCustomerProfileId7())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1176,8 +1178,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setCustomerProfileId8":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId8")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId8")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1189,8 +1191,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId8(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId8", o2.jsonCustomerProfileId8())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId8", o2.jsonCustomerProfileId8())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1204,8 +1206,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setCustomerProfileId9":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId9")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId9")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1217,8 +1219,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId9(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId9", o2.jsonCustomerProfileId9())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId9", o2.jsonCustomerProfileId9())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1232,8 +1234,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setCustomerProfileId10":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "customerProfileId10")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId10")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1245,8 +1247,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setCustomerProfileId10(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "customerProfileId10", o2.jsonCustomerProfileId10())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId10", o2.jsonCustomerProfileId10())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1260,8 +1262,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setUtilisateurRecevoirCourriels":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "utilisateurRecevoirCourriels")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "utilisateurRecevoirCourriels")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1273,8 +1275,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setUtilisateurRecevoirCourriels(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "utilisateurRecevoirCourriels", o2.jsonUtilisateurRecevoirCourriels())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "utilisateurRecevoirCourriels", o2.jsonUtilisateurRecevoirCourriels())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1288,8 +1290,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setVoirArchive":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "voirArchive")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "voirArchive")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1301,8 +1303,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setVoirArchive(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "voirArchive", o2.jsonVoirArchive())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "voirArchive", o2.jsonVoirArchive())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1316,8 +1318,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "setVoirSupprime":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "voirSupprime")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "voirSupprime")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1329,8 +1331,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						} else {
 							o2.setVoirSupprime(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "voirSupprime", o2.jsonVoirSupprime())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "voirSupprime", o2.jsonVoirSupprime())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1343,7 +1345,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					UtilisateurSite o3 = new UtilisateurSite();
 					o3.setRequeteSite_(o.getRequeteSite_());
@@ -1496,14 +1498,17 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
+			UtilisateurSite o2 = new UtilisateurSite();
+			o2.setRequeteSite_(requeteSite);
 			List<Future> futures = new ArrayList<>();
 
 			if(requeteSite.getSessionId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "sessionId", requeteSite.getSessionId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "sessionId", requeteSite.getSessionId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1515,8 +1520,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			}
 			if(requeteSite.getUtilisateurId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1528,8 +1533,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			}
 			if(requeteSite.getUtilisateurCle() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1552,8 +1557,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					switch(entiteVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1565,8 +1570,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "archive":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1578,8 +1583,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "supprime":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1592,10 +1597,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "inscriptionCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.inscription.InscriptionScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1603,8 +1608,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "inscriptionCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1624,10 +1629,10 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					case "paiementCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<PaiementScolaire> listeRecherche = new ListeRecherche<PaiementScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.paiement.PaiementScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.paiement.PaiementScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(PaiementScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.paiement.PaiementScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1635,8 +1640,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "paiementCles", l2, "utilisateurCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1655,8 +1660,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "utilisateurNom":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "utilisateurNom", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "utilisateurNom", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1668,8 +1673,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "utilisateurMail":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "utilisateurMail", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "utilisateurMail", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1681,8 +1686,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "customerProfileId1":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId1", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId1", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1694,8 +1699,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "customerProfileId2":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId2", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId2", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1707,8 +1712,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "customerProfileId3":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId3", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId3", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1720,8 +1725,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "customerProfileId4":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId4", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId4", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1733,8 +1738,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "customerProfileId5":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId5", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId5", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1746,8 +1751,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "customerProfileId6":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId6", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId6", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1759,8 +1764,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "customerProfileId7":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId7", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId7", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1772,8 +1777,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "customerProfileId8":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId8", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId8", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1785,8 +1790,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "customerProfileId9":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId9", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId9", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1798,8 +1803,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "customerProfileId10":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "customerProfileId10", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId10", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1811,8 +1816,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "utilisateurRecevoirCourriels":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "utilisateurRecevoirCourriels", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "utilisateurRecevoirCourriels", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1824,8 +1829,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "voirArchive":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "voirArchive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "voirArchive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1837,8 +1842,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						break;
 					case "voirSupprime":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "voirSupprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "voirSupprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1851,7 +1856,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
@@ -1966,7 +1971,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			ToutEcrivain w = ToutEcrivain.creer(listeUtilisateurSite.getRequeteSite_(), buffer);
 			UtilisateurSitePage page = new UtilisateurSitePage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
-			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			MultiMap requeteEnTetes = MultiMap.caseInsensitiveMultiMap();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/utilisateur");
@@ -2045,10 +2050,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			String utilisateurId = requeteSite.getUtilisateurId();
 			ZonedDateTime cree = Optional.ofNullable(requeteSite.getObjetJson()).map(j -> j.getString("cree")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())));
 
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_creer
-					, Tuple.of(UtilisateurSite.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_creer)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(UtilisateurSite.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
 					, creerAsync
 			-> {
 				if(creerAsync.succeeded()) {
@@ -2083,7 +2087,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
 				Buffer.buffer().appendString(json.encodePrettily())
-				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
+				, MultiMap.caseInsensitiveMultiMap().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -2265,10 +2269,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 						sqlTransactionUtilisateurSite(requeteSite, b -> {
 							if(b.succeeded()) {
 								Transaction tx = requeteSite.getTx();
-								tx.preparedQuery(
-										SiteContexteFrFR.SQL_selectC
-										, Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
-										, Collectors.toList()
+								tx.preparedQuery(SiteContexteFrFR.SQL_selectC)
+										.collecting(Collectors.toList())
+										.execute(Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
 										, selectCAsync
 								-> {
 									if(selectCAsync.succeeded()) {
@@ -2277,7 +2280,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 											UtilisateurSiteFrFRApiServiceImpl utilisateurService = new UtilisateurSiteFrFRApiServiceImpl(siteContexte);
 											if(utilisateurValeurs == null) {
 												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContexte.getAuthFournisseur(), utilisateurVertx);
+												JsonObject principalJson = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
@@ -2316,6 +2320,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
 																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
 																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																		requeteSite.setUtilisateurMail(principalJson.getString("email"));
 																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
 																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
 																		gestionnaireEvenements.handle(Future.succeededFuture());
@@ -2343,7 +2348,8 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 												UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
 
 												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContexte.getAuthFournisseur(), utilisateurVertx);
+												JsonObject principalJson = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
@@ -2352,8 +2358,6 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 												jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
 												jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 												Boolean definir = utilisateurUtilisateurSiteDefinir(requeteSite, jsonObject, true);
@@ -2455,19 +2459,11 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
-				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -2550,94 +2546,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 
 	public void rechercheUtilisateurSite(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<UtilisateurSite>>> gestionnaireEvenements) {
 		try {
-			OperationRequest operationRequete = requeteSite.getOperationRequete();
-			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
-			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
-			ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
-			listeRecherche.setPeupler(peupler);
-			listeRecherche.setStocker(stocker);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(UtilisateurSite.class);
-			listeRecherche.setRequeteSite_(requeteSite);
-			if(entiteListe != null)
-				listeRecherche.addFields(entiteListe);
-			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
-
-			String id = operationRequete.getParams().getJsonObject("path").getString("id");
-			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			List<String> roles = Arrays.asList("SiteManager");
-			List<String> roleLires = Arrays.asList("");
-			if(
-					!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
-					&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
-					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires))
-					&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires))
-					) {
-				listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
-						+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
-			}
-
-			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
-				String entiteVar = null;
-				String valeurIndexe = null;
-				String varIndexe = null;
-				String valeurTri = null;
-				Integer valeurStart = null;
-				Integer valeurRows = null;
-				String paramNom = paramRequete.getKey();
-				Object paramValeursObjet = paramRequete.getValue();
-				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
-
-				try {
-					for(Object paramObjet : paramObjets) {
-						switch(paramNom) {
-							case "q":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : UtilisateurSite.varRechercheUtilisateurSite(entiteVar);
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheUtilisateurSiteQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "fq":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = UtilisateurSite.varIndexeUtilisateurSite(entiteVar);
-								rechercheUtilisateurSiteFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "sort":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = UtilisateurSite.varIndexeUtilisateurSite(entiteVar);
-								rechercheUtilisateurSiteSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "start":
-								valeurStart = (Integer)paramObjet;
-								rechercheUtilisateurSiteStart(uri, apiMethode, listeRecherche, valeurStart);
-								break;
-							case "rows":
-								valeurRows = (Integer)paramObjet;
-								rechercheUtilisateurSiteRows(uri, apiMethode, listeRecherche, valeurRows);
-								break;
-							case "var":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheUtilisateurSiteVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
-								break;
-						}
-					}
-					rechercheUtilisateurSiteUri(uri, apiMethode, listeRecherche);
-				} catch(Exception e) {
-					LOGGER.error(String.format("rechercheUtilisateurSite a échoué. ", e));
-					gestionnaireEvenements.handle(Future.failedFuture(e));
-				}
-			});
-			if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
-				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
-			}
-			listeRecherche.initLoinPourClasse(requeteSite);
+			ListeRecherche<UtilisateurSite> listeRecherche = rechercheUtilisateurSiteListe(requeteSite, peupler, stocker, modifier, uri, apiMethode);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {
 			LOGGER.error(String.format("rechercheUtilisateurSite a échoué. ", e));
@@ -2645,15 +2554,110 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 		}
 	}
 
+	public ListeRecherche<UtilisateurSite> rechercheUtilisateurSiteListe(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode) {
+		OperationRequest operationRequete = requeteSite.getOperationRequete();
+		String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
+		String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
+		ListeRecherche<UtilisateurSite> listeRecherche = new ListeRecherche<UtilisateurSite>();
+		listeRecherche.setPeupler(peupler);
+		listeRecherche.setStocker(stocker);
+		listeRecherche.setQuery("*:*");
+		listeRecherche.setC(UtilisateurSite.class);
+		listeRecherche.setRequeteSite_(requeteSite);
+		if(entiteListe != null)
+			listeRecherche.addFields(entiteListe);
+		listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+
+		String id = operationRequete.getParams().getJsonObject("path").getString("id");
+		if(id != null && NumberUtils.isCreatable(id)) {
+			listeRecherche.addFilterQuery("(pk_indexed_long:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		} else if(id != null) {
+			listeRecherche.addFilterQuery("objetId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+		}
+
+		List<String> roles = Arrays.asList("SiteManager");
+		List<String> roleLires = Arrays.asList("");
+		if(
+				!CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roles)
+				&& !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roles)
+				&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRessource(), roleLires))
+				&& (modifier || !CollectionUtils.containsAny(requeteSite.getUtilisateurRolesRoyaume(), roleLires))
+				) {
+			listeRecherche.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(requeteSite.getSessionIdAvant()).orElse("-----"))
+					+ " OR utilisateurCles_indexed_longs:" + Optional.ofNullable(requeteSite.getUtilisateurCle()).orElse(0L));
+		}
+
+		operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
+			String entiteVar = null;
+			String valeurIndexe = null;
+			String varIndexe = null;
+			String valeurTri = null;
+			Integer valeurStart = null;
+			Integer valeurRows = null;
+			String paramNom = paramRequete.getKey();
+			Object paramValeursObjet = paramRequete.getValue();
+			JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+			try {
+				for(Object paramObjet : paramObjets) {
+					switch(paramNom) {
+						case "q":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							varIndexe = "*".equals(entiteVar) ? entiteVar : UtilisateurSite.varRechercheUtilisateurSite(entiteVar);
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
+							rechercheUtilisateurSiteQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "fq":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							varIndexe = UtilisateurSite.varIndexeUtilisateurSite(entiteVar);
+							rechercheUtilisateurSiteFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "sort":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
+							valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+							varIndexe = UtilisateurSite.varIndexeUtilisateurSite(entiteVar);
+							rechercheUtilisateurSiteSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "start":
+							valeurStart = paramObjet instanceof Integer ? (Integer)paramObjet : Integer.parseInt(paramObjet.toString());
+							rechercheUtilisateurSiteStart(uri, apiMethode, listeRecherche, valeurStart);
+							break;
+						case "rows":
+							valeurRows = paramObjet instanceof Integer ? (Integer)paramObjet : Integer.parseInt(paramObjet.toString());
+							rechercheUtilisateurSiteRows(uri, apiMethode, listeRecherche, valeurRows);
+							break;
+						case "var":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							rechercheUtilisateurSiteVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
+							break;
+					}
+				}
+				rechercheUtilisateurSiteUri(uri, apiMethode, listeRecherche);
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
+		if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
+		}
+		rechercheUtilisateurSite2(requeteSite, peupler, stocker, modifier, uri, apiMethode, listeRecherche);
+		listeRecherche.initLoinPourClasse(requeteSite);
+		return listeRecherche;
+	}
+	public void rechercheUtilisateurSite2(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, ListeRecherche<UtilisateurSite> listeRecherche) {
+	}
+
 	public void definirUtilisateurSite(UtilisateurSite o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_definir
-					, Tuple.of(pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_definir)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
@@ -2687,10 +2691,9 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_attribuer
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_attribuer)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attribuerAsync
 			-> {
 				try {
@@ -2828,7 +2831,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 					}
 				}
 
-				CompositeFuture.all(futures).setHandler(a -> {
+				CompositeFuture.all(futures).onComplete(a -> {
 					if(a.succeeded()) {
 						UtilisateurSiteFrFRApiServiceImpl service = new UtilisateurSiteFrFRApiServiceImpl(requeteSite.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
@@ -2846,7 +2849,7 @@ public class UtilisateurSiteFrFRGenApiServiceImpl implements UtilisateurSiteFrFR
 							);
 						}
 
-						CompositeFuture.all(futures2).setHandler(b -> {
+						CompositeFuture.all(futures2).onComplete(b -> {
 							if(b.succeeded()) {
 								gestionnaireEvenements.handle(Future.succeededFuture());
 							} else {

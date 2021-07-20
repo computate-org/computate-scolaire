@@ -377,7 +377,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("a");
 			} g("h1");
-			e("div").a("class", "").f();
+			{ e("div").a("class", "").f();
 				{ e("div").f();
 					JsonObject queryParams = Optional.ofNullable(operationRequest).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listSchoolBlock.getQueryResponse().getResults().getNumFound();
@@ -459,6 +459,7 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " of ", num).g("span");
 				} g("div");
 				table1BlockGenPage();
+			} g("div");
 		}
 
 		if(listSchoolBlock != null && listSchoolBlock.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -486,7 +487,6 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsBlockGenPage();
-		g("div");
 	}
 
 	public void table1BlockGenPage() {
@@ -588,7 +588,6 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
 				) {
-			e("div").a("class", "w3-margin-top ").f();
 
 			if(listSchoolBlock != null && listSchoolBlock.size() == 1) {
 				{ e("button")
@@ -771,7 +770,6 @@ public class BlockGenPage extends BlockGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
-			g("div");
 		}
 		htmlSuggestedBlockGenPage(this, null, listSchoolBlock);
 	}

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.dad.SchoolDad;
@@ -181,6 +182,10 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -297,7 +302,29 @@ public abstract class DadGenPageGen<DEV> extends ClusterPage {
 		return o != null;
 	}
 	public Object defineDadGenPage(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return super.defineClusterPage(var, val);
+		}
+	}
+
+	@Override public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineDadGenPage(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineDadGenPage(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return super.defineClusterPage(var, val);
 		}

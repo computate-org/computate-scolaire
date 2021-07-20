@@ -40,6 +40,7 @@ import java.util.Set;
 import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -64,7 +65,6 @@ import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.api.OperationResponse;
@@ -73,7 +73,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import java.nio.charset.Charset;
 import org.apache.http.NameValuePair;
 import io.vertx.ext.web.api.OperationRequest;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.auth.oauth2.impl.OAuth2TokenImpl;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
@@ -124,7 +124,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -230,14 +230,17 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
+			PartHtml o2 = new PartHtml();
+			o2.setRequeteSite_(requeteSite);
 			List<Future> futures = new ArrayList<>();
 
 			if(requeteSite.getSessionId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "sessionId", requeteSite.getSessionId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "sessionId", requeteSite.getSessionId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -249,8 +252,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			}
 			if(requeteSite.getUtilisateurId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -262,8 +265,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			}
 			if(requeteSite.getUtilisateurCle() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -280,8 +283,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					switch(entiteVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -293,8 +296,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "archive":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -306,8 +309,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "supprime":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -320,10 +323,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "designPageCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(DesignPage.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -331,8 +334,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -351,8 +354,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlLien":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlLien", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlLien", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -364,8 +367,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlElement":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlElement", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlElement", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -377,8 +380,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlId":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -390,8 +393,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlClasses":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlClasses", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlClasses", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -403,8 +406,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlStyle":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlStyle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlStyle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -416,8 +419,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlAvant":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlAvant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlAvant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -429,8 +432,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlApres":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlApres", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlApres", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -442,8 +445,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlTexte":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlTexte", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlTexte", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -455,8 +458,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVar":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVar", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVar", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -468,8 +471,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVarSpan":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVarSpan", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarSpan", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -481,8 +484,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVarForm":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVarForm", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarForm", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -494,8 +497,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVarInput":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVarInput", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarInput", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -507,8 +510,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlIfVarEquals":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlIfVarEquals", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlIfVarEquals", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -520,8 +523,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVarForEach":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVarForEach", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarForEach", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -533,8 +536,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVarHtml":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVarHtml", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarHtml", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -546,8 +549,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlExclure":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlExclure", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlExclure", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -559,8 +562,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "pdfExclure":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "pdfExclure", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "pdfExclure", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -572,8 +575,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "connecterDeconnecter":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "connecterDeconnecter", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "connecterDeconnecter", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -585,8 +588,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri1":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri1", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri1", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -598,8 +601,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri2":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri2", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri2", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -611,8 +614,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri3":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri3", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri3", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -624,8 +627,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri4":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri4", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri4", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -637,8 +640,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri5":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri5", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri5", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -650,8 +653,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri6":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri6", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri6", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -663,8 +666,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri7":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri7", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri7", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -676,8 +679,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri8":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri8", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri8", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -689,8 +692,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri9":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri9", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri9", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -702,8 +705,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri10":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri10", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri10", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -716,7 +719,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
@@ -779,7 +782,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -907,7 +910,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTImportPartHtml(requeteSite, gestionnaireEvenements);
@@ -969,7 +972,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1095,7 +1098,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTFusionPartHtml(requeteSite, gestionnaireEvenements);
@@ -1157,7 +1160,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1249,7 +1252,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listePartHtml.size());
 				if(listePartHtml.next()) {
@@ -1338,6 +1341,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			List<Future> futures = new ArrayList<>();
 
@@ -1348,8 +1352,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					switch(entiteVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1361,8 +1365,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "archive":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1374,8 +1378,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "supprime":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1388,8 +1392,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "designPageCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_addA
-										, Tuple.of(pk, "designPageCles", l, "partHtmlCles")
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+										.execute(Tuple.of(pk, "designPageCles", l, "partHtmlCles")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1406,8 +1410,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlLien":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlLien", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlLien", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1419,8 +1423,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlElement":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlElement", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlElement", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1432,8 +1436,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlId":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlId", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1445,8 +1449,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlClasses":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlClasses", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlClasses", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1458,8 +1462,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlStyle":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlStyle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlStyle", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1471,8 +1475,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlAvant":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlAvant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlAvant", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1484,8 +1488,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlApres":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlApres", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlApres", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1497,8 +1501,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlTexte":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlTexte", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlTexte", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1510,8 +1514,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVar":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVar", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVar", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1523,8 +1527,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVarSpan":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVarSpan", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarSpan", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1536,8 +1540,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVarForm":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVarForm", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarForm", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1549,8 +1553,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVarInput":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVarInput", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarInput", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1562,8 +1566,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlIfVarEquals":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlIfVarEquals", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlIfVarEquals", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1575,8 +1579,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVarForEach":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVarForEach", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarForEach", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1588,8 +1592,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlVarHtml":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlVarHtml", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlVarHtml", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1601,8 +1605,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "htmlExclure":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "htmlExclure", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "htmlExclure", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1614,8 +1618,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "pdfExclure":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "pdfExclure", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "pdfExclure", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1627,8 +1631,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "connecterDeconnecter":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "connecterDeconnecter", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "connecterDeconnecter", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1640,8 +1644,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri1":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri1", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri1", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1653,8 +1657,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri2":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri2", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri2", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1666,8 +1670,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri3":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri3", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri3", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1679,8 +1683,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri4":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri4", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri4", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1692,8 +1696,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri5":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri5", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri5", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1705,8 +1709,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri6":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri6", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri6", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1718,8 +1722,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri7":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri7", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri7", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1731,8 +1735,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri8":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri8", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri8", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1744,8 +1748,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri9":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri9", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri9", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1757,8 +1761,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 					case "tri10":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "tri10", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "tri10", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1771,7 +1775,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
@@ -1832,7 +1836,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1946,7 +1950,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listePartHtml.next(dt)) {
 					listePATCHPartHtml(requeteApi, listePartHtml, dt, gestionnaireEvenements);
@@ -2021,16 +2025,18 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
 			Set<String> methodeNoms = jsonObject.fieldNames();
 			PartHtml o2 = new PartHtml();
+			o2.setRequeteSite_(requeteSite);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-							, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+							.execute(Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -2042,8 +2048,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -2059,8 +2065,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setInheritPk":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2072,8 +2078,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2087,8 +2093,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setArchive":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "archive")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "archive")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2100,8 +2106,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "archive", o2.jsonArchive())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "archive", o2.jsonArchive())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2115,8 +2121,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setSupprime":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "supprime")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "supprime")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2128,8 +2134,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "supprime", o2.jsonSupprime())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "supprime", o2.jsonSupprime())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2144,10 +2150,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(DesignPage.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2155,8 +2161,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getDesignPageCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2179,10 +2185,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							for(Integer i = 0; i <  addAllDesignPageClesValeurs.size(); i++) {
 								Long l = Long.parseLong(addAllDesignPageClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+									ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(DesignPage.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2190,8 +2196,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getDesignPageCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2216,10 +2222,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							for(Integer i = 0; i <  setDesignPageClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setDesignPageClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+									ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(DesignPage.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2229,8 +2235,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 										setDesignPageClesValeurs2.add(l2);
 									if(l2 != null && !o.getDesignPageCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2251,8 +2257,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							for(Long l :  o.getDesignPageCles()) {
 								if(l != null && (setDesignPageClesValeurs2 == null || !setDesignPageClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "designPageCles", l, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "designPageCles", l, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2269,10 +2275,10 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<DesignPage> listeRecherche = new ListeRecherche<DesignPage>();
+								ListeRecherche<org.computate.scolaire.frFR.design.DesignPage> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.design.DesignPage>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(DesignPage.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.design.DesignPage.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2280,8 +2286,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getDesignPageCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "designPageCles", l2, "partHtmlCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2301,8 +2307,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlLien":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlLien")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlLien")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2314,8 +2320,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlLien(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlLien", o2.jsonHtmlLien())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlLien", o2.jsonHtmlLien())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2329,8 +2335,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlElement":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlElement")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlElement")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2342,8 +2348,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlElement(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlElement", o2.jsonHtmlElement())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlElement", o2.jsonHtmlElement())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2357,8 +2363,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlId":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlId")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlId")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2370,8 +2376,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlId(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlId", o2.jsonHtmlId())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlId", o2.jsonHtmlId())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2385,8 +2391,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlClasses":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlClasses")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlClasses")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2398,8 +2404,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlClasses(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlClasses", o2.jsonHtmlClasses())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlClasses", o2.jsonHtmlClasses())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2413,8 +2419,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlStyle":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlStyle")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlStyle")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2426,8 +2432,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlStyle(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlStyle", o2.jsonHtmlStyle())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlStyle", o2.jsonHtmlStyle())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2441,8 +2447,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlAvant":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlAvant")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlAvant")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2454,8 +2460,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlAvant(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlAvant", o2.jsonHtmlAvant())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlAvant", o2.jsonHtmlAvant())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2469,8 +2475,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlApres":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlApres")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlApres")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2482,8 +2488,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlApres(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlApres", o2.jsonHtmlApres())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlApres", o2.jsonHtmlApres())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2497,8 +2503,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlTexte":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlTexte")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlTexte")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2510,8 +2516,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlTexte(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlTexte", o2.jsonHtmlTexte())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlTexte", o2.jsonHtmlTexte())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2525,8 +2531,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlVar":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlVar")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVar")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2538,8 +2544,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVar(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlVar", o2.jsonHtmlVar())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVar", o2.jsonHtmlVar())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2553,8 +2559,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlVarSpan":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlVarSpan")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVarSpan")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2566,8 +2572,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVarSpan(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlVarSpan", o2.jsonHtmlVarSpan())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVarSpan", o2.jsonHtmlVarSpan())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2581,8 +2587,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlVarForm":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlVarForm")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVarForm")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2594,8 +2600,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVarForm(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlVarForm", o2.jsonHtmlVarForm())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVarForm", o2.jsonHtmlVarForm())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2609,8 +2615,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlVarInput":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlVarInput")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVarInput")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2622,8 +2628,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVarInput(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlVarInput", o2.jsonHtmlVarInput())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVarInput", o2.jsonHtmlVarInput())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2637,8 +2643,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlIfVarEquals":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlIfVarEquals")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlIfVarEquals")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2650,8 +2656,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlIfVarEquals(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlIfVarEquals", o2.jsonHtmlIfVarEquals())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlIfVarEquals", o2.jsonHtmlIfVarEquals())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2665,8 +2671,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlVarForEach":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlVarForEach")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVarForEach")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2678,8 +2684,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVarForEach(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlVarForEach", o2.jsonHtmlVarForEach())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVarForEach", o2.jsonHtmlVarForEach())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2693,8 +2699,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlVarHtml":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlVarHtml")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlVarHtml")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2706,8 +2712,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlVarHtml(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlVarHtml", o2.jsonHtmlVarHtml())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlVarHtml", o2.jsonHtmlVarHtml())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2721,8 +2727,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setHtmlExclure":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "htmlExclure")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "htmlExclure")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2734,8 +2740,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setHtmlExclure(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "htmlExclure", o2.jsonHtmlExclure())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "htmlExclure", o2.jsonHtmlExclure())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2749,8 +2755,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setPdfExclure":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "pdfExclure")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "pdfExclure")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2762,8 +2768,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setPdfExclure(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "pdfExclure", o2.jsonPdfExclure())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "pdfExclure", o2.jsonPdfExclure())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2777,8 +2783,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setConnecterDeconnecter":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "connecterDeconnecter")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "connecterDeconnecter")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2790,8 +2796,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setConnecterDeconnecter(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "connecterDeconnecter", o2.jsonConnecterDeconnecter())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "connecterDeconnecter", o2.jsonConnecterDeconnecter())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2805,8 +2811,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setTri1":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "tri1")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "tri1")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2818,8 +2824,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri1(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "tri1", o2.jsonTri1())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "tri1", o2.jsonTri1())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2833,8 +2839,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setTri2":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "tri2")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "tri2")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2846,8 +2852,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri2(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "tri2", o2.jsonTri2())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "tri2", o2.jsonTri2())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2861,8 +2867,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setTri3":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "tri3")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "tri3")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2874,8 +2880,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri3(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "tri3", o2.jsonTri3())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "tri3", o2.jsonTri3())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2889,8 +2895,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setTri4":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "tri4")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "tri4")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2902,8 +2908,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri4(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "tri4", o2.jsonTri4())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "tri4", o2.jsonTri4())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2917,8 +2923,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setTri5":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "tri5")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "tri5")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2930,8 +2936,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri5(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "tri5", o2.jsonTri5())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "tri5", o2.jsonTri5())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2945,8 +2951,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setTri6":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "tri6")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "tri6")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2958,8 +2964,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri6(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "tri6", o2.jsonTri6())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "tri6", o2.jsonTri6())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2973,8 +2979,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setTri7":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "tri7")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "tri7")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2986,8 +2992,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri7(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "tri7", o2.jsonTri7())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "tri7", o2.jsonTri7())
 										, b
 								-> {
 									if(b.succeeded())
@@ -3001,8 +3007,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setTri8":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "tri8")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "tri8")
 										, b
 								-> {
 									if(b.succeeded())
@@ -3014,8 +3020,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri8(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "tri8", o2.jsonTri8())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "tri8", o2.jsonTri8())
 										, b
 								-> {
 									if(b.succeeded())
@@ -3029,8 +3035,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setTri9":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "tri9")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "tri9")
 										, b
 								-> {
 									if(b.succeeded())
@@ -3042,8 +3048,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri9(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "tri9", o2.jsonTri9())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "tri9", o2.jsonTri9())
 										, b
 								-> {
 									if(b.succeeded())
@@ -3057,8 +3063,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					case "setTri10":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "tri10")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "tri10")
 										, b
 								-> {
 									if(b.succeeded())
@@ -3070,8 +3076,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						} else {
 							o2.setTri10(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "tri10", o2.jsonTri10())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "tri10", o2.jsonTri10())
 										, b
 								-> {
 									if(b.succeeded())
@@ -3084,7 +3090,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					PartHtml o3 = new PartHtml();
 					o3.setRequeteSite_(o.getRequeteSite_());
@@ -3150,7 +3156,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -3240,7 +3246,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -3375,7 +3381,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -3440,7 +3446,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			ToutEcrivain w = ToutEcrivain.creer(listePartHtml.getRequeteSite_(), buffer);
 			PartHtmlPage page = new PartHtmlPage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
-			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			MultiMap requeteEnTetes = MultiMap.caseInsensitiveMultiMap();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/part-html");
@@ -3519,10 +3525,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			String utilisateurId = requeteSite.getUtilisateurId();
 			ZonedDateTime cree = Optional.ofNullable(requeteSite.getObjetJson()).map(j -> j.getString("cree")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())));
 
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_creer
-					, Tuple.of(PartHtml.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_creer)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(PartHtml.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
 					, creerAsync
 			-> {
 				if(creerAsync.succeeded()) {
@@ -3557,7 +3562,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
 				Buffer.buffer().appendString(json.encodePrettily())
-				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
+				, MultiMap.caseInsensitiveMultiMap().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -3739,10 +3744,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 						sqlTransactionPartHtml(requeteSite, b -> {
 							if(b.succeeded()) {
 								Transaction tx = requeteSite.getTx();
-								tx.preparedQuery(
-										SiteContexteFrFR.SQL_selectC
-										, Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
-										, Collectors.toList()
+								tx.preparedQuery(SiteContexteFrFR.SQL_selectC)
+										.collecting(Collectors.toList())
+										.execute(Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
 										, selectCAsync
 								-> {
 									if(selectCAsync.succeeded()) {
@@ -3751,7 +3755,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 											UtilisateurSiteFrFRApiServiceImpl utilisateurService = new UtilisateurSiteFrFRApiServiceImpl(siteContexte);
 											if(utilisateurValeurs == null) {
 												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContexte.getAuthFournisseur(), utilisateurVertx);
+												JsonObject principalJson = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
@@ -3790,6 +3795,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
 																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
 																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																		requeteSite.setUtilisateurMail(principalJson.getString("email"));
 																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
 																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
 																		gestionnaireEvenements.handle(Future.succeededFuture());
@@ -3817,7 +3823,8 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 												UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
 
 												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContexte.getAuthFournisseur(), utilisateurVertx);
+												JsonObject principalJson = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
@@ -3826,8 +3833,6 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 												jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
 												jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 												Boolean definir = utilisateurPartHtmlDefinir(requeteSite, jsonObject, true);
@@ -3929,19 +3934,11 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
-				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -4024,91 +4021,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 
 	public void recherchePartHtml(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<PartHtml>>> gestionnaireEvenements) {
 		try {
-			OperationRequest operationRequete = requeteSite.getOperationRequete();
-			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
-			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
-			ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
-			listeRecherche.setPeupler(peupler);
-			listeRecherche.setStocker(stocker);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(PartHtml.class);
-			listeRecherche.setRequeteSite_(requeteSite);
-			if(entiteListe != null)
-				listeRecherche.addFields(entiteListe);
-			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
-
-			String id = operationRequete.getParams().getJsonObject("path").getString("id");
-			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
-				String entiteVar = null;
-				String valeurIndexe = null;
-				String varIndexe = null;
-				String valeurTri = null;
-				Integer valeurStart = null;
-				Integer valeurRows = null;
-				String paramNom = paramRequete.getKey();
-				Object paramValeursObjet = paramRequete.getValue();
-				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
-
-				try {
-					for(Object paramObjet : paramObjets) {
-						switch(paramNom) {
-							case "q":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : PartHtml.varRecherchePartHtml(entiteVar);
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								recherchePartHtmlQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "fq":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = PartHtml.varIndexePartHtml(entiteVar);
-								recherchePartHtmlFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "sort":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = PartHtml.varIndexePartHtml(entiteVar);
-								recherchePartHtmlSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "start":
-								valeurStart = (Integer)paramObjet;
-								recherchePartHtmlStart(uri, apiMethode, listeRecherche, valeurStart);
-								break;
-							case "rows":
-								valeurRows = (Integer)paramObjet;
-								recherchePartHtmlRows(uri, apiMethode, listeRecherche, valeurRows);
-								break;
-							case "var":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								recherchePartHtmlVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
-								break;
-						}
-					}
-					recherchePartHtmlUri(uri, apiMethode, listeRecherche);
-				} catch(Exception e) {
-					LOGGER.error(String.format("recherchePartHtml a échoué. ", e));
-					gestionnaireEvenements.handle(Future.failedFuture(e));
-				}
-			});
-			if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
-				listeRecherche.addSort("tri1_indexed_double", ORDER.asc);
-				listeRecherche.addSort("tri2_indexed_double", ORDER.asc);
-				listeRecherche.addSort("tri3_indexed_double", ORDER.asc);
-				listeRecherche.addSort("tri4_indexed_double", ORDER.asc);
-				listeRecherche.addSort("tri5_indexed_double", ORDER.asc);
-				listeRecherche.addSort("tri6_indexed_double", ORDER.asc);
-				listeRecherche.addSort("tri7_indexed_double", ORDER.asc);
-				listeRecherche.addSort("tri8_indexed_double", ORDER.asc);
-				listeRecherche.addSort("tri9_indexed_double", ORDER.asc);
-				listeRecherche.addSort("tri10_indexed_double", ORDER.asc);
-			}
-			listeRecherche.initLoinPourClasse(requeteSite);
+			ListeRecherche<PartHtml> listeRecherche = recherchePartHtmlListe(requeteSite, peupler, stocker, modifier, uri, apiMethode);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {
 			LOGGER.error(String.format("recherchePartHtml a échoué. ", e));
@@ -4116,15 +4029,107 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 		}
 	}
 
+	public ListeRecherche<PartHtml> recherchePartHtmlListe(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode) {
+		OperationRequest operationRequete = requeteSite.getOperationRequete();
+		String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
+		String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
+		ListeRecherche<PartHtml> listeRecherche = new ListeRecherche<PartHtml>();
+		listeRecherche.setPeupler(peupler);
+		listeRecherche.setStocker(stocker);
+		listeRecherche.setQuery("*:*");
+		listeRecherche.setC(PartHtml.class);
+		listeRecherche.setRequeteSite_(requeteSite);
+		if(entiteListe != null)
+			listeRecherche.addFields(entiteListe);
+		listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+
+		String id = operationRequete.getParams().getJsonObject("path").getString("id");
+		if(id != null && NumberUtils.isCreatable(id)) {
+			listeRecherche.addFilterQuery("(pk_indexed_long:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		} else if(id != null) {
+			listeRecherche.addFilterQuery("objetId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+		}
+
+		operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
+			String entiteVar = null;
+			String valeurIndexe = null;
+			String varIndexe = null;
+			String valeurTri = null;
+			Integer valeurStart = null;
+			Integer valeurRows = null;
+			String paramNom = paramRequete.getKey();
+			Object paramValeursObjet = paramRequete.getValue();
+			JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+			try {
+				for(Object paramObjet : paramObjets) {
+					switch(paramNom) {
+						case "q":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							varIndexe = "*".equals(entiteVar) ? entiteVar : PartHtml.varRecherchePartHtml(entiteVar);
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
+							recherchePartHtmlQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "fq":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							varIndexe = PartHtml.varIndexePartHtml(entiteVar);
+							recherchePartHtmlFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "sort":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
+							valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+							varIndexe = PartHtml.varIndexePartHtml(entiteVar);
+							recherchePartHtmlSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "start":
+							valeurStart = paramObjet instanceof Integer ? (Integer)paramObjet : Integer.parseInt(paramObjet.toString());
+							recherchePartHtmlStart(uri, apiMethode, listeRecherche, valeurStart);
+							break;
+						case "rows":
+							valeurRows = paramObjet instanceof Integer ? (Integer)paramObjet : Integer.parseInt(paramObjet.toString());
+							recherchePartHtmlRows(uri, apiMethode, listeRecherche, valeurRows);
+							break;
+						case "var":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							recherchePartHtmlVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
+							break;
+					}
+				}
+				recherchePartHtmlUri(uri, apiMethode, listeRecherche);
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
+		if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
+			listeRecherche.addSort("tri1_indexed_double", ORDER.asc);
+			listeRecherche.addSort("tri2_indexed_double", ORDER.asc);
+			listeRecherche.addSort("tri3_indexed_double", ORDER.asc);
+			listeRecherche.addSort("tri4_indexed_double", ORDER.asc);
+			listeRecherche.addSort("tri5_indexed_double", ORDER.asc);
+			listeRecherche.addSort("tri6_indexed_double", ORDER.asc);
+			listeRecherche.addSort("tri7_indexed_double", ORDER.asc);
+			listeRecherche.addSort("tri8_indexed_double", ORDER.asc);
+			listeRecherche.addSort("tri9_indexed_double", ORDER.asc);
+			listeRecherche.addSort("tri10_indexed_double", ORDER.asc);
+		}
+		recherchePartHtml2(requeteSite, peupler, stocker, modifier, uri, apiMethode, listeRecherche);
+		listeRecherche.initLoinPourClasse(requeteSite);
+		return listeRecherche;
+	}
+	public void recherchePartHtml2(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, ListeRecherche<PartHtml> listeRecherche) {
+	}
+
 	public void definirPartHtml(PartHtml o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_definir
-					, Tuple.of(pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_definir)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
@@ -4158,10 +4163,9 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_attribuer
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_attribuer)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attribuerAsync
 			-> {
 				try {
@@ -4263,7 +4267,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 					}
 				}
 
-				CompositeFuture.all(futures).setHandler(a -> {
+				CompositeFuture.all(futures).onComplete(a -> {
 					if(a.succeeded()) {
 						PartHtmlFrFRApiServiceImpl service = new PartHtmlFrFRApiServiceImpl(requeteSite.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
@@ -4281,7 +4285,7 @@ public class PartHtmlFrFRGenApiServiceImpl implements PartHtmlFrFRGenApiService 
 							);
 						}
 
-						CompositeFuture.all(futures2).setHandler(b -> {
+						CompositeFuture.all(futures2).onComplete(b -> {
 							if(b.succeeded()) {
 								gestionnaireEvenements.handle(Future.succeededFuture());
 							} else {

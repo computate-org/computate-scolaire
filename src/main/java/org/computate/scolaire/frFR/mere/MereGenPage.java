@@ -387,7 +387,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("a");
 			} g("h1");
-			e("div").a("class", "").f();
+			{ e("div").a("class", "").f();
 				{ e("div").f();
 					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeMereScolaire.getQueryResponse().getResults().getNumFound();
@@ -469,6 +469,7 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
 				table1MereGenPage();
+			} g("div");
 		}
 
 		if(listeMereScolaire != null && listeMereScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -496,7 +497,6 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsMereGenPage();
-		g("div");
 	}
 
 	public void table1MereGenPage() {
@@ -598,7 +598,6 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			e("div").a("class", "w3-margin-top ").f();
 
 			if(listeMereScolaire != null && listeMereScolaire.size() == 1) {
 				{ e("button")
@@ -781,7 +780,6 @@ public class MereGenPage extends MereGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
-			g("div");
 		}
 		htmlSuggereMereGenPage(this, null, listeMereScolaire);
 	}

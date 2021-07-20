@@ -17,6 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
@@ -149,6 +150,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return designPageCle == null ? "" : designPageCle.toString();
 	}
 
+	public Long sqlDesignPageCle() {
+		return designPageCle;
+	}
+
 	public String jsonDesignPageCle() {
 		return designPageCle == null ? "" : designPageCle.toString();
 	}
@@ -260,6 +265,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public String strDesignEnfantCles() {
 		return designEnfantCles == null ? "" : designEnfantCles.toString();
+	}
+
+	public List<Long> sqlDesignEnfantCles() {
+		return designEnfantCles;
 	}
 
 	public String jsonDesignEnfantCles() {
@@ -375,6 +384,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return designParentCles == null ? "" : designParentCles.toString();
 	}
 
+	public List<Long> sqlDesignParentCles() {
+		return designParentCles;
+	}
+
 	public String jsonDesignParentCles() {
 		return designParentCles == null ? "" : designParentCles.toString();
 	}
@@ -411,16 +424,15 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "designs parent")
-				.a("class", "valeur suggereDesignParentCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereDesignParentCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setDesignParentCles")
 				.a("id", classeApiMethodeMethode, "_designParentCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereDesignPageDesignParentCles($(this).val() ? rechercherDesignPageFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'designEnfantCles:" + pk + "'}", "], $('#listDesignPageDesignParentCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereDesignPageDesignParentCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,designPageNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'designEnfantCles:" + pk + "'}", "], $('#listDesignPageDesignParentCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varDesignPage", pk, "DesignParentCles ").f().sx(htmDesignParentCles()).g("span");
 		}
 	}
 
@@ -573,6 +585,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return partHtmlCles == null ? "" : partHtmlCles.toString();
 	}
 
+	public List<Long> sqlPartHtmlCles() {
+		return partHtmlCles;
+	}
+
 	public String jsonPartHtmlCles() {
 		return partHtmlCles == null ? "" : partHtmlCles.toString();
 	}
@@ -609,16 +625,15 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 			e("input")
 				.a("type", "text")
 				.a("placeholder", "parts")
-				.a("class", "valeur suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggerePartHtmlCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setPartHtmlCles")
 				.a("id", classeApiMethodeMethode, "_partHtmlCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereDesignPagePartHtmlCles($(this).val() ? rechercherPartHtmlFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'designPageCles:" + pk + "'}", "], $('#listDesignPagePartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereDesignPagePartHtmlCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,objetTitre' } ] : [", pk == null ? "" : "{'name':'fq','value':'designPageCles:" + pk + "'}", "], $('#listDesignPagePartHtmlCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varDesignPage", pk, "PartHtmlCles ").f().sx(htmPartHtmlCles()).g("span");
 		}
 	}
 
@@ -732,6 +747,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public String strDesignPageNomComplet() {
 		return designPageNomComplet == null ? "" : designPageNomComplet;
+	}
+
+	public String sqlDesignPageNomComplet() {
+		return designPageNomComplet;
 	}
 
 	public String jsonDesignPageNomComplet() {
@@ -881,6 +900,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return designCache == null ? "" : designCache.toString();
 	}
 
+	public Boolean sqlDesignCache() {
+		return designCache;
+	}
+
 	public String jsonDesignCache() {
 		return designCache == null ? "" : designCache.toString();
 	}
@@ -1023,6 +1046,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public String strDesignAdmin() {
 		return designAdmin == null ? "" : designAdmin.toString();
+	}
+
+	public Boolean sqlDesignAdmin() {
+		return designAdmin;
 	}
 
 	public String jsonDesignAdmin() {
@@ -1169,6 +1196,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return designIgnorerNomEnfantVide == null ? "" : designIgnorerNomEnfantVide.toString();
 	}
 
+	public Boolean sqlDesignIgnorerNomEnfantVide() {
+		return designIgnorerNomEnfantVide;
+	}
+
 	public String jsonDesignIgnorerNomEnfantVide() {
 		return designIgnorerNomEnfantVide == null ? "" : designIgnorerNomEnfantVide.toString();
 	}
@@ -1311,6 +1342,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public String strDesignIgnorerPaiementsPasEnSouffrance() {
 		return designIgnorerPaiementsPasEnSouffrance == null ? "" : designIgnorerPaiementsPasEnSouffrance.toString();
+	}
+
+	public Boolean sqlDesignIgnorerPaiementsPasEnSouffrance() {
+		return designIgnorerPaiementsPasEnSouffrance;
 	}
 
 	public String jsonDesignIgnorerPaiementsPasEnSouffrance() {
@@ -1457,6 +1492,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return designIgnorerPaiementsEnSouffrance == null ? "" : designIgnorerPaiementsEnSouffrance.toString();
 	}
 
+	public Boolean sqlDesignIgnorerPaiementsEnSouffrance() {
+		return designIgnorerPaiementsEnSouffrance;
+	}
+
 	public String jsonDesignIgnorerPaiementsEnSouffrance() {
 		return designIgnorerPaiementsEnSouffrance == null ? "" : designIgnorerPaiementsEnSouffrance.toString();
 	}
@@ -1599,6 +1638,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public String strDesignFiltrerInscriptionCle() {
 		return designFiltrerInscriptionCle == null ? "" : designFiltrerInscriptionCle.toString();
+	}
+
+	public Boolean sqlDesignFiltrerInscriptionCle() {
+		return designFiltrerInscriptionCle;
 	}
 
 	public String jsonDesignFiltrerInscriptionCle() {
@@ -1745,6 +1788,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return designInscriptionTriMoisJourDeNaissance == null ? "" : designInscriptionTriMoisJourDeNaissance.toString();
 	}
 
+	public Boolean sqlDesignInscriptionTriMoisJourDeNaissance() {
+		return designInscriptionTriMoisJourDeNaissance;
+	}
+
 	public String jsonDesignInscriptionTriMoisJourDeNaissance() {
 		return designInscriptionTriMoisJourDeNaissance == null ? "" : designInscriptionTriMoisJourDeNaissance.toString();
 	}
@@ -1887,6 +1934,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public String strDesignInscriptionTriNomGroupe() {
 		return designInscriptionTriNomGroupe == null ? "" : designInscriptionTriNomGroupe.toString();
+	}
+
+	public Boolean sqlDesignInscriptionTriNomGroupe() {
+		return designInscriptionTriNomGroupe;
 	}
 
 	public String jsonDesignInscriptionTriNomGroupe() {
@@ -2033,6 +2084,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return designInscriptionTriNomEnfant == null ? "" : designInscriptionTriNomEnfant.toString();
 	}
 
+	public Boolean sqlDesignInscriptionTriNomEnfant() {
+		return designInscriptionTriNomEnfant;
+	}
+
 	public String jsonDesignInscriptionTriNomEnfant() {
 		return designInscriptionTriNomEnfant == null ? "" : designInscriptionTriNomEnfant.toString();
 	}
@@ -2175,6 +2230,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public String strRechercherAnnees() {
 		return rechercherAnnees == null ? "" : rechercherAnnees.toString();
+	}
+
+	public Boolean sqlRechercherAnnees() {
+		return rechercherAnnees;
 	}
 
 	public String jsonRechercherAnnees() {
@@ -2321,6 +2380,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return rechercherPaiements == null ? "" : rechercherPaiements.toString();
 	}
 
+	public Boolean sqlRechercherPaiements() {
+		return rechercherPaiements;
+	}
+
 	public String jsonRechercherPaiements() {
 		return rechercherPaiements == null ? "" : rechercherPaiements.toString();
 	}
@@ -2463,6 +2526,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 
 	public String strRechercherPaiementsActuel() {
 		return rechercherPaiementsActuel == null ? "" : rechercherPaiementsActuel.toString();
+	}
+
+	public Boolean sqlRechercherPaiementsActuel() {
+		return rechercherPaiementsActuel;
 	}
 
 	public String jsonRechercherPaiementsActuel() {
@@ -2614,6 +2681,10 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -2681,18 +2752,18 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		switch(var) {
 			case "designEnfantCles":
 				oDesignPage.addDesignEnfantCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("designEnfantCles"))
+					sauvegardes.add("designEnfantCles");
 				return val;
 			case "designParentCles":
 				oDesignPage.addDesignParentCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("designParentCles"))
+					sauvegardes.add("designParentCles");
 				return val;
 			case "partHtmlCles":
 				oDesignPage.addPartHtmlCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("partHtmlCles"))
+					sauvegardes.add("partHtmlCles");
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -2911,71 +2982,158 @@ public abstract class DesignPageGen<DEV> extends Cluster {
 		return o != null;
 	}
 	public Object definirDesignPage(String var, String val) {
-		switch(var) {
-			case "designPageNomComplet":
+		switch(var.toLowerCase()) {
+			case "designpagenomcomplet":
 				if(val != null)
 					setDesignPageNomComplet(val);
-				sauvegardes.add(var);
+				sauvegardes.add("designPageNomComplet");
 				return val;
-			case "designCache":
+			case "designcache":
 				if(val != null)
 					setDesignCache(val);
-				sauvegardes.add(var);
+				sauvegardes.add("designCache");
 				return val;
-			case "designAdmin":
+			case "designadmin":
 				if(val != null)
 					setDesignAdmin(val);
-				sauvegardes.add(var);
+				sauvegardes.add("designAdmin");
 				return val;
-			case "designIgnorerNomEnfantVide":
+			case "designignorernomenfantvide":
 				if(val != null)
 					setDesignIgnorerNomEnfantVide(val);
-				sauvegardes.add(var);
+				sauvegardes.add("designIgnorerNomEnfantVide");
 				return val;
-			case "designIgnorerPaiementsPasEnSouffrance":
+			case "designignorerpaiementspasensouffrance":
 				if(val != null)
 					setDesignIgnorerPaiementsPasEnSouffrance(val);
-				sauvegardes.add(var);
+				sauvegardes.add("designIgnorerPaiementsPasEnSouffrance");
 				return val;
-			case "designIgnorerPaiementsEnSouffrance":
+			case "designignorerpaiementsensouffrance":
 				if(val != null)
 					setDesignIgnorerPaiementsEnSouffrance(val);
-				sauvegardes.add(var);
+				sauvegardes.add("designIgnorerPaiementsEnSouffrance");
 				return val;
-			case "designFiltrerInscriptionCle":
+			case "designfiltrerinscriptioncle":
 				if(val != null)
 					setDesignFiltrerInscriptionCle(val);
-				sauvegardes.add(var);
+				sauvegardes.add("designFiltrerInscriptionCle");
 				return val;
-			case "designInscriptionTriMoisJourDeNaissance":
+			case "designinscriptiontrimoisjourdenaissance":
 				if(val != null)
 					setDesignInscriptionTriMoisJourDeNaissance(val);
-				sauvegardes.add(var);
+				sauvegardes.add("designInscriptionTriMoisJourDeNaissance");
 				return val;
-			case "designInscriptionTriNomGroupe":
+			case "designinscriptiontrinomgroupe":
 				if(val != null)
 					setDesignInscriptionTriNomGroupe(val);
-				sauvegardes.add(var);
+				sauvegardes.add("designInscriptionTriNomGroupe");
 				return val;
-			case "designInscriptionTriNomEnfant":
+			case "designinscriptiontrinomenfant":
 				if(val != null)
 					setDesignInscriptionTriNomEnfant(val);
-				sauvegardes.add(var);
+				sauvegardes.add("designInscriptionTriNomEnfant");
 				return val;
-			case "rechercherAnnees":
+			case "rechercherannees":
 				if(val != null)
 					setRechercherAnnees(val);
-				sauvegardes.add(var);
+				sauvegardes.add("rechercherAnnees");
 				return val;
-			case "rechercherPaiements":
+			case "rechercherpaiements":
 				if(val != null)
 					setRechercherPaiements(val);
-				sauvegardes.add(var);
+				sauvegardes.add("rechercherPaiements");
 				return val;
-			case "rechercherPaiementsActuel":
+			case "rechercherpaiementsactuel":
 				if(val != null)
 					setRechercherPaiementsActuel(val);
-				sauvegardes.add(var);
+				sauvegardes.add("rechercherPaiementsActuel");
+				return val;
+			default:
+				return super.definirCluster(var, val);
+		}
+	}
+
+	@Override public boolean definirPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirDesignPage(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirDesignPage(String var, Object val) {
+		switch(var.toLowerCase()) {
+			case "designpagenomcomplet":
+				if(val instanceof String)
+					setDesignPageNomComplet((String)val);
+				sauvegardes.add("designPageNomComplet");
+				return val;
+			case "designcache":
+				if(val instanceof Boolean)
+					setDesignCache((Boolean)val);
+				sauvegardes.add("designCache");
+				return val;
+			case "designadmin":
+				if(val instanceof Boolean)
+					setDesignAdmin((Boolean)val);
+				sauvegardes.add("designAdmin");
+				return val;
+			case "designignorernomenfantvide":
+				if(val instanceof Boolean)
+					setDesignIgnorerNomEnfantVide((Boolean)val);
+				sauvegardes.add("designIgnorerNomEnfantVide");
+				return val;
+			case "designignorerpaiementspasensouffrance":
+				if(val instanceof Boolean)
+					setDesignIgnorerPaiementsPasEnSouffrance((Boolean)val);
+				sauvegardes.add("designIgnorerPaiementsPasEnSouffrance");
+				return val;
+			case "designignorerpaiementsensouffrance":
+				if(val instanceof Boolean)
+					setDesignIgnorerPaiementsEnSouffrance((Boolean)val);
+				sauvegardes.add("designIgnorerPaiementsEnSouffrance");
+				return val;
+			case "designfiltrerinscriptioncle":
+				if(val instanceof Boolean)
+					setDesignFiltrerInscriptionCle((Boolean)val);
+				sauvegardes.add("designFiltrerInscriptionCle");
+				return val;
+			case "designinscriptiontrimoisjourdenaissance":
+				if(val instanceof Boolean)
+					setDesignInscriptionTriMoisJourDeNaissance((Boolean)val);
+				sauvegardes.add("designInscriptionTriMoisJourDeNaissance");
+				return val;
+			case "designinscriptiontrinomgroupe":
+				if(val instanceof Boolean)
+					setDesignInscriptionTriNomGroupe((Boolean)val);
+				sauvegardes.add("designInscriptionTriNomGroupe");
+				return val;
+			case "designinscriptiontrinomenfant":
+				if(val instanceof Boolean)
+					setDesignInscriptionTriNomEnfant((Boolean)val);
+				sauvegardes.add("designInscriptionTriNomEnfant");
+				return val;
+			case "rechercherannees":
+				if(val instanceof Boolean)
+					setRechercherAnnees((Boolean)val);
+				sauvegardes.add("rechercherAnnees");
+				return val;
+			case "rechercherpaiements":
+				if(val instanceof Boolean)
+					setRechercherPaiements((Boolean)val);
+				sauvegardes.add("rechercherPaiements");
+				return val;
+			case "rechercherpaiementsactuel":
+				if(val instanceof Boolean)
+					setRechercherPaiementsActuel((Boolean)val);
+				sauvegardes.add("rechercherPaiementsActuel");
 				return val;
 			default:
 				return super.definirCluster(var, val);

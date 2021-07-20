@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.lang.Long;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
+import java.util.Map;
 import java.time.LocalTime;
 import org.computate.scolaire.enUS.season.SchoolSeason;
 import io.vertx.core.json.JsonObject;
@@ -168,6 +169,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentKey == null ? "" : enrollmentKey.toString();
 	}
 
+	public Long sqlEnrollmentKey() {
+		return enrollmentKey;
+	}
+
 	public String jsonEnrollmentKey() {
 		return enrollmentKey == null ? "" : enrollmentKey.toString();
 	}
@@ -252,6 +257,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return yearKey == null ? "" : yearKey.toString();
 	}
 
+	public Long sqlYearKey() {
+		return yearKey;
+	}
+
 	public String jsonYearKey() {
 		return yearKey == null ? "" : yearKey.toString();
 	}
@@ -294,12 +303,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("name", "setYearKey")
 				.a("id", classApiMethodMethod, "_yearKey")
 				.a("autocomplete", "off");
-				a("oninput", "suggestSchoolEnrollmentYearKey($(this).val() ? searchSchoolYearFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentYearKey_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestSchoolEnrollmentYearKey($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,yearCompleteName' } ] : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentYearKey_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varSchoolEnrollment", pk, "YearKey ").f().sx(htmYearKey()).g("span");
 		}
 	}
 
@@ -535,6 +543,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return blockKeys == null ? "" : blockKeys.toString();
 	}
 
+	public List<Long> sqlBlockKeys() {
+		return blockKeys;
+	}
+
 	public String jsonBlockKeys() {
 		return blockKeys == null ? "" : blockKeys.toString();
 	}
@@ -577,12 +589,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("name", "setBlockKeys")
 				.a("id", classApiMethodMethod, "_blockKeys")
 				.a("autocomplete", "off");
-				a("oninput", "suggestSchoolEnrollmentBlockKeys($(this).val() ? searchSchoolBlockFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentBlockKeys_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestSchoolEnrollmentBlockKeys($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,blockCompleteName' } ] : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentBlockKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varSchoolEnrollment", pk, "BlockKeys ").f().sx(htmBlockKeys()).g("span");
 		}
 	}
 
@@ -893,6 +904,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
 
+	public Long sqlSchoolKey() {
+		return schoolKey;
+	}
+
 	public String jsonSchoolKey() {
 		return schoolKey == null ? "" : schoolKey.toString();
 	}
@@ -975,6 +990,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strSessionKey() {
 		return sessionKey == null ? "" : sessionKey.toString();
+	}
+
+	public Long sqlSessionKey() {
+		return sessionKey;
 	}
 
 	public String jsonSessionKey() {
@@ -1061,6 +1080,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return ageKey == null ? "" : ageKey.toString();
 	}
 
+	public Long sqlAgeKey() {
+		return ageKey;
+	}
+
 	public String jsonAgeKey() {
 		return ageKey == null ? "" : ageKey.toString();
 	}
@@ -1143,6 +1166,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strBlockKey() {
 		return blockKey == null ? "" : blockKey.toString();
+	}
+
+	public Long sqlBlockKey() {
+		return blockKey;
 	}
 
 	public String jsonBlockKey() {
@@ -1229,6 +1256,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childKey == null ? "" : childKey.toString();
 	}
 
+	public Long sqlChildKey() {
+		return childKey;
+	}
+
 	public String jsonChildKey() {
 		return childKey == null ? "" : childKey.toString();
 	}
@@ -1271,12 +1302,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("name", "setChildKey")
 				.a("id", classApiMethodMethod, "_childKey")
 				.a("autocomplete", "off");
-				a("oninput", "suggestSchoolEnrollmentChildKey($(this).val() ? searchSchoolChildFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentChildKey_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestSchoolEnrollmentChildKey($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,childCompleteName' } ] : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentChildKey_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varSchoolEnrollment", pk, "ChildKey ").f().sx(htmChildKey()).g("span");
 		}
 	}
 
@@ -1426,6 +1456,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return momKeys == null ? "" : momKeys.toString();
 	}
 
+	public List<Long> sqlMomKeys() {
+		return momKeys;
+	}
+
 	public String jsonMomKeys() {
 		return momKeys == null ? "" : momKeys.toString();
 	}
@@ -1468,12 +1502,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("name", "setMomKeys")
 				.a("id", classApiMethodMethod, "_momKeys")
 				.a("autocomplete", "off");
-				a("oninput", "suggestSchoolEnrollmentMomKeys($(this).val() ? searchSchoolMomFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentMomKeys_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestSchoolEnrollmentMomKeys($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,momCompleteName' } ] : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentMomKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varSchoolEnrollment", pk, "MomKeys ").f().sx(htmMomKeys()).g("span");
 		}
 	}
 
@@ -1623,6 +1656,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return dadKeys == null ? "" : dadKeys.toString();
 	}
 
+	public List<Long> sqlDadKeys() {
+		return dadKeys;
+	}
+
 	public String jsonDadKeys() {
 		return dadKeys == null ? "" : dadKeys.toString();
 	}
@@ -1665,12 +1702,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("name", "setDadKeys")
 				.a("id", classApiMethodMethod, "_dadKeys")
 				.a("autocomplete", "off");
-				a("oninput", "suggestSchoolEnrollmentDadKeys($(this).val() ? searchSchoolDadFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentDadKeys_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestSchoolEnrollmentDadKeys($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,dadCompleteName' } ] : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentDadKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varSchoolEnrollment", pk, "DadKeys ").f().sx(htmDadKeys()).g("span");
 		}
 	}
 
@@ -1820,6 +1856,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return guardianKeys == null ? "" : guardianKeys.toString();
 	}
 
+	public List<Long> sqlGuardianKeys() {
+		return guardianKeys;
+	}
+
 	public String jsonGuardianKeys() {
 		return guardianKeys == null ? "" : guardianKeys.toString();
 	}
@@ -1862,12 +1902,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("name", "setGuardianKeys")
 				.a("id", classApiMethodMethod, "_guardianKeys")
 				.a("autocomplete", "off");
-				a("oninput", "suggestSchoolEnrollmentGuardianKeys($(this).val() ? searchSchoolGuardianFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentGuardianKeys_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestSchoolEnrollmentGuardianKeys($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,guardianCompleteName' } ] : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentGuardianKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varSchoolEnrollment", pk, "GuardianKeys ").f().sx(htmGuardianKeys()).g("span");
 		}
 	}
 
@@ -2017,6 +2056,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return paymentKeys == null ? "" : paymentKeys.toString();
 	}
 
+	public List<Long> sqlPaymentKeys() {
+		return paymentKeys;
+	}
+
 	public String jsonPaymentKeys() {
 		return paymentKeys == null ? "" : paymentKeys.toString();
 	}
@@ -2059,12 +2102,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("name", "setPaymentKeys")
 				.a("id", classApiMethodMethod, "_paymentKeys")
 				.a("autocomplete", "off");
-				a("oninput", "suggestSchoolEnrollmentPaymentKeys($(this).val() ? searchSchoolPaymentFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKey:" + pk + "'}", "], $('#listSchoolEnrollmentPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestSchoolEnrollmentPaymentKeys($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,paymentCompleteName' } ] : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKey:" + pk + "'}", "], $('#listSchoolEnrollmentPaymentKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varSchoolEnrollment", pk, "PaymentKeys ").f().sx(htmPaymentKeys()).g("span");
 		}
 	}
 
@@ -2188,6 +2230,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentFormKey == null ? "" : enrollmentFormKey.toString();
 	}
 
+	public Long sqlEnrollmentFormKey() {
+		return enrollmentFormKey;
+	}
+
 	public String jsonEnrollmentFormKey() {
 		return enrollmentFormKey == null ? "" : enrollmentFormKey.toString();
 	}
@@ -2301,6 +2347,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return userKeys == null ? "" : userKeys.toString();
 	}
 
+	public List<Long> sqlUserKeys() {
+		return userKeys;
+	}
+
 	public String jsonUserKeys() {
 		return userKeys == null ? "" : userKeys.toString();
 	}
@@ -2343,12 +2393,11 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				.a("name", "setUserKeys")
 				.a("id", classApiMethodMethod, "_userKeys")
 				.a("autocomplete", "off");
-				a("oninput", "suggestSchoolEnrollmentUserKeys($(this).val() ? searchSiteUserFilters($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentUserKeys_", classApiMethodMethod, "'), ", pk, "); ");
+				a("oninput", "suggestSchoolEnrollmentUserKeys($(this).val() ? [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,objectTitle' } ] : [", pk == null ? "" : "{'name':'fq','value':'enrollmentKeys:" + pk + "'}", "], $('#listSchoolEnrollmentUserKeys_", classApiMethodMethod, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varSchoolEnrollment", pk, "UserKeys ").f().sx(htmUserKeys()).g("span");
 		}
 	}
 
@@ -2472,6 +2521,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return educationSort == null ? "" : educationSort.toString();
 	}
 
+	public Integer sqlEducationSort() {
+		return educationSort;
+	}
+
 	public String jsonEducationSort() {
 		return educationSort == null ? "" : educationSort.toString();
 	}
@@ -2554,6 +2607,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strSchoolSort() {
 		return schoolSort == null ? "" : schoolSort.toString();
+	}
+
+	public Integer sqlSchoolSort() {
+		return schoolSort;
 	}
 
 	public String jsonSchoolSort() {
@@ -2640,6 +2697,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return yearSort == null ? "" : yearSort.toString();
 	}
 
+	public Integer sqlYearSort() {
+		return yearSort;
+	}
+
 	public String jsonYearSort() {
 		return yearSort == null ? "" : yearSort.toString();
 	}
@@ -2722,6 +2783,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strSeasonSort() {
 		return seasonSort == null ? "" : seasonSort.toString();
+	}
+
+	public Integer sqlSeasonSort() {
+		return seasonSort;
 	}
 
 	public String jsonSeasonSort() {
@@ -2808,6 +2873,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return sessionSort == null ? "" : sessionSort.toString();
 	}
 
+	public Integer sqlSessionSort() {
+		return sessionSort;
+	}
+
 	public String jsonSessionSort() {
 		return sessionSort == null ? "" : sessionSort.toString();
 	}
@@ -2890,6 +2959,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strAgeSort() {
 		return ageSort == null ? "" : ageSort.toString();
+	}
+
+	public Integer sqlAgeSort() {
+		return ageSort;
 	}
 
 	public String jsonAgeSort() {
@@ -3415,6 +3488,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childFirstName == null ? "" : childFirstName;
 	}
 
+	public String sqlChildFirstName() {
+		return childFirstName;
+	}
+
 	public String jsonChildFirstName() {
 		return childFirstName == null ? "" : childFirstName;
 	}
@@ -3489,6 +3566,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strChildFirstNamePreferred() {
 		return childFirstNamePreferred == null ? "" : childFirstNamePreferred;
+	}
+
+	public String sqlChildFirstNamePreferred() {
+		return childFirstNamePreferred;
 	}
 
 	public String jsonChildFirstNamePreferred() {
@@ -3567,6 +3648,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childFamilyName == null ? "" : childFamilyName;
 	}
 
+	public String sqlChildFamilyName() {
+		return childFamilyName;
+	}
+
 	public String jsonChildFamilyName() {
 		return childFamilyName == null ? "" : childFamilyName;
 	}
@@ -3641,6 +3726,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strMomFirstName() {
 		return momFirstName == null ? "" : momFirstName;
+	}
+
+	public String sqlMomFirstName() {
+		return momFirstName;
 	}
 
 	public String jsonMomFirstName() {
@@ -3719,6 +3808,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return momFirstNamePreferred == null ? "" : momFirstNamePreferred;
 	}
 
+	public String sqlMomFirstNamePreferred() {
+		return momFirstNamePreferred;
+	}
+
 	public String jsonMomFirstNamePreferred() {
 		return momFirstNamePreferred == null ? "" : momFirstNamePreferred;
 	}
@@ -3793,6 +3886,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strMomCompleteNamePreferred() {
 		return momCompleteNamePreferred == null ? "" : momCompleteNamePreferred;
+	}
+
+	public String sqlMomCompleteNamePreferred() {
+		return momCompleteNamePreferred;
 	}
 
 	public String jsonMomCompleteNamePreferred() {
@@ -3871,6 +3968,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return dadFirstName == null ? "" : dadFirstName;
 	}
 
+	public String sqlDadFirstName() {
+		return dadFirstName;
+	}
+
 	public String jsonDadFirstName() {
 		return dadFirstName == null ? "" : dadFirstName;
 	}
@@ -3945,6 +4046,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strDadFirstNamePreferred() {
 		return dadFirstNamePreferred == null ? "" : dadFirstNamePreferred;
+	}
+
+	public String sqlDadFirstNamePreferred() {
+		return dadFirstNamePreferred;
 	}
 
 	public String jsonDadFirstNamePreferred() {
@@ -4023,6 +4128,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return dadCompleteNamePreferred == null ? "" : dadCompleteNamePreferred;
 	}
 
+	public String sqlDadCompleteNamePreferred() {
+		return dadCompleteNamePreferred;
+	}
+
 	public String jsonDadCompleteNamePreferred() {
 		return dadCompleteNamePreferred == null ? "" : dadCompleteNamePreferred;
 	}
@@ -4097,6 +4206,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strChildCompleteName() {
 		return childCompleteName == null ? "" : childCompleteName;
+	}
+
+	public String sqlChildCompleteName() {
+		return childCompleteName;
 	}
 
 	public String jsonChildCompleteName() {
@@ -4243,6 +4356,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strChildCompleteNamePreferred() {
 		return childCompleteNamePreferred == null ? "" : childCompleteNamePreferred;
+	}
+
+	public String sqlChildCompleteNamePreferred() {
+		return childCompleteNamePreferred;
 	}
 
 	public String jsonChildCompleteNamePreferred() {
@@ -4408,6 +4525,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childBirthDate == null ? "" : childBirthDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlChildBirthDate() {
+		return childBirthDate;
+	}
+
 	public String jsonChildBirthDate() {
 		return childBirthDate == null ? "" : childBirthDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -4555,6 +4676,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childBirthDateYear == null ? "" : childBirthDateYear.toString();
 	}
 
+	public Integer sqlChildBirthDateYear() {
+		return childBirthDateYear;
+	}
+
 	public String jsonChildBirthDateYear() {
 		return childBirthDateYear == null ? "" : childBirthDateYear.toString();
 	}
@@ -4631,6 +4756,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childBirthDateMonthOfYear == null ? "" : childBirthDateMonthOfYear;
 	}
 
+	public String sqlChildBirthDateMonthOfYear() {
+		return childBirthDateMonthOfYear;
+	}
+
 	public String jsonChildBirthDateMonthOfYear() {
 		return childBirthDateMonthOfYear == null ? "" : childBirthDateMonthOfYear;
 	}
@@ -4705,6 +4834,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strChildBirthDateDayOfWeek() {
 		return childBirthDateDayOfWeek == null ? "" : childBirthDateDayOfWeek;
+	}
+
+	public String sqlChildBirthDateDayOfWeek() {
+		return childBirthDateDayOfWeek;
 	}
 
 	public String jsonChildBirthDateDayOfWeek() {
@@ -4791,6 +4924,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childBirthMonth == null ? "" : childBirthMonth.toString();
 	}
 
+	public Integer sqlChildBirthMonth() {
+		return childBirthMonth;
+	}
+
 	public String jsonChildBirthMonth() {
 		return childBirthMonth == null ? "" : childBirthMonth.toString();
 	}
@@ -4875,6 +5012,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childBirthDay == null ? "" : childBirthDay.toString();
 	}
 
+	public Integer sqlChildBirthDay() {
+		return childBirthDay;
+	}
+
 	public String jsonChildBirthDay() {
 		return childBirthDay == null ? "" : childBirthDay.toString();
 	}
@@ -4949,6 +5090,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strSchoolName() {
 		return schoolName == null ? "" : schoolName;
+	}
+
+	public String sqlSchoolName() {
+		return schoolName;
 	}
 
 	public String jsonSchoolName() {
@@ -5027,6 +5172,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
 
+	public String sqlSchoolCompleteName() {
+		return schoolCompleteName;
+	}
+
 	public String jsonSchoolCompleteName() {
 		return schoolCompleteName == null ? "" : schoolCompleteName;
 	}
@@ -5103,6 +5252,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return schoolLocation == null ? "" : schoolLocation;
 	}
 
+	public String sqlSchoolLocation() {
+		return schoolLocation;
+	}
+
 	public String jsonSchoolLocation() {
 		return schoolLocation == null ? "" : schoolLocation;
 	}
@@ -5177,6 +5330,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strSchoolAddress() {
 		return schoolAddress == null ? "" : schoolAddress;
+	}
+
+	public String sqlSchoolAddress() {
+		return schoolAddress;
 	}
 
 	public String jsonSchoolAddress() {
@@ -5325,6 +5482,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
 	}
 
+	public String sqlSchoolPhoneNumber() {
+		return schoolPhoneNumber;
+	}
+
 	public String jsonSchoolPhoneNumber() {
 		return schoolPhoneNumber == null ? "" : schoolPhoneNumber;
 	}
@@ -5399,6 +5560,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strSchoolForm() {
 		return schoolForm == null ? "" : schoolForm;
+	}
+
+	public String sqlSchoolForm() {
+		return schoolForm;
 	}
 
 	public String jsonSchoolForm() {
@@ -5485,6 +5650,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return schoolNumber == null ? "" : schoolNumber.toString();
 	}
 
+	public Integer sqlSchoolNumber() {
+		return schoolNumber;
+	}
+
 	public String jsonSchoolNumber() {
 		return schoolNumber == null ? "" : schoolNumber.toString();
 	}
@@ -5559,6 +5728,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strSchoolAdministratorName() {
 		return schoolAdministratorName == null ? "" : schoolAdministratorName;
+	}
+
+	public String sqlSchoolAdministratorName() {
+		return schoolAdministratorName;
 	}
 
 	public String jsonSchoolAdministratorName() {
@@ -5645,6 +5818,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return yearStart == null ? "" : yearStart.toString();
 	}
 
+	public Integer sqlYearStart() {
+		return yearStart;
+	}
+
 	public String jsonYearStart() {
 		return yearStart == null ? "" : yearStart.toString();
 	}
@@ -5727,6 +5904,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strYearEnd() {
 		return yearEnd == null ? "" : yearEnd.toString();
+	}
+
+	public Integer sqlYearEnd() {
+		return yearEnd;
 	}
 
 	public String jsonYearEnd() {
@@ -5822,6 +6003,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlSeasonStartDate() {
+		return seasonStartDate;
+	}
+
 	public String jsonSeasonStartDate() {
 		return seasonStartDate == null ? "" : seasonStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -5913,6 +6098,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strYearEnrollmentFee() {
 		return yearEnrollmentFee == null ? "" : yearEnrollmentFee.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlYearEnrollmentFee() {
+		return yearEnrollmentFee;
 	}
 
 	public String jsonYearEnrollmentFee() {
@@ -6008,6 +6197,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlSessionStartDate() {
+		return sessionStartDate;
+	}
+
 	public String jsonSessionStartDate() {
 		return sessionStartDate == null ? "" : sessionStartDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -6101,6 +6294,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlSessionEndDate() {
+		return sessionEndDate;
+	}
+
 	public String jsonSessionEndDate() {
 		return sessionEndDate == null ? "" : sessionEndDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -6175,6 +6372,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strAgeCompleteName() {
 		return ageCompleteName == null ? "" : ageCompleteName;
+	}
+
+	public String sqlAgeCompleteName() {
+		return ageCompleteName;
 	}
 
 	public String jsonAgeCompleteName() {
@@ -6261,6 +6462,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return ageStart == null ? "" : ageStart.toString();
 	}
 
+	public Integer sqlAgeStart() {
+		return ageStart;
+	}
+
 	public String jsonAgeStart() {
 		return ageStart == null ? "" : ageStart.toString();
 	}
@@ -6343,6 +6548,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strAgeEnd() {
 		return ageEnd == null ? "" : ageEnd.toString();
+	}
+
+	public Integer sqlAgeEnd() {
+		return ageEnd;
 	}
 
 	public String jsonAgeEnd() {
@@ -6432,6 +6641,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return blockStartTime == null ? "" : blockStartTime.format(DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalTime sqlBlockStartTime() {
+		return blockStartTime;
+	}
+
 	public String jsonBlockStartTime() {
 		return blockStartTime == null ? "" : blockStartTime.format(DateTimeFormatter.ISO_TIME);
 	}
@@ -6517,6 +6730,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strBlockEndTime() {
 		return blockEndTime == null ? "" : blockEndTime.format(DateTimeFormatter.ofPattern("h:mm a", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalTime sqlBlockEndTime() {
+		return blockEndTime;
 	}
 
 	public String jsonBlockEndTime() {
@@ -6612,6 +6829,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return blockPricePerMonth == null ? "" : blockPricePerMonth.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlBlockPricePerMonth() {
+		return blockPricePerMonth;
+	}
+
 	public String jsonBlockPricePerMonth() {
 		return blockPricePerMonth == null ? "" : blockPricePerMonth.toString();
 	}
@@ -6691,6 +6912,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strBlockSunday() {
 		return blockSunday == null ? "" : blockSunday.toString();
+	}
+
+	public Boolean sqlBlockSunday() {
+		return blockSunday;
 	}
 
 	public String jsonBlockSunday() {
@@ -6774,6 +6999,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return blockMonday == null ? "" : blockMonday.toString();
 	}
 
+	public Boolean sqlBlockMonday() {
+		return blockMonday;
+	}
+
 	public String jsonBlockMonday() {
 		return blockMonday == null ? "" : blockMonday.toString();
 	}
@@ -6853,6 +7082,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strBlockTuesday() {
 		return blockTuesday == null ? "" : blockTuesday.toString();
+	}
+
+	public Boolean sqlBlockTuesday() {
+		return blockTuesday;
 	}
 
 	public String jsonBlockTuesday() {
@@ -6936,6 +7169,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return blockWednesday == null ? "" : blockWednesday.toString();
 	}
 
+	public Boolean sqlBlockWednesday() {
+		return blockWednesday;
+	}
+
 	public String jsonBlockWednesday() {
 		return blockWednesday == null ? "" : blockWednesday.toString();
 	}
@@ -7015,6 +7252,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strBlockThursday() {
 		return blockThursday == null ? "" : blockThursday.toString();
+	}
+
+	public Boolean sqlBlockThursday() {
+		return blockThursday;
 	}
 
 	public String jsonBlockThursday() {
@@ -7098,6 +7339,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return blockFriday == null ? "" : blockFriday.toString();
 	}
 
+	public Boolean sqlBlockFriday() {
+		return blockFriday;
+	}
+
 	public String jsonBlockFriday() {
 		return blockFriday == null ? "" : blockFriday.toString();
 	}
@@ -7177,6 +7422,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strBlockSaturday() {
 		return blockSaturday == null ? "" : blockSaturday.toString();
+	}
+
+	public Boolean sqlBlockSaturday() {
+		return blockSaturday;
 	}
 
 	public String jsonBlockSaturday() {
@@ -7272,6 +7521,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return blockTotalPrice == null ? "" : blockTotalPrice.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlBlockTotalPrice() {
+		return blockTotalPrice;
+	}
+
 	public String jsonBlockTotalPrice() {
 		return blockTotalPrice == null ? "" : blockTotalPrice.toString();
 	}
@@ -7346,6 +7599,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strBlockAdminName() {
 		return blockAdminName == null ? "" : blockAdminName;
+	}
+
+	public String sqlBlockAdminName() {
+		return blockAdminName;
 	}
 
 	public String jsonBlockAdminName() {
@@ -7424,6 +7681,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return blockShortName == null ? "" : blockShortName;
 	}
 
+	public String sqlBlockShortName() {
+		return blockShortName;
+	}
+
 	public String jsonBlockShortName() {
 		return blockShortName == null ? "" : blockShortName;
 	}
@@ -7498,6 +7759,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strBlockCompleteName() {
 		return blockCompleteName == null ? "" : blockCompleteName;
+	}
+
+	public String sqlBlockCompleteName() {
+		return blockCompleteName;
 	}
 
 	public String jsonBlockCompleteName() {
@@ -7579,6 +7844,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentApproved() {
 		return enrollmentApproved == null ? "" : enrollmentApproved.toString();
+	}
+
+	public Boolean sqlEnrollmentApproved() {
+		return enrollmentApproved;
 	}
 
 	public String jsonEnrollmentApproved() {
@@ -7727,6 +7996,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentImmunizations == null ? "" : enrollmentImmunizations.toString();
 	}
 
+	public Boolean sqlEnrollmentImmunizations() {
+		return enrollmentImmunizations;
+	}
+
 	public String jsonEnrollmentImmunizations() {
 		return enrollmentImmunizations == null ? "" : enrollmentImmunizations.toString();
 	}
@@ -7866,6 +8139,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strPhoto() {
 		return photo == null ? "" : photo;
+	}
+
+	public String sqlPhoto() {
+		return photo;
 	}
 
 	public String jsonPhoto() {
@@ -8011,6 +8288,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strFamilyMarried() {
 		return familyMarried == null ? "" : familyMarried.toString();
+	}
+
+	public Boolean sqlFamilyMarried() {
+		return familyMarried;
 	}
 
 	public String jsonFamilyMarried() {
@@ -8159,6 +8440,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return familySeparated == null ? "" : familySeparated.toString();
 	}
 
+	public Boolean sqlFamilySeparated() {
+		return familySeparated;
+	}
+
 	public String jsonFamilySeparated() {
 		return familySeparated == null ? "" : familySeparated.toString();
 	}
@@ -8305,6 +8590,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return familyDivorced == null ? "" : familyDivorced.toString();
 	}
 
+	public Boolean sqlFamilyDivorced() {
+		return familyDivorced;
+	}
+
 	public String jsonFamilyDivorced() {
 		return familyDivorced == null ? "" : familyDivorced.toString();
 	}
@@ -8386,6 +8675,156 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	//////////////////////////
+	// enrollmentPassphrase //
+	//////////////////////////
+
+	/**	 The entity enrollmentPassphrase
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String enrollmentPassphrase;
+	@JsonIgnore
+	public Wrap<String> enrollmentPassphraseWrap = new Wrap<String>().p(this).c(String.class).var("enrollmentPassphrase").o(enrollmentPassphrase);
+
+	/**	<br/> The entity enrollmentPassphrase
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:enrollmentPassphrase">Find the entity enrollmentPassphrase in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _enrollmentPassphrase(Wrap<String> c);
+
+	public String getEnrollmentPassphrase() {
+		return enrollmentPassphrase;
+	}
+	public void setEnrollmentPassphrase(String o) {
+		this.enrollmentPassphrase = SchoolEnrollment.staticSetEnrollmentPassphrase(siteRequest_, o);
+		this.enrollmentPassphraseWrap.alreadyInitialized = true;
+	}
+	public static String staticSetEnrollmentPassphrase(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment enrollmentPassphraseInit() {
+		if(!enrollmentPassphraseWrap.alreadyInitialized) {
+			_enrollmentPassphrase(enrollmentPassphraseWrap);
+			if(enrollmentPassphrase == null)
+				setEnrollmentPassphrase(enrollmentPassphraseWrap.o);
+		}
+		enrollmentPassphraseWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrEnrollmentPassphrase(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrEnrollmentPassphrase(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqEnrollmentPassphrase(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrEnrollmentPassphrase(siteRequest_, SchoolEnrollment.staticSolrEnrollmentPassphrase(siteRequest_, SchoolEnrollment.staticSetEnrollmentPassphrase(siteRequest_, o)));
+	}
+
+	public String solrEnrollmentPassphrase() {
+		return SchoolEnrollment.staticSolrEnrollmentPassphrase(siteRequest_, enrollmentPassphrase);
+	}
+
+	public String strEnrollmentPassphrase() {
+		return enrollmentPassphrase == null ? "" : enrollmentPassphrase;
+	}
+
+	public String sqlEnrollmentPassphrase() {
+		return enrollmentPassphrase;
+	}
+
+	public String jsonEnrollmentPassphrase() {
+		return enrollmentPassphrase == null ? "" : enrollmentPassphrase;
+	}
+
+	public String nomAffichageEnrollmentPassphrase() {
+		return "passphrase";
+	}
+
+	public String htmTooltipEnrollmentPassphrase() {
+		return null;
+	}
+
+	public String htmEnrollmentPassphrase() {
+		return enrollmentPassphrase == null ? "" : StringEscapeUtils.escapeHtml4(strEnrollmentPassphrase());
+	}
+
+	public void inputEnrollmentPassphrase(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "passphrase")
+				.a("id", classApiMethodMethod, "_enrollmentPassphrase");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setEnrollmentPassphrase classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentPassphrase w3-input w3-border ");
+					a("name", "setEnrollmentPassphrase");
+				} else {
+					a("class", "valueEnrollmentPassphrase w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "EnrollmentPassphrase w3-input w3-border ");
+					a("name", "enrollmentPassphrase");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setEnrollmentPassphrase', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_enrollmentPassphrase')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPassphrase')); }); ");
+				}
+				a("value", strEnrollmentPassphrase())
+			.fg();
+
+		} else {
+			e("span").a("class", "varSchoolEnrollment", pk, "EnrollmentPassphrase ").f().sx(htmEnrollmentPassphrase()).g("span");
+		}
+	}
+
+	public void htmEnrollmentPassphrase(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolEnrollmentEnrollmentPassphrase").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
+							e("label").a("for", classApiMethodMethod, "_enrollmentPassphrase").a("class", "").f().sx("passphrase").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputEnrollmentPassphrase(classApiMethodMethod);
+							} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_enrollmentPassphrase')); $('#", classApiMethodMethod, "_enrollmentPassphrase').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setEnrollmentPassphrase', null, function() { addGlow($('#", classApiMethodMethod, "_enrollmentPassphrase')); }, function() { addError($('#", classApiMethodMethod, "_enrollmentPassphrase')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////////
 	// familyAddress //
 	///////////////////
@@ -8444,6 +8883,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strFamilyAddress() {
 		return familyAddress == null ? "" : familyAddress;
+	}
+
+	public String sqlFamilyAddress() {
+		return familyAddress;
 	}
 
 	public String jsonFamilyAddress() {
@@ -8590,6 +9033,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return familyHowDoYouKnowTheSchool == null ? "" : familyHowDoYouKnowTheSchool;
 	}
 
+	public String sqlFamilyHowDoYouKnowTheSchool() {
+		return familyHowDoYouKnowTheSchool;
+	}
+
 	public String jsonFamilyHowDoYouKnowTheSchool() {
 		return familyHowDoYouKnowTheSchool == null ? "" : familyHowDoYouKnowTheSchool;
 	}
@@ -8732,6 +9179,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentSpecialConsiderations() {
 		return enrollmentSpecialConsiderations == null ? "" : enrollmentSpecialConsiderations;
+	}
+
+	public String sqlEnrollmentSpecialConsiderations() {
+		return enrollmentSpecialConsiderations;
 	}
 
 	public String jsonEnrollmentSpecialConsiderations() {
@@ -8878,6 +9329,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childMedicalConditions == null ? "" : childMedicalConditions;
 	}
 
+	public String sqlChildMedicalConditions() {
+		return childMedicalConditions;
+	}
+
 	public String jsonChildMedicalConditions() {
 		return childMedicalConditions == null ? "" : childMedicalConditions;
 	}
@@ -9020,6 +9475,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strChildPreviousSchoolsAttended() {
 		return childPreviousSchoolsAttended == null ? "" : childPreviousSchoolsAttended;
+	}
+
+	public String sqlChildPreviousSchoolsAttended() {
+		return childPreviousSchoolsAttended;
 	}
 
 	public String jsonChildPreviousSchoolsAttended() {
@@ -9166,6 +9625,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childDescription == null ? "" : childDescription;
 	}
 
+	public String sqlChildDescription() {
+		return childDescription;
+	}
+
 	public String jsonChildDescription() {
 		return childDescription == null ? "" : childDescription;
 	}
@@ -9310,6 +9773,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childObjectives == null ? "" : childObjectives;
 	}
 
+	public String sqlChildObjectives() {
+		return childObjectives;
+	}
+
 	public String jsonChildObjectives() {
 		return childObjectives == null ? "" : childObjectives;
 	}
@@ -9394,6 +9861,154 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	////////////////
+	// adminNotes //
+	////////////////
+
+	/**	 The entity adminNotes
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String adminNotes;
+	@JsonIgnore
+	public Wrap<String> adminNotesWrap = new Wrap<String>().p(this).c(String.class).var("adminNotes").o(adminNotes);
+
+	/**	<br/> The entity adminNotes
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:adminNotes">Find the entity adminNotes in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _adminNotes(Wrap<String> c);
+
+	public String getAdminNotes() {
+		return adminNotes;
+	}
+	public void setAdminNotes(String o) {
+		this.adminNotes = SchoolEnrollment.staticSetAdminNotes(siteRequest_, o);
+		this.adminNotesWrap.alreadyInitialized = true;
+	}
+	public static String staticSetAdminNotes(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment adminNotesInit() {
+		if(!adminNotesWrap.alreadyInitialized) {
+			_adminNotes(adminNotesWrap);
+			if(adminNotes == null)
+				setAdminNotes(adminNotesWrap.o);
+		}
+		adminNotesWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrAdminNotes(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrAdminNotes(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAdminNotes(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrAdminNotes(siteRequest_, SchoolEnrollment.staticSolrAdminNotes(siteRequest_, SchoolEnrollment.staticSetAdminNotes(siteRequest_, o)));
+	}
+
+	public String solrAdminNotes() {
+		return SchoolEnrollment.staticSolrAdminNotes(siteRequest_, adminNotes);
+	}
+
+	public String strAdminNotes() {
+		return adminNotes == null ? "" : adminNotes;
+	}
+
+	public String sqlAdminNotes() {
+		return adminNotes;
+	}
+
+	public String jsonAdminNotes() {
+		return adminNotes == null ? "" : adminNotes;
+	}
+
+	public String nomAffichageAdminNotes() {
+		return "admin notes";
+	}
+
+	public String htmTooltipAdminNotes() {
+		return null;
+	}
+
+	public String htmAdminNotes() {
+		return adminNotes == null ? "" : StringEscapeUtils.escapeHtml4(strAdminNotes());
+	}
+
+	public void inputAdminNotes(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		if(
+				userKeys.contains(siteRequest_.getUserKey())
+				|| Objects.equals(sessionId, siteRequest_.getSessionId())
+				|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+		) {
+			e("textarea")
+				.a("placeholder", "admin notes")
+				.a("id", classApiMethodMethod, "_adminNotes");
+				if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+					a("class", "setAdminNotes classSchoolEnrollment inputSchoolEnrollment", pk, "AdminNotes w3-input w3-border ");
+					a("name", "setAdminNotes");
+				} else {
+					a("class", "valueAdminNotes w3-input w3-border classSchoolEnrollment inputSchoolEnrollment", pk, "AdminNotes w3-input w3-border ");
+					a("name", "adminNotes");
+				}
+				if("Page".equals(classApiMethodMethod)) {
+					a("onclick", "removeGlow($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setAdminNotes', $(this).val(), function() { addGlow($('#", classApiMethodMethod, "_adminNotes')); }, function() { addError($('#", classApiMethodMethod, "_adminNotes')); }); ");
+				}
+			f().sx(strAdminNotes()).g("textarea");
+
+		} else {
+			e("span").a("class", "varSchoolEnrollment", pk, "AdminNotes ").f().sx(htmAdminNotes()).g("span");
+		}
+	}
+
+	public void htmAdminNotes(String classApiMethodMethod) {
+		SchoolEnrollment s = (SchoolEnrollment)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "SchoolEnrollmentAdminNotes").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
+							e("label").a("for", classApiMethodMethod, "_adminNotes").a("class", "").f().sx("admin notes").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputAdminNotes(classApiMethodMethod);
+							} g("div");
+							if(
+									userKeys.contains(siteRequest_.getUserKey())
+									|| Objects.equals(sessionId, siteRequest_.getSessionId())
+									|| CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+									|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+							) {
+								if("Page".equals(classApiMethodMethod)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
+										.a("onclick", "removeGlow($('#", classApiMethodMethod, "_adminNotes')); $('#", classApiMethodMethod, "_adminNotes').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#SchoolEnrollmentForm :input[name=pk]').val() }], 'setAdminNotes', null, function() { addGlow($('#", classApiMethodMethod, "_adminNotes')); }, function() { addError($('#", classApiMethodMethod, "_adminNotes')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	///////////////////////
 	// childPottyTrained //
 	///////////////////////
@@ -9457,6 +10072,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strChildPottyTrained() {
 		return childPottyTrained == null ? "" : childPottyTrained.toString();
+	}
+
+	public Boolean sqlChildPottyTrained() {
+		return childPottyTrained;
 	}
 
 	public String jsonChildPottyTrained() {
@@ -9598,6 +10217,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentGroupName() {
 		return enrollmentGroupName == null ? "" : enrollmentGroupName;
+	}
+
+	public String sqlEnrollmentGroupName() {
+		return enrollmentGroupName;
 	}
 
 	public String jsonEnrollmentGroupName() {
@@ -9746,6 +10369,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentGroupColor == null ? "" : enrollmentGroupColor;
 	}
 
+	public String sqlEnrollmentGroupColor() {
+		return enrollmentGroupColor;
+	}
+
 	public String jsonEnrollmentGroupColor() {
 		return enrollmentGroupColor == null ? "" : enrollmentGroupColor;
 	}
@@ -9825,6 +10452,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentPaymentEachMonth() {
 		return enrollmentPaymentEachMonth == null ? "" : enrollmentPaymentEachMonth.toString();
+	}
+
+	public Boolean sqlEnrollmentPaymentEachMonth() {
+		return enrollmentPaymentEachMonth;
 	}
 
 	public String jsonEnrollmentPaymentEachMonth() {
@@ -9973,6 +10604,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentPaymentComplete == null ? "" : enrollmentPaymentComplete.toString();
 	}
 
+	public Boolean sqlEnrollmentPaymentComplete() {
+		return enrollmentPaymentComplete;
+	}
+
 	public String jsonEnrollmentPaymentComplete() {
 		return enrollmentPaymentComplete == null ? "" : enrollmentPaymentComplete.toString();
 	}
@@ -10112,6 +10747,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strCustomerProfileId() {
 		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String sqlCustomerProfileId() {
+		return customerProfileId;
 	}
 
 	public String jsonCustomerProfileId() {
@@ -10275,6 +10914,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentChargeDate() {
 		return enrollmentChargeDate == null ? "" : enrollmentChargeDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalDate sqlEnrollmentChargeDate() {
+		return enrollmentChargeDate;
 	}
 
 	public String jsonEnrollmentChargeDate() {
@@ -10472,6 +11115,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return paymentLastDate == null ? "" : paymentLastDate.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlPaymentLastDate() {
+		return paymentLastDate;
+	}
+
 	public String jsonPaymentLastDate() {
 		return paymentLastDate == null ? "" : paymentLastDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -10546,6 +11193,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strPaymentLastStr() {
 		return paymentLastStr == null ? "" : paymentLastStr;
+	}
+
+	public String sqlPaymentLastStr() {
+		return paymentLastStr;
 	}
 
 	public String jsonPaymentLastStr() {
@@ -10641,6 +11292,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return paymentAmount == null ? "" : paymentAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlPaymentAmount() {
+		return paymentAmount;
+	}
+
 	public String jsonPaymentAmount() {
 		return paymentAmount == null ? "" : paymentAmount.toString();
 	}
@@ -10732,6 +11387,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strChargeAmount() {
 		return chargeAmount == null ? "" : chargeAmount.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlChargeAmount() {
+		return chargeAmount;
 	}
 
 	public String jsonChargeAmount() {
@@ -10827,6 +11486,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return chargeAmountFuture == null ? "" : chargeAmountFuture.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargeAmountFuture() {
+		return chargeAmountFuture;
+	}
+
 	public String jsonChargeAmountFuture() {
 		return chargeAmountFuture == null ? "" : chargeAmountFuture.toString();
 	}
@@ -10918,6 +11581,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strChargeAmountDue() {
 		return chargeAmountDue == null ? "" : chargeAmountDue.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlChargeAmountDue() {
+		return chargeAmountDue;
 	}
 
 	public String jsonChargeAmountDue() {
@@ -11013,6 +11680,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return chargeAmountNotPassed == null ? "" : chargeAmountNotPassed.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargeAmountNotPassed() {
+		return chargeAmountNotPassed;
+	}
+
 	public String jsonChargeAmountNotPassed() {
 		return chargeAmountNotPassed == null ? "" : chargeAmountNotPassed.toString();
 	}
@@ -11106,6 +11777,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return chargesNow == null ? "" : chargesNow.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlChargesNow() {
+		return chargesNow;
+	}
+
 	public String jsonChargesNow() {
 		return chargesNow == null ? "" : chargesNow.toString();
 	}
@@ -11187,6 +11862,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return paymentsCurrent == null ? "" : paymentsCurrent.toString();
 	}
 
+	public Boolean sqlPaymentsCurrent() {
+		return paymentsCurrent;
+	}
+
 	public String jsonPaymentsCurrent() {
 		return paymentsCurrent == null ? "" : paymentsCurrent.toString();
 	}
@@ -11266,6 +11945,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strPaymentsLate() {
 		return paymentsLate == null ? "" : paymentsLate.toString();
+	}
+
+	public Boolean sqlPaymentsLate() {
+		return paymentsLate;
 	}
 
 	public String jsonPaymentsLate() {
@@ -11361,6 +12044,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return paymentsLateAmount == null ? "" : paymentsLateAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlPaymentsLateAmount() {
+		return paymentsLateAmount;
+	}
+
 	public String jsonPaymentsLateAmount() {
 		return paymentsLateAmount == null ? "" : paymentsLateAmount.toString();
 	}
@@ -11442,6 +12129,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return paymentsAhead == null ? "" : paymentsAhead.toString();
 	}
 
+	public Boolean sqlPaymentsAhead() {
+		return paymentsAhead;
+	}
+
 	public String jsonPaymentsAhead() {
 		return paymentsAhead == null ? "" : paymentsAhead.toString();
 	}
@@ -11521,6 +12212,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strPaymentsPastDue() {
 		return paymentsPastDue == null ? "" : paymentsPastDue.toString();
+	}
+
+	public Boolean sqlPaymentsPastDue() {
+		return paymentsPastDue;
 	}
 
 	public String jsonPaymentsPastDue() {
@@ -11616,6 +12311,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return paymentsPastDueAmount == null ? "" : paymentsPastDueAmount.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlPaymentsPastDueAmount() {
+		return paymentsPastDueAmount;
+	}
+
 	public String jsonPaymentsPastDueAmount() {
 		return paymentsPastDueAmount == null ? "" : paymentsPastDueAmount.toString();
 	}
@@ -11695,6 +12394,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strChargesCreated() {
 		return chargesCreated == null ? "" : chargesCreated.toString();
+	}
+
+	public Boolean sqlChargesCreated() {
+		return chargesCreated;
 	}
 
 	public String jsonChargesCreated() {
@@ -11781,6 +12484,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return createdYear == null ? "" : createdYear.toString();
 	}
 
+	public Integer sqlCreatedYear() {
+		return createdYear;
+	}
+
 	public String jsonCreatedYear() {
 		return createdYear == null ? "" : createdYear.toString();
 	}
@@ -11855,6 +12562,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strCreatedDayOfWeek() {
 		return createdDayOfWeek == null ? "" : createdDayOfWeek;
+	}
+
+	public String sqlCreatedDayOfWeek() {
+		return createdDayOfWeek;
 	}
 
 	public String jsonCreatedDayOfWeek() {
@@ -11933,6 +12644,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return createdMonthOfYear == null ? "" : createdMonthOfYear;
 	}
 
+	public String sqlCreatedMonthOfYear() {
+		return createdMonthOfYear;
+	}
+
 	public String jsonCreatedMonthOfYear() {
 		return createdMonthOfYear == null ? "" : createdMonthOfYear;
 	}
@@ -12007,6 +12722,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strCreatedHourOfDay() {
 		return createdHourOfDay == null ? "" : createdHourOfDay;
+	}
+
+	public String sqlCreatedHourOfDay() {
+		return createdHourOfDay;
 	}
 
 	public String jsonCreatedHourOfDay() {
@@ -12106,6 +12825,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentDaysOfWeek == null ? "" : enrollmentDaysOfWeek.toString();
 	}
 
+	public List<String> sqlEnrollmentDaysOfWeek() {
+		return enrollmentDaysOfWeek;
+	}
+
 	public String jsonEnrollmentDaysOfWeek() {
 		return enrollmentDaysOfWeek == null ? "" : enrollmentDaysOfWeek.toString();
 	}
@@ -12180,6 +12903,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentParentNames() {
 		return enrollmentParentNames == null ? "" : enrollmentParentNames;
+	}
+
+	public String sqlEnrollmentParentNames() {
+		return enrollmentParentNames;
 	}
 
 	public String jsonEnrollmentParentNames() {
@@ -12345,6 +13072,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentEmails == null ? "" : enrollmentEmails.toString();
 	}
 
+	public List<String> sqlEnrollmentEmails() {
+		return enrollmentEmails;
+	}
+
 	public String jsonEnrollmentEmails() {
 		return enrollmentEmails == null ? "" : enrollmentEmails.toString();
 	}
@@ -12421,6 +13152,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentEmail == null ? "" : enrollmentEmail;
 	}
 
+	public String sqlEnrollmentEmail() {
+		return enrollmentEmail;
+	}
+
 	public String jsonEnrollmentEmail() {
 		return enrollmentEmail == null ? "" : enrollmentEmail;
 	}
@@ -12495,6 +13230,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentParentEmails() {
 		return enrollmentParentEmails == null ? "" : enrollmentParentEmails;
+	}
+
+	public String sqlEnrollmentParentEmails() {
+		return enrollmentParentEmails;
 	}
 
 	public String jsonEnrollmentParentEmails() {
@@ -12594,6 +13333,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentPhoneNumbers == null ? "" : enrollmentPhoneNumbers.toString();
 	}
 
+	public List<String> sqlEnrollmentPhoneNumbers() {
+		return enrollmentPhoneNumbers;
+	}
+
 	public String jsonEnrollmentPhoneNumbers() {
 		return enrollmentPhoneNumbers == null ? "" : enrollmentPhoneNumbers.toString();
 	}
@@ -12668,6 +13411,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentPhoneNumber() {
 		return enrollmentPhoneNumber == null ? "" : enrollmentPhoneNumber;
+	}
+
+	public String sqlEnrollmentPhoneNumber() {
+		return enrollmentPhoneNumber;
 	}
 
 	public String jsonEnrollmentPhoneNumber() {
@@ -12746,6 +13493,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentParentName == null ? "" : enrollmentParentName;
 	}
 
+	public String sqlEnrollmentParentName() {
+		return enrollmentParentName;
+	}
+
 	public String jsonEnrollmentParentName() {
 		return enrollmentParentName == null ? "" : enrollmentParentName;
 	}
@@ -12820,6 +13571,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentParentNameLines() {
 		return enrollmentParentNameLines == null ? "" : enrollmentParentNameLines;
+	}
+
+	public String sqlEnrollmentParentNameLines() {
+		return enrollmentParentNameLines;
 	}
 
 	public String jsonEnrollmentParentNameLines() {
@@ -12898,6 +13653,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentParentEmailLines == null ? "" : enrollmentParentEmailLines;
 	}
 
+	public String sqlEnrollmentParentEmailLines() {
+		return enrollmentParentEmailLines;
+	}
+
 	public String jsonEnrollmentParentEmailLines() {
 		return enrollmentParentEmailLines == null ? "" : enrollmentParentEmailLines;
 	}
@@ -12972,6 +13731,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentParentDetailLines() {
 		return enrollmentParentDetailLines == null ? "" : enrollmentParentDetailLines;
+	}
+
+	public String sqlEnrollmentParentDetailLines() {
+		return enrollmentParentDetailLines;
 	}
 
 	public String jsonEnrollmentParentDetailLines() {
@@ -13050,6 +13813,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentPickupDetailLines == null ? "" : enrollmentPickupDetailLines;
 	}
 
+	public String sqlEnrollmentPickupDetailLines() {
+		return enrollmentPickupDetailLines;
+	}
+
 	public String jsonEnrollmentPickupDetailLines() {
 		return enrollmentPickupDetailLines == null ? "" : enrollmentPickupDetailLines;
 	}
@@ -13126,6 +13893,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentEmergencyContactDetailLines == null ? "" : enrollmentEmergencyContactDetailLines;
 	}
 
+	public String sqlEnrollmentEmergencyContactDetailLines() {
+		return enrollmentEmergencyContactDetailLines;
+	}
+
 	public String jsonEnrollmentEmergencyContactDetailLines() {
 		return enrollmentEmergencyContactDetailLines == null ? "" : enrollmentEmergencyContactDetailLines;
 	}
@@ -13200,6 +13971,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentSignature1() {
 		return enrollmentSignature1 == null ? "" : enrollmentSignature1;
+	}
+
+	public String sqlEnrollmentSignature1() {
+		return enrollmentSignature1;
 	}
 
 	public String jsonEnrollmentSignature1() {
@@ -13354,6 +14129,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentSignature2 == null ? "" : enrollmentSignature2;
 	}
 
+	public String sqlEnrollmentSignature2() {
+		return enrollmentSignature2;
+	}
+
 	public String jsonEnrollmentSignature2() {
 		return enrollmentSignature2 == null ? "" : enrollmentSignature2;
 	}
@@ -13504,6 +14283,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentSignature3() {
 		return enrollmentSignature3 == null ? "" : enrollmentSignature3;
+	}
+
+	public String sqlEnrollmentSignature3() {
+		return enrollmentSignature3;
 	}
 
 	public String jsonEnrollmentSignature3() {
@@ -13658,6 +14441,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentSignature4 == null ? "" : enrollmentSignature4;
 	}
 
+	public String sqlEnrollmentSignature4() {
+		return enrollmentSignature4;
+	}
+
 	public String jsonEnrollmentSignature4() {
 		return enrollmentSignature4 == null ? "" : enrollmentSignature4;
 	}
@@ -13808,6 +14595,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentSignature5() {
 		return enrollmentSignature5 == null ? "" : enrollmentSignature5;
+	}
+
+	public String sqlEnrollmentSignature5() {
+		return enrollmentSignature5;
 	}
 
 	public String jsonEnrollmentSignature5() {
@@ -13962,6 +14753,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentSignature6 == null ? "" : enrollmentSignature6;
 	}
 
+	public String sqlEnrollmentSignature6() {
+		return enrollmentSignature6;
+	}
+
 	public String jsonEnrollmentSignature6() {
 		return enrollmentSignature6 == null ? "" : enrollmentSignature6;
 	}
@@ -14112,6 +14907,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentSignature7() {
 		return enrollmentSignature7 == null ? "" : enrollmentSignature7;
+	}
+
+	public String sqlEnrollmentSignature7() {
+		return enrollmentSignature7;
 	}
 
 	public String jsonEnrollmentSignature7() {
@@ -14266,6 +15065,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentSignature8 == null ? "" : enrollmentSignature8;
 	}
 
+	public String sqlEnrollmentSignature8() {
+		return enrollmentSignature8;
+	}
+
 	public String jsonEnrollmentSignature8() {
 		return enrollmentSignature8 == null ? "" : enrollmentSignature8;
 	}
@@ -14418,6 +15221,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentSignature9 == null ? "" : enrollmentSignature9;
 	}
 
+	public String sqlEnrollmentSignature9() {
+		return enrollmentSignature9;
+	}
+
 	public String jsonEnrollmentSignature9() {
 		return enrollmentSignature9 == null ? "" : enrollmentSignature9;
 	}
@@ -14568,6 +15375,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentSignature10() {
 		return enrollmentSignature10 == null ? "" : enrollmentSignature10;
+	}
+
+	public String sqlEnrollmentSignature10() {
+		return enrollmentSignature10;
 	}
 
 	public String jsonEnrollmentSignature10() {
@@ -14739,6 +15550,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentDate1 == null ? "" : enrollmentDate1.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlEnrollmentDate1() {
+		return enrollmentDate1;
+	}
+
 	public String jsonEnrollmentDate1() {
 		return enrollmentDate1 == null ? "" : enrollmentDate1.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -14890,6 +15705,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentDate2() {
 		return enrollmentDate2 == null ? "" : enrollmentDate2.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalDate sqlEnrollmentDate2() {
+		return enrollmentDate2;
 	}
 
 	public String jsonEnrollmentDate2() {
@@ -15045,6 +15864,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentDate3 == null ? "" : enrollmentDate3.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlEnrollmentDate3() {
+		return enrollmentDate3;
+	}
+
 	public String jsonEnrollmentDate3() {
 		return enrollmentDate3 == null ? "" : enrollmentDate3.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -15196,6 +16019,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentDate4() {
 		return enrollmentDate4 == null ? "" : enrollmentDate4.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalDate sqlEnrollmentDate4() {
+		return enrollmentDate4;
 	}
 
 	public String jsonEnrollmentDate4() {
@@ -15351,6 +16178,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentDate5 == null ? "" : enrollmentDate5.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlEnrollmentDate5() {
+		return enrollmentDate5;
+	}
+
 	public String jsonEnrollmentDate5() {
 		return enrollmentDate5 == null ? "" : enrollmentDate5.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -15502,6 +16333,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentDate6() {
 		return enrollmentDate6 == null ? "" : enrollmentDate6.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalDate sqlEnrollmentDate6() {
+		return enrollmentDate6;
 	}
 
 	public String jsonEnrollmentDate6() {
@@ -15657,6 +16492,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentDate7 == null ? "" : enrollmentDate7.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlEnrollmentDate7() {
+		return enrollmentDate7;
+	}
+
 	public String jsonEnrollmentDate7() {
 		return enrollmentDate7 == null ? "" : enrollmentDate7.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -15808,6 +16647,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentDate8() {
 		return enrollmentDate8 == null ? "" : enrollmentDate8.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalDate sqlEnrollmentDate8() {
+		return enrollmentDate8;
 	}
 
 	public String jsonEnrollmentDate8() {
@@ -15963,6 +16806,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentDate9 == null ? "" : enrollmentDate9.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
 	}
 
+	public LocalDate sqlEnrollmentDate9() {
+		return enrollmentDate9;
+	}
+
 	public String jsonEnrollmentDate9() {
 		return enrollmentDate9 == null ? "" : enrollmentDate9.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -16114,6 +16961,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentDate10() {
 		return enrollmentDate10 == null ? "" : enrollmentDate10.format(DateTimeFormatter.ofPattern("EEE MMM d, yyyy", Locale.forLanguageTag("en-US")));
+	}
+
+	public LocalDate sqlEnrollmentDate10() {
+		return enrollmentDate10;
 	}
 
 	public String jsonEnrollmentDate10() {
@@ -16452,6 +17303,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return childImmunizationsReceived == null ? "" : childImmunizationsReceived;
 	}
 
+	public String sqlChildImmunizationsReceived() {
+		return childImmunizationsReceived;
+	}
+
 	public String jsonChildImmunizationsReceived() {
 		return childImmunizationsReceived == null ? "" : childImmunizationsReceived;
 	}
@@ -16526,6 +17381,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strChildPhotosApproved() {
 		return childPhotosApproved == null ? "" : childPhotosApproved;
+	}
+
+	public String sqlChildPhotosApproved() {
+		return childPhotosApproved;
 	}
 
 	public String jsonChildPhotosApproved() {
@@ -16612,6 +17471,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return enrollmentNumber == null ? "" : enrollmentNumber.toString();
 	}
 
+	public Integer sqlEnrollmentNumber() {
+		return enrollmentNumber;
+	}
+
 	public String jsonEnrollmentNumber() {
 		return enrollmentNumber == null ? "" : enrollmentNumber.toString();
 	}
@@ -16686,6 +17549,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String strEnrollmentCompleteName() {
 		return enrollmentCompleteName == null ? "" : enrollmentCompleteName;
+	}
+
+	public String sqlEnrollmentCompleteName() {
+		return enrollmentCompleteName;
 	}
 
 	public String jsonEnrollmentCompleteName() {
@@ -16815,6 +17682,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		familyMarriedInit();
 		familySeparatedInit();
 		familyDivorcedInit();
+		enrollmentPassphraseInit();
 		familyAddressInit();
 		familyHowDoYouKnowTheSchoolInit();
 		enrollmentSpecialConsiderationsInit();
@@ -16822,6 +17690,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		childPreviousSchoolsAttendedInit();
 		childDescriptionInit();
 		childObjectivesInit();
+		adminNotesInit();
 		childPottyTrainedInit();
 		enrollmentGroupNameInit();
 		enrollmentGroupColorInit();
@@ -16937,6 +17806,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
+			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
 			}
 		}
 		return o;
@@ -17124,6 +17997,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.familySeparated;
 			case "familyDivorced":
 				return oSchoolEnrollment.familyDivorced;
+			case "enrollmentPassphrase":
+				return oSchoolEnrollment.enrollmentPassphrase;
 			case "familyAddress":
 				return oSchoolEnrollment.familyAddress;
 			case "familyHowDoYouKnowTheSchool":
@@ -17138,6 +18013,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.childDescription;
 			case "childObjectives":
 				return oSchoolEnrollment.childObjectives;
+			case "adminNotes":
+				return oSchoolEnrollment.adminNotes;
 			case "childPottyTrained":
 				return oSchoolEnrollment.childPottyTrained;
 			case "enrollmentGroupName":
@@ -17302,44 +18179,44 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			case "yearKey":
 				if(oSchoolEnrollment.getYearKey() == null)
 					oSchoolEnrollment.setYearKey((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("yearKey"))
+					saves.add("yearKey");
 				return val;
 			case "blockKeys":
 				oSchoolEnrollment.addBlockKeys((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("blockKeys"))
+					saves.add("blockKeys");
 				return val;
 			case "childKey":
 				if(oSchoolEnrollment.getChildKey() == null)
 					oSchoolEnrollment.setChildKey((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("childKey"))
+					saves.add("childKey");
 				return val;
 			case "momKeys":
 				oSchoolEnrollment.addMomKeys((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("momKeys"))
+					saves.add("momKeys");
 				return val;
 			case "dadKeys":
 				oSchoolEnrollment.addDadKeys((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("dadKeys"))
+					saves.add("dadKeys");
 				return val;
 			case "guardianKeys":
 				oSchoolEnrollment.addGuardianKeys((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("guardianKeys"))
+					saves.add("guardianKeys");
 				return val;
 			case "paymentKeys":
 				oSchoolEnrollment.addPaymentKeys((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("paymentKeys"))
+					saves.add("paymentKeys");
 				return val;
 			case "userKeys":
 				oSchoolEnrollment.addUserKeys((Long)val);
-				if(!saves.contains(var))
-					saves.add(var);
+				if(!saves.contains("userKeys"))
+					saves.add("userKeys");
 				return val;
 			default:
 				return super.attributeCluster(var, val);
@@ -17503,6 +18380,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSetFamilySeparated(siteRequest_, o);
 		case "familyDivorced":
 			return SchoolEnrollment.staticSetFamilyDivorced(siteRequest_, o);
+		case "enrollmentPassphrase":
+			return SchoolEnrollment.staticSetEnrollmentPassphrase(siteRequest_, o);
 		case "familyAddress":
 			return SchoolEnrollment.staticSetFamilyAddress(siteRequest_, o);
 		case "familyHowDoYouKnowTheSchool":
@@ -17517,6 +18396,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSetChildDescription(siteRequest_, o);
 		case "childObjectives":
 			return SchoolEnrollment.staticSetChildObjectives(siteRequest_, o);
+		case "adminNotes":
+			return SchoolEnrollment.staticSetAdminNotes(siteRequest_, o);
 		case "childPottyTrained":
 			return SchoolEnrollment.staticSetChildPottyTrained(siteRequest_, o);
 		case "enrollmentGroupName":
@@ -17805,6 +18686,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrFamilySeparated(siteRequest_, (Boolean)o);
 		case "familyDivorced":
 			return SchoolEnrollment.staticSolrFamilyDivorced(siteRequest_, (Boolean)o);
+		case "enrollmentPassphrase":
+			return SchoolEnrollment.staticSolrEnrollmentPassphrase(siteRequest_, (String)o);
 		case "familyAddress":
 			return SchoolEnrollment.staticSolrFamilyAddress(siteRequest_, (String)o);
 		case "familyHowDoYouKnowTheSchool":
@@ -17819,6 +18702,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrChildDescription(siteRequest_, (String)o);
 		case "childObjectives":
 			return SchoolEnrollment.staticSolrChildObjectives(siteRequest_, (String)o);
+		case "adminNotes":
+			return SchoolEnrollment.staticSolrAdminNotes(siteRequest_, (String)o);
 		case "childPottyTrained":
 			return SchoolEnrollment.staticSolrChildPottyTrained(siteRequest_, (Boolean)o);
 		case "enrollmentGroupName":
@@ -18107,6 +18992,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrStrFamilySeparated(siteRequest_, (Boolean)o);
 		case "familyDivorced":
 			return SchoolEnrollment.staticSolrStrFamilyDivorced(siteRequest_, (Boolean)o);
+		case "enrollmentPassphrase":
+			return SchoolEnrollment.staticSolrStrEnrollmentPassphrase(siteRequest_, (String)o);
 		case "familyAddress":
 			return SchoolEnrollment.staticSolrStrFamilyAddress(siteRequest_, (String)o);
 		case "familyHowDoYouKnowTheSchool":
@@ -18121,6 +19008,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrStrChildDescription(siteRequest_, (String)o);
 		case "childObjectives":
 			return SchoolEnrollment.staticSolrStrChildObjectives(siteRequest_, (String)o);
+		case "adminNotes":
+			return SchoolEnrollment.staticSolrStrAdminNotes(siteRequest_, (String)o);
 		case "childPottyTrained":
 			return SchoolEnrollment.staticSolrStrChildPottyTrained(siteRequest_, (Boolean)o);
 		case "enrollmentGroupName":
@@ -18409,6 +19298,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrFqFamilySeparated(siteRequest_, o);
 		case "familyDivorced":
 			return SchoolEnrollment.staticSolrFqFamilyDivorced(siteRequest_, o);
+		case "enrollmentPassphrase":
+			return SchoolEnrollment.staticSolrFqEnrollmentPassphrase(siteRequest_, o);
 		case "familyAddress":
 			return SchoolEnrollment.staticSolrFqFamilyAddress(siteRequest_, o);
 		case "familyHowDoYouKnowTheSchool":
@@ -18423,6 +19314,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrFqChildDescription(siteRequest_, o);
 		case "childObjectives":
 			return SchoolEnrollment.staticSolrFqChildObjectives(siteRequest_, o);
+		case "adminNotes":
+			return SchoolEnrollment.staticSolrFqAdminNotes(siteRequest_, o);
 		case "childPottyTrained":
 			return SchoolEnrollment.staticSolrFqChildPottyTrained(siteRequest_, o);
 		case "enrollmentGroupName":
@@ -18574,226 +19467,508 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return o != null;
 	}
 	public Object defineSchoolEnrollment(String var, String val) {
-		switch(var) {
-			case "childCompleteName":
+		switch(var.toLowerCase()) {
+			case "yearkey":
+				if(val != null)
+					setYearKey(val);
+				saves.add("yearKey");
+				return val;
+			case "childkey":
+				if(val != null)
+					setChildKey(val);
+				saves.add("childKey");
+				return val;
+			case "childcompletename":
 				if(val != null)
 					setChildCompleteName(val);
-				saves.add(var);
+				saves.add("childCompleteName");
 				return val;
-			case "childCompleteNamePreferred":
+			case "childcompletenamepreferred":
 				if(val != null)
 					setChildCompleteNamePreferred(val);
-				saves.add(var);
+				saves.add("childCompleteNamePreferred");
 				return val;
-			case "childBirthDate":
+			case "childbirthdate":
 				if(val != null)
 					setChildBirthDate(val);
-				saves.add(var);
+				saves.add("childBirthDate");
 				return val;
-			case "schoolAddress":
+			case "schooladdress":
 				if(val != null)
 					setSchoolAddress(val);
-				saves.add(var);
+				saves.add("schoolAddress");
 				return val;
-			case "enrollmentApproved":
+			case "enrollmentapproved":
 				if(val != null)
 					setEnrollmentApproved(val);
-				saves.add(var);
+				saves.add("enrollmentApproved");
 				return val;
-			case "enrollmentImmunizations":
+			case "enrollmentimmunizations":
 				if(val != null)
 					setEnrollmentImmunizations(val);
-				saves.add(var);
+				saves.add("enrollmentImmunizations");
 				return val;
 			case "photo":
 				if(val != null)
 					setPhoto(val);
-				saves.add(var);
+				saves.add("photo");
 				return val;
-			case "familyMarried":
+			case "familymarried":
 				if(val != null)
 					setFamilyMarried(val);
-				saves.add(var);
+				saves.add("familyMarried");
 				return val;
-			case "familySeparated":
+			case "familyseparated":
 				if(val != null)
 					setFamilySeparated(val);
-				saves.add(var);
+				saves.add("familySeparated");
 				return val;
-			case "familyDivorced":
+			case "familydivorced":
 				if(val != null)
 					setFamilyDivorced(val);
-				saves.add(var);
+				saves.add("familyDivorced");
 				return val;
-			case "familyAddress":
+			case "enrollmentpassphrase":
+				if(val != null)
+					setEnrollmentPassphrase(val);
+				saves.add("enrollmentPassphrase");
+				return val;
+			case "familyaddress":
 				if(val != null)
 					setFamilyAddress(val);
-				saves.add(var);
+				saves.add("familyAddress");
 				return val;
-			case "familyHowDoYouKnowTheSchool":
+			case "familyhowdoyouknowtheschool":
 				if(val != null)
 					setFamilyHowDoYouKnowTheSchool(val);
-				saves.add(var);
+				saves.add("familyHowDoYouKnowTheSchool");
 				return val;
-			case "enrollmentSpecialConsiderations":
+			case "enrollmentspecialconsiderations":
 				if(val != null)
 					setEnrollmentSpecialConsiderations(val);
-				saves.add(var);
+				saves.add("enrollmentSpecialConsiderations");
 				return val;
-			case "childMedicalConditions":
+			case "childmedicalconditions":
 				if(val != null)
 					setChildMedicalConditions(val);
-				saves.add(var);
+				saves.add("childMedicalConditions");
 				return val;
-			case "childPreviousSchoolsAttended":
+			case "childpreviousschoolsattended":
 				if(val != null)
 					setChildPreviousSchoolsAttended(val);
-				saves.add(var);
+				saves.add("childPreviousSchoolsAttended");
 				return val;
-			case "childDescription":
+			case "childdescription":
 				if(val != null)
 					setChildDescription(val);
-				saves.add(var);
+				saves.add("childDescription");
 				return val;
-			case "childObjectives":
+			case "childobjectives":
 				if(val != null)
 					setChildObjectives(val);
-				saves.add(var);
+				saves.add("childObjectives");
 				return val;
-			case "childPottyTrained":
+			case "adminnotes":
+				if(val != null)
+					setAdminNotes(val);
+				saves.add("adminNotes");
+				return val;
+			case "childpottytrained":
 				if(val != null)
 					setChildPottyTrained(val);
-				saves.add(var);
+				saves.add("childPottyTrained");
 				return val;
-			case "enrollmentGroupName":
+			case "enrollmentgroupname":
 				if(val != null)
 					setEnrollmentGroupName(val);
-				saves.add(var);
+				saves.add("enrollmentGroupName");
 				return val;
-			case "enrollmentPaymentEachMonth":
+			case "enrollmentpaymenteachmonth":
 				if(val != null)
 					setEnrollmentPaymentEachMonth(val);
-				saves.add(var);
+				saves.add("enrollmentPaymentEachMonth");
 				return val;
-			case "enrollmentPaymentComplete":
+			case "enrollmentpaymentcomplete":
 				if(val != null)
 					setEnrollmentPaymentComplete(val);
-				saves.add(var);
+				saves.add("enrollmentPaymentComplete");
 				return val;
-			case "customerProfileId":
+			case "customerprofileid":
 				if(val != null)
 					setCustomerProfileId(val);
-				saves.add(var);
+				saves.add("customerProfileId");
 				return val;
-			case "enrollmentChargeDate":
+			case "enrollmentchargedate":
 				if(val != null)
 					setEnrollmentChargeDate(val);
-				saves.add(var);
+				saves.add("enrollmentChargeDate");
 				return val;
-			case "enrollmentParentNames":
+			case "enrollmentparentnames":
 				if(val != null)
 					setEnrollmentParentNames(val);
-				saves.add(var);
+				saves.add("enrollmentParentNames");
 				return val;
-			case "enrollmentSignature1":
+			case "enrollmentsignature1":
 				if(val != null)
 					setEnrollmentSignature1(val);
-				saves.add(var);
+				saves.add("enrollmentSignature1");
 				return val;
-			case "enrollmentSignature2":
+			case "enrollmentsignature2":
 				if(val != null)
 					setEnrollmentSignature2(val);
-				saves.add(var);
+				saves.add("enrollmentSignature2");
 				return val;
-			case "enrollmentSignature3":
+			case "enrollmentsignature3":
 				if(val != null)
 					setEnrollmentSignature3(val);
-				saves.add(var);
+				saves.add("enrollmentSignature3");
 				return val;
-			case "enrollmentSignature4":
+			case "enrollmentsignature4":
 				if(val != null)
 					setEnrollmentSignature4(val);
-				saves.add(var);
+				saves.add("enrollmentSignature4");
 				return val;
-			case "enrollmentSignature5":
+			case "enrollmentsignature5":
 				if(val != null)
 					setEnrollmentSignature5(val);
-				saves.add(var);
+				saves.add("enrollmentSignature5");
 				return val;
-			case "enrollmentSignature6":
+			case "enrollmentsignature6":
 				if(val != null)
 					setEnrollmentSignature6(val);
-				saves.add(var);
+				saves.add("enrollmentSignature6");
 				return val;
-			case "enrollmentSignature7":
+			case "enrollmentsignature7":
 				if(val != null)
 					setEnrollmentSignature7(val);
-				saves.add(var);
+				saves.add("enrollmentSignature7");
 				return val;
-			case "enrollmentSignature8":
+			case "enrollmentsignature8":
 				if(val != null)
 					setEnrollmentSignature8(val);
-				saves.add(var);
+				saves.add("enrollmentSignature8");
 				return val;
-			case "enrollmentSignature9":
+			case "enrollmentsignature9":
 				if(val != null)
 					setEnrollmentSignature9(val);
-				saves.add(var);
+				saves.add("enrollmentSignature9");
 				return val;
-			case "enrollmentSignature10":
+			case "enrollmentsignature10":
 				if(val != null)
 					setEnrollmentSignature10(val);
-				saves.add(var);
+				saves.add("enrollmentSignature10");
 				return val;
-			case "enrollmentDate1":
+			case "enrollmentdate1":
 				if(val != null)
 					setEnrollmentDate1(val);
-				saves.add(var);
+				saves.add("enrollmentDate1");
 				return val;
-			case "enrollmentDate2":
+			case "enrollmentdate2":
 				if(val != null)
 					setEnrollmentDate2(val);
-				saves.add(var);
+				saves.add("enrollmentDate2");
 				return val;
-			case "enrollmentDate3":
+			case "enrollmentdate3":
 				if(val != null)
 					setEnrollmentDate3(val);
-				saves.add(var);
+				saves.add("enrollmentDate3");
 				return val;
-			case "enrollmentDate4":
+			case "enrollmentdate4":
 				if(val != null)
 					setEnrollmentDate4(val);
-				saves.add(var);
+				saves.add("enrollmentDate4");
 				return val;
-			case "enrollmentDate5":
+			case "enrollmentdate5":
 				if(val != null)
 					setEnrollmentDate5(val);
-				saves.add(var);
+				saves.add("enrollmentDate5");
 				return val;
-			case "enrollmentDate6":
+			case "enrollmentdate6":
 				if(val != null)
 					setEnrollmentDate6(val);
-				saves.add(var);
+				saves.add("enrollmentDate6");
 				return val;
-			case "enrollmentDate7":
+			case "enrollmentdate7":
 				if(val != null)
 					setEnrollmentDate7(val);
-				saves.add(var);
+				saves.add("enrollmentDate7");
 				return val;
-			case "enrollmentDate8":
+			case "enrollmentdate8":
 				if(val != null)
 					setEnrollmentDate8(val);
-				saves.add(var);
+				saves.add("enrollmentDate8");
 				return val;
-			case "enrollmentDate9":
+			case "enrollmentdate9":
 				if(val != null)
 					setEnrollmentDate9(val);
-				saves.add(var);
+				saves.add("enrollmentDate9");
 				return val;
-			case "enrollmentDate10":
+			case "enrollmentdate10":
 				if(val != null)
 					setEnrollmentDate10(val);
-				saves.add(var);
+				saves.add("enrollmentDate10");
+				return val;
+			default:
+				return super.defineCluster(var, val);
+		}
+	}
+
+	@Override public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineSchoolEnrollment(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineSchoolEnrollment(String var, Object val) {
+		switch(var.toLowerCase()) {
+			case "yearkey":
+				if(val instanceof Long)
+					setYearKey((Long)val);
+				saves.add("yearKey");
+				return val;
+			case "childkey":
+				if(val instanceof Long)
+					setChildKey((Long)val);
+				saves.add("childKey");
+				return val;
+			case "childcompletename":
+				if(val instanceof String)
+					setChildCompleteName((String)val);
+				saves.add("childCompleteName");
+				return val;
+			case "childcompletenamepreferred":
+				if(val instanceof String)
+					setChildCompleteNamePreferred((String)val);
+				saves.add("childCompleteNamePreferred");
+				return val;
+			case "childbirthdate":
+				if(val instanceof LocalDate)
+					setChildBirthDate((LocalDate)val);
+				saves.add("childBirthDate");
+				return val;
+			case "schooladdress":
+				if(val instanceof String)
+					setSchoolAddress((String)val);
+				saves.add("schoolAddress");
+				return val;
+			case "enrollmentapproved":
+				if(val instanceof Boolean)
+					setEnrollmentApproved((Boolean)val);
+				saves.add("enrollmentApproved");
+				return val;
+			case "enrollmentimmunizations":
+				if(val instanceof Boolean)
+					setEnrollmentImmunizations((Boolean)val);
+				saves.add("enrollmentImmunizations");
+				return val;
+			case "photo":
+				if(val instanceof String)
+					setPhoto((String)val);
+				saves.add("photo");
+				return val;
+			case "familymarried":
+				if(val instanceof Boolean)
+					setFamilyMarried((Boolean)val);
+				saves.add("familyMarried");
+				return val;
+			case "familyseparated":
+				if(val instanceof Boolean)
+					setFamilySeparated((Boolean)val);
+				saves.add("familySeparated");
+				return val;
+			case "familydivorced":
+				if(val instanceof Boolean)
+					setFamilyDivorced((Boolean)val);
+				saves.add("familyDivorced");
+				return val;
+			case "enrollmentpassphrase":
+				if(val instanceof String)
+					setEnrollmentPassphrase((String)val);
+				saves.add("enrollmentPassphrase");
+				return val;
+			case "familyaddress":
+				if(val instanceof String)
+					setFamilyAddress((String)val);
+				saves.add("familyAddress");
+				return val;
+			case "familyhowdoyouknowtheschool":
+				if(val instanceof String)
+					setFamilyHowDoYouKnowTheSchool((String)val);
+				saves.add("familyHowDoYouKnowTheSchool");
+				return val;
+			case "enrollmentspecialconsiderations":
+				if(val instanceof String)
+					setEnrollmentSpecialConsiderations((String)val);
+				saves.add("enrollmentSpecialConsiderations");
+				return val;
+			case "childmedicalconditions":
+				if(val instanceof String)
+					setChildMedicalConditions((String)val);
+				saves.add("childMedicalConditions");
+				return val;
+			case "childpreviousschoolsattended":
+				if(val instanceof String)
+					setChildPreviousSchoolsAttended((String)val);
+				saves.add("childPreviousSchoolsAttended");
+				return val;
+			case "childdescription":
+				if(val instanceof String)
+					setChildDescription((String)val);
+				saves.add("childDescription");
+				return val;
+			case "childobjectives":
+				if(val instanceof String)
+					setChildObjectives((String)val);
+				saves.add("childObjectives");
+				return val;
+			case "adminnotes":
+				if(val instanceof String)
+					setAdminNotes((String)val);
+				saves.add("adminNotes");
+				return val;
+			case "childpottytrained":
+				if(val instanceof Boolean)
+					setChildPottyTrained((Boolean)val);
+				saves.add("childPottyTrained");
+				return val;
+			case "enrollmentgroupname":
+				if(val instanceof String)
+					setEnrollmentGroupName((String)val);
+				saves.add("enrollmentGroupName");
+				return val;
+			case "enrollmentpaymenteachmonth":
+				if(val instanceof Boolean)
+					setEnrollmentPaymentEachMonth((Boolean)val);
+				saves.add("enrollmentPaymentEachMonth");
+				return val;
+			case "enrollmentpaymentcomplete":
+				if(val instanceof Boolean)
+					setEnrollmentPaymentComplete((Boolean)val);
+				saves.add("enrollmentPaymentComplete");
+				return val;
+			case "customerprofileid":
+				if(val instanceof String)
+					setCustomerProfileId((String)val);
+				saves.add("customerProfileId");
+				return val;
+			case "enrollmentchargedate":
+				if(val instanceof LocalDate)
+					setEnrollmentChargeDate((LocalDate)val);
+				saves.add("enrollmentChargeDate");
+				return val;
+			case "enrollmentparentnames":
+				if(val instanceof String)
+					setEnrollmentParentNames((String)val);
+				saves.add("enrollmentParentNames");
+				return val;
+			case "enrollmentsignature1":
+				if(val instanceof String)
+					setEnrollmentSignature1((String)val);
+				saves.add("enrollmentSignature1");
+				return val;
+			case "enrollmentsignature2":
+				if(val instanceof String)
+					setEnrollmentSignature2((String)val);
+				saves.add("enrollmentSignature2");
+				return val;
+			case "enrollmentsignature3":
+				if(val instanceof String)
+					setEnrollmentSignature3((String)val);
+				saves.add("enrollmentSignature3");
+				return val;
+			case "enrollmentsignature4":
+				if(val instanceof String)
+					setEnrollmentSignature4((String)val);
+				saves.add("enrollmentSignature4");
+				return val;
+			case "enrollmentsignature5":
+				if(val instanceof String)
+					setEnrollmentSignature5((String)val);
+				saves.add("enrollmentSignature5");
+				return val;
+			case "enrollmentsignature6":
+				if(val instanceof String)
+					setEnrollmentSignature6((String)val);
+				saves.add("enrollmentSignature6");
+				return val;
+			case "enrollmentsignature7":
+				if(val instanceof String)
+					setEnrollmentSignature7((String)val);
+				saves.add("enrollmentSignature7");
+				return val;
+			case "enrollmentsignature8":
+				if(val instanceof String)
+					setEnrollmentSignature8((String)val);
+				saves.add("enrollmentSignature8");
+				return val;
+			case "enrollmentsignature9":
+				if(val instanceof String)
+					setEnrollmentSignature9((String)val);
+				saves.add("enrollmentSignature9");
+				return val;
+			case "enrollmentsignature10":
+				if(val instanceof String)
+					setEnrollmentSignature10((String)val);
+				saves.add("enrollmentSignature10");
+				return val;
+			case "enrollmentdate1":
+				if(val instanceof LocalDate)
+					setEnrollmentDate1((LocalDate)val);
+				saves.add("enrollmentDate1");
+				return val;
+			case "enrollmentdate2":
+				if(val instanceof LocalDate)
+					setEnrollmentDate2((LocalDate)val);
+				saves.add("enrollmentDate2");
+				return val;
+			case "enrollmentdate3":
+				if(val instanceof LocalDate)
+					setEnrollmentDate3((LocalDate)val);
+				saves.add("enrollmentDate3");
+				return val;
+			case "enrollmentdate4":
+				if(val instanceof LocalDate)
+					setEnrollmentDate4((LocalDate)val);
+				saves.add("enrollmentDate4");
+				return val;
+			case "enrollmentdate5":
+				if(val instanceof LocalDate)
+					setEnrollmentDate5((LocalDate)val);
+				saves.add("enrollmentDate5");
+				return val;
+			case "enrollmentdate6":
+				if(val instanceof LocalDate)
+					setEnrollmentDate6((LocalDate)val);
+				saves.add("enrollmentDate6");
+				return val;
+			case "enrollmentdate7":
+				if(val instanceof LocalDate)
+					setEnrollmentDate7((LocalDate)val);
+				saves.add("enrollmentDate7");
+				return val;
+			case "enrollmentdate8":
+				if(val instanceof LocalDate)
+					setEnrollmentDate8((LocalDate)val);
+				saves.add("enrollmentDate8");
+				return val;
+			case "enrollmentdate9":
+				if(val instanceof LocalDate)
+					setEnrollmentDate9((LocalDate)val);
+				saves.add("enrollmentDate9");
+				return val;
+			case "enrollmentdate10":
+				if(val instanceof LocalDate)
+					setEnrollmentDate10((LocalDate)val);
+				saves.add("enrollmentDate10");
 				return val;
 			default:
 				return super.defineCluster(var, val);
@@ -19240,6 +20415,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setFamilyDivorced(familyDivorced);
 			}
 
+			if(saves.contains("enrollmentPassphrase")) {
+				String enrollmentPassphrase = (String)solrDocument.get("enrollmentPassphrase_stored_string");
+				if(enrollmentPassphrase != null)
+					oSchoolEnrollment.setEnrollmentPassphrase(enrollmentPassphrase);
+			}
+
 			if(saves.contains("familyAddress")) {
 				String familyAddress = (String)solrDocument.get("familyAddress_stored_string");
 				if(familyAddress != null)
@@ -19280,6 +20461,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				String childObjectives = (String)solrDocument.get("childObjectives_stored_string");
 				if(childObjectives != null)
 					oSchoolEnrollment.setChildObjectives(childObjectives);
+			}
+
+			if(saves.contains("adminNotes")) {
+				String adminNotes = (String)solrDocument.get("adminNotes_stored_string");
+				if(adminNotes != null)
+					oSchoolEnrollment.setAdminNotes(adminNotes);
 			}
 
 			if(saves.contains("childPottyTrained")) {
@@ -20039,6 +21226,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("familyDivorced_indexed_boolean", familyDivorced);
 			document.addField("familyDivorced_stored_boolean", familyDivorced);
 		}
+		if(enrollmentPassphrase != null) {
+			document.addField("enrollmentPassphrase_indexed_string", enrollmentPassphrase);
+			document.addField("enrollmentPassphrase_stored_string", enrollmentPassphrase);
+		}
 		if(familyAddress != null) {
 			document.addField("familyAddress_indexed_string", familyAddress);
 			document.addField("familyAddress_stored_string", familyAddress);
@@ -20067,6 +21258,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(childObjectives != null) {
 			document.addField("childObjectives_indexed_string", childObjectives);
 			document.addField("childObjectives_stored_string", childObjectives);
+		}
+		if(adminNotes != null) {
+			document.addField("adminNotes_indexed_string", adminNotes);
+			document.addField("adminNotes_stored_string", adminNotes);
 		}
 		if(childPottyTrained != null) {
 			document.addField("childPottyTrained_indexed_boolean", childPottyTrained);
@@ -20480,6 +21675,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "familySeparated_indexed_boolean";
 			case "familyDivorced":
 				return "familyDivorced_indexed_boolean";
+			case "enrollmentPassphrase":
+				return "enrollmentPassphrase_indexed_string";
 			case "familyAddress":
 				return "familyAddress_indexed_string";
 			case "familyHowDoYouKnowTheSchool":
@@ -20494,6 +21691,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "childDescription_indexed_string";
 			case "childObjectives":
 				return "childObjectives_indexed_string";
+			case "adminNotes":
+				return "adminNotes_indexed_string";
 			case "childPottyTrained":
 				return "childPottyTrained_indexed_boolean";
 			case "enrollmentGroupName":
@@ -20911,6 +22110,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(familyDivorced != null)
 			oSchoolEnrollment.setFamilyDivorced(familyDivorced);
 
+		String enrollmentPassphrase = (String)solrDocument.get("enrollmentPassphrase_stored_string");
+		if(enrollmentPassphrase != null)
+			oSchoolEnrollment.setEnrollmentPassphrase(enrollmentPassphrase);
+
 		String familyAddress = (String)solrDocument.get("familyAddress_stored_string");
 		if(familyAddress != null)
 			oSchoolEnrollment.setFamilyAddress(familyAddress);
@@ -20938,6 +22141,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		String childObjectives = (String)solrDocument.get("childObjectives_stored_string");
 		if(childObjectives != null)
 			oSchoolEnrollment.setChildObjectives(childObjectives);
+
+		String adminNotes = (String)solrDocument.get("adminNotes_stored_string");
+		if(adminNotes != null)
+			oSchoolEnrollment.setAdminNotes(adminNotes);
 
 		Boolean childPottyTrained = (Boolean)solrDocument.get("childPottyTrained_stored_boolean");
 		if(childPottyTrained != null)
@@ -21347,6 +22554,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				apiRequest.addVars("familySeparated");
 			if(!Objects.equals(familyDivorced, original.getFamilyDivorced()))
 				apiRequest.addVars("familyDivorced");
+			if(!Objects.equals(enrollmentPassphrase, original.getEnrollmentPassphrase()))
+				apiRequest.addVars("enrollmentPassphrase");
 			if(!Objects.equals(familyAddress, original.getFamilyAddress()))
 				apiRequest.addVars("familyAddress");
 			if(!Objects.equals(familyHowDoYouKnowTheSchool, original.getFamilyHowDoYouKnowTheSchool()))
@@ -21361,6 +22570,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				apiRequest.addVars("childDescription");
 			if(!Objects.equals(childObjectives, original.getChildObjectives()))
 				apiRequest.addVars("childObjectives");
+			if(!Objects.equals(adminNotes, original.getAdminNotes()))
+				apiRequest.addVars("adminNotes");
 			if(!Objects.equals(childPottyTrained, original.getChildPottyTrained()))
 				apiRequest.addVars("childPottyTrained");
 			if(!Objects.equals(enrollmentGroupName, original.getEnrollmentGroupName()))
@@ -21494,7 +22705,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKey, yearKey, blockKeys, schoolKey, sessionKey, ageKey, blockKey, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, enrollmentFormKey, userKeys, educationSort, schoolSort, yearSort, seasonSort, sessionSort, ageSort, childFirstName, childFirstNamePreferred, childFamilyName, momFirstName, momFirstNamePreferred, momCompleteNamePreferred, dadFirstName, dadFirstNamePreferred, dadCompleteNamePreferred, childCompleteName, childCompleteNamePreferred, childBirthDate, childBirthDateYear, childBirthDateMonthOfYear, childBirthDateDayOfWeek, childBirthMonth, childBirthDay, schoolName, schoolCompleteName, schoolLocation, schoolAddress, schoolPhoneNumber, schoolForm, schoolNumber, schoolAdministratorName, yearStart, yearEnd, seasonStartDate, yearEnrollmentFee, sessionStartDate, sessionEndDate, ageCompleteName, ageStart, ageEnd, blockStartTime, blockEndTime, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday, blockTotalPrice, blockAdminName, blockShortName, blockCompleteName, enrollmentApproved, enrollmentImmunizations, photo, familyMarried, familySeparated, familyDivorced, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, childPottyTrained, enrollmentGroupName, enrollmentGroupColor, enrollmentPaymentEachMonth, enrollmentPaymentComplete, customerProfileId, enrollmentChargeDate, paymentLastDate, paymentLastStr, paymentAmount, chargeAmount, chargeAmountFuture, chargeAmountDue, chargeAmountNotPassed, chargesNow, paymentsCurrent, paymentsLate, paymentsLateAmount, paymentsAhead, paymentsPastDue, paymentsPastDueAmount, chargesCreated, createdYear, createdDayOfWeek, createdMonthOfYear, createdHourOfDay, enrollmentDaysOfWeek, enrollmentParentNames, enrollmentEmails, enrollmentEmail, enrollmentParentEmails, enrollmentPhoneNumbers, enrollmentPhoneNumber, enrollmentParentName, enrollmentParentNameLines, enrollmentParentEmailLines, enrollmentParentDetailLines, enrollmentPickupDetailLines, enrollmentEmergencyContactDetailLines, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10, childImmunizationsReceived, childPhotosApproved, enrollmentCompleteName);
+		return Objects.hash(super.hashCode(), enrollmentKey, yearKey, blockKeys, schoolKey, sessionKey, ageKey, blockKey, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, enrollmentFormKey, userKeys, educationSort, schoolSort, yearSort, seasonSort, sessionSort, ageSort, childFirstName, childFirstNamePreferred, childFamilyName, momFirstName, momFirstNamePreferred, momCompleteNamePreferred, dadFirstName, dadFirstNamePreferred, dadCompleteNamePreferred, childCompleteName, childCompleteNamePreferred, childBirthDate, childBirthDateYear, childBirthDateMonthOfYear, childBirthDateDayOfWeek, childBirthMonth, childBirthDay, schoolName, schoolCompleteName, schoolLocation, schoolAddress, schoolPhoneNumber, schoolForm, schoolNumber, schoolAdministratorName, yearStart, yearEnd, seasonStartDate, yearEnrollmentFee, sessionStartDate, sessionEndDate, ageCompleteName, ageStart, ageEnd, blockStartTime, blockEndTime, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday, blockTotalPrice, blockAdminName, blockShortName, blockCompleteName, enrollmentApproved, enrollmentImmunizations, photo, familyMarried, familySeparated, familyDivorced, enrollmentPassphrase, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, adminNotes, childPottyTrained, enrollmentGroupName, enrollmentGroupColor, enrollmentPaymentEachMonth, enrollmentPaymentComplete, customerProfileId, enrollmentChargeDate, paymentLastDate, paymentLastStr, paymentAmount, chargeAmount, chargeAmountFuture, chargeAmountDue, chargeAmountNotPassed, chargesNow, paymentsCurrent, paymentsLate, paymentsLateAmount, paymentsAhead, paymentsPastDue, paymentsPastDueAmount, chargesCreated, createdYear, createdDayOfWeek, createdMonthOfYear, createdHourOfDay, enrollmentDaysOfWeek, enrollmentParentNames, enrollmentEmails, enrollmentEmail, enrollmentParentEmails, enrollmentPhoneNumbers, enrollmentPhoneNumber, enrollmentParentName, enrollmentParentNameLines, enrollmentParentEmailLines, enrollmentParentDetailLines, enrollmentPickupDetailLines, enrollmentEmergencyContactDetailLines, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10, childImmunizationsReceived, childPhotosApproved, enrollmentCompleteName);
 	}
 
 	////////////
@@ -21582,6 +22793,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( familyMarried, that.familyMarried )
 				&& Objects.equals( familySeparated, that.familySeparated )
 				&& Objects.equals( familyDivorced, that.familyDivorced )
+				&& Objects.equals( enrollmentPassphrase, that.enrollmentPassphrase )
 				&& Objects.equals( familyAddress, that.familyAddress )
 				&& Objects.equals( familyHowDoYouKnowTheSchool, that.familyHowDoYouKnowTheSchool )
 				&& Objects.equals( enrollmentSpecialConsiderations, that.enrollmentSpecialConsiderations )
@@ -21589,6 +22801,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( childPreviousSchoolsAttended, that.childPreviousSchoolsAttended )
 				&& Objects.equals( childDescription, that.childDescription )
 				&& Objects.equals( childObjectives, that.childObjectives )
+				&& Objects.equals( adminNotes, that.adminNotes )
 				&& Objects.equals( childPottyTrained, that.childPottyTrained )
 				&& Objects.equals( enrollmentGroupName, that.enrollmentGroupName )
 				&& Objects.equals( enrollmentGroupColor, that.enrollmentGroupColor )
@@ -21735,6 +22948,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", familyMarried: " ).append(familyMarried);
 		sb.append( ", familySeparated: " ).append(familySeparated);
 		sb.append( ", familyDivorced: " ).append(familyDivorced);
+		sb.append( ", enrollmentPassphrase: \"" ).append(enrollmentPassphrase).append( "\"" );
 		sb.append( ", familyAddress: \"" ).append(familyAddress).append( "\"" );
 		sb.append( ", familyHowDoYouKnowTheSchool: \"" ).append(familyHowDoYouKnowTheSchool).append( "\"" );
 		sb.append( ", enrollmentSpecialConsiderations: \"" ).append(enrollmentSpecialConsiderations).append( "\"" );
@@ -21742,6 +22956,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", childPreviousSchoolsAttended: \"" ).append(childPreviousSchoolsAttended).append( "\"" );
 		sb.append( ", childDescription: \"" ).append(childDescription).append( "\"" );
 		sb.append( ", childObjectives: \"" ).append(childObjectives).append( "\"" );
+		sb.append( ", adminNotes: \"" ).append(adminNotes).append( "\"" );
 		sb.append( ", childPottyTrained: " ).append(childPottyTrained);
 		sb.append( ", enrollmentGroupName: \"" ).append(enrollmentGroupName).append( "\"" );
 		sb.append( ", enrollmentGroupColor: \"" ).append(enrollmentGroupColor).append( "\"" );

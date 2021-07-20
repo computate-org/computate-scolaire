@@ -277,7 +277,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("a");
 			} g("h1");
-			e("div").a("class", "").f();
+			{ e("div").a("class", "").f();
 				{ e("div").f();
 					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeCluster.getQueryResponse().getResults().getNumFound();
@@ -359,6 +359,7 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
 				table1ClusterGenPage();
+			} g("div");
 		}
 
 		if(listeCluster != null && listeCluster.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -386,7 +387,6 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 
 		}
 		htmlBodyFormsClusterGenPage();
-		g("div");
 	}
 
 	public void table1ClusterGenPage() {
@@ -488,7 +488,6 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			e("div").a("class", "w3-margin-top ").f();
 
 			if(listeCluster != null && listeCluster.size() == 1) {
 				{ e("button")
@@ -671,7 +670,6 @@ public class ClusterGenPage extends ClusterGenPageGen<MiseEnPage> {
 				} g("div");
 			} g("div");
 
-			g("div");
 		}
 		htmlSuggereClusterGenPage(this, null, listeCluster);
 	}

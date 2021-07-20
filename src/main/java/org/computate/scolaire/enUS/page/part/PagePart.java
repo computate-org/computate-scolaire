@@ -4,6 +4,9 @@ import org.computate.scolaire.enUS.cluster.Cluster;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.page.PageLayout;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.page.part.PagePart
+ **/
 public abstract class PagePart extends PagePartGen<Cluster> {
 
 	protected void _page_(Wrap<PageLayout> c) {}

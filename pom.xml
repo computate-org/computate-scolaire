@@ -22,7 +22,7 @@
 		<build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
 		<exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
 		<vertx.verticle>org.computate.scolaire.enUS.vertx.AppVertx</vertx.verticle>
-		<vertx.version>3.8.5</vertx.version>
+		<vertx.version>3.9.8</vertx.version>
 		<fabric8.generator.from>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:latest</fabric8.generator.from>
 	</properties>
 

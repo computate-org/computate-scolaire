@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.lang.Long;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.util.Locale;
+import java.util.Map;
 import java.time.LocalTime;
 import org.computate.scolaire.frFR.saison.SaisonScolaire;
 import io.vertx.core.json.JsonObject;
@@ -169,6 +170,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionCle == null ? "" : inscriptionCle.toString();
 	}
 
+	public Long sqlInscriptionCle() {
+		return inscriptionCle;
+	}
+
 	public String jsonInscriptionCle() {
 		return inscriptionCle == null ? "" : inscriptionCle.toString();
 	}
@@ -253,6 +258,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return anneeCle == null ? "" : anneeCle.toString();
 	}
 
+	public Long sqlAnneeCle() {
+		return anneeCle;
+	}
+
 	public String jsonAnneeCle() {
 		return anneeCle == null ? "" : anneeCle.toString();
 	}
@@ -292,16 +301,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "année")
 				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-				.a("class", "valeur suggereAnneeCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereAnneeCle w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setAnneeCle")
 				.a("id", classeApiMethodeMethode, "_anneeCle")
 				.a("autocomplete", "off");
-				a("oninput", "suggereInscriptionScolaireAnneeCle($(this).val() ? rechercherAnneeScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireAnneeCle_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereInscriptionScolaireAnneeCle($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,anneeNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireAnneeCle_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varInscriptionScolaire", pk, "AnneeCle ").f().sx(htmAnneeCle()).g("span");
 		}
 	}
 
@@ -537,6 +545,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return blocCles == null ? "" : blocCles.toString();
 	}
 
+	public List<Long> sqlBlocCles() {
+		return blocCles;
+	}
+
 	public String jsonBlocCles() {
 		return blocCles == null ? "" : blocCles.toString();
 	}
@@ -576,16 +588,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "blocs")
 				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-				.a("class", "valeur suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereBlocCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setBlocCles")
 				.a("id", classeApiMethodeMethode, "_blocCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereInscriptionScolaireBlocCles($(this).val() ? rechercherBlocScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereInscriptionScolaireBlocCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,blocNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireBlocCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varInscriptionScolaire", pk, "BlocCles ").f().sx(htmBlocCles()).g("span");
 		}
 	}
 
@@ -896,6 +907,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
 
+	public Long sqlEcoleCle() {
+		return ecoleCle;
+	}
+
 	public String jsonEcoleCle() {
 		return ecoleCle == null ? "" : ecoleCle.toString();
 	}
@@ -978,6 +993,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strSessionCle() {
 		return sessionCle == null ? "" : sessionCle.toString();
+	}
+
+	public Long sqlSessionCle() {
+		return sessionCle;
 	}
 
 	public String jsonSessionCle() {
@@ -1064,6 +1083,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return ageCle == null ? "" : ageCle.toString();
 	}
 
+	public Long sqlAgeCle() {
+		return ageCle;
+	}
+
 	public String jsonAgeCle() {
 		return ageCle == null ? "" : ageCle.toString();
 	}
@@ -1146,6 +1169,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strBlocCle() {
 		return blocCle == null ? "" : blocCle.toString();
+	}
+
+	public Long sqlBlocCle() {
+		return blocCle;
 	}
 
 	public String jsonBlocCle() {
@@ -1232,6 +1259,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantCle == null ? "" : enfantCle.toString();
 	}
 
+	public Long sqlEnfantCle() {
+		return enfantCle;
+	}
+
 	public String jsonEnfantCle() {
 		return enfantCle == null ? "" : enfantCle.toString();
 	}
@@ -1271,16 +1302,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "enfants")
 				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-				.a("class", "valeur suggereEnfantCle w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereEnfantCle w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setEnfantCle")
 				.a("id", classeApiMethodeMethode, "_enfantCle")
 				.a("autocomplete", "off");
-				a("oninput", "suggereInscriptionScolaireEnfantCle($(this).val() ? rechercherEnfantScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireEnfantCle_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereInscriptionScolaireEnfantCle($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,enfantNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireEnfantCle_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varInscriptionScolaire", pk, "EnfantCle ").f().sx(htmEnfantCle()).g("span");
 		}
 	}
 
@@ -1430,6 +1460,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return mereCles == null ? "" : mereCles.toString();
 	}
 
+	public List<Long> sqlMereCles() {
+		return mereCles;
+	}
+
 	public String jsonMereCles() {
 		return mereCles == null ? "" : mereCles.toString();
 	}
@@ -1469,16 +1503,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "mères")
 				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-				.a("class", "valeur suggereMereCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereMereCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setMereCles")
 				.a("id", classeApiMethodeMethode, "_mereCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereInscriptionScolaireMereCles($(this).val() ? rechercherMereScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireMereCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereInscriptionScolaireMereCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,mereNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireMereCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varInscriptionScolaire", pk, "MereCles ").f().sx(htmMereCles()).g("span");
 		}
 	}
 
@@ -1628,6 +1661,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return pereCles == null ? "" : pereCles.toString();
 	}
 
+	public List<Long> sqlPereCles() {
+		return pereCles;
+	}
+
 	public String jsonPereCles() {
 		return pereCles == null ? "" : pereCles.toString();
 	}
@@ -1667,16 +1704,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "pères")
 				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-				.a("class", "valeur suggerePereCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggerePereCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setPereCles")
 				.a("id", classeApiMethodeMethode, "_pereCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereInscriptionScolairePereCles($(this).val() ? rechercherPereScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolairePereCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereInscriptionScolairePereCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,pereNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolairePereCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varInscriptionScolaire", pk, "PereCles ").f().sx(htmPereCles()).g("span");
 		}
 	}
 
@@ -1826,6 +1862,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return gardienCles == null ? "" : gardienCles.toString();
 	}
 
+	public List<Long> sqlGardienCles() {
+		return gardienCles;
+	}
+
 	public String jsonGardienCles() {
 		return gardienCles == null ? "" : gardienCles.toString();
 	}
@@ -1865,16 +1905,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "gardiens")
 				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-				.a("class", "valeur suggereGardienCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereGardienCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setGardienCles")
 				.a("id", classeApiMethodeMethode, "_gardienCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereInscriptionScolaireGardienCles($(this).val() ? rechercherGardienScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireGardienCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereInscriptionScolaireGardienCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,gardienNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireGardienCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varInscriptionScolaire", pk, "GardienCles ").f().sx(htmGardienCles()).g("span");
 		}
 	}
 
@@ -2024,6 +2063,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return paiementCles == null ? "" : paiementCles.toString();
 	}
 
+	public List<Long> sqlPaiementCles() {
+		return paiementCles;
+	}
+
 	public String jsonPaiementCles() {
 		return paiementCles == null ? "" : paiementCles.toString();
 	}
@@ -2063,16 +2106,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "paiements")
 				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-				.a("class", "valeur suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setPaiementCles")
 				.a("id", classeApiMethodeMethode, "_paiementCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereInscriptionScolairePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCle:" + pk + "'}", "], $('#listInscriptionScolairePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereInscriptionScolairePaiementCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,paiementNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCle:" + pk + "'}", "], $('#listInscriptionScolairePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varInscriptionScolaire", pk, "PaiementCles ").f().sx(htmPaiementCles()).g("span");
 		}
 	}
 
@@ -2196,6 +2238,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return formInscriptionCle == null ? "" : formInscriptionCle.toString();
 	}
 
+	public Long sqlFormInscriptionCle() {
+		return formInscriptionCle;
+	}
+
 	public String jsonFormInscriptionCle() {
 		return formInscriptionCle == null ? "" : formInscriptionCle.toString();
 	}
@@ -2309,6 +2355,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return utilisateurCles == null ? "" : utilisateurCles.toString();
 	}
 
+	public List<Long> sqlUtilisateurCles() {
+		return utilisateurCles;
+	}
+
 	public String jsonUtilisateurCles() {
 		return utilisateurCles == null ? "" : utilisateurCles.toString();
 	}
@@ -2348,16 +2398,15 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "utilisateurs")
 				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
-				.a("class", "valeur suggereUtilisateurCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereUtilisateurCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setUtilisateurCles")
 				.a("id", classeApiMethodeMethode, "_utilisateurCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereInscriptionScolaireUtilisateurCles($(this).val() ? rechercherUtilisateurSiteFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereInscriptionScolaireUtilisateurCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,objetTitre' } ] : [", pk == null ? "" : "{'name':'fq','value':'inscriptionCles:" + pk + "'}", "], $('#listInscriptionScolaireUtilisateurCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			e("span").a("class", "varInscriptionScolaire", pk, "UtilisateurCles ").f().sx(htmUtilisateurCles()).g("span");
 		}
 	}
 
@@ -2481,6 +2530,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return scolaireTri == null ? "" : scolaireTri.toString();
 	}
 
+	public Integer sqlScolaireTri() {
+		return scolaireTri;
+	}
+
 	public String jsonScolaireTri() {
 		return scolaireTri == null ? "" : scolaireTri.toString();
 	}
@@ -2563,6 +2616,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEcoleTri() {
 		return ecoleTri == null ? "" : ecoleTri.toString();
+	}
+
+	public Integer sqlEcoleTri() {
+		return ecoleTri;
 	}
 
 	public String jsonEcoleTri() {
@@ -2649,6 +2706,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return anneeTri == null ? "" : anneeTri.toString();
 	}
 
+	public Integer sqlAnneeTri() {
+		return anneeTri;
+	}
+
 	public String jsonAnneeTri() {
 		return anneeTri == null ? "" : anneeTri.toString();
 	}
@@ -2731,6 +2792,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strSaisonTri() {
 		return saisonTri == null ? "" : saisonTri.toString();
+	}
+
+	public Integer sqlSaisonTri() {
+		return saisonTri;
 	}
 
 	public String jsonSaisonTri() {
@@ -2817,6 +2882,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return sessionTri == null ? "" : sessionTri.toString();
 	}
 
+	public Integer sqlSessionTri() {
+		return sessionTri;
+	}
+
 	public String jsonSessionTri() {
 		return sessionTri == null ? "" : sessionTri.toString();
 	}
@@ -2899,6 +2968,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strAgeTri() {
 		return ageTri == null ? "" : ageTri.toString();
+	}
+
+	public Integer sqlAgeTri() {
+		return ageTri;
 	}
 
 	public String jsonAgeTri() {
@@ -3424,6 +3497,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantPrenom == null ? "" : enfantPrenom;
 	}
 
+	public String sqlEnfantPrenom() {
+		return enfantPrenom;
+	}
+
 	public String jsonEnfantPrenom() {
 		return enfantPrenom == null ? "" : enfantPrenom;
 	}
@@ -3498,6 +3575,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEnfantPrenomPrefere() {
 		return enfantPrenomPrefere == null ? "" : enfantPrenomPrefere;
+	}
+
+	public String sqlEnfantPrenomPrefere() {
+		return enfantPrenomPrefere;
 	}
 
 	public String jsonEnfantPrenomPrefere() {
@@ -3576,6 +3657,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantFamilleNom == null ? "" : enfantFamilleNom;
 	}
 
+	public String sqlEnfantFamilleNom() {
+		return enfantFamilleNom;
+	}
+
 	public String jsonEnfantFamilleNom() {
 		return enfantFamilleNom == null ? "" : enfantFamilleNom;
 	}
@@ -3650,6 +3735,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strMerePrenom() {
 		return merePrenom == null ? "" : merePrenom;
+	}
+
+	public String sqlMerePrenom() {
+		return merePrenom;
 	}
 
 	public String jsonMerePrenom() {
@@ -3728,6 +3817,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return merePrenomPrefere == null ? "" : merePrenomPrefere;
 	}
 
+	public String sqlMerePrenomPrefere() {
+		return merePrenomPrefere;
+	}
+
 	public String jsonMerePrenomPrefere() {
 		return merePrenomPrefere == null ? "" : merePrenomPrefere;
 	}
@@ -3802,6 +3895,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strMereNomCompletPrefere() {
 		return mereNomCompletPrefere == null ? "" : mereNomCompletPrefere;
+	}
+
+	public String sqlMereNomCompletPrefere() {
+		return mereNomCompletPrefere;
 	}
 
 	public String jsonMereNomCompletPrefere() {
@@ -3880,6 +3977,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return perePrenom == null ? "" : perePrenom;
 	}
 
+	public String sqlPerePrenom() {
+		return perePrenom;
+	}
+
 	public String jsonPerePrenom() {
 		return perePrenom == null ? "" : perePrenom;
 	}
@@ -3954,6 +4055,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strPerePrenomPrefere() {
 		return perePrenomPrefere == null ? "" : perePrenomPrefere;
+	}
+
+	public String sqlPerePrenomPrefere() {
+		return perePrenomPrefere;
 	}
 
 	public String jsonPerePrenomPrefere() {
@@ -4032,6 +4137,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return pereNomCompletPrefere == null ? "" : pereNomCompletPrefere;
 	}
 
+	public String sqlPereNomCompletPrefere() {
+		return pereNomCompletPrefere;
+	}
+
 	public String jsonPereNomCompletPrefere() {
 		return pereNomCompletPrefere == null ? "" : pereNomCompletPrefere;
 	}
@@ -4106,6 +4215,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEnfantNomComplet() {
 		return enfantNomComplet == null ? "" : enfantNomComplet;
+	}
+
+	public String sqlEnfantNomComplet() {
+		return enfantNomComplet;
 	}
 
 	public String jsonEnfantNomComplet() {
@@ -4253,6 +4366,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEnfantNomCompletPrefere() {
 		return enfantNomCompletPrefere == null ? "" : enfantNomCompletPrefere;
+	}
+
+	public String sqlEnfantNomCompletPrefere() {
+		return enfantNomCompletPrefere;
 	}
 
 	public String jsonEnfantNomCompletPrefere() {
@@ -4419,6 +4536,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalDate sqlEnfantDateNaissance() {
+		return enfantDateNaissance;
+	}
+
 	public String jsonEnfantDateNaissance() {
 		return enfantDateNaissance == null ? "" : enfantDateNaissance.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -4567,6 +4688,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantDateNaissanceDAnnee == null ? "" : enfantDateNaissanceDAnnee.toString();
 	}
 
+	public Integer sqlEnfantDateNaissanceDAnnee() {
+		return enfantDateNaissanceDAnnee;
+	}
+
 	public String jsonEnfantDateNaissanceDAnnee() {
 		return enfantDateNaissanceDAnnee == null ? "" : enfantDateNaissanceDAnnee.toString();
 	}
@@ -4643,6 +4768,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantDateNaissanceMoisDAnnee == null ? "" : enfantDateNaissanceMoisDAnnee;
 	}
 
+	public String sqlEnfantDateNaissanceMoisDAnnee() {
+		return enfantDateNaissanceMoisDAnnee;
+	}
+
 	public String jsonEnfantDateNaissanceMoisDAnnee() {
 		return enfantDateNaissanceMoisDAnnee == null ? "" : enfantDateNaissanceMoisDAnnee;
 	}
@@ -4717,6 +4846,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEnfantDateNaissanceJourDeSemaine() {
 		return enfantDateNaissanceJourDeSemaine == null ? "" : enfantDateNaissanceJourDeSemaine;
+	}
+
+	public String sqlEnfantDateNaissanceJourDeSemaine() {
+		return enfantDateNaissanceJourDeSemaine;
 	}
 
 	public String jsonEnfantDateNaissanceJourDeSemaine() {
@@ -4803,6 +4936,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantMoisNaissance == null ? "" : enfantMoisNaissance.toString();
 	}
 
+	public Integer sqlEnfantMoisNaissance() {
+		return enfantMoisNaissance;
+	}
+
 	public String jsonEnfantMoisNaissance() {
 		return enfantMoisNaissance == null ? "" : enfantMoisNaissance.toString();
 	}
@@ -4887,6 +5024,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantJourNaissance == null ? "" : enfantJourNaissance.toString();
 	}
 
+	public Integer sqlEnfantJourNaissance() {
+		return enfantJourNaissance;
+	}
+
 	public String jsonEnfantJourNaissance() {
 		return enfantJourNaissance == null ? "" : enfantJourNaissance.toString();
 	}
@@ -4961,6 +5102,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEcoleNom() {
 		return ecoleNom == null ? "" : ecoleNom;
+	}
+
+	public String sqlEcoleNom() {
+		return ecoleNom;
 	}
 
 	public String jsonEcoleNom() {
@@ -5039,6 +5184,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return ecoleNomComplet == null ? "" : ecoleNomComplet;
 	}
 
+	public String sqlEcoleNomComplet() {
+		return ecoleNomComplet;
+	}
+
 	public String jsonEcoleNomComplet() {
 		return ecoleNomComplet == null ? "" : ecoleNomComplet;
 	}
@@ -5115,6 +5264,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return ecoleEmplacement == null ? "" : ecoleEmplacement;
 	}
 
+	public String sqlEcoleEmplacement() {
+		return ecoleEmplacement;
+	}
+
 	public String jsonEcoleEmplacement() {
 		return ecoleEmplacement == null ? "" : ecoleEmplacement;
 	}
@@ -5189,6 +5342,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEcoleAddresse() {
 		return ecoleAddresse == null ? "" : ecoleAddresse;
+	}
+
+	public String sqlEcoleAddresse() {
+		return ecoleAddresse;
 	}
 
 	public String jsonEcoleAddresse() {
@@ -5338,6 +5495,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
 	}
 
+	public String sqlEcoleNumeroTelephone() {
+		return ecoleNumeroTelephone;
+	}
+
 	public String jsonEcoleNumeroTelephone() {
 		return ecoleNumeroTelephone == null ? "" : ecoleNumeroTelephone;
 	}
@@ -5412,6 +5573,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEcoleForm() {
 		return ecoleForm == null ? "" : ecoleForm;
+	}
+
+	public String sqlEcoleForm() {
+		return ecoleForm;
 	}
 
 	public String jsonEcoleForm() {
@@ -5498,6 +5663,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return ecoleNumero == null ? "" : ecoleNumero.toString();
 	}
 
+	public Integer sqlEcoleNumero() {
+		return ecoleNumero;
+	}
+
 	public String jsonEcoleNumero() {
 		return ecoleNumero == null ? "" : ecoleNumero.toString();
 	}
@@ -5572,6 +5741,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEcoleAdministrateurNom() {
 		return ecoleAdministrateurNom == null ? "" : ecoleAdministrateurNom;
+	}
+
+	public String sqlEcoleAdministrateurNom() {
+		return ecoleAdministrateurNom;
 	}
 
 	public String jsonEcoleAdministrateurNom() {
@@ -5658,6 +5831,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return anneeDebut == null ? "" : anneeDebut.toString();
 	}
 
+	public Integer sqlAnneeDebut() {
+		return anneeDebut;
+	}
+
 	public String jsonAnneeDebut() {
 		return anneeDebut == null ? "" : anneeDebut.toString();
 	}
@@ -5740,6 +5917,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strAnneeFin() {
 		return anneeFin == null ? "" : anneeFin.toString();
+	}
+
+	public Integer sqlAnneeFin() {
+		return anneeFin;
 	}
 
 	public String jsonAnneeFin() {
@@ -5835,6 +6016,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return saisonDateDebut == null ? "" : saisonDateDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalDate sqlSaisonDateDebut() {
+		return saisonDateDebut;
+	}
+
 	public String jsonSaisonDateDebut() {
 		return saisonDateDebut == null ? "" : saisonDateDebut.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -5926,6 +6111,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strAnneeFraisInscription() {
 		return anneeFraisInscription == null ? "" : anneeFraisInscription.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlAnneeFraisInscription() {
+		return anneeFraisInscription;
 	}
 
 	public String jsonAnneeFraisInscription() {
@@ -6021,6 +6210,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return sessionDateDebut == null ? "" : sessionDateDebut.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalDate sqlSessionDateDebut() {
+		return sessionDateDebut;
+	}
+
 	public String jsonSessionDateDebut() {
 		return sessionDateDebut == null ? "" : sessionDateDebut.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -6114,6 +6307,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return sessionDateFin == null ? "" : sessionDateFin.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalDate sqlSessionDateFin() {
+		return sessionDateFin;
+	}
+
 	public String jsonSessionDateFin() {
 		return sessionDateFin == null ? "" : sessionDateFin.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -6188,6 +6385,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strAgeNomComplet() {
 		return ageNomComplet == null ? "" : ageNomComplet;
+	}
+
+	public String sqlAgeNomComplet() {
+		return ageNomComplet;
 	}
 
 	public String jsonAgeNomComplet() {
@@ -6274,6 +6475,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return ageDebut == null ? "" : ageDebut.toString();
 	}
 
+	public Integer sqlAgeDebut() {
+		return ageDebut;
+	}
+
 	public String jsonAgeDebut() {
 		return ageDebut == null ? "" : ageDebut.toString();
 	}
@@ -6356,6 +6561,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strAgeFin() {
 		return ageFin == null ? "" : ageFin.toString();
+	}
+
+	public Integer sqlAgeFin() {
+		return ageFin;
 	}
 
 	public String jsonAgeFin() {
@@ -6445,6 +6654,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalTime sqlBlocHeureDebut() {
+		return blocHeureDebut;
+	}
+
 	public String jsonBlocHeureDebut() {
 		return blocHeureDebut == null ? "" : blocHeureDebut.format(DateTimeFormatter.ISO_TIME);
 	}
@@ -6530,6 +6743,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strBlocHeureFin() {
 		return blocHeureFin == null ? "" : blocHeureFin.format(DateTimeFormatter.ofPattern("H'h'mm", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public LocalTime sqlBlocHeureFin() {
+		return blocHeureFin;
 	}
 
 	public String jsonBlocHeureFin() {
@@ -6625,6 +6842,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return blocPrixParMois == null ? "" : blocPrixParMois.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlBlocPrixParMois() {
+		return blocPrixParMois;
+	}
+
 	public String jsonBlocPrixParMois() {
 		return blocPrixParMois == null ? "" : blocPrixParMois.toString();
 	}
@@ -6704,6 +6925,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strBlocDimanche() {
 		return blocDimanche == null ? "" : blocDimanche.toString();
+	}
+
+	public Boolean sqlBlocDimanche() {
+		return blocDimanche;
 	}
 
 	public String jsonBlocDimanche() {
@@ -6787,6 +7012,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return blocLundi == null ? "" : blocLundi.toString();
 	}
 
+	public Boolean sqlBlocLundi() {
+		return blocLundi;
+	}
+
 	public String jsonBlocLundi() {
 		return blocLundi == null ? "" : blocLundi.toString();
 	}
@@ -6866,6 +7095,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strBlocMardi() {
 		return blocMardi == null ? "" : blocMardi.toString();
+	}
+
+	public Boolean sqlBlocMardi() {
+		return blocMardi;
 	}
 
 	public String jsonBlocMardi() {
@@ -6949,6 +7182,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return blocMercredi == null ? "" : blocMercredi.toString();
 	}
 
+	public Boolean sqlBlocMercredi() {
+		return blocMercredi;
+	}
+
 	public String jsonBlocMercredi() {
 		return blocMercredi == null ? "" : blocMercredi.toString();
 	}
@@ -7028,6 +7265,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strBlocJeudi() {
 		return blocJeudi == null ? "" : blocJeudi.toString();
+	}
+
+	public Boolean sqlBlocJeudi() {
+		return blocJeudi;
 	}
 
 	public String jsonBlocJeudi() {
@@ -7111,6 +7352,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return blocVendredi == null ? "" : blocVendredi.toString();
 	}
 
+	public Boolean sqlBlocVendredi() {
+		return blocVendredi;
+	}
+
 	public String jsonBlocVendredi() {
 		return blocVendredi == null ? "" : blocVendredi.toString();
 	}
@@ -7190,6 +7435,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strBlocSamedi() {
 		return blocSamedi == null ? "" : blocSamedi.toString();
+	}
+
+	public Boolean sqlBlocSamedi() {
+		return blocSamedi;
 	}
 
 	public String jsonBlocSamedi() {
@@ -7285,6 +7534,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return blocPrixTotal == null ? "" : blocPrixTotal.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlBlocPrixTotal() {
+		return blocPrixTotal;
+	}
+
 	public String jsonBlocPrixTotal() {
 		return blocPrixTotal == null ? "" : blocPrixTotal.toString();
 	}
@@ -7359,6 +7612,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strBlocNomAdmin() {
 		return blocNomAdmin == null ? "" : blocNomAdmin;
+	}
+
+	public String sqlBlocNomAdmin() {
+		return blocNomAdmin;
 	}
 
 	public String jsonBlocNomAdmin() {
@@ -7437,6 +7694,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return blocNomCourt == null ? "" : blocNomCourt;
 	}
 
+	public String sqlBlocNomCourt() {
+		return blocNomCourt;
+	}
+
 	public String jsonBlocNomCourt() {
 		return blocNomCourt == null ? "" : blocNomCourt;
 	}
@@ -7511,6 +7772,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strBlocNomComplet() {
 		return blocNomComplet == null ? "" : blocNomComplet;
+	}
+
+	public String sqlBlocNomComplet() {
+		return blocNomComplet;
 	}
 
 	public String jsonBlocNomComplet() {
@@ -7592,6 +7857,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionApprouve() {
 		return inscriptionApprouve == null ? "" : inscriptionApprouve.toString();
+	}
+
+	public Boolean sqlInscriptionApprouve() {
+		return inscriptionApprouve;
 	}
 
 	public String jsonInscriptionApprouve() {
@@ -7740,6 +8009,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionImmunisations == null ? "" : inscriptionImmunisations.toString();
 	}
 
+	public Boolean sqlInscriptionImmunisations() {
+		return inscriptionImmunisations;
+	}
+
 	public String jsonInscriptionImmunisations() {
 		return inscriptionImmunisations == null ? "" : inscriptionImmunisations.toString();
 	}
@@ -7879,6 +8152,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strPhoto() {
 		return photo == null ? "" : photo;
+	}
+
+	public String sqlPhoto() {
+		return photo;
 	}
 
 	public String jsonPhoto() {
@@ -8024,6 +8301,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strFamilleMarie() {
 		return familleMarie == null ? "" : familleMarie.toString();
+	}
+
+	public Boolean sqlFamilleMarie() {
+		return familleMarie;
 	}
 
 	public String jsonFamilleMarie() {
@@ -8172,6 +8453,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return familleSepare == null ? "" : familleSepare.toString();
 	}
 
+	public Boolean sqlFamilleSepare() {
+		return familleSepare;
+	}
+
 	public String jsonFamilleSepare() {
 		return familleSepare == null ? "" : familleSepare.toString();
 	}
@@ -8318,6 +8603,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return familleDivorce == null ? "" : familleDivorce.toString();
 	}
 
+	public Boolean sqlFamilleDivorce() {
+		return familleDivorce;
+	}
+
 	public String jsonFamilleDivorce() {
 		return familleDivorce == null ? "" : familleDivorce.toString();
 	}
@@ -8399,6 +8688,157 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	///////////////////////////
+	// inscriptionMotDePasse //
+	///////////////////////////
+
+	/**	 L'entité inscriptionMotDePasse
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String inscriptionMotDePasse;
+	@JsonIgnore
+	public Couverture<String> inscriptionMotDePasseCouverture = new Couverture<String>().p(this).c(String.class).var("inscriptionMotDePasse").o(inscriptionMotDePasse);
+
+	/**	<br/> L'entité inscriptionMotDePasse
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:inscriptionMotDePasse">Trouver l'entité inscriptionMotDePasse dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _inscriptionMotDePasse(Couverture<String> c);
+
+	public String getInscriptionMotDePasse() {
+		return inscriptionMotDePasse;
+	}
+	public void setInscriptionMotDePasse(String o) {
+		this.inscriptionMotDePasse = InscriptionScolaire.staticSetInscriptionMotDePasse(requeteSite_, o);
+		this.inscriptionMotDePasseCouverture.dejaInitialise = true;
+	}
+	public static String staticSetInscriptionMotDePasse(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire inscriptionMotDePasseInit() {
+		if(!inscriptionMotDePasseCouverture.dejaInitialise) {
+			_inscriptionMotDePasse(inscriptionMotDePasseCouverture);
+			if(inscriptionMotDePasse == null)
+				setInscriptionMotDePasse(inscriptionMotDePasseCouverture.o);
+		}
+		inscriptionMotDePasseCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrInscriptionMotDePasse(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrInscriptionMotDePasse(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqInscriptionMotDePasse(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrInscriptionMotDePasse(requeteSite_, InscriptionScolaire.staticSolrInscriptionMotDePasse(requeteSite_, InscriptionScolaire.staticSetInscriptionMotDePasse(requeteSite_, o)));
+	}
+
+	public String solrInscriptionMotDePasse() {
+		return InscriptionScolaire.staticSolrInscriptionMotDePasse(requeteSite_, inscriptionMotDePasse);
+	}
+
+	public String strInscriptionMotDePasse() {
+		return inscriptionMotDePasse == null ? "" : inscriptionMotDePasse;
+	}
+
+	public String sqlInscriptionMotDePasse() {
+		return inscriptionMotDePasse;
+	}
+
+	public String jsonInscriptionMotDePasse() {
+		return inscriptionMotDePasse == null ? "" : inscriptionMotDePasse;
+	}
+
+	public String nomAffichageInscriptionMotDePasse() {
+		return "mot de passe";
+	}
+
+	public String htmTooltipInscriptionMotDePasse() {
+		return null;
+	}
+
+	public String htmInscriptionMotDePasse() {
+		return inscriptionMotDePasse == null ? "" : StringEscapeUtils.escapeHtml4(strInscriptionMotDePasse());
+	}
+
+	public void inputInscriptionMotDePasse(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+		) {
+			e("input")
+				.a("type", "text")
+				.a("placeholder", "mot de passe")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_inscriptionMotDePasse");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setInscriptionMotDePasse classInscriptionScolaire inputInscriptionScolaire", pk, "InscriptionMotDePasse w3-input w3-border ");
+					a("name", "setInscriptionMotDePasse");
+				} else {
+					a("class", "valeurInscriptionMotDePasse w3-input w3-border classInscriptionScolaire inputInscriptionScolaire", pk, "InscriptionMotDePasse w3-input w3-border ");
+					a("name", "inscriptionMotDePasse");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setInscriptionMotDePasse', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionMotDePasse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionMotDePasse')); }); ");
+				}
+				a("value", strInscriptionMotDePasse())
+			.fg();
+
+		} else {
+			e("span").a("class", "varInscriptionScolaire", pk, "InscriptionMotDePasse ").f().sx(htmInscriptionMotDePasse()).g("span");
+		}
+	}
+
+	public void htmInscriptionMotDePasse(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireInscriptionMotDePasse").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
+							e("label").a("for", classeApiMethodeMethode, "_inscriptionMotDePasse").a("class", "").f().sx("mot de passe").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputInscriptionMotDePasse(classeApiMethodeMethode);
+							} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_inscriptionMotDePasse')); $('#", classeApiMethodeMethode, "_inscriptionMotDePasse').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setInscriptionMotDePasse', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_inscriptionMotDePasse')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_inscriptionMotDePasse')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	/////////////////////
 	// familleAddresse //
 	/////////////////////
@@ -8457,6 +8897,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strFamilleAddresse() {
 		return familleAddresse == null ? "" : familleAddresse;
+	}
+
+	public String sqlFamilleAddresse() {
+		return familleAddresse;
 	}
 
 	public String jsonFamilleAddresse() {
@@ -8604,6 +9048,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return familleCommentVousConnaissezEcole == null ? "" : familleCommentVousConnaissezEcole;
 	}
 
+	public String sqlFamilleCommentVousConnaissezEcole() {
+		return familleCommentVousConnaissezEcole;
+	}
+
 	public String jsonFamilleCommentVousConnaissezEcole() {
 		return familleCommentVousConnaissezEcole == null ? "" : familleCommentVousConnaissezEcole;
 	}
@@ -8747,6 +9195,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionConsiderationsSpeciales() {
 		return inscriptionConsiderationsSpeciales == null ? "" : inscriptionConsiderationsSpeciales;
+	}
+
+	public String sqlInscriptionConsiderationsSpeciales() {
+		return inscriptionConsiderationsSpeciales;
 	}
 
 	public String jsonInscriptionConsiderationsSpeciales() {
@@ -8894,6 +9346,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantConditionsMedicales == null ? "" : enfantConditionsMedicales;
 	}
 
+	public String sqlEnfantConditionsMedicales() {
+		return enfantConditionsMedicales;
+	}
+
 	public String jsonEnfantConditionsMedicales() {
 		return enfantConditionsMedicales == null ? "" : enfantConditionsMedicales;
 	}
@@ -9037,6 +9493,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEnfantEcolesPrecedemmentFrequentees() {
 		return enfantEcolesPrecedemmentFrequentees == null ? "" : enfantEcolesPrecedemmentFrequentees;
+	}
+
+	public String sqlEnfantEcolesPrecedemmentFrequentees() {
+		return enfantEcolesPrecedemmentFrequentees;
 	}
 
 	public String jsonEnfantEcolesPrecedemmentFrequentees() {
@@ -9184,6 +9644,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantDescription == null ? "" : enfantDescription;
 	}
 
+	public String sqlEnfantDescription() {
+		return enfantDescription;
+	}
+
 	public String jsonEnfantDescription() {
 		return enfantDescription == null ? "" : enfantDescription;
 	}
@@ -9329,6 +9793,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantObjectifs == null ? "" : enfantObjectifs;
 	}
 
+	public String sqlEnfantObjectifs() {
+		return enfantObjectifs;
+	}
+
 	public String jsonEnfantObjectifs() {
 		return enfantObjectifs == null ? "" : enfantObjectifs;
 	}
@@ -9414,6 +9882,155 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	////////////////
+	// adminNotes //
+	////////////////
+
+	/**	 L'entité adminNotes
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String adminNotes;
+	@JsonIgnore
+	public Couverture<String> adminNotesCouverture = new Couverture<String>().p(this).c(String.class).var("adminNotes").o(adminNotes);
+
+	/**	<br/> L'entité adminNotes
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:adminNotes">Trouver l'entité adminNotes dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _adminNotes(Couverture<String> c);
+
+	public String getAdminNotes() {
+		return adminNotes;
+	}
+	public void setAdminNotes(String o) {
+		this.adminNotes = InscriptionScolaire.staticSetAdminNotes(requeteSite_, o);
+		this.adminNotesCouverture.dejaInitialise = true;
+	}
+	public static String staticSetAdminNotes(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire adminNotesInit() {
+		if(!adminNotesCouverture.dejaInitialise) {
+			_adminNotes(adminNotesCouverture);
+			if(adminNotes == null)
+				setAdminNotes(adminNotesCouverture.o);
+		}
+		adminNotesCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrAdminNotes(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrAdminNotes(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAdminNotes(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrAdminNotes(requeteSite_, InscriptionScolaire.staticSolrAdminNotes(requeteSite_, InscriptionScolaire.staticSetAdminNotes(requeteSite_, o)));
+	}
+
+	public String solrAdminNotes() {
+		return InscriptionScolaire.staticSolrAdminNotes(requeteSite_, adminNotes);
+	}
+
+	public String strAdminNotes() {
+		return adminNotes == null ? "" : adminNotes;
+	}
+
+	public String sqlAdminNotes() {
+		return adminNotes;
+	}
+
+	public String jsonAdminNotes() {
+		return adminNotes == null ? "" : adminNotes;
+	}
+
+	public String nomAffichageAdminNotes() {
+		return "notes d'administration";
+	}
+
+	public String htmTooltipAdminNotes() {
+		return null;
+	}
+
+	public String htmAdminNotes() {
+		return adminNotes == null ? "" : StringEscapeUtils.escapeHtml4(strAdminNotes());
+	}
+
+	public void inputAdminNotes(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		if(
+				utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+				|| Objects.equals(sessionId, requeteSite_.getSessionId())
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+		) {
+			e("textarea")
+				.a("placeholder", "notes d'administration")
+				.a("title", "La clé primaire des utilisateurs dans la base de données. ")
+				.a("id", classeApiMethodeMethode, "_adminNotes");
+				if("Page".equals(classeApiMethodeMethode) || "PATCH".equals(classeApiMethodeMethode)) {
+					a("class", "setAdminNotes classInscriptionScolaire inputInscriptionScolaire", pk, "AdminNotes w3-input w3-border ");
+					a("name", "setAdminNotes");
+				} else {
+					a("class", "valeurAdminNotes w3-input w3-border classInscriptionScolaire inputInscriptionScolaire", pk, "AdminNotes w3-input w3-border ");
+					a("name", "adminNotes");
+				}
+				if("Page".equals(classeApiMethodeMethode)) {
+					a("onclick", "enleverLueur($(this)); ");
+					a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setAdminNotes', $(this).val(), function() { ajouterLueur($('#", classeApiMethodeMethode, "_adminNotes')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_adminNotes')); }); ");
+				}
+			f().sx(strAdminNotes()).g("textarea");
+
+		} else {
+			e("span").a("class", "varInscriptionScolaire", pk, "AdminNotes ").f().sx(htmAdminNotes()).g("span");
+		}
+	}
+
+	public void htmAdminNotes(String classeApiMethodeMethode) {
+		InscriptionScolaire s = (InscriptionScolaire)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggere", classeApiMethodeMethode, "InscriptionScolaireAdminNotes").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-blue-gray ").f();
+							e("label").a("for", classeApiMethodeMethode, "_adminNotes").a("class", "").f().sx("notes d'administration").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputAdminNotes(classeApiMethodeMethode);
+							} g("div");
+							if(
+									utilisateurCles.contains(requeteSite_.getUtilisateurCle())
+									|| Objects.equals(sessionId, requeteSite_.getSessionId())
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
+									|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
+							) {
+								if("Page".equals(classeApiMethodeMethode)) {
+									{ e("div").a("class", "w3-cell w3-left-align w3-cell-top ").f();
+										{ e("button")
+											.a("tabindex", "-1")
+											.a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3-blue-gray ")
+										.a("onclick", "enleverLueur($('#", classeApiMethodeMethode, "_adminNotes')); $('#", classeApiMethodeMethode, "_adminNotes').val(null); patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:' + $('#InscriptionScolaireForm :input[name=pk]').val() }], 'setAdminNotes', null, function() { ajouterLueur($('#", classeApiMethodeMethode, "_adminNotes')); }, function() { ajouterErreur($('#", classeApiMethodeMethode, "_adminNotes')); }); ")
+											.f();
+											e("i").a("class", "far fa-eraser ").f().g("i");
+										} g("button");
+									} g("div");
+								}
+							}
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////////
 	// enfantPropre //
 	//////////////////
@@ -9477,6 +10094,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEnfantPropre() {
 		return enfantPropre == null ? "" : enfantPropre.toString();
+	}
+
+	public Boolean sqlEnfantPropre() {
+		return enfantPropre;
 	}
 
 	public String jsonEnfantPropre() {
@@ -9618,6 +10239,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionNomGroupe() {
 		return inscriptionNomGroupe == null ? "" : inscriptionNomGroupe;
+	}
+
+	public String sqlInscriptionNomGroupe() {
+		return inscriptionNomGroupe;
 	}
 
 	public String jsonInscriptionNomGroupe() {
@@ -9767,6 +10392,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionCouleurGroupe == null ? "" : inscriptionCouleurGroupe;
 	}
 
+	public String sqlInscriptionCouleurGroupe() {
+		return inscriptionCouleurGroupe;
+	}
+
 	public String jsonInscriptionCouleurGroupe() {
 		return inscriptionCouleurGroupe == null ? "" : inscriptionCouleurGroupe;
 	}
@@ -9846,6 +10475,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionPaimentChaqueMois() {
 		return inscriptionPaimentChaqueMois == null ? "" : inscriptionPaimentChaqueMois.toString();
+	}
+
+	public Boolean sqlInscriptionPaimentChaqueMois() {
+		return inscriptionPaimentChaqueMois;
 	}
 
 	public String jsonInscriptionPaimentChaqueMois() {
@@ -9994,6 +10627,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionPaimentComplet == null ? "" : inscriptionPaimentComplet.toString();
 	}
 
+	public Boolean sqlInscriptionPaimentComplet() {
+		return inscriptionPaimentComplet;
+	}
+
 	public String jsonInscriptionPaimentComplet() {
 		return inscriptionPaimentComplet == null ? "" : inscriptionPaimentComplet.toString();
 	}
@@ -10133,6 +10770,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strCustomerProfileId() {
 		return customerProfileId == null ? "" : customerProfileId;
+	}
+
+	public String sqlCustomerProfileId() {
+		return customerProfileId;
 	}
 
 	public String jsonCustomerProfileId() {
@@ -10297,6 +10938,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionDateFrais() {
 		return inscriptionDateFrais == null ? "" : inscriptionDateFrais.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public LocalDate sqlInscriptionDateFrais() {
+		return inscriptionDateFrais;
 	}
 
 	public String jsonInscriptionDateFrais() {
@@ -10495,6 +11140,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return paiementLastDate == null ? "" : paiementLastDate.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalDate sqlPaiementLastDate() {
+		return paiementLastDate;
+	}
+
 	public String jsonPaiementLastDate() {
 		return paiementLastDate == null ? "" : paiementLastDate.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -10569,6 +11218,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strPaiementLastStr() {
 		return paiementLastStr == null ? "" : paiementLastStr;
+	}
+
+	public String sqlPaiementLastStr() {
+		return paiementLastStr;
 	}
 
 	public String jsonPaiementLastStr() {
@@ -10664,6 +11317,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return paiementMontant == null ? "" : paiementMontant.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlPaiementMontant() {
+		return paiementMontant;
+	}
+
 	public String jsonPaiementMontant() {
 		return paiementMontant == null ? "" : paiementMontant.toString();
 	}
@@ -10755,6 +11412,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strFraisMontant() {
 		return fraisMontant == null ? "" : fraisMontant.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlFraisMontant() {
+		return fraisMontant;
 	}
 
 	public String jsonFraisMontant() {
@@ -10850,6 +11511,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return fraisMontantFuture == null ? "" : fraisMontantFuture.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlFraisMontantFuture() {
+		return fraisMontantFuture;
+	}
+
 	public String jsonFraisMontantFuture() {
 		return fraisMontantFuture == null ? "" : fraisMontantFuture.toString();
 	}
@@ -10941,6 +11606,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strFraisMontantDu() {
 		return fraisMontantDu == null ? "" : fraisMontantDu.setScale(2, RoundingMode.HALF_UP).toString();
+	}
+
+	public BigDecimal sqlFraisMontantDu() {
+		return fraisMontantDu;
 	}
 
 	public String jsonFraisMontantDu() {
@@ -11036,6 +11705,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return fraisMontantNonPasse == null ? "" : fraisMontantNonPasse.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlFraisMontantNonPasse() {
+		return fraisMontantNonPasse;
+	}
+
 	public String jsonFraisMontantNonPasse() {
 		return fraisMontantNonPasse == null ? "" : fraisMontantNonPasse.toString();
 	}
@@ -11129,6 +11802,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return fraisMaintenant == null ? "" : fraisMaintenant.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlFraisMaintenant() {
+		return fraisMaintenant;
+	}
+
 	public String jsonFraisMaintenant() {
 		return fraisMaintenant == null ? "" : fraisMaintenant.toString();
 	}
@@ -11210,6 +11887,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return paiementsAJour == null ? "" : paiementsAJour.toString();
 	}
 
+	public Boolean sqlPaiementsAJour() {
+		return paiementsAJour;
+	}
+
 	public String jsonPaiementsAJour() {
 		return paiementsAJour == null ? "" : paiementsAJour.toString();
 	}
@@ -11289,6 +11970,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strPaiementsEnRetard() {
 		return paiementsEnRetard == null ? "" : paiementsEnRetard.toString();
+	}
+
+	public Boolean sqlPaiementsEnRetard() {
+		return paiementsEnRetard;
 	}
 
 	public String jsonPaiementsEnRetard() {
@@ -11384,6 +12069,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return paiementsEnRetardMontant == null ? "" : paiementsEnRetardMontant.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlPaiementsEnRetardMontant() {
+		return paiementsEnRetardMontant;
+	}
+
 	public String jsonPaiementsEnRetardMontant() {
 		return paiementsEnRetardMontant == null ? "" : paiementsEnRetardMontant.toString();
 	}
@@ -11465,6 +12154,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return paiementsEnAvance == null ? "" : paiementsEnAvance.toString();
 	}
 
+	public Boolean sqlPaiementsEnAvance() {
+		return paiementsEnAvance;
+	}
+
 	public String jsonPaiementsEnAvance() {
 		return paiementsEnAvance == null ? "" : paiementsEnAvance.toString();
 	}
@@ -11544,6 +12237,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strPaiementsEnSouffrance() {
 		return paiementsEnSouffrance == null ? "" : paiementsEnSouffrance.toString();
+	}
+
+	public Boolean sqlPaiementsEnSouffrance() {
+		return paiementsEnSouffrance;
 	}
 
 	public String jsonPaiementsEnSouffrance() {
@@ -11639,6 +12336,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return paiementsEnSouffranceMontant == null ? "" : paiementsEnSouffranceMontant.setScale(2, RoundingMode.HALF_UP).toString();
 	}
 
+	public BigDecimal sqlPaiementsEnSouffranceMontant() {
+		return paiementsEnSouffranceMontant;
+	}
+
 	public String jsonPaiementsEnSouffranceMontant() {
 		return paiementsEnSouffranceMontant == null ? "" : paiementsEnSouffranceMontant.toString();
 	}
@@ -11718,6 +12419,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strFraisCrees() {
 		return fraisCrees == null ? "" : fraisCrees.toString();
+	}
+
+	public Boolean sqlFraisCrees() {
+		return fraisCrees;
 	}
 
 	public String jsonFraisCrees() {
@@ -11804,6 +12509,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return creeDAnnee == null ? "" : creeDAnnee.toString();
 	}
 
+	public Integer sqlCreeDAnnee() {
+		return creeDAnnee;
+	}
+
 	public String jsonCreeDAnnee() {
 		return creeDAnnee == null ? "" : creeDAnnee.toString();
 	}
@@ -11878,6 +12587,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strCreeJourDeSemaine() {
 		return creeJourDeSemaine == null ? "" : creeJourDeSemaine;
+	}
+
+	public String sqlCreeJourDeSemaine() {
+		return creeJourDeSemaine;
 	}
 
 	public String jsonCreeJourDeSemaine() {
@@ -11956,6 +12669,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return creeMoisDAnnee == null ? "" : creeMoisDAnnee;
 	}
 
+	public String sqlCreeMoisDAnnee() {
+		return creeMoisDAnnee;
+	}
+
 	public String jsonCreeMoisDAnnee() {
 		return creeMoisDAnnee == null ? "" : creeMoisDAnnee;
 	}
@@ -12030,6 +12747,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strCreeHeureDuJour() {
 		return creeHeureDuJour == null ? "" : creeHeureDuJour;
+	}
+
+	public String sqlCreeHeureDuJour() {
+		return creeHeureDuJour;
 	}
 
 	public String jsonCreeHeureDuJour() {
@@ -12129,6 +12850,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionJoursDeSemaine == null ? "" : inscriptionJoursDeSemaine.toString();
 	}
 
+	public List<String> sqlInscriptionJoursDeSemaine() {
+		return inscriptionJoursDeSemaine;
+	}
+
 	public String jsonInscriptionJoursDeSemaine() {
 		return inscriptionJoursDeSemaine == null ? "" : inscriptionJoursDeSemaine.toString();
 	}
@@ -12203,6 +12928,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionNomsParents() {
 		return inscriptionNomsParents == null ? "" : inscriptionNomsParents;
+	}
+
+	public String sqlInscriptionNomsParents() {
+		return inscriptionNomsParents;
 	}
 
 	public String jsonInscriptionNomsParents() {
@@ -12369,6 +13098,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionMails == null ? "" : inscriptionMails.toString();
 	}
 
+	public List<String> sqlInscriptionMails() {
+		return inscriptionMails;
+	}
+
 	public String jsonInscriptionMails() {
 		return inscriptionMails == null ? "" : inscriptionMails.toString();
 	}
@@ -12445,6 +13178,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionMail == null ? "" : inscriptionMail;
 	}
 
+	public String sqlInscriptionMail() {
+		return inscriptionMail;
+	}
+
 	public String jsonInscriptionMail() {
 		return inscriptionMail == null ? "" : inscriptionMail;
 	}
@@ -12519,6 +13256,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionMailsParents() {
 		return inscriptionMailsParents == null ? "" : inscriptionMailsParents;
+	}
+
+	public String sqlInscriptionMailsParents() {
+		return inscriptionMailsParents;
 	}
 
 	public String jsonInscriptionMailsParents() {
@@ -12618,6 +13359,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionNumeroTelephones == null ? "" : inscriptionNumeroTelephones.toString();
 	}
 
+	public List<String> sqlInscriptionNumeroTelephones() {
+		return inscriptionNumeroTelephones;
+	}
+
 	public String jsonInscriptionNumeroTelephones() {
 		return inscriptionNumeroTelephones == null ? "" : inscriptionNumeroTelephones.toString();
 	}
@@ -12692,6 +13437,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionNumeroTelephone() {
 		return inscriptionNumeroTelephone == null ? "" : inscriptionNumeroTelephone;
+	}
+
+	public String sqlInscriptionNumeroTelephone() {
+		return inscriptionNumeroTelephone;
 	}
 
 	public String jsonInscriptionNumeroTelephone() {
@@ -12770,6 +13519,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionNomParent == null ? "" : inscriptionNomParent;
 	}
 
+	public String sqlInscriptionNomParent() {
+		return inscriptionNomParent;
+	}
+
 	public String jsonInscriptionNomParent() {
 		return inscriptionNomParent == null ? "" : inscriptionNomParent;
 	}
@@ -12844,6 +13597,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionNomParentLignes() {
 		return inscriptionNomParentLignes == null ? "" : inscriptionNomParentLignes;
+	}
+
+	public String sqlInscriptionNomParentLignes() {
+		return inscriptionNomParentLignes;
 	}
 
 	public String jsonInscriptionNomParentLignes() {
@@ -12922,6 +13679,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionMailParentLignes == null ? "" : inscriptionMailParentLignes;
 	}
 
+	public String sqlInscriptionMailParentLignes() {
+		return inscriptionMailParentLignes;
+	}
+
 	public String jsonInscriptionMailParentLignes() {
 		return inscriptionMailParentLignes == null ? "" : inscriptionMailParentLignes;
 	}
@@ -12996,6 +13757,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionDetailParentLignes() {
 		return inscriptionDetailParentLignes == null ? "" : inscriptionDetailParentLignes;
+	}
+
+	public String sqlInscriptionDetailParentLignes() {
+		return inscriptionDetailParentLignes;
 	}
 
 	public String jsonInscriptionDetailParentLignes() {
@@ -13074,6 +13839,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionChercherParentLignes == null ? "" : inscriptionChercherParentLignes;
 	}
 
+	public String sqlInscriptionChercherParentLignes() {
+		return inscriptionChercherParentLignes;
+	}
+
 	public String jsonInscriptionChercherParentLignes() {
 		return inscriptionChercherParentLignes == null ? "" : inscriptionChercherParentLignes;
 	}
@@ -13150,6 +13919,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionContactUrgenceParentLignes == null ? "" : inscriptionContactUrgenceParentLignes;
 	}
 
+	public String sqlInscriptionContactUrgenceParentLignes() {
+		return inscriptionContactUrgenceParentLignes;
+	}
+
 	public String jsonInscriptionContactUrgenceParentLignes() {
 		return inscriptionContactUrgenceParentLignes == null ? "" : inscriptionContactUrgenceParentLignes;
 	}
@@ -13224,6 +13997,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionSignature1() {
 		return inscriptionSignature1 == null ? "" : inscriptionSignature1;
+	}
+
+	public String sqlInscriptionSignature1() {
+		return inscriptionSignature1;
 	}
 
 	public String jsonInscriptionSignature1() {
@@ -13378,6 +14155,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionSignature2 == null ? "" : inscriptionSignature2;
 	}
 
+	public String sqlInscriptionSignature2() {
+		return inscriptionSignature2;
+	}
+
 	public String jsonInscriptionSignature2() {
 		return inscriptionSignature2 == null ? "" : inscriptionSignature2;
 	}
@@ -13528,6 +14309,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionSignature3() {
 		return inscriptionSignature3 == null ? "" : inscriptionSignature3;
+	}
+
+	public String sqlInscriptionSignature3() {
+		return inscriptionSignature3;
 	}
 
 	public String jsonInscriptionSignature3() {
@@ -13682,6 +14467,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionSignature4 == null ? "" : inscriptionSignature4;
 	}
 
+	public String sqlInscriptionSignature4() {
+		return inscriptionSignature4;
+	}
+
 	public String jsonInscriptionSignature4() {
 		return inscriptionSignature4 == null ? "" : inscriptionSignature4;
 	}
@@ -13832,6 +14621,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionSignature5() {
 		return inscriptionSignature5 == null ? "" : inscriptionSignature5;
+	}
+
+	public String sqlInscriptionSignature5() {
+		return inscriptionSignature5;
 	}
 
 	public String jsonInscriptionSignature5() {
@@ -13986,6 +14779,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionSignature6 == null ? "" : inscriptionSignature6;
 	}
 
+	public String sqlInscriptionSignature6() {
+		return inscriptionSignature6;
+	}
+
 	public String jsonInscriptionSignature6() {
 		return inscriptionSignature6 == null ? "" : inscriptionSignature6;
 	}
@@ -14136,6 +14933,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionSignature7() {
 		return inscriptionSignature7 == null ? "" : inscriptionSignature7;
+	}
+
+	public String sqlInscriptionSignature7() {
+		return inscriptionSignature7;
 	}
 
 	public String jsonInscriptionSignature7() {
@@ -14290,6 +15091,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionSignature8 == null ? "" : inscriptionSignature8;
 	}
 
+	public String sqlInscriptionSignature8() {
+		return inscriptionSignature8;
+	}
+
 	public String jsonInscriptionSignature8() {
 		return inscriptionSignature8 == null ? "" : inscriptionSignature8;
 	}
@@ -14442,6 +15247,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionSignature9 == null ? "" : inscriptionSignature9;
 	}
 
+	public String sqlInscriptionSignature9() {
+		return inscriptionSignature9;
+	}
+
 	public String jsonInscriptionSignature9() {
 		return inscriptionSignature9 == null ? "" : inscriptionSignature9;
 	}
@@ -14592,6 +15401,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionSignature10() {
 		return inscriptionSignature10 == null ? "" : inscriptionSignature10;
+	}
+
+	public String sqlInscriptionSignature10() {
+		return inscriptionSignature10;
 	}
 
 	public String jsonInscriptionSignature10() {
@@ -14763,6 +15576,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionDate1 == null ? "" : inscriptionDate1.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalDate sqlInscriptionDate1() {
+		return inscriptionDate1;
+	}
+
 	public String jsonInscriptionDate1() {
 		return inscriptionDate1 == null ? "" : inscriptionDate1.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -14915,6 +15732,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionDate2() {
 		return inscriptionDate2 == null ? "" : inscriptionDate2.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public LocalDate sqlInscriptionDate2() {
+		return inscriptionDate2;
 	}
 
 	public String jsonInscriptionDate2() {
@@ -15071,6 +15892,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionDate3 == null ? "" : inscriptionDate3.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalDate sqlInscriptionDate3() {
+		return inscriptionDate3;
+	}
+
 	public String jsonInscriptionDate3() {
 		return inscriptionDate3 == null ? "" : inscriptionDate3.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -15223,6 +16048,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionDate4() {
 		return inscriptionDate4 == null ? "" : inscriptionDate4.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public LocalDate sqlInscriptionDate4() {
+		return inscriptionDate4;
 	}
 
 	public String jsonInscriptionDate4() {
@@ -15379,6 +16208,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionDate5 == null ? "" : inscriptionDate5.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalDate sqlInscriptionDate5() {
+		return inscriptionDate5;
+	}
+
 	public String jsonInscriptionDate5() {
 		return inscriptionDate5 == null ? "" : inscriptionDate5.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -15531,6 +16364,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionDate6() {
 		return inscriptionDate6 == null ? "" : inscriptionDate6.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public LocalDate sqlInscriptionDate6() {
+		return inscriptionDate6;
 	}
 
 	public String jsonInscriptionDate6() {
@@ -15687,6 +16524,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionDate7 == null ? "" : inscriptionDate7.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalDate sqlInscriptionDate7() {
+		return inscriptionDate7;
+	}
+
 	public String jsonInscriptionDate7() {
 		return inscriptionDate7 == null ? "" : inscriptionDate7.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -15839,6 +16680,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionDate8() {
 		return inscriptionDate8 == null ? "" : inscriptionDate8.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public LocalDate sqlInscriptionDate8() {
+		return inscriptionDate8;
 	}
 
 	public String jsonInscriptionDate8() {
@@ -15995,6 +16840,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionDate9 == null ? "" : inscriptionDate9.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
 	}
 
+	public LocalDate sqlInscriptionDate9() {
+		return inscriptionDate9;
+	}
+
 	public String jsonInscriptionDate9() {
 		return inscriptionDate9 == null ? "" : inscriptionDate9.format(DateTimeFormatter.ISO_DATE);
 	}
@@ -16147,6 +16996,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionDate10() {
 		return inscriptionDate10 == null ? "" : inscriptionDate10.format(DateTimeFormatter.ofPattern("EEE d MMM yyyy", Locale.forLanguageTag("fr-FR")));
+	}
+
+	public LocalDate sqlInscriptionDate10() {
+		return inscriptionDate10;
 	}
 
 	public String jsonInscriptionDate10() {
@@ -16486,6 +17339,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return enfantImmunisationsRecu == null ? "" : enfantImmunisationsRecu;
 	}
 
+	public String sqlEnfantImmunisationsRecu() {
+		return enfantImmunisationsRecu;
+	}
+
 	public String jsonEnfantImmunisationsRecu() {
 		return enfantImmunisationsRecu == null ? "" : enfantImmunisationsRecu;
 	}
@@ -16560,6 +17417,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strEnfantPhotosApprouve() {
 		return enfantPhotosApprouve == null ? "" : enfantPhotosApprouve;
+	}
+
+	public String sqlEnfantPhotosApprouve() {
+		return enfantPhotosApprouve;
 	}
 
 	public String jsonEnfantPhotosApprouve() {
@@ -16646,6 +17507,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return inscriptionNumero == null ? "" : inscriptionNumero.toString();
 	}
 
+	public Integer sqlInscriptionNumero() {
+		return inscriptionNumero;
+	}
+
 	public String jsonInscriptionNumero() {
 		return inscriptionNumero == null ? "" : inscriptionNumero.toString();
 	}
@@ -16720,6 +17585,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String strInscriptionNomComplet() {
 		return inscriptionNomComplet == null ? "" : inscriptionNomComplet;
+	}
+
+	public String sqlInscriptionNomComplet() {
+		return inscriptionNomComplet;
 	}
 
 	public String jsonInscriptionNomComplet() {
@@ -16849,6 +17718,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		familleMarieInit();
 		familleSepareInit();
 		familleDivorceInit();
+		inscriptionMotDePasseInit();
 		familleAddresseInit();
 		familleCommentVousConnaissezEcoleInit();
 		inscriptionConsiderationsSpecialesInit();
@@ -16856,6 +17726,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		enfantEcolesPrecedemmentFrequenteesInit();
 		enfantDescriptionInit();
 		enfantObjectifsInit();
+		adminNotesInit();
 		enfantPropreInit();
 		inscriptionNomGroupeInit();
 		inscriptionCouleurGroupeInit();
@@ -16971,6 +17842,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
+			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
 			}
 		}
 		return o;
@@ -17158,6 +18033,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.familleSepare;
 			case "familleDivorce":
 				return oInscriptionScolaire.familleDivorce;
+			case "inscriptionMotDePasse":
+				return oInscriptionScolaire.inscriptionMotDePasse;
 			case "familleAddresse":
 				return oInscriptionScolaire.familleAddresse;
 			case "familleCommentVousConnaissezEcole":
@@ -17172,6 +18049,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.enfantDescription;
 			case "enfantObjectifs":
 				return oInscriptionScolaire.enfantObjectifs;
+			case "adminNotes":
+				return oInscriptionScolaire.adminNotes;
 			case "enfantPropre":
 				return oInscriptionScolaire.enfantPropre;
 			case "inscriptionNomGroupe":
@@ -17336,44 +18215,44 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			case "anneeCle":
 				if(oInscriptionScolaire.getAnneeCle() == null)
 					oInscriptionScolaire.setAnneeCle((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("anneeCle"))
+					sauvegardes.add("anneeCle");
 				return val;
 			case "blocCles":
 				oInscriptionScolaire.addBlocCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("blocCles"))
+					sauvegardes.add("blocCles");
 				return val;
 			case "enfantCle":
 				if(oInscriptionScolaire.getEnfantCle() == null)
 					oInscriptionScolaire.setEnfantCle((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("enfantCle"))
+					sauvegardes.add("enfantCle");
 				return val;
 			case "mereCles":
 				oInscriptionScolaire.addMereCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("mereCles"))
+					sauvegardes.add("mereCles");
 				return val;
 			case "pereCles":
 				oInscriptionScolaire.addPereCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("pereCles"))
+					sauvegardes.add("pereCles");
 				return val;
 			case "gardienCles":
 				oInscriptionScolaire.addGardienCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("gardienCles"))
+					sauvegardes.add("gardienCles");
 				return val;
 			case "paiementCles":
 				oInscriptionScolaire.addPaiementCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("paiementCles"))
+					sauvegardes.add("paiementCles");
 				return val;
 			case "utilisateurCles":
 				oInscriptionScolaire.addUtilisateurCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("utilisateurCles"))
+					sauvegardes.add("utilisateurCles");
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -17537,6 +18416,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSetFamilleSepare(requeteSite_, o);
 		case "familleDivorce":
 			return InscriptionScolaire.staticSetFamilleDivorce(requeteSite_, o);
+		case "inscriptionMotDePasse":
+			return InscriptionScolaire.staticSetInscriptionMotDePasse(requeteSite_, o);
 		case "familleAddresse":
 			return InscriptionScolaire.staticSetFamilleAddresse(requeteSite_, o);
 		case "familleCommentVousConnaissezEcole":
@@ -17551,6 +18432,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSetEnfantDescription(requeteSite_, o);
 		case "enfantObjectifs":
 			return InscriptionScolaire.staticSetEnfantObjectifs(requeteSite_, o);
+		case "adminNotes":
+			return InscriptionScolaire.staticSetAdminNotes(requeteSite_, o);
 		case "enfantPropre":
 			return InscriptionScolaire.staticSetEnfantPropre(requeteSite_, o);
 		case "inscriptionNomGroupe":
@@ -17839,6 +18722,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrFamilleSepare(requeteSite_, (Boolean)o);
 		case "familleDivorce":
 			return InscriptionScolaire.staticSolrFamilleDivorce(requeteSite_, (Boolean)o);
+		case "inscriptionMotDePasse":
+			return InscriptionScolaire.staticSolrInscriptionMotDePasse(requeteSite_, (String)o);
 		case "familleAddresse":
 			return InscriptionScolaire.staticSolrFamilleAddresse(requeteSite_, (String)o);
 		case "familleCommentVousConnaissezEcole":
@@ -17853,6 +18738,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrEnfantDescription(requeteSite_, (String)o);
 		case "enfantObjectifs":
 			return InscriptionScolaire.staticSolrEnfantObjectifs(requeteSite_, (String)o);
+		case "adminNotes":
+			return InscriptionScolaire.staticSolrAdminNotes(requeteSite_, (String)o);
 		case "enfantPropre":
 			return InscriptionScolaire.staticSolrEnfantPropre(requeteSite_, (Boolean)o);
 		case "inscriptionNomGroupe":
@@ -18141,6 +19028,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrStrFamilleSepare(requeteSite_, (Boolean)o);
 		case "familleDivorce":
 			return InscriptionScolaire.staticSolrStrFamilleDivorce(requeteSite_, (Boolean)o);
+		case "inscriptionMotDePasse":
+			return InscriptionScolaire.staticSolrStrInscriptionMotDePasse(requeteSite_, (String)o);
 		case "familleAddresse":
 			return InscriptionScolaire.staticSolrStrFamilleAddresse(requeteSite_, (String)o);
 		case "familleCommentVousConnaissezEcole":
@@ -18155,6 +19044,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrStrEnfantDescription(requeteSite_, (String)o);
 		case "enfantObjectifs":
 			return InscriptionScolaire.staticSolrStrEnfantObjectifs(requeteSite_, (String)o);
+		case "adminNotes":
+			return InscriptionScolaire.staticSolrStrAdminNotes(requeteSite_, (String)o);
 		case "enfantPropre":
 			return InscriptionScolaire.staticSolrStrEnfantPropre(requeteSite_, (Boolean)o);
 		case "inscriptionNomGroupe":
@@ -18443,6 +19334,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrFqFamilleSepare(requeteSite_, o);
 		case "familleDivorce":
 			return InscriptionScolaire.staticSolrFqFamilleDivorce(requeteSite_, o);
+		case "inscriptionMotDePasse":
+			return InscriptionScolaire.staticSolrFqInscriptionMotDePasse(requeteSite_, o);
 		case "familleAddresse":
 			return InscriptionScolaire.staticSolrFqFamilleAddresse(requeteSite_, o);
 		case "familleCommentVousConnaissezEcole":
@@ -18457,6 +19350,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrFqEnfantDescription(requeteSite_, o);
 		case "enfantObjectifs":
 			return InscriptionScolaire.staticSolrFqEnfantObjectifs(requeteSite_, o);
+		case "adminNotes":
+			return InscriptionScolaire.staticSolrFqAdminNotes(requeteSite_, o);
 		case "enfantPropre":
 			return InscriptionScolaire.staticSolrFqEnfantPropre(requeteSite_, o);
 		case "inscriptionNomGroupe":
@@ -18608,226 +19503,508 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return o != null;
 	}
 	public Object definirInscriptionScolaire(String var, String val) {
-		switch(var) {
-			case "enfantNomComplet":
+		switch(var.toLowerCase()) {
+			case "anneecle":
+				if(val != null)
+					setAnneeCle(val);
+				sauvegardes.add("anneeCle");
+				return val;
+			case "enfantcle":
+				if(val != null)
+					setEnfantCle(val);
+				sauvegardes.add("enfantCle");
+				return val;
+			case "enfantnomcomplet":
 				if(val != null)
 					setEnfantNomComplet(val);
-				sauvegardes.add(var);
+				sauvegardes.add("enfantNomComplet");
 				return val;
-			case "enfantNomCompletPrefere":
+			case "enfantnomcompletprefere":
 				if(val != null)
 					setEnfantNomCompletPrefere(val);
-				sauvegardes.add(var);
+				sauvegardes.add("enfantNomCompletPrefere");
 				return val;
-			case "enfantDateNaissance":
+			case "enfantdatenaissance":
 				if(val != null)
 					setEnfantDateNaissance(val);
-				sauvegardes.add(var);
+				sauvegardes.add("enfantDateNaissance");
 				return val;
-			case "ecoleAddresse":
+			case "ecoleaddresse":
 				if(val != null)
 					setEcoleAddresse(val);
-				sauvegardes.add(var);
+				sauvegardes.add("ecoleAddresse");
 				return val;
-			case "inscriptionApprouve":
+			case "inscriptionapprouve":
 				if(val != null)
 					setInscriptionApprouve(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionApprouve");
 				return val;
-			case "inscriptionImmunisations":
+			case "inscriptionimmunisations":
 				if(val != null)
 					setInscriptionImmunisations(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionImmunisations");
 				return val;
 			case "photo":
 				if(val != null)
 					setPhoto(val);
-				sauvegardes.add(var);
+				sauvegardes.add("photo");
 				return val;
-			case "familleMarie":
+			case "famillemarie":
 				if(val != null)
 					setFamilleMarie(val);
-				sauvegardes.add(var);
+				sauvegardes.add("familleMarie");
 				return val;
-			case "familleSepare":
+			case "famillesepare":
 				if(val != null)
 					setFamilleSepare(val);
-				sauvegardes.add(var);
+				sauvegardes.add("familleSepare");
 				return val;
-			case "familleDivorce":
+			case "familledivorce":
 				if(val != null)
 					setFamilleDivorce(val);
-				sauvegardes.add(var);
+				sauvegardes.add("familleDivorce");
 				return val;
-			case "familleAddresse":
+			case "inscriptionmotdepasse":
+				if(val != null)
+					setInscriptionMotDePasse(val);
+				sauvegardes.add("inscriptionMotDePasse");
+				return val;
+			case "familleaddresse":
 				if(val != null)
 					setFamilleAddresse(val);
-				sauvegardes.add(var);
+				sauvegardes.add("familleAddresse");
 				return val;
-			case "familleCommentVousConnaissezEcole":
+			case "famillecommentvousconnaissezecole":
 				if(val != null)
 					setFamilleCommentVousConnaissezEcole(val);
-				sauvegardes.add(var);
+				sauvegardes.add("familleCommentVousConnaissezEcole");
 				return val;
-			case "inscriptionConsiderationsSpeciales":
+			case "inscriptionconsiderationsspeciales":
 				if(val != null)
 					setInscriptionConsiderationsSpeciales(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionConsiderationsSpeciales");
 				return val;
-			case "enfantConditionsMedicales":
+			case "enfantconditionsmedicales":
 				if(val != null)
 					setEnfantConditionsMedicales(val);
-				sauvegardes.add(var);
+				sauvegardes.add("enfantConditionsMedicales");
 				return val;
-			case "enfantEcolesPrecedemmentFrequentees":
+			case "enfantecolesprecedemmentfrequentees":
 				if(val != null)
 					setEnfantEcolesPrecedemmentFrequentees(val);
-				sauvegardes.add(var);
+				sauvegardes.add("enfantEcolesPrecedemmentFrequentees");
 				return val;
-			case "enfantDescription":
+			case "enfantdescription":
 				if(val != null)
 					setEnfantDescription(val);
-				sauvegardes.add(var);
+				sauvegardes.add("enfantDescription");
 				return val;
-			case "enfantObjectifs":
+			case "enfantobjectifs":
 				if(val != null)
 					setEnfantObjectifs(val);
-				sauvegardes.add(var);
+				sauvegardes.add("enfantObjectifs");
 				return val;
-			case "enfantPropre":
+			case "adminnotes":
+				if(val != null)
+					setAdminNotes(val);
+				sauvegardes.add("adminNotes");
+				return val;
+			case "enfantpropre":
 				if(val != null)
 					setEnfantPropre(val);
-				sauvegardes.add(var);
+				sauvegardes.add("enfantPropre");
 				return val;
-			case "inscriptionNomGroupe":
+			case "inscriptionnomgroupe":
 				if(val != null)
 					setInscriptionNomGroupe(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionNomGroupe");
 				return val;
-			case "inscriptionPaimentChaqueMois":
+			case "inscriptionpaimentchaquemois":
 				if(val != null)
 					setInscriptionPaimentChaqueMois(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionPaimentChaqueMois");
 				return val;
-			case "inscriptionPaimentComplet":
+			case "inscriptionpaimentcomplet":
 				if(val != null)
 					setInscriptionPaimentComplet(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionPaimentComplet");
 				return val;
-			case "customerProfileId":
+			case "customerprofileid":
 				if(val != null)
 					setCustomerProfileId(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId");
 				return val;
-			case "inscriptionDateFrais":
+			case "inscriptiondatefrais":
 				if(val != null)
 					setInscriptionDateFrais(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDateFrais");
 				return val;
-			case "inscriptionNomsParents":
+			case "inscriptionnomsparents":
 				if(val != null)
 					setInscriptionNomsParents(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionNomsParents");
 				return val;
-			case "inscriptionSignature1":
+			case "inscriptionsignature1":
 				if(val != null)
 					setInscriptionSignature1(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionSignature1");
 				return val;
-			case "inscriptionSignature2":
+			case "inscriptionsignature2":
 				if(val != null)
 					setInscriptionSignature2(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionSignature2");
 				return val;
-			case "inscriptionSignature3":
+			case "inscriptionsignature3":
 				if(val != null)
 					setInscriptionSignature3(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionSignature3");
 				return val;
-			case "inscriptionSignature4":
+			case "inscriptionsignature4":
 				if(val != null)
 					setInscriptionSignature4(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionSignature4");
 				return val;
-			case "inscriptionSignature5":
+			case "inscriptionsignature5":
 				if(val != null)
 					setInscriptionSignature5(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionSignature5");
 				return val;
-			case "inscriptionSignature6":
+			case "inscriptionsignature6":
 				if(val != null)
 					setInscriptionSignature6(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionSignature6");
 				return val;
-			case "inscriptionSignature7":
+			case "inscriptionsignature7":
 				if(val != null)
 					setInscriptionSignature7(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionSignature7");
 				return val;
-			case "inscriptionSignature8":
+			case "inscriptionsignature8":
 				if(val != null)
 					setInscriptionSignature8(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionSignature8");
 				return val;
-			case "inscriptionSignature9":
+			case "inscriptionsignature9":
 				if(val != null)
 					setInscriptionSignature9(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionSignature9");
 				return val;
-			case "inscriptionSignature10":
+			case "inscriptionsignature10":
 				if(val != null)
 					setInscriptionSignature10(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionSignature10");
 				return val;
-			case "inscriptionDate1":
+			case "inscriptiondate1":
 				if(val != null)
 					setInscriptionDate1(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDate1");
 				return val;
-			case "inscriptionDate2":
+			case "inscriptiondate2":
 				if(val != null)
 					setInscriptionDate2(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDate2");
 				return val;
-			case "inscriptionDate3":
+			case "inscriptiondate3":
 				if(val != null)
 					setInscriptionDate3(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDate3");
 				return val;
-			case "inscriptionDate4":
+			case "inscriptiondate4":
 				if(val != null)
 					setInscriptionDate4(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDate4");
 				return val;
-			case "inscriptionDate5":
+			case "inscriptiondate5":
 				if(val != null)
 					setInscriptionDate5(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDate5");
 				return val;
-			case "inscriptionDate6":
+			case "inscriptiondate6":
 				if(val != null)
 					setInscriptionDate6(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDate6");
 				return val;
-			case "inscriptionDate7":
+			case "inscriptiondate7":
 				if(val != null)
 					setInscriptionDate7(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDate7");
 				return val;
-			case "inscriptionDate8":
+			case "inscriptiondate8":
 				if(val != null)
 					setInscriptionDate8(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDate8");
 				return val;
-			case "inscriptionDate9":
+			case "inscriptiondate9":
 				if(val != null)
 					setInscriptionDate9(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDate9");
 				return val;
-			case "inscriptionDate10":
+			case "inscriptiondate10":
 				if(val != null)
 					setInscriptionDate10(val);
-				sauvegardes.add(var);
+				sauvegardes.add("inscriptionDate10");
+				return val;
+			default:
+				return super.definirCluster(var, val);
+		}
+	}
+
+	@Override public boolean definirPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirInscriptionScolaire(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirInscriptionScolaire(String var, Object val) {
+		switch(var.toLowerCase()) {
+			case "anneecle":
+				if(val instanceof Long)
+					setAnneeCle((Long)val);
+				sauvegardes.add("anneeCle");
+				return val;
+			case "enfantcle":
+				if(val instanceof Long)
+					setEnfantCle((Long)val);
+				sauvegardes.add("enfantCle");
+				return val;
+			case "enfantnomcomplet":
+				if(val instanceof String)
+					setEnfantNomComplet((String)val);
+				sauvegardes.add("enfantNomComplet");
+				return val;
+			case "enfantnomcompletprefere":
+				if(val instanceof String)
+					setEnfantNomCompletPrefere((String)val);
+				sauvegardes.add("enfantNomCompletPrefere");
+				return val;
+			case "enfantdatenaissance":
+				if(val instanceof LocalDate)
+					setEnfantDateNaissance((LocalDate)val);
+				sauvegardes.add("enfantDateNaissance");
+				return val;
+			case "ecoleaddresse":
+				if(val instanceof String)
+					setEcoleAddresse((String)val);
+				sauvegardes.add("ecoleAddresse");
+				return val;
+			case "inscriptionapprouve":
+				if(val instanceof Boolean)
+					setInscriptionApprouve((Boolean)val);
+				sauvegardes.add("inscriptionApprouve");
+				return val;
+			case "inscriptionimmunisations":
+				if(val instanceof Boolean)
+					setInscriptionImmunisations((Boolean)val);
+				sauvegardes.add("inscriptionImmunisations");
+				return val;
+			case "photo":
+				if(val instanceof String)
+					setPhoto((String)val);
+				sauvegardes.add("photo");
+				return val;
+			case "famillemarie":
+				if(val instanceof Boolean)
+					setFamilleMarie((Boolean)val);
+				sauvegardes.add("familleMarie");
+				return val;
+			case "famillesepare":
+				if(val instanceof Boolean)
+					setFamilleSepare((Boolean)val);
+				sauvegardes.add("familleSepare");
+				return val;
+			case "familledivorce":
+				if(val instanceof Boolean)
+					setFamilleDivorce((Boolean)val);
+				sauvegardes.add("familleDivorce");
+				return val;
+			case "inscriptionmotdepasse":
+				if(val instanceof String)
+					setInscriptionMotDePasse((String)val);
+				sauvegardes.add("inscriptionMotDePasse");
+				return val;
+			case "familleaddresse":
+				if(val instanceof String)
+					setFamilleAddresse((String)val);
+				sauvegardes.add("familleAddresse");
+				return val;
+			case "famillecommentvousconnaissezecole":
+				if(val instanceof String)
+					setFamilleCommentVousConnaissezEcole((String)val);
+				sauvegardes.add("familleCommentVousConnaissezEcole");
+				return val;
+			case "inscriptionconsiderationsspeciales":
+				if(val instanceof String)
+					setInscriptionConsiderationsSpeciales((String)val);
+				sauvegardes.add("inscriptionConsiderationsSpeciales");
+				return val;
+			case "enfantconditionsmedicales":
+				if(val instanceof String)
+					setEnfantConditionsMedicales((String)val);
+				sauvegardes.add("enfantConditionsMedicales");
+				return val;
+			case "enfantecolesprecedemmentfrequentees":
+				if(val instanceof String)
+					setEnfantEcolesPrecedemmentFrequentees((String)val);
+				sauvegardes.add("enfantEcolesPrecedemmentFrequentees");
+				return val;
+			case "enfantdescription":
+				if(val instanceof String)
+					setEnfantDescription((String)val);
+				sauvegardes.add("enfantDescription");
+				return val;
+			case "enfantobjectifs":
+				if(val instanceof String)
+					setEnfantObjectifs((String)val);
+				sauvegardes.add("enfantObjectifs");
+				return val;
+			case "adminnotes":
+				if(val instanceof String)
+					setAdminNotes((String)val);
+				sauvegardes.add("adminNotes");
+				return val;
+			case "enfantpropre":
+				if(val instanceof Boolean)
+					setEnfantPropre((Boolean)val);
+				sauvegardes.add("enfantPropre");
+				return val;
+			case "inscriptionnomgroupe":
+				if(val instanceof String)
+					setInscriptionNomGroupe((String)val);
+				sauvegardes.add("inscriptionNomGroupe");
+				return val;
+			case "inscriptionpaimentchaquemois":
+				if(val instanceof Boolean)
+					setInscriptionPaimentChaqueMois((Boolean)val);
+				sauvegardes.add("inscriptionPaimentChaqueMois");
+				return val;
+			case "inscriptionpaimentcomplet":
+				if(val instanceof Boolean)
+					setInscriptionPaimentComplet((Boolean)val);
+				sauvegardes.add("inscriptionPaimentComplet");
+				return val;
+			case "customerprofileid":
+				if(val instanceof String)
+					setCustomerProfileId((String)val);
+				sauvegardes.add("customerProfileId");
+				return val;
+			case "inscriptiondatefrais":
+				if(val instanceof LocalDate)
+					setInscriptionDateFrais((LocalDate)val);
+				sauvegardes.add("inscriptionDateFrais");
+				return val;
+			case "inscriptionnomsparents":
+				if(val instanceof String)
+					setInscriptionNomsParents((String)val);
+				sauvegardes.add("inscriptionNomsParents");
+				return val;
+			case "inscriptionsignature1":
+				if(val instanceof String)
+					setInscriptionSignature1((String)val);
+				sauvegardes.add("inscriptionSignature1");
+				return val;
+			case "inscriptionsignature2":
+				if(val instanceof String)
+					setInscriptionSignature2((String)val);
+				sauvegardes.add("inscriptionSignature2");
+				return val;
+			case "inscriptionsignature3":
+				if(val instanceof String)
+					setInscriptionSignature3((String)val);
+				sauvegardes.add("inscriptionSignature3");
+				return val;
+			case "inscriptionsignature4":
+				if(val instanceof String)
+					setInscriptionSignature4((String)val);
+				sauvegardes.add("inscriptionSignature4");
+				return val;
+			case "inscriptionsignature5":
+				if(val instanceof String)
+					setInscriptionSignature5((String)val);
+				sauvegardes.add("inscriptionSignature5");
+				return val;
+			case "inscriptionsignature6":
+				if(val instanceof String)
+					setInscriptionSignature6((String)val);
+				sauvegardes.add("inscriptionSignature6");
+				return val;
+			case "inscriptionsignature7":
+				if(val instanceof String)
+					setInscriptionSignature7((String)val);
+				sauvegardes.add("inscriptionSignature7");
+				return val;
+			case "inscriptionsignature8":
+				if(val instanceof String)
+					setInscriptionSignature8((String)val);
+				sauvegardes.add("inscriptionSignature8");
+				return val;
+			case "inscriptionsignature9":
+				if(val instanceof String)
+					setInscriptionSignature9((String)val);
+				sauvegardes.add("inscriptionSignature9");
+				return val;
+			case "inscriptionsignature10":
+				if(val instanceof String)
+					setInscriptionSignature10((String)val);
+				sauvegardes.add("inscriptionSignature10");
+				return val;
+			case "inscriptiondate1":
+				if(val instanceof LocalDate)
+					setInscriptionDate1((LocalDate)val);
+				sauvegardes.add("inscriptionDate1");
+				return val;
+			case "inscriptiondate2":
+				if(val instanceof LocalDate)
+					setInscriptionDate2((LocalDate)val);
+				sauvegardes.add("inscriptionDate2");
+				return val;
+			case "inscriptiondate3":
+				if(val instanceof LocalDate)
+					setInscriptionDate3((LocalDate)val);
+				sauvegardes.add("inscriptionDate3");
+				return val;
+			case "inscriptiondate4":
+				if(val instanceof LocalDate)
+					setInscriptionDate4((LocalDate)val);
+				sauvegardes.add("inscriptionDate4");
+				return val;
+			case "inscriptiondate5":
+				if(val instanceof LocalDate)
+					setInscriptionDate5((LocalDate)val);
+				sauvegardes.add("inscriptionDate5");
+				return val;
+			case "inscriptiondate6":
+				if(val instanceof LocalDate)
+					setInscriptionDate6((LocalDate)val);
+				sauvegardes.add("inscriptionDate6");
+				return val;
+			case "inscriptiondate7":
+				if(val instanceof LocalDate)
+					setInscriptionDate7((LocalDate)val);
+				sauvegardes.add("inscriptionDate7");
+				return val;
+			case "inscriptiondate8":
+				if(val instanceof LocalDate)
+					setInscriptionDate8((LocalDate)val);
+				sauvegardes.add("inscriptionDate8");
+				return val;
+			case "inscriptiondate9":
+				if(val instanceof LocalDate)
+					setInscriptionDate9((LocalDate)val);
+				sauvegardes.add("inscriptionDate9");
+				return val;
+			case "inscriptiondate10":
+				if(val instanceof LocalDate)
+					setInscriptionDate10((LocalDate)val);
+				sauvegardes.add("inscriptionDate10");
 				return val;
 			default:
 				return super.definirCluster(var, val);
@@ -19274,6 +20451,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setFamilleDivorce(familleDivorce);
 			}
 
+			if(sauvegardes.contains("inscriptionMotDePasse")) {
+				String inscriptionMotDePasse = (String)solrDocument.get("inscriptionMotDePasse_stored_string");
+				if(inscriptionMotDePasse != null)
+					oInscriptionScolaire.setInscriptionMotDePasse(inscriptionMotDePasse);
+			}
+
 			if(sauvegardes.contains("familleAddresse")) {
 				String familleAddresse = (String)solrDocument.get("familleAddresse_stored_string");
 				if(familleAddresse != null)
@@ -19314,6 +20497,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				String enfantObjectifs = (String)solrDocument.get("enfantObjectifs_stored_string");
 				if(enfantObjectifs != null)
 					oInscriptionScolaire.setEnfantObjectifs(enfantObjectifs);
+			}
+
+			if(sauvegardes.contains("adminNotes")) {
+				String adminNotes = (String)solrDocument.get("adminNotes_stored_string");
+				if(adminNotes != null)
+					oInscriptionScolaire.setAdminNotes(adminNotes);
 			}
 
 			if(sauvegardes.contains("enfantPropre")) {
@@ -20073,6 +21262,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("familleDivorce_indexed_boolean", familleDivorce);
 			document.addField("familleDivorce_stored_boolean", familleDivorce);
 		}
+		if(inscriptionMotDePasse != null) {
+			document.addField("inscriptionMotDePasse_indexed_string", inscriptionMotDePasse);
+			document.addField("inscriptionMotDePasse_stored_string", inscriptionMotDePasse);
+		}
 		if(familleAddresse != null) {
 			document.addField("familleAddresse_indexed_string", familleAddresse);
 			document.addField("familleAddresse_stored_string", familleAddresse);
@@ -20101,6 +21294,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(enfantObjectifs != null) {
 			document.addField("enfantObjectifs_indexed_string", enfantObjectifs);
 			document.addField("enfantObjectifs_stored_string", enfantObjectifs);
+		}
+		if(adminNotes != null) {
+			document.addField("adminNotes_indexed_string", adminNotes);
+			document.addField("adminNotes_stored_string", adminNotes);
 		}
 		if(enfantPropre != null) {
 			document.addField("enfantPropre_indexed_boolean", enfantPropre);
@@ -20514,6 +21711,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "familleSepare_indexed_boolean";
 			case "familleDivorce":
 				return "familleDivorce_indexed_boolean";
+			case "inscriptionMotDePasse":
+				return "inscriptionMotDePasse_indexed_string";
 			case "familleAddresse":
 				return "familleAddresse_indexed_string";
 			case "familleCommentVousConnaissezEcole":
@@ -20528,6 +21727,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "enfantDescription_indexed_string";
 			case "enfantObjectifs":
 				return "enfantObjectifs_indexed_string";
+			case "adminNotes":
+				return "adminNotes_indexed_string";
 			case "enfantPropre":
 				return "enfantPropre_indexed_boolean";
 			case "inscriptionNomGroupe":
@@ -20945,6 +22146,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(familleDivorce != null)
 			oInscriptionScolaire.setFamilleDivorce(familleDivorce);
 
+		String inscriptionMotDePasse = (String)solrDocument.get("inscriptionMotDePasse_stored_string");
+		if(inscriptionMotDePasse != null)
+			oInscriptionScolaire.setInscriptionMotDePasse(inscriptionMotDePasse);
+
 		String familleAddresse = (String)solrDocument.get("familleAddresse_stored_string");
 		if(familleAddresse != null)
 			oInscriptionScolaire.setFamilleAddresse(familleAddresse);
@@ -20972,6 +22177,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		String enfantObjectifs = (String)solrDocument.get("enfantObjectifs_stored_string");
 		if(enfantObjectifs != null)
 			oInscriptionScolaire.setEnfantObjectifs(enfantObjectifs);
+
+		String adminNotes = (String)solrDocument.get("adminNotes_stored_string");
+		if(adminNotes != null)
+			oInscriptionScolaire.setAdminNotes(adminNotes);
 
 		Boolean enfantPropre = (Boolean)solrDocument.get("enfantPropre_stored_boolean");
 		if(enfantPropre != null)
@@ -21381,6 +22590,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("familleSepare");
 			if(!Objects.equals(familleDivorce, original.getFamilleDivorce()))
 				requeteApi.addVars("familleDivorce");
+			if(!Objects.equals(inscriptionMotDePasse, original.getInscriptionMotDePasse()))
+				requeteApi.addVars("inscriptionMotDePasse");
 			if(!Objects.equals(familleAddresse, original.getFamilleAddresse()))
 				requeteApi.addVars("familleAddresse");
 			if(!Objects.equals(familleCommentVousConnaissezEcole, original.getFamilleCommentVousConnaissezEcole()))
@@ -21395,6 +22606,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("enfantDescription");
 			if(!Objects.equals(enfantObjectifs, original.getEnfantObjectifs()))
 				requeteApi.addVars("enfantObjectifs");
+			if(!Objects.equals(adminNotes, original.getAdminNotes()))
+				requeteApi.addVars("adminNotes");
 			if(!Objects.equals(enfantPropre, original.getEnfantPropre()))
 				requeteApi.addVars("enfantPropre");
 			if(!Objects.equals(inscriptionNomGroupe, original.getInscriptionNomGroupe()))
@@ -21528,7 +22741,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCle, anneeCle, blocCles, ecoleCle, sessionCle, ageCle, blocCle, enfantCle, mereCles, pereCles, gardienCles, paiementCles, formInscriptionCle, utilisateurCles, scolaireTri, ecoleTri, anneeTri, saisonTri, sessionTri, ageTri, enfantPrenom, enfantPrenomPrefere, enfantFamilleNom, merePrenom, merePrenomPrefere, mereNomCompletPrefere, perePrenom, perePrenomPrefere, pereNomCompletPrefere, enfantNomComplet, enfantNomCompletPrefere, enfantDateNaissance, enfantDateNaissanceDAnnee, enfantDateNaissanceMoisDAnnee, enfantDateNaissanceJourDeSemaine, enfantMoisNaissance, enfantJourNaissance, ecoleNom, ecoleNomComplet, ecoleEmplacement, ecoleAddresse, ecoleNumeroTelephone, ecoleForm, ecoleNumero, ecoleAdministrateurNom, anneeDebut, anneeFin, saisonDateDebut, anneeFraisInscription, sessionDateDebut, sessionDateFin, ageNomComplet, ageDebut, ageFin, blocHeureDebut, blocHeureFin, blocPrixParMois, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi, blocPrixTotal, blocNomAdmin, blocNomCourt, blocNomComplet, inscriptionApprouve, inscriptionImmunisations, photo, familleMarie, familleSepare, familleDivorce, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, enfantPropre, inscriptionNomGroupe, inscriptionCouleurGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, customerProfileId, inscriptionDateFrais, paiementLastDate, paiementLastStr, paiementMontant, fraisMontant, fraisMontantFuture, fraisMontantDu, fraisMontantNonPasse, fraisMaintenant, paiementsAJour, paiementsEnRetard, paiementsEnRetardMontant, paiementsEnAvance, paiementsEnSouffrance, paiementsEnSouffranceMontant, fraisCrees, creeDAnnee, creeJourDeSemaine, creeMoisDAnnee, creeHeureDuJour, inscriptionJoursDeSemaine, inscriptionNomsParents, inscriptionMails, inscriptionMail, inscriptionMailsParents, inscriptionNumeroTelephones, inscriptionNumeroTelephone, inscriptionNomParent, inscriptionNomParentLignes, inscriptionMailParentLignes, inscriptionDetailParentLignes, inscriptionChercherParentLignes, inscriptionContactUrgenceParentLignes, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10, enfantImmunisationsRecu, enfantPhotosApprouve, inscriptionNomComplet);
+		return Objects.hash(super.hashCode(), inscriptionCle, anneeCle, blocCles, ecoleCle, sessionCle, ageCle, blocCle, enfantCle, mereCles, pereCles, gardienCles, paiementCles, formInscriptionCle, utilisateurCles, scolaireTri, ecoleTri, anneeTri, saisonTri, sessionTri, ageTri, enfantPrenom, enfantPrenomPrefere, enfantFamilleNom, merePrenom, merePrenomPrefere, mereNomCompletPrefere, perePrenom, perePrenomPrefere, pereNomCompletPrefere, enfantNomComplet, enfantNomCompletPrefere, enfantDateNaissance, enfantDateNaissanceDAnnee, enfantDateNaissanceMoisDAnnee, enfantDateNaissanceJourDeSemaine, enfantMoisNaissance, enfantJourNaissance, ecoleNom, ecoleNomComplet, ecoleEmplacement, ecoleAddresse, ecoleNumeroTelephone, ecoleForm, ecoleNumero, ecoleAdministrateurNom, anneeDebut, anneeFin, saisonDateDebut, anneeFraisInscription, sessionDateDebut, sessionDateFin, ageNomComplet, ageDebut, ageFin, blocHeureDebut, blocHeureFin, blocPrixParMois, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi, blocPrixTotal, blocNomAdmin, blocNomCourt, blocNomComplet, inscriptionApprouve, inscriptionImmunisations, photo, familleMarie, familleSepare, familleDivorce, inscriptionMotDePasse, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, adminNotes, enfantPropre, inscriptionNomGroupe, inscriptionCouleurGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, customerProfileId, inscriptionDateFrais, paiementLastDate, paiementLastStr, paiementMontant, fraisMontant, fraisMontantFuture, fraisMontantDu, fraisMontantNonPasse, fraisMaintenant, paiementsAJour, paiementsEnRetard, paiementsEnRetardMontant, paiementsEnAvance, paiementsEnSouffrance, paiementsEnSouffranceMontant, fraisCrees, creeDAnnee, creeJourDeSemaine, creeMoisDAnnee, creeHeureDuJour, inscriptionJoursDeSemaine, inscriptionNomsParents, inscriptionMails, inscriptionMail, inscriptionMailsParents, inscriptionNumeroTelephones, inscriptionNumeroTelephone, inscriptionNomParent, inscriptionNomParentLignes, inscriptionMailParentLignes, inscriptionDetailParentLignes, inscriptionChercherParentLignes, inscriptionContactUrgenceParentLignes, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10, enfantImmunisationsRecu, enfantPhotosApprouve, inscriptionNomComplet);
 	}
 
 	////////////
@@ -21616,6 +22829,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( familleMarie, that.familleMarie )
 				&& Objects.equals( familleSepare, that.familleSepare )
 				&& Objects.equals( familleDivorce, that.familleDivorce )
+				&& Objects.equals( inscriptionMotDePasse, that.inscriptionMotDePasse )
 				&& Objects.equals( familleAddresse, that.familleAddresse )
 				&& Objects.equals( familleCommentVousConnaissezEcole, that.familleCommentVousConnaissezEcole )
 				&& Objects.equals( inscriptionConsiderationsSpeciales, that.inscriptionConsiderationsSpeciales )
@@ -21623,6 +22837,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( enfantEcolesPrecedemmentFrequentees, that.enfantEcolesPrecedemmentFrequentees )
 				&& Objects.equals( enfantDescription, that.enfantDescription )
 				&& Objects.equals( enfantObjectifs, that.enfantObjectifs )
+				&& Objects.equals( adminNotes, that.adminNotes )
 				&& Objects.equals( enfantPropre, that.enfantPropre )
 				&& Objects.equals( inscriptionNomGroupe, that.inscriptionNomGroupe )
 				&& Objects.equals( inscriptionCouleurGroupe, that.inscriptionCouleurGroupe )
@@ -21769,6 +22984,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", familleMarie: " ).append(familleMarie);
 		sb.append( ", familleSepare: " ).append(familleSepare);
 		sb.append( ", familleDivorce: " ).append(familleDivorce);
+		sb.append( ", inscriptionMotDePasse: \"" ).append(inscriptionMotDePasse).append( "\"" );
 		sb.append( ", familleAddresse: \"" ).append(familleAddresse).append( "\"" );
 		sb.append( ", familleCommentVousConnaissezEcole: \"" ).append(familleCommentVousConnaissezEcole).append( "\"" );
 		sb.append( ", inscriptionConsiderationsSpeciales: \"" ).append(inscriptionConsiderationsSpeciales).append( "\"" );
@@ -21776,6 +22992,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", enfantEcolesPrecedemmentFrequentees: \"" ).append(enfantEcolesPrecedemmentFrequentees).append( "\"" );
 		sb.append( ", enfantDescription: \"" ).append(enfantDescription).append( "\"" );
 		sb.append( ", enfantObjectifs: \"" ).append(enfantObjectifs).append( "\"" );
+		sb.append( ", adminNotes: \"" ).append(adminNotes).append( "\"" );
 		sb.append( ", enfantPropre: " ).append(enfantPropre);
 		sb.append( ", inscriptionNomGroupe: \"" ).append(inscriptionNomGroupe).append( "\"" );
 		sb.append( ", inscriptionCouleurGroupe: \"" ).append(inscriptionCouleurGroupe).append( "\"" );

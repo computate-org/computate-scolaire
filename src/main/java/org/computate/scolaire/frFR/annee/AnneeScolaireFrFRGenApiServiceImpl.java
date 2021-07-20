@@ -46,6 +46,7 @@ import java.util.Set;
 import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -70,7 +71,6 @@ import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.api.OperationResponse;
@@ -79,7 +79,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import java.nio.charset.Charset;
 import org.apache.http.NameValuePair;
 import io.vertx.ext.web.api.OperationRequest;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.auth.oauth2.impl.OAuth2TokenImpl;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
@@ -130,7 +130,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -236,14 +236,17 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
+			AnneeScolaire o2 = new AnneeScolaire();
+			o2.setRequeteSite_(requeteSite);
 			List<Future> futures = new ArrayList<>();
 
 			if(requeteSite.getSessionId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "sessionId", requeteSite.getSessionId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "sessionId", requeteSite.getSessionId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -255,8 +258,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			}
 			if(requeteSite.getUtilisateurId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -268,8 +271,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			}
 			if(requeteSite.getUtilisateurCle() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -286,8 +289,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					switch(entiteVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -299,8 +302,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "archive":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -312,8 +315,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "supprime":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -327,10 +330,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						{
 							Long l = Long.parseLong(jsonObject.getString(entiteVar));
 							if(l != null) {
-								ListeRecherche<Ecole> listeRecherche = new ListeRecherche<Ecole>();
+								ListeRecherche<org.computate.scolaire.frFR.ecole.Ecole> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.ecole.Ecole>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(Ecole.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.ecole.Ecole.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -338,8 +341,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCles", pk, "ecoleCle")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "anneeCles", pk, "ecoleCle")
 												, b
 										-> {
 											if(b.succeeded())
@@ -359,10 +362,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "inscriptionCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.inscription.InscriptionScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -370,8 +373,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -391,10 +394,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "saisonCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.saison.SaisonScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.saison.SaisonScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(SaisonScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.saison.SaisonScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -402,8 +405,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "anneeCle", pk, "saisonCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -423,10 +426,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "ageCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							if(l != null) {
-								ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.age.AgeScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.age.AgeScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(AgeScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.age.AgeScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -434,8 +437,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "ageCles", l2, "anneeCle")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "ageCles", l2, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
@@ -454,8 +457,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "sessionDateDebut":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "sessionDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "sessionDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -467,8 +470,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "saisonDateDebut":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "saisonDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -480,8 +483,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "sessionDateFin":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "sessionDateFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "sessionDateFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -493,8 +496,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "anneeDebut":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "anneeDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "anneeDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -506,8 +509,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "anneeFin":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "anneeFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "anneeFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -519,8 +522,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "anneeFraisInscription":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "anneeFraisInscription", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "anneeFraisInscription", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -533,7 +536,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
@@ -596,7 +599,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -724,7 +727,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTImportAnneeScolaire(requeteSite, gestionnaireEvenements);
@@ -786,7 +789,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -912,7 +915,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					requeteApi.setNumPATCH(requeteApi.getNumPATCH() + 1);
 					reponse200PUTFusionAnneeScolaire(requeteSite, gestionnaireEvenements);
@@ -974,7 +977,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1066,7 +1069,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				requeteApi.setNumPATCH(requeteApi.getNumPATCH() + listeAnneeScolaire.size());
 				if(listeAnneeScolaire.next()) {
@@ -1155,6 +1158,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			List<Future> futures = new ArrayList<>();
 
@@ -1165,8 +1169,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					switch(entiteVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1178,8 +1182,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "archive":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "archive", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1191,8 +1195,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "supprime":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "supprime", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1206,8 +1210,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							{
 						Long l = Long.parseLong(jsonObject.getString(entiteVar));
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_addA
-									, Tuple.of(l, "anneeCles", pk, "ecoleCle")
+							tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+									.execute(Tuple.of(l, "anneeCles", pk, "ecoleCle")
 									, b
 							-> {
 								if(b.succeeded())
@@ -1221,8 +1225,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "inscriptionCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_addA
-										, Tuple.of(l, "anneeCle", pk, "inscriptionCles")
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+										.execute(Tuple.of(l, "anneeCle", pk, "inscriptionCles")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1240,8 +1244,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "saisonCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_addA
-										, Tuple.of(l, "anneeCle", pk, "saisonCles")
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+										.execute(Tuple.of(l, "anneeCle", pk, "saisonCles")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1259,8 +1263,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "ageCles":
 						for(Long l : Optional.ofNullable(jsonObject.getJsonArray(entiteVar)).orElse(new JsonArray()).stream().map(a -> Long.parseLong((String)a)).collect(Collectors.toList())) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_addA
-										, Tuple.of(pk, "ageCles", l, "anneeCle")
+								tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+										.execute(Tuple.of(pk, "ageCles", l, "anneeCle")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1277,8 +1281,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "sessionDateDebut":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "sessionDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "sessionDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1290,8 +1294,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "saisonDateDebut":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "saisonDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "saisonDateDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1303,8 +1307,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "sessionDateFin":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "sessionDateFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "sessionDateFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1316,8 +1320,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "anneeDebut":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "anneeDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "anneeDebut", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1329,8 +1333,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "anneeFin":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "anneeFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "anneeFin", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1342,8 +1346,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 					case "anneeFraisInscription":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContexteFrFR.SQL_setD
-									, Tuple.of(pk, "anneeFraisInscription", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "anneeFraisInscription", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1356,7 +1360,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					gestionnaireEvenements.handle(Future.succeededFuture());
 				} else {
@@ -1417,7 +1421,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -1531,7 +1535,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listeAnneeScolaire.next(dt)) {
 					listePATCHAnneeScolaire(requeteApi, listeAnneeScolaire, dt, gestionnaireEvenements);
@@ -1606,16 +1610,18 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			List<Long> pks = Optional.ofNullable(requeteApi).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(requeteApi).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = requeteSite.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = requeteSite.getObjetJson();
 			Set<String> methodeNoms = jsonObject.fieldNames();
 			AnneeScolaire o2 = new AnneeScolaire();
+			o2.setRequeteSite_(requeteSite);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUtilisateurId() == null && requeteSite.getUtilisateurId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-							, Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+							.execute(Tuple.of(pk, "utilisateurId", requeteSite.getUtilisateurId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1627,8 +1633,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			}
 			if(o.getUtilisateurCle() == null && requeteSite.getUtilisateurCle() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContexteFrFR.SQL_setD
-				, Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
+					tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+				.execute(Tuple.of(pk, "utilisateurCle", requeteSite.getUtilisateurCle().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1644,8 +1650,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "setInheritPk":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1657,8 +1663,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1672,8 +1678,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "setArchive":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "archive")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "archive")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1685,8 +1691,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						} else {
 							o2.setArchive(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "archive", o2.jsonArchive())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "archive", o2.jsonArchive())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1700,8 +1706,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "setSupprime":
 						if(jsonObject.getBoolean(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "supprime")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "supprime")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1713,8 +1719,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						} else {
 							o2.setSupprime(jsonObject.getBoolean(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "supprime", o2.jsonSupprime())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "supprime", o2.jsonSupprime())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1730,10 +1736,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							o2.setEcoleCle(jsonObject.getString(methodeNom));
 							Long l = o2.getEcoleCle();
 							if(l != null && !l.equals(o.getEcoleCle())) {
-								ListeRecherche<Ecole> listeRecherche = new ListeRecherche<Ecole>();
+								ListeRecherche<org.computate.scolaire.frFR.ecole.Ecole> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.ecole.Ecole>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(Ecole.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.ecole.Ecole.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1741,8 +1747,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCles", pk, "ecoleCle")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "anneeCles", pk, "ecoleCle")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1764,10 +1770,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							o2.setEcoleCle(jsonObject.getString(methodeNom));
 							Long l = o2.getEcoleCle();
 							if(l != null) {
-								ListeRecherche<Ecole> listeRecherche = new ListeRecherche<Ecole>();
+								ListeRecherche<org.computate.scolaire.frFR.ecole.Ecole> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.ecole.Ecole>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(Ecole.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.ecole.Ecole.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1775,8 +1781,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l2, "anneeCles", pk, "ecoleCle")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l2, "anneeCles", pk, "ecoleCle")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1797,10 +1803,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.inscription.InscriptionScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1817,8 +1823,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1841,10 +1847,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							for(Integer i = 0; i <  addAllInscriptionClesValeurs.size(); i++) {
 								Long l = Long.parseLong(addAllInscriptionClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(InscriptionScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.inscription.InscriptionScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1861,8 +1867,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1887,10 +1893,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							for(Integer i = 0; i <  setInscriptionClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setInscriptionClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(InscriptionScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.inscription.InscriptionScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1909,8 +1915,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 										setInscriptionClesValeurs2.add(l2);
 									if(l2 != null && !o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1931,8 +1937,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							for(Long l :  o.getInscriptionCles()) {
 								if(l != null && (setInscriptionClesValeurs == null || !setInscriptionClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l, "anneeCle", pk, "inscriptionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l, "anneeCle", pk, "inscriptionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1949,10 +1955,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<InscriptionScolaire> listeRecherche = new ListeRecherche<InscriptionScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.inscription.InscriptionScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(InscriptionScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.inscription.InscriptionScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1969,8 +1975,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getInscriptionCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l2, "anneeCle", pk, "inscriptionCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1991,10 +1997,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.saison.SaisonScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.saison.SaisonScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(SaisonScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.saison.SaisonScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2002,8 +2008,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getSaisonCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "anneeCle", pk, "saisonCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2026,10 +2032,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							for(Integer i = 0; i <  addAllSaisonClesValeurs.size(); i++) {
 								Long l = Long.parseLong(addAllSaisonClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.saison.SaisonScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.saison.SaisonScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(SaisonScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.saison.SaisonScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2037,8 +2043,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getSaisonCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "anneeCle", pk, "saisonCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2063,10 +2069,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							for(Integer i = 0; i <  setSaisonClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setSaisonClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.saison.SaisonScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.saison.SaisonScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(SaisonScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.saison.SaisonScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2076,8 +2082,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 										setSaisonClesValeurs2.add(l2);
 									if(l2 != null && !o.getSaisonCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(l2, "anneeCle", pk, "saisonCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2098,8 +2104,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							for(Long l :  o.getSaisonCles()) {
 								if(l != null && (setSaisonClesValeurs == null || !setSaisonClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l, "anneeCle", pk, "saisonCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l, "anneeCle", pk, "saisonCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2116,10 +2122,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<SaisonScolaire> listeRecherche = new ListeRecherche<SaisonScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.saison.SaisonScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.saison.SaisonScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(SaisonScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.saison.SaisonScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2127,8 +2133,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getSaisonCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(l2, "anneeCle", pk, "saisonCles")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(l2, "anneeCle", pk, "saisonCles")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2149,10 +2155,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.age.AgeScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.age.AgeScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(AgeScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.age.AgeScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2160,8 +2166,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !o.getAgeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "ageCles", l2, "anneeCle")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "ageCles", l2, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2184,10 +2190,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							for(Integer i = 0; i <  addAllAgeClesValeurs.size(); i++) {
 								Long l = Long.parseLong(addAllAgeClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.age.AgeScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.age.AgeScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(AgeScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.age.AgeScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2195,8 +2201,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 									Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 									if(l2 != null && !o.getAgeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "ageCles", l2, "anneeCle")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "ageCles", l2, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2221,10 +2227,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							for(Integer i = 0; i <  setAgeClesValeurs.size(); i++) {
 								Long l = Long.parseLong(setAgeClesValeurs.getString(i));
 								if(l != null) {
-									ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
+									ListeRecherche<org.computate.scolaire.frFR.age.AgeScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.age.AgeScolaire>();
 									listeRecherche.setQuery("*:*");
 									listeRecherche.setStocker(true);
-									listeRecherche.setC(AgeScolaire.class);
+									listeRecherche.setC(org.computate.scolaire.frFR.age.AgeScolaire.class);
 									listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 									listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 									listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2234,8 +2240,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 										setAgeClesValeurs2.add(l2);
 									if(l2 != null && !o.getAgeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_addA
-												, Tuple.of(pk, "ageCles", l2, "anneeCle")
+										tx.preparedQuery(SiteContexteFrFR.SQL_addA)
+												.execute(Tuple.of(pk, "ageCles", l2, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2256,8 +2262,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							for(Long l :  o.getAgeCles()) {
 								if(l != null && (setAgeClesValeurs2 == null || !setAgeClesValeurs2.contains(l))) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "ageCles", l, "anneeCle")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "ageCles", l, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2274,10 +2280,10 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						{
 							Long l = Long.parseLong(jsonObject.getString(methodeNom));
 							if(l != null) {
-								ListeRecherche<AgeScolaire> listeRecherche = new ListeRecherche<AgeScolaire>();
+								ListeRecherche<org.computate.scolaire.frFR.age.AgeScolaire> listeRecherche = new ListeRecherche<org.computate.scolaire.frFR.age.AgeScolaire>();
 								listeRecherche.setQuery("*:*");
 								listeRecherche.setStocker(true);
-								listeRecherche.setC(AgeScolaire.class);
+								listeRecherche.setC(org.computate.scolaire.frFR.age.AgeScolaire.class);
 								listeRecherche.addFilterQuery("supprime_indexed_boolean:false");
 								listeRecherche.addFilterQuery("archive_indexed_boolean:false");
 								listeRecherche.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -2285,8 +2291,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								Long l2 = Optional.ofNullable(listeRecherche.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && o.getAgeCles().contains(l2)) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContexteFrFR.SQL_removeA
-												, Tuple.of(pk, "ageCles", l2, "anneeCle")
+										tx.preparedQuery(SiteContexteFrFR.SQL_removeA)
+												.execute(Tuple.of(pk, "ageCles", l2, "anneeCle")
 												, b
 										-> {
 											if(b.succeeded())
@@ -2306,8 +2312,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "setSessionDateDebut":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "sessionDateDebut")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "sessionDateDebut")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2319,8 +2325,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						} else {
 							o2.setSessionDateDebut(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "sessionDateDebut", o2.jsonSessionDateDebut())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "sessionDateDebut", o2.jsonSessionDateDebut())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2334,8 +2340,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "setSaisonDateDebut":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "saisonDateDebut")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "saisonDateDebut")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2347,8 +2353,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						} else {
 							o2.setSaisonDateDebut(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "saisonDateDebut", o2.jsonSaisonDateDebut())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "saisonDateDebut", o2.jsonSaisonDateDebut())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2362,8 +2368,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "setSessionDateFin":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "sessionDateFin")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "sessionDateFin")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2375,8 +2381,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						} else {
 							o2.setSessionDateFin(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "sessionDateFin", o2.jsonSessionDateFin())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "sessionDateFin", o2.jsonSessionDateFin())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2390,8 +2396,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "setAnneeDebut":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "anneeDebut")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "anneeDebut")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2403,8 +2409,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						} else {
 							o2.setAnneeDebut(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "anneeDebut", o2.jsonAnneeDebut())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "anneeDebut", o2.jsonAnneeDebut())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2418,8 +2424,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "setAnneeFin":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "anneeFin")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "anneeFin")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2431,8 +2437,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						} else {
 							o2.setAnneeFin(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "anneeFin", o2.jsonAnneeFin())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "anneeFin", o2.jsonAnneeFin())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2446,8 +2452,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					case "setAnneeFraisInscription":
 						if(jsonObject.getString(methodeNom) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_removeD
-										, Tuple.of(pk, "anneeFraisInscription")
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "anneeFraisInscription")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2459,8 +2465,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						} else {
 							o2.setAnneeFraisInscription(jsonObject.getString(methodeNom));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContexteFrFR.SQL_setD
-										, Tuple.of(pk, "anneeFraisInscription", o2.jsonAnneeFraisInscription())
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "anneeFraisInscription", o2.jsonAnneeFraisInscription())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2473,7 +2479,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					AnneeScolaire o3 = new AnneeScolaire();
 					o3.setRequeteSite_(o.getRequeteSite_());
@@ -2539,7 +2545,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -2629,7 +2635,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -2764,7 +2770,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 								.put("errorCode", "401")
 								.put("errorMessage", "rôles requis : " + String.join(", ", roles))
 								.encodePrettily()
-							), new CaseInsensitiveHeaders()
+							), MultiMap.caseInsensitiveMultiMap()
 					)
 				));
 			} else {
@@ -2829,7 +2835,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			ToutEcrivain w = ToutEcrivain.creer(listeAnneeScolaire.getRequeteSite_(), buffer);
 			AnneePage page = new AnneePage();
 			SolrDocument pageDocumentSolr = new SolrDocument();
-			CaseInsensitiveHeaders requeteEnTetes = new CaseInsensitiveHeaders();
+			MultiMap requeteEnTetes = MultiMap.caseInsensitiveMultiMap();
 			requeteSite.setRequeteEnTetes(requeteEnTetes);
 
 			pageDocumentSolr.setField("pageUri_frFR_stored_string", "/annee");
@@ -2908,10 +2914,9 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			String utilisateurId = requeteSite.getUtilisateurId();
 			ZonedDateTime cree = Optional.ofNullable(requeteSite.getObjetJson()).map(j -> j.getString("cree")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(requeteSite.getConfigSite_().getSiteZone())));
 
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_creer
-					, Tuple.of(AnneeScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_creer)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(AnneeScolaire.class.getCanonicalName(), utilisateurId, cree.toOffsetDateTime())
 					, creerAsync
 			-> {
 				if(creerAsync.succeeded()) {
@@ -2946,7 +2951,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse reponseOperation = new OperationResponse(400, "BAD REQUEST", 
 				Buffer.buffer().appendString(json.encodePrettily())
-				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
+				, MultiMap.caseInsensitiveMultiMap().add("Content-Type", "application/json")
 		);
 		ConfigSite configSite = requeteSite.getConfigSite_();
 		SiteContexteFrFR siteContexte = requeteSite.getSiteContexte_();
@@ -3128,10 +3133,9 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 						sqlTransactionAnneeScolaire(requeteSite, b -> {
 							if(b.succeeded()) {
 								Transaction tx = requeteSite.getTx();
-								tx.preparedQuery(
-										SiteContexteFrFR.SQL_selectC
-										, Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
-										, Collectors.toList()
+								tx.preparedQuery(SiteContexteFrFR.SQL_selectC)
+										.collecting(Collectors.toList())
+										.execute(Tuple.of("org.computate.scolaire.frFR.utilisateur.UtilisateurSite", utilisateurId)
 										, selectCAsync
 								-> {
 									if(selectCAsync.succeeded()) {
@@ -3140,7 +3144,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 											UtilisateurSiteFrFRApiServiceImpl utilisateurService = new UtilisateurSiteFrFRApiServiceImpl(siteContexte);
 											if(utilisateurValeurs == null) {
 												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContexte.getAuthFournisseur(), utilisateurVertx);
+												JsonObject principalJson = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("utilisateurNom", principalJson.getString("preferred_username"));
@@ -3179,6 +3184,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 																		requeteSite.setUtilisateurNom(principalJson.getString("preferred_username"));
 																		requeteSite.setUtilisateurPrenom(principalJson.getString("given_name"));
 																		requeteSite.setUtilisateurNomFamille(principalJson.getString("family_name"));
+																		requeteSite.setUtilisateurMail(principalJson.getString("email"));
 																		requeteSite.setUtilisateurId(principalJson.getString("sub"));
 																		requeteSite.setUtilisateurCle(utilisateurSite.getPk());
 																		gestionnaireEvenements.handle(Future.succeededFuture());
@@ -3206,7 +3212,8 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 												UtilisateurSite utilisateurSite1 = listeRecherche.getList().stream().findFirst().orElse(null);
 
 												JsonObject utilisateurVertx = requeteSite.getOperationRequete().getUser();
-												JsonObject principalJson = KeycloakHelper.parseToken(utilisateurVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContexte.getAuthFournisseur(), utilisateurVertx);
+												JsonObject principalJson = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("setUtilisateurNom", principalJson.getString("preferred_username"));
@@ -3215,8 +3222,6 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 												jsonObject.put("setUtilisateurNomComplet", principalJson.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(utilisateurSite1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUtilisateurId", principalJson.getString("sub"));
 												jsonObject.put("setUtilisateurMail", principalJson.getString("email"));
 												Boolean definir = utilisateurAnneeScolaireDefinir(requeteSite, jsonObject, true);
@@ -3318,19 +3323,11 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
-				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -3413,82 +3410,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 
 	public void rechercheAnneeScolaire(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, Handler<AsyncResult<ListeRecherche<AnneeScolaire>>> gestionnaireEvenements) {
 		try {
-			OperationRequest operationRequete = requeteSite.getOperationRequete();
-			String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
-			String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
-			ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
-			listeRecherche.setPeupler(peupler);
-			listeRecherche.setStocker(stocker);
-			listeRecherche.setQuery("*:*");
-			listeRecherche.setC(AnneeScolaire.class);
-			listeRecherche.setRequeteSite_(requeteSite);
-			if(entiteListe != null)
-				listeRecherche.addFields(entiteListe);
-			listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
-
-			String id = operationRequete.getParams().getJsonObject("path").getString("id");
-			if(id != null) {
-				listeRecherche.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
-				String entiteVar = null;
-				String valeurIndexe = null;
-				String varIndexe = null;
-				String valeurTri = null;
-				Integer valeurStart = null;
-				Integer valeurRows = null;
-				String paramNom = paramRequete.getKey();
-				Object paramValeursObjet = paramRequete.getValue();
-				JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
-
-				try {
-					for(Object paramObjet : paramObjets) {
-						switch(paramNom) {
-							case "q":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								varIndexe = "*".equals(entiteVar) ? entiteVar : AnneeScolaire.varRechercheAnneeScolaire(entiteVar);
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
-								rechercheAnneeScolaireQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "fq":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								varIndexe = AnneeScolaire.varIndexeAnneeScolaire(entiteVar);
-								rechercheAnneeScolaireFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "sort":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
-								valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
-								varIndexe = AnneeScolaire.varIndexeAnneeScolaire(entiteVar);
-								rechercheAnneeScolaireSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
-								break;
-							case "start":
-								valeurStart = (Integer)paramObjet;
-								rechercheAnneeScolaireStart(uri, apiMethode, listeRecherche, valeurStart);
-								break;
-							case "rows":
-								valeurRows = (Integer)paramObjet;
-								rechercheAnneeScolaireRows(uri, apiMethode, listeRecherche, valeurRows);
-								break;
-							case "var":
-								entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
-								valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
-								rechercheAnneeScolaireVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
-								break;
-						}
-					}
-					rechercheAnneeScolaireUri(uri, apiMethode, listeRecherche);
-				} catch(Exception e) {
-					LOGGER.error(String.format("rechercheAnneeScolaire a échoué. ", e));
-					gestionnaireEvenements.handle(Future.failedFuture(e));
-				}
-			});
-			if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
-				listeRecherche.addSort("cree_indexed_date", ORDER.desc);
-			}
-			listeRecherche.initLoinPourClasse(requeteSite);
+			ListeRecherche<AnneeScolaire> listeRecherche = rechercheAnneeScolaireListe(requeteSite, peupler, stocker, modifier, uri, apiMethode);
 			gestionnaireEvenements.handle(Future.succeededFuture(listeRecherche));
 		} catch(Exception e) {
 			LOGGER.error(String.format("rechercheAnneeScolaire a échoué. ", e));
@@ -3496,15 +3418,98 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 		}
 	}
 
+	public ListeRecherche<AnneeScolaire> rechercheAnneeScolaireListe(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode) {
+		OperationRequest operationRequete = requeteSite.getOperationRequete();
+		String entiteListeStr = requeteSite.getOperationRequete().getParams().getJsonObject("query").getString("fl");
+		String[] entiteListe = entiteListeStr == null ? null : entiteListeStr.split(",\\s*");
+		ListeRecherche<AnneeScolaire> listeRecherche = new ListeRecherche<AnneeScolaire>();
+		listeRecherche.setPeupler(peupler);
+		listeRecherche.setStocker(stocker);
+		listeRecherche.setQuery("*:*");
+		listeRecherche.setC(AnneeScolaire.class);
+		listeRecherche.setRequeteSite_(requeteSite);
+		if(entiteListe != null)
+			listeRecherche.addFields(entiteListe);
+		listeRecherche.add("json.facet", "{max_modifie:'max(modifie_indexed_date)'}");
+
+		String id = operationRequete.getParams().getJsonObject("path").getString("id");
+		if(id != null && NumberUtils.isCreatable(id)) {
+			listeRecherche.addFilterQuery("(pk_indexed_long:" + ClientUtils.escapeQueryChars(id) + " OR objetId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		} else if(id != null) {
+			listeRecherche.addFilterQuery("objetId_indexed_string:" + ClientUtils.escapeQueryChars(id));
+		}
+
+		operationRequete.getParams().getJsonObject("query").forEach(paramRequete -> {
+			String entiteVar = null;
+			String valeurIndexe = null;
+			String varIndexe = null;
+			String valeurTri = null;
+			Integer valeurStart = null;
+			Integer valeurRows = null;
+			String paramNom = paramRequete.getKey();
+			Object paramValeursObjet = paramRequete.getValue();
+			JsonArray paramObjets = paramValeursObjet instanceof JsonArray ? (JsonArray)paramValeursObjet : new JsonArray().add(paramValeursObjet);
+
+			try {
+				for(Object paramObjet : paramObjets) {
+					switch(paramNom) {
+						case "q":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							varIndexe = "*".equals(entiteVar) ? entiteVar : AnneeScolaire.varRechercheAnneeScolaire(entiteVar);
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							valeurIndexe = StringUtils.isEmpty(valeurIndexe) ? "*" : valeurIndexe;
+							rechercheAnneeScolaireQ(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "fq":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							varIndexe = AnneeScolaire.varIndexeAnneeScolaire(entiteVar);
+							rechercheAnneeScolaireFq(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "sort":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, " "));
+							valeurIndexe = StringUtils.trim(StringUtils.substringAfter((String)paramObjet, " "));
+							varIndexe = AnneeScolaire.varIndexeAnneeScolaire(entiteVar);
+							rechercheAnneeScolaireSort(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe, varIndexe);
+							break;
+						case "start":
+							valeurStart = paramObjet instanceof Integer ? (Integer)paramObjet : Integer.parseInt(paramObjet.toString());
+							rechercheAnneeScolaireStart(uri, apiMethode, listeRecherche, valeurStart);
+							break;
+						case "rows":
+							valeurRows = paramObjet instanceof Integer ? (Integer)paramObjet : Integer.parseInt(paramObjet.toString());
+							rechercheAnneeScolaireRows(uri, apiMethode, listeRecherche, valeurRows);
+							break;
+						case "var":
+							entiteVar = StringUtils.trim(StringUtils.substringBefore((String)paramObjet, ":"));
+							valeurIndexe = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObjet, ":")), "UTF-8");
+							rechercheAnneeScolaireVar(uri, apiMethode, listeRecherche, entiteVar, valeurIndexe);
+							break;
+					}
+				}
+				rechercheAnneeScolaireUri(uri, apiMethode, listeRecherche);
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
+		if("*:*".equals(listeRecherche.getQuery()) && listeRecherche.getSorts().size() == 0) {
+			listeRecherche.addSort("cree_indexed_date", ORDER.desc);
+		}
+		rechercheAnneeScolaire2(requeteSite, peupler, stocker, modifier, uri, apiMethode, listeRecherche);
+		listeRecherche.initLoinPourClasse(requeteSite);
+		return listeRecherche;
+	}
+	public void rechercheAnneeScolaire2(RequeteSiteFrFR requeteSite, Boolean peupler, Boolean stocker, Boolean modifier, String uri, String apiMethode, ListeRecherche<AnneeScolaire> listeRecherche) {
+	}
+
 	public void definirAnneeScolaire(AnneeScolaire o, Handler<AsyncResult<OperationResponse>> gestionnaireEvenements) {
 		try {
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_definir
-					, Tuple.of(pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_definir)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, definirAsync
 			-> {
 				if(definirAsync.succeeded()) {
@@ -3538,10 +3543,9 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 			RequeteSiteFrFR requeteSite = o.getRequeteSite_();
 			Transaction tx = requeteSite.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContexteFrFR.SQL_attribuer
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContexteFrFR.SQL_attribuer)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attribuerAsync
 			-> {
 				try {
@@ -3751,7 +3755,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 					}
 				}
 
-				CompositeFuture.all(futures).setHandler(a -> {
+				CompositeFuture.all(futures).onComplete(a -> {
 					if(a.succeeded()) {
 						AnneeScolaireFrFRApiServiceImpl service = new AnneeScolaireFrFRApiServiceImpl(requeteSite.getSiteContexte_());
 						List<Future> futures2 = new ArrayList<>();
@@ -3769,7 +3773,7 @@ public class AnneeScolaireFrFRGenApiServiceImpl implements AnneeScolaireFrFRGenA
 							);
 						}
 
-						CompositeFuture.all(futures2).setHandler(b -> {
+						CompositeFuture.all(futures2).onComplete(b -> {
 							if(b.succeeded()) {
 								gestionnaireEvenements.handle(Future.succeededFuture());
 							} else {

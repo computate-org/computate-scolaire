@@ -338,7 +338,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 					e("span").a("class", " ").f().sx(pageH1).g("span");
 				} g("a");
 			} g("h1");
-			e("div").a("class", "").f();
+			{ e("div").a("class", "").f();
 				{ e("div").f();
 					JsonObject queryParams = Optional.ofNullable(operationRequete).map(OperationRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
 					Long num = listeSessionScolaire.getQueryResponse().getResults().getNumFound();
@@ -420,6 +420,7 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 						e("span").f().sx((start1 + 1), " - ", (start1 + rows1), " de ", num).g("span");
 				} g("div");
 				table1SessionGenPage();
+			} g("div");
 		}
 
 		if(listeSessionScolaire != null && listeSessionScolaire.size() == 1 && params.getJsonObject("query").getString("q").equals("*:*")) {
@@ -447,7 +448,6 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 
 		}
 		htmlBodyFormsSessionGenPage();
-		g("div");
 	}
 
 	public void table1SessionGenPage() {
@@ -549,7 +549,6 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 				CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
 				|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
 				) {
-			e("div").a("class", "w3-margin-top ").f();
 
 			if(listeSessionScolaire != null && listeSessionScolaire.size() == 1) {
 				{ e("button")
@@ -732,7 +731,6 @@ public class SessionGenPage extends SessionGenPageGen<ClusterPage> {
 				} g("div");
 			} g("div");
 
-			g("div");
 		}
 		htmlSuggereSessionGenPage(this, null, listeSessionScolaire);
 	}

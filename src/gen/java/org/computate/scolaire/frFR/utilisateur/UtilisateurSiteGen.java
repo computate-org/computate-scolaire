@@ -17,6 +17,7 @@ import org.apache.commons.collections.CollectionUtils;
 import java.lang.Long;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.lang.Boolean;
 import io.vertx.core.json.JsonObject;
@@ -177,6 +178,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurCles == null ? "" : utilisateurCles.toString();
 	}
 
+	public List<Long> sqlUtilisateurCles() {
+		return utilisateurCles;
+	}
+
 	public String jsonUtilisateurCles() {
 		return utilisateurCles == null ? "" : utilisateurCles.toString();
 	}
@@ -290,6 +295,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return inscriptionCles == null ? "" : inscriptionCles.toString();
 	}
 
+	public List<Long> sqlInscriptionCles() {
+		return inscriptionCles;
+	}
+
 	public String jsonInscriptionCles() {
 		return inscriptionCles == null ? "" : inscriptionCles.toString();
 	}
@@ -327,21 +336,15 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "inscriptions")
 				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-				.a("class", "valeur suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggereInscriptionCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setInscriptionCles")
 				.a("id", classeApiMethodeMethode, "_inscriptionCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereUtilisateurSiteInscriptionCles($(this).val() ? rechercherInscriptionScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'utilisateurCles:" + pk + "'}", "], $('#listUtilisateurSiteInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereUtilisateurSiteInscriptionCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,inscriptionNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'utilisateurCles:" + pk + "'}", "], $('#listUtilisateurSiteInscriptionCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
-				e("span").a("class", "varUtilisateurSite", pk, "InscriptionCles ").f().sx(htmInscriptionCles()).g("span");
-			}
 		}
 	}
 
@@ -544,6 +547,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return paiementCles == null ? "" : paiementCles.toString();
 	}
 
+	public List<Long> sqlPaiementCles() {
+		return paiementCles;
+	}
+
 	public String jsonPaiementCles() {
 		return paiementCles == null ? "" : paiementCles.toString();
 	}
@@ -581,21 +588,15 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				.a("type", "text")
 				.a("placeholder", "paiements")
 				.a("title", "La clé primaire des contacts d'urgence dans la base de données. ")
-				.a("class", "valeur suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
+				.a("class", "valeurObjetSuggere suggerePaiementCles w3-input w3-border w3-cell w3-cell-middle ")
 				.a("name", "setPaiementCles")
 				.a("id", classeApiMethodeMethode, "_paiementCles")
 				.a("autocomplete", "off");
-				a("oninput", "suggereUtilisateurSitePaiementCles($(this).val() ? rechercherPaiementScolaireFiltres($(this.parentElement)) : [", pk == null ? "" : "{'name':'fq','value':'utilisateurCles:" + pk + "'}", "], $('#listUtilisateurSitePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ");
+				a("oninput", "suggereUtilisateurSitePaiementCles($(this).val() ? [ { 'name': 'q', 'value': 'objetSuggere:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'pk,pageUrlPk,paiementNomComplet' } ] : [", pk == null ? "" : "{'name':'fq','value':'utilisateurCles:" + pk + "'}", "], $('#listUtilisateurSitePaiementCles_", classeApiMethodeMethode, "'), ", pk, "); ");
 
 				fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
-				e("span").a("class", "varUtilisateurSite", pk, "PaiementCles ").f().sx(htmPaiementCles()).g("span");
-			}
 		}
 	}
 
@@ -711,6 +712,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurNom == null ? "" : utilisateurNom;
 	}
 
+	public String sqlUtilisateurNom() {
+		return utilisateurNom;
+	}
+
 	public String jsonUtilisateurNom() {
 		return utilisateurNom == null ? "" : utilisateurNom;
 	}
@@ -752,12 +757,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "UtilisateurNom ").f().sx(htmUtilisateurNom()).g("span");
-			}
 		}
 	}
 
@@ -855,6 +855,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurMail == null ? "" : utilisateurMail;
 	}
 
+	public String sqlUtilisateurMail() {
+		return utilisateurMail;
+	}
+
 	public String jsonUtilisateurMail() {
 		return utilisateurMail == null ? "" : utilisateurMail;
 	}
@@ -896,12 +900,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "UtilisateurMail ").f().sx(htmUtilisateurMail()).g("span");
-			}
 		}
 	}
 
@@ -999,6 +998,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurPrenom == null ? "" : utilisateurPrenom;
 	}
 
+	public String sqlUtilisateurPrenom() {
+		return utilisateurPrenom;
+	}
+
 	public String jsonUtilisateurPrenom() {
 		return utilisateurPrenom == null ? "" : utilisateurPrenom;
 	}
@@ -1073,6 +1076,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public String strUtilisateurNomFamille() {
 		return utilisateurNomFamille == null ? "" : utilisateurNomFamille;
+	}
+
+	public String sqlUtilisateurNomFamille() {
+		return utilisateurNomFamille;
 	}
 
 	public String jsonUtilisateurNomFamille() {
@@ -1151,6 +1158,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurNomComplet == null ? "" : utilisateurNomComplet;
 	}
 
+	public String sqlUtilisateurNomComplet() {
+		return utilisateurNomComplet;
+	}
+
 	public String jsonUtilisateurNomComplet() {
 		return utilisateurNomComplet == null ? "" : utilisateurNomComplet;
 	}
@@ -1225,6 +1236,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 
 	public String strUtilisateurSite() {
 		return utilisateurSite == null ? "" : utilisateurSite;
+	}
+
+	public String sqlUtilisateurSite() {
+		return utilisateurSite;
 	}
 
 	public String jsonUtilisateurSite() {
@@ -1303,6 +1318,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return customerProfileId1 == null ? "" : customerProfileId1;
 	}
 
+	public String sqlCustomerProfileId1() {
+		return customerProfileId1;
+	}
+
 	public String jsonCustomerProfileId1() {
 		return customerProfileId1 == null ? "" : customerProfileId1;
 	}
@@ -1344,12 +1363,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId1 ").f().sx(htmCustomerProfileId1()).g("span");
-			}
 		}
 	}
 
@@ -1447,6 +1461,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return customerProfileId2 == null ? "" : customerProfileId2;
 	}
 
+	public String sqlCustomerProfileId2() {
+		return customerProfileId2;
+	}
+
 	public String jsonCustomerProfileId2() {
 		return customerProfileId2 == null ? "" : customerProfileId2;
 	}
@@ -1488,12 +1506,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId2 ").f().sx(htmCustomerProfileId2()).g("span");
-			}
 		}
 	}
 
@@ -1591,6 +1604,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return customerProfileId3 == null ? "" : customerProfileId3;
 	}
 
+	public String sqlCustomerProfileId3() {
+		return customerProfileId3;
+	}
+
 	public String jsonCustomerProfileId3() {
 		return customerProfileId3 == null ? "" : customerProfileId3;
 	}
@@ -1632,12 +1649,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId3 ").f().sx(htmCustomerProfileId3()).g("span");
-			}
 		}
 	}
 
@@ -1735,6 +1747,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return customerProfileId4 == null ? "" : customerProfileId4;
 	}
 
+	public String sqlCustomerProfileId4() {
+		return customerProfileId4;
+	}
+
 	public String jsonCustomerProfileId4() {
 		return customerProfileId4 == null ? "" : customerProfileId4;
 	}
@@ -1776,12 +1792,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId4 ").f().sx(htmCustomerProfileId4()).g("span");
-			}
 		}
 	}
 
@@ -1879,6 +1890,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return customerProfileId5 == null ? "" : customerProfileId5;
 	}
 
+	public String sqlCustomerProfileId5() {
+		return customerProfileId5;
+	}
+
 	public String jsonCustomerProfileId5() {
 		return customerProfileId5 == null ? "" : customerProfileId5;
 	}
@@ -1920,12 +1935,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId5 ").f().sx(htmCustomerProfileId5()).g("span");
-			}
 		}
 	}
 
@@ -2023,6 +2033,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return customerProfileId6 == null ? "" : customerProfileId6;
 	}
 
+	public String sqlCustomerProfileId6() {
+		return customerProfileId6;
+	}
+
 	public String jsonCustomerProfileId6() {
 		return customerProfileId6 == null ? "" : customerProfileId6;
 	}
@@ -2064,12 +2078,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId6 ").f().sx(htmCustomerProfileId6()).g("span");
-			}
 		}
 	}
 
@@ -2167,6 +2176,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return customerProfileId7 == null ? "" : customerProfileId7;
 	}
 
+	public String sqlCustomerProfileId7() {
+		return customerProfileId7;
+	}
+
 	public String jsonCustomerProfileId7() {
 		return customerProfileId7 == null ? "" : customerProfileId7;
 	}
@@ -2208,12 +2221,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId7 ").f().sx(htmCustomerProfileId7()).g("span");
-			}
 		}
 	}
 
@@ -2311,6 +2319,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return customerProfileId8 == null ? "" : customerProfileId8;
 	}
 
+	public String sqlCustomerProfileId8() {
+		return customerProfileId8;
+	}
+
 	public String jsonCustomerProfileId8() {
 		return customerProfileId8 == null ? "" : customerProfileId8;
 	}
@@ -2352,12 +2364,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId8 ").f().sx(htmCustomerProfileId8()).g("span");
-			}
 		}
 	}
 
@@ -2455,6 +2462,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return customerProfileId9 == null ? "" : customerProfileId9;
 	}
 
+	public String sqlCustomerProfileId9() {
+		return customerProfileId9;
+	}
+
 	public String jsonCustomerProfileId9() {
 		return customerProfileId9 == null ? "" : customerProfileId9;
 	}
@@ -2496,12 +2507,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId9 ").f().sx(htmCustomerProfileId9()).g("span");
-			}
 		}
 	}
 
@@ -2599,6 +2605,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return customerProfileId10 == null ? "" : customerProfileId10;
 	}
 
+	public String sqlCustomerProfileId10() {
+		return customerProfileId10;
+	}
+
 	public String jsonCustomerProfileId10() {
 		return customerProfileId10 == null ? "" : customerProfileId10;
 	}
@@ -2640,12 +2650,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			.fg();
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "CustomerProfileId10 ").f().sx(htmCustomerProfileId10()).g("span");
-			}
 		}
 	}
 
@@ -2748,6 +2753,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return utilisateurRecevoirCourriels == null ? "" : utilisateurRecevoirCourriels.toString();
 	}
 
+	public Boolean sqlUtilisateurRecevoirCourriels() {
+		return utilisateurRecevoirCourriels;
+	}
+
 	public String jsonUtilisateurRecevoirCourriels() {
 		return utilisateurRecevoirCourriels == null ? "" : utilisateurRecevoirCourriels.toString();
 	}
@@ -2802,12 +2811,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "UtilisateurRecevoirCourriels ").f().sx(htmUtilisateurRecevoirCourriels()).g("span");
-			}
 		}
 	}
 
@@ -2897,6 +2901,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return voirArchive == null ? "" : voirArchive.toString();
 	}
 
+	public Boolean sqlVoirArchive() {
+		return voirArchive;
+	}
+
 	public String jsonVoirArchive() {
 		return voirArchive == null ? "" : voirArchive.toString();
 	}
@@ -2951,12 +2959,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "VoirArchive ").f().sx(htmVoirArchive()).g("span");
-			}
 		}
 	}
 
@@ -3046,6 +3049,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return voirSupprime == null ? "" : voirSupprime.toString();
 	}
 
+	public Boolean sqlVoirSupprime() {
+		return voirSupprime;
+	}
+
 	public String jsonVoirSupprime() {
 		return voirSupprime == null ? "" : voirSupprime.toString();
 	}
@@ -3100,12 +3107,7 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 			}
 
 		} else {
-			if(
-					CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRessource(), ROLES)
-					|| CollectionUtils.containsAny(requeteSite_.getUtilisateurRolesRoyaume(), ROLES)
-					) {
 				e("span").a("class", "varUtilisateurSite", pk, "VoirSupprime ").f().sx(htmVoirSupprime()).g("span");
-			}
 		}
 	}
 
@@ -3206,6 +3208,10 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -3285,13 +3291,13 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		switch(var) {
 			case "inscriptionCles":
 				oUtilisateurSite.addInscriptionCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("inscriptionCles"))
+					sauvegardes.add("inscriptionCles");
 				return val;
 			case "paiementCles":
 				oUtilisateurSite.addPaiementCles((Long)val);
-				if(!sauvegardes.contains(var))
-					sauvegardes.add(var);
+				if(!sauvegardes.contains("paiementCles"))
+					sauvegardes.add("paiementCles");
 				return val;
 			default:
 				return super.attribuerCluster(var, val);
@@ -3550,81 +3556,178 @@ public abstract class UtilisateurSiteGen<DEV> extends Cluster {
 		return o != null;
 	}
 	public Object definirUtilisateurSite(String var, String val) {
-		switch(var) {
-			case "utilisateurNom":
+		switch(var.toLowerCase()) {
+			case "utilisateurnom":
 				if(val != null)
 					setUtilisateurNom(val);
-				sauvegardes.add(var);
+				sauvegardes.add("utilisateurNom");
 				return val;
-			case "utilisateurMail":
+			case "utilisateurmail":
 				if(val != null)
 					setUtilisateurMail(val);
-				sauvegardes.add(var);
+				sauvegardes.add("utilisateurMail");
 				return val;
-			case "customerProfileId1":
+			case "customerprofileid1":
 				if(val != null)
 					setCustomerProfileId1(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId1");
 				return val;
-			case "customerProfileId2":
+			case "customerprofileid2":
 				if(val != null)
 					setCustomerProfileId2(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId2");
 				return val;
-			case "customerProfileId3":
+			case "customerprofileid3":
 				if(val != null)
 					setCustomerProfileId3(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId3");
 				return val;
-			case "customerProfileId4":
+			case "customerprofileid4":
 				if(val != null)
 					setCustomerProfileId4(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId4");
 				return val;
-			case "customerProfileId5":
+			case "customerprofileid5":
 				if(val != null)
 					setCustomerProfileId5(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId5");
 				return val;
-			case "customerProfileId6":
+			case "customerprofileid6":
 				if(val != null)
 					setCustomerProfileId6(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId6");
 				return val;
-			case "customerProfileId7":
+			case "customerprofileid7":
 				if(val != null)
 					setCustomerProfileId7(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId7");
 				return val;
-			case "customerProfileId8":
+			case "customerprofileid8":
 				if(val != null)
 					setCustomerProfileId8(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId8");
 				return val;
-			case "customerProfileId9":
+			case "customerprofileid9":
 				if(val != null)
 					setCustomerProfileId9(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId9");
 				return val;
-			case "customerProfileId10":
+			case "customerprofileid10":
 				if(val != null)
 					setCustomerProfileId10(val);
-				sauvegardes.add(var);
+				sauvegardes.add("customerProfileId10");
 				return val;
-			case "utilisateurRecevoirCourriels":
+			case "utilisateurrecevoircourriels":
 				if(val != null)
 					setUtilisateurRecevoirCourriels(val);
-				sauvegardes.add(var);
+				sauvegardes.add("utilisateurRecevoirCourriels");
 				return val;
-			case "voirArchive":
+			case "voirarchive":
 				if(val != null)
 					setVoirArchive(val);
-				sauvegardes.add(var);
+				sauvegardes.add("voirArchive");
 				return val;
-			case "voirSupprime":
+			case "voirsupprime":
 				if(val != null)
 					setVoirSupprime(val);
-				sauvegardes.add(var);
+				sauvegardes.add("voirSupprime");
+				return val;
+			default:
+				return super.definirCluster(var, val);
+		}
+	}
+
+	@Override public boolean definirPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirUtilisateurSite(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirUtilisateurSite(String var, Object val) {
+		switch(var.toLowerCase()) {
+			case "utilisateurnom":
+				if(val instanceof String)
+					setUtilisateurNom((String)val);
+				sauvegardes.add("utilisateurNom");
+				return val;
+			case "utilisateurmail":
+				if(val instanceof String)
+					setUtilisateurMail((String)val);
+				sauvegardes.add("utilisateurMail");
+				return val;
+			case "customerprofileid1":
+				if(val instanceof String)
+					setCustomerProfileId1((String)val);
+				sauvegardes.add("customerProfileId1");
+				return val;
+			case "customerprofileid2":
+				if(val instanceof String)
+					setCustomerProfileId2((String)val);
+				sauvegardes.add("customerProfileId2");
+				return val;
+			case "customerprofileid3":
+				if(val instanceof String)
+					setCustomerProfileId3((String)val);
+				sauvegardes.add("customerProfileId3");
+				return val;
+			case "customerprofileid4":
+				if(val instanceof String)
+					setCustomerProfileId4((String)val);
+				sauvegardes.add("customerProfileId4");
+				return val;
+			case "customerprofileid5":
+				if(val instanceof String)
+					setCustomerProfileId5((String)val);
+				sauvegardes.add("customerProfileId5");
+				return val;
+			case "customerprofileid6":
+				if(val instanceof String)
+					setCustomerProfileId6((String)val);
+				sauvegardes.add("customerProfileId6");
+				return val;
+			case "customerprofileid7":
+				if(val instanceof String)
+					setCustomerProfileId7((String)val);
+				sauvegardes.add("customerProfileId7");
+				return val;
+			case "customerprofileid8":
+				if(val instanceof String)
+					setCustomerProfileId8((String)val);
+				sauvegardes.add("customerProfileId8");
+				return val;
+			case "customerprofileid9":
+				if(val instanceof String)
+					setCustomerProfileId9((String)val);
+				sauvegardes.add("customerProfileId9");
+				return val;
+			case "customerprofileid10":
+				if(val instanceof String)
+					setCustomerProfileId10((String)val);
+				sauvegardes.add("customerProfileId10");
+				return val;
+			case "utilisateurrecevoircourriels":
+				if(val instanceof Boolean)
+					setUtilisateurRecevoirCourriels((Boolean)val);
+				sauvegardes.add("utilisateurRecevoirCourriels");
+				return val;
+			case "voirarchive":
+				if(val instanceof Boolean)
+					setVoirArchive((Boolean)val);
+				sauvegardes.add("voirArchive");
+				return val;
+			case "voirsupprime":
+				if(val instanceof Boolean)
+					setVoirSupprime((Boolean)val);
+				sauvegardes.add("voirSupprime");
 				return val;
 			default:
 				return super.definirCluster(var, val);

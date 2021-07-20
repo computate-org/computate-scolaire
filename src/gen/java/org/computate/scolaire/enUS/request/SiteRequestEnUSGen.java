@@ -2,6 +2,7 @@ package org.computate.scolaire.enUS.request;
 
 import java.util.Arrays;
 import org.apache.solr.common.SolrDocumentList;
+import io.vertx.core.MultiMap;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +15,6 @@ import io.vertx.sqlclient.Transaction;
 import io.vertx.core.logging.Logger;
 import org.computate.scolaire.enUS.user.SiteUser;
 import java.math.RoundingMode;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import java.math.MathContext;
 import org.computate.scolaire.enUS.cluster.Cluster;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -656,6 +656,10 @@ The site configuration.
 		return userId == null ? "" : userId;
 	}
 
+	public String sqlUserId() {
+		return userId;
+	}
+
 	public String jsonUserId() {
 		return userId == null ? "" : userId;
 	}
@@ -740,6 +744,10 @@ The site configuration.
 		return userKey == null ? "" : userKey.toString();
 	}
 
+	public Long sqlUserKey() {
+		return userKey;
+	}
+
 	public String jsonUserKey() {
 		return userKey == null ? "" : userKey.toString();
 	}
@@ -814,6 +822,10 @@ The site configuration.
 
 	public String strSessionId() {
 		return sessionId == null ? "" : sessionId;
+	}
+
+	public String sqlSessionId() {
+		return sessionId;
 	}
 
 	public String jsonSessionId() {
@@ -892,6 +904,10 @@ The site configuration.
 		return sessionIdBefore == null ? "" : sessionIdBefore;
 	}
 
+	public String sqlSessionIdBefore() {
+		return sessionIdBefore;
+	}
+
 	public String jsonSessionIdBefore() {
 		return sessionIdBefore == null ? "" : sessionIdBefore;
 	}
@@ -968,6 +984,10 @@ The site configuration.
 		return userName == null ? "" : userName;
 	}
 
+	public String sqlUserName() {
+		return userName;
+	}
+
 	public String jsonUserName() {
 		return userName == null ? "" : userName;
 	}
@@ -982,6 +1002,86 @@ The site configuration.
 
 	public String htmUserName() {
 		return userName == null ? "" : StringEscapeUtils.escapeHtml4(strUserName());
+	}
+
+	///////////////
+	// userEmail //
+	///////////////
+
+	/**	 The entity userEmail
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String userEmail;
+	@JsonIgnore
+	public Wrap<String> userEmailWrap = new Wrap<String>().p(this).c(String.class).var("userEmail").o(userEmail);
+
+	/**	<br/> The entity userEmail
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.request.SiteRequestEnUS&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:userEmail">Find the entity userEmail in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _userEmail(Wrap<String> c);
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+	public void setUserEmail(String o) {
+		this.userEmail = SiteRequestEnUS.staticSetUserEmail(siteRequest_, o);
+		this.userEmailWrap.alreadyInitialized = true;
+	}
+	public static String staticSetUserEmail(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SiteRequestEnUS userEmailInit() {
+		if(!userEmailWrap.alreadyInitialized) {
+			_userEmail(userEmailWrap);
+			if(userEmail == null)
+				setUserEmail(userEmailWrap.o);
+		}
+		userEmailWrap.alreadyInitialized(true);
+		return (SiteRequestEnUS)this;
+	}
+
+	public static String staticSolrUserEmail(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrUserEmail(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqUserEmail(SiteRequestEnUS siteRequest_, String o) {
+		return SiteRequestEnUS.staticSolrStrUserEmail(siteRequest_, SiteRequestEnUS.staticSolrUserEmail(siteRequest_, SiteRequestEnUS.staticSetUserEmail(siteRequest_, o)));
+	}
+
+	public String solrUserEmail() {
+		return SiteRequestEnUS.staticSolrUserEmail(siteRequest_, userEmail);
+	}
+
+	public String strUserEmail() {
+		return userEmail == null ? "" : userEmail;
+	}
+
+	public String sqlUserEmail() {
+		return userEmail;
+	}
+
+	public String jsonUserEmail() {
+		return userEmail == null ? "" : userEmail;
+	}
+
+	public String nomAffichageUserEmail() {
+		return null;
+	}
+
+	public String htmTooltipUserEmail() {
+		return null;
+	}
+
+	public String htmUserEmail() {
+		return userEmail == null ? "" : StringEscapeUtils.escapeHtml4(strUserEmail());
 	}
 
 	//////////////////
@@ -1042,6 +1142,10 @@ The site configuration.
 
 	public String strUserLastName() {
 		return userLastName == null ? "" : userLastName;
+	}
+
+	public String sqlUserLastName() {
+		return userLastName;
 	}
 
 	public String jsonUserLastName() {
@@ -1120,6 +1224,10 @@ The site configuration.
 		return userFirstName == null ? "" : userFirstName;
 	}
 
+	public String sqlUserFirstName() {
+		return userFirstName;
+	}
+
 	public String jsonUserFirstName() {
 		return userFirstName == null ? "" : userFirstName;
 	}
@@ -1194,6 +1302,10 @@ The site configuration.
 
 	public String strUserFullName() {
 		return userFullName == null ? "" : userFullName;
+	}
+
+	public String sqlUserFullName() {
+		return userFullName;
 	}
 
 	public String jsonUserFullName() {
@@ -1291,6 +1403,10 @@ The site configuration.
 
 	public String strUserRealmRoles() {
 		return userRealmRoles == null ? "" : userRealmRoles.toString();
+	}
+
+	public List<String> sqlUserRealmRoles() {
+		return userRealmRoles;
 	}
 
 	public String jsonUserRealmRoles() {
@@ -1429,6 +1545,10 @@ The site configuration.
 
 	public String strUserResourceRoles() {
 		return userResourceRoles == null ? "" : userResourceRoles.toString();
+	}
+
+	public List<String> sqlUserResourceRoles() {
+		return userResourceRoles;
 	}
 
 	public String jsonUserResourceRoles() {
@@ -1635,6 +1755,10 @@ The site configuration.
 		return pageAdmin == null ? "" : pageAdmin.toString();
 	}
 
+	public Boolean sqlPageAdmin() {
+		return pageAdmin;
+	}
+
 	public String jsonPageAdmin() {
 		return pageAdmin == null ? "" : pageAdmin.toString();
 	}
@@ -1719,6 +1843,10 @@ The site configuration.
 		return requestPk == null ? "" : requestPk.toString();
 	}
 
+	public Long sqlRequestPk() {
+		return requestPk;
+	}
+
 	public String jsonRequestPk() {
 		return requestPk == null ? "" : requestPk.toString();
 	}
@@ -1795,6 +1923,10 @@ The site configuration.
 		return requestUri == null ? "" : requestUri;
 	}
 
+	public String sqlRequestUri() {
+		return requestUri;
+	}
+
 	public String jsonRequestUri() {
 		return requestUri == null ? "" : requestUri;
 	}
@@ -1869,6 +2001,10 @@ The site configuration.
 
 	public String strRequestMethod() {
 		return requestMethod == null ? "" : requestMethod;
+	}
+
+	public String sqlRequestMethod() {
+		return requestMethod;
 	}
 
 	public String jsonRequestMethod() {
@@ -1980,9 +2116,9 @@ The site configuration.
 	 */
 	@JsonIgnore
 	@JsonInclude(Include.NON_NULL)
-	protected CaseInsensitiveHeaders requestHeaders;
+	protected MultiMap requestHeaders;
 	@JsonIgnore
-	public Wrap<CaseInsensitiveHeaders> requestHeadersWrap = new Wrap<CaseInsensitiveHeaders>().p(this).c(CaseInsensitiveHeaders.class).var("requestHeaders").o(requestHeaders);
+	public Wrap<MultiMap> requestHeadersWrap = new Wrap<MultiMap>().p(this).c(MultiMap.class).var("requestHeaders").o(requestHeaders);
 
 	/**	<br/> The entity requestHeaders
 	 *  is defined as null before being initialized. 
@@ -1990,17 +2126,17 @@ The site configuration.
 	 * <br/>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _requestHeaders(Wrap<CaseInsensitiveHeaders> c);
+	protected abstract void _requestHeaders(Wrap<MultiMap> c);
 
-	public CaseInsensitiveHeaders getRequestHeaders() {
+	public MultiMap getRequestHeaders() {
 		return requestHeaders;
 	}
 
-	public void setRequestHeaders(CaseInsensitiveHeaders requestHeaders) {
+	public void setRequestHeaders(MultiMap requestHeaders) {
 		this.requestHeaders = requestHeaders;
 		this.requestHeadersWrap.alreadyInitialized = true;
 	}
-	public static CaseInsensitiveHeaders staticSetRequestHeaders(SiteRequestEnUS siteRequest_, String o) {
+	public static MultiMap staticSetRequestHeaders(SiteRequestEnUS siteRequest_, String o) {
 		return null;
 	}
 	protected SiteRequestEnUS requestHeadersInit() {
@@ -2091,6 +2227,7 @@ The site configuration.
 		sessionIdInit();
 		sessionIdBeforeInit();
 		userNameInit();
+		userEmailInit();
 		userLastNameInit();
 		userFirstNameInit();
 		userFullNameInit();
@@ -2143,6 +2280,10 @@ The site configuration.
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtainForClass(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -2185,6 +2326,8 @@ The site configuration.
 				return oSiteRequestEnUS.sessionIdBefore;
 			case "userName":
 				return oSiteRequestEnUS.userName;
+			case "userEmail":
+				return oSiteRequestEnUS.userEmail;
 			case "userLastName":
 				return oSiteRequestEnUS.userLastName;
 			case "userFirstName":
@@ -2268,6 +2411,8 @@ The site configuration.
 			return SiteRequestEnUS.staticSetSessionIdBefore(siteRequest_, o);
 		case "userName":
 			return SiteRequestEnUS.staticSetUserName(siteRequest_, o);
+		case "userEmail":
+			return SiteRequestEnUS.staticSetUserEmail(siteRequest_, o);
 		case "userLastName":
 			return SiteRequestEnUS.staticSetUserLastName(siteRequest_, o);
 		case "userFirstName":
@@ -2310,6 +2455,8 @@ The site configuration.
 			return SiteRequestEnUS.staticSolrSessionIdBefore(siteRequest_, (String)o);
 		case "userName":
 			return SiteRequestEnUS.staticSolrUserName(siteRequest_, (String)o);
+		case "userEmail":
+			return SiteRequestEnUS.staticSolrUserEmail(siteRequest_, (String)o);
 		case "userLastName":
 			return SiteRequestEnUS.staticSolrUserLastName(siteRequest_, (String)o);
 		case "userFirstName":
@@ -2352,6 +2499,8 @@ The site configuration.
 			return SiteRequestEnUS.staticSolrStrSessionIdBefore(siteRequest_, (String)o);
 		case "userName":
 			return SiteRequestEnUS.staticSolrStrUserName(siteRequest_, (String)o);
+		case "userEmail":
+			return SiteRequestEnUS.staticSolrStrUserEmail(siteRequest_, (String)o);
 		case "userLastName":
 			return SiteRequestEnUS.staticSolrStrUserLastName(siteRequest_, (String)o);
 		case "userFirstName":
@@ -2394,6 +2543,8 @@ The site configuration.
 			return SiteRequestEnUS.staticSolrFqSessionIdBefore(siteRequest_, o);
 		case "userName":
 			return SiteRequestEnUS.staticSolrFqUserName(siteRequest_, o);
+		case "userEmail":
+			return SiteRequestEnUS.staticSolrFqUserEmail(siteRequest_, o);
 		case "userLastName":
 			return SiteRequestEnUS.staticSolrFqUserLastName(siteRequest_, o);
 		case "userFirstName":
@@ -2437,7 +2588,29 @@ The site configuration.
 		return o != null;
 	}
 	public Object defineSiteRequestEnUS(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return null;
+		}
+	}
+
+	public boolean defineForClass(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = defineSiteRequestEnUS(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.defineForClass(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object defineSiteRequestEnUS(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return null;
 		}

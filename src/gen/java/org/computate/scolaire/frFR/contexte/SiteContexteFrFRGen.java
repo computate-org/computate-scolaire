@@ -16,6 +16,7 @@ import org.computate.scolaire.frFR.config.ConfigSite;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.vertx.ext.web.api.contract.openapi3.OpenAPI3RouterFactory;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
@@ -46,6 +47,442 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
  * <br/>
  **/
 public abstract class SiteContexteFrFRGen<DEV> extends Object {
+
+/*
+CREATE TABLE InscriptionScolaire(
+	anneeCle bigint references AnneeScolaire(pk)
+	, enfantCle bigint references EnfantScolaire(pk)
+	, enfantNomComplet text
+	, enfantNomCompletPrefere text
+	, enfantDateNaissance date
+	, ecoleAddresse text
+	, inscriptionApprouve boolean
+	, inscriptionImmunisations boolean
+	, photo text
+	, familleMarie boolean
+	, familleSepare boolean
+	, familleDivorce boolean
+	, inscriptionMotDePasse text
+	, familleAddresse text
+	, familleCommentVousConnaissezEcole text
+	, inscriptionConsiderationsSpeciales text
+	, enfantConditionsMedicales text
+	, enfantEcolesPrecedemmentFrequentees text
+	, enfantDescription text
+	, enfantObjectifs text
+	, enfantPropre boolean
+	, inscriptionNomGroupe text
+	, inscriptionPaimentChaqueMois boolean
+	, inscriptionPaimentComplet boolean
+	, customerProfileId text
+	, inscriptionDateFrais date
+	, inscriptionNomsParents text
+	, inscriptionSignature1 text
+	, inscriptionSignature2 text
+	, inscriptionSignature3 text
+	, inscriptionSignature4 text
+	, inscriptionSignature5 text
+	, inscriptionSignature6 text
+	, inscriptionSignature7 text
+	, inscriptionSignature8 text
+	, inscriptionSignature9 text
+	, inscriptionSignature10 text
+	, inscriptionDate1 date
+	, inscriptionDate2 date
+	, inscriptionDate3 date
+	, inscriptionDate4 date
+	, inscriptionDate5 date
+	, inscriptionDate6 date
+	, inscriptionDate7 date
+	, inscriptionDate8 date
+	, inscriptionDate9 date
+	, inscriptionDate10 date
+	, pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	);
+CREATE TABLE Cluster(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	);
+CREATE TABLE EnfantScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, personnePrenom text
+	, personnePrenomPrefere text
+	, familleNom text
+	, personneDateNaissance date
+	, photo text
+	);
+CREATE TABLE MereScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, personnePrenom text
+	, personnePrenomPrefere text
+	, familleNom text
+	, personneOccupation text
+	, personneNumeroTelephone text
+	, personneMail text
+	, personneSms boolean
+	, personneRecevoirMail boolean
+	, personneContactUrgence boolean
+	, personneChercher boolean
+	, photo text
+	);
+CREATE TABLE PereScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, personnePrenom text
+	, personnePrenomPrefere text
+	, familleNom text
+	, personneOccupation text
+	, personneNumeroTelephone text
+	, personneMail text
+	, personneSms boolean
+	, personneRecevoirMail boolean
+	, personneContactUrgence boolean
+	, personneChercher boolean
+	, photo text
+	);
+CREATE TABLE GardienScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, personnePrenom text
+	, personnePrenomPrefere text
+	, familleNom text
+	, personneNumeroTelephone text
+	, personneRelation text
+	, personneContactUrgence boolean
+	, personneChercher boolean
+	, photo text
+	);
+CREATE TABLE PaiementScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, inscriptionCle bigint references InscriptionScolaire(pk)
+	, inscriptionPaimentChaqueMois boolean
+	, paiementDescription text
+	, paiementDate date
+	, fraisRetardDate date
+	, paiementMontant double
+	, paiementEspeces boolean
+	, paiementCheque boolean
+	, paiementECheck boolean
+	, paiementSysteme boolean
+	, paiementPar text
+	, transactionId text
+	, customerProfileId text
+	, transactionStatus text
+	, paiementRecu boolean
+	, fraisMontant double
+	, fraisPremierDernier boolean
+	, fraisInscription boolean
+	, fraisMois boolean
+	, fraisRetard boolean
+	, paiementNomCourt text
+	);
+CREATE TABLE RecuScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, ecoleCle bigint references Ecole(pk)
+	, paiementDate date
+	, paiementMontant double
+	, paiementDescription text
+	, paiementNomCourt text
+	);
+CREATE TABLE UtilisateurSite(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, utilisateurNom text
+	, utilisateurMail text
+	, customerProfileId1 text
+	, customerProfileId2 text
+	, customerProfileId3 text
+	, customerProfileId4 text
+	, customerProfileId5 text
+	, customerProfileId6 text
+	, customerProfileId7 text
+	, customerProfileId8 text
+	, customerProfileId9 text
+	, customerProfileId10 text
+	, utilisateurRecevoirCourriels boolean
+	, voirArchive boolean
+	, voirSupprime boolean
+	);
+CREATE TABLE DesignPage(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, designPageNomComplet text
+	, designCache boolean
+	, designAdmin boolean
+	, designIgnorerNomEnfantVide boolean
+	, designIgnorerPaiementsPasEnSouffrance boolean
+	, designIgnorerPaiementsEnSouffrance boolean
+	, designFiltrerInscriptionCle boolean
+	, designInscriptionTriMoisJourDeNaissance boolean
+	, designInscriptionTriNomGroupe boolean
+	, designInscriptionTriNomEnfant boolean
+	, rechercherAnnees boolean
+	, rechercherPaiements boolean
+	, rechercherPaiementsActuel boolean
+	);
+CREATE TABLE PartHtml(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, htmlLien text
+	, htmlElement text
+	, htmlId text
+	, htmlClasses text
+	, htmlStyle text
+	, htmlAvant text
+	, htmlApres text
+	, htmlTexte text
+	, htmlVar text
+	, htmlVarSpan text
+	, htmlVarForm text
+	, htmlVarInput text
+	, htmlIfVarEquals text
+	, htmlVarForEach text
+	, htmlVarHtml text
+	, htmlExclure boolean
+	, pdfExclure boolean
+	, connecterDeconnecter boolean
+	, tri1 double
+	, tri2 double
+	, tri3 double
+	, tri4 double
+	, tri5 double
+	, tri6 double
+	, tri7 double
+	, tri8 double
+	, tri9 double
+	, tri10 double
+	);
+CREATE TABLE Ecole(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, ecoleNom text
+	, ecoleNumeroTelephone text
+	, ecoleForm text
+	, ecoleNumero integer
+	, ecoleAdministrateurNom text
+	, ecoleMail text
+	, ecoleMailDe text
+	, ecoleMailA text
+	, ecoleEmplacement text
+	, ecoleAddresse text
+	);
+CREATE TABLE AnneeScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, ecoleCle bigint references Ecole(pk)
+	, sessionDateDebut date
+	, saisonDateDebut date
+	, sessionDateFin date
+	, anneeDebut integer
+	, anneeFin integer
+	, anneeFraisInscription double
+	);
+CREATE TABLE SaisonScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, anneeCle bigint references AnneeScolaire(pk)
+	, saisonDateDebut date
+	, saisonEte boolean
+	, saisonHiver boolean
+	, saisonFuture boolean
+	);
+CREATE TABLE SessionScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, saisonCle bigint references SaisonScolaire(pk)
+	, ecoleAddresse text
+	, sessionDateDebut date
+	, sessionDateFin date
+	);
+CREATE TABLE AgeScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, sessionCle bigint references SessionScolaire(pk)
+	, anneeCle bigint references AnneeScolaire(pk)
+	, ecoleAddresse text
+	, ageDebut integer
+	, ageFin integer
+	);
+CREATE TABLE BlocScolaire(
+	pk bigserial primary key
+	, inheritPk bigint
+	, cree timestamp with time zone
+	, modifie timestamp with time zone
+	, archive boolean
+	, supprime boolean
+	, sessionId text
+	, utilisateurId text
+	, utilisateurCle bigint
+	, ageCle bigint references AgeScolaire(pk)
+	, ecoleAddresse text
+	, blocHeureDebut timestamp
+	, blocHeureFin timestamp
+	, blocPrixParMois double
+	, blocLundi boolean
+	, blocMardi boolean
+	, blocMercredi boolean
+	, blocJeudi boolean
+	, blocVendredi boolean
+	);
+CREATE TABLE InscriptionScolaireBlocCles_BlocScolaireInscriptionCles(
+	pk bigserial primary key
+	, pk1 bigint references BlocScolaire(pk)
+	, pk2 bigint references InscriptionScolaire(pk)
+	);
+CREATE TABLE InscriptionScolaireGardienCles_GardienScolaireInscriptionCles(
+	pk bigserial primary key
+	, pk1 bigint references GardienScolaire(pk)
+	, pk2 bigint references InscriptionScolaire(pk)
+	);
+CREATE TABLE MereScolaireInscriptionCles_InscriptionScolaireMereCles(
+	pk bigserial primary key
+	, pk1 bigint references InscriptionScolaire(pk)
+	, pk2 bigint references MereScolaire(pk)
+	);
+CREATE TABLE PereScolaireInscriptionCles_InscriptionScolairePereCles(
+	pk bigserial primary key
+	, pk1 bigint references InscriptionScolaire(pk)
+	, pk2 bigint references PereScolaire(pk)
+	);
+CREATE TABLE UtilisateurSiteInscriptionCles_InscriptionScolaireUtilisateurCles(
+	pk bigserial primary key
+	, pk1 bigint references InscriptionScolaire(pk)
+	, pk2 bigint references UtilisateurSite(pk)
+	);
+CREATE TABLE UtilisateurSitePaiementCles_PaiementScolaireUtilisateurCles(
+	pk bigserial primary key
+	, pk1 bigint references PaiementScolaire(pk)
+	, pk2 bigint references UtilisateurSite(pk)
+	);
+CREATE TABLE DesignPageDesignEnfantCles_DesignPageDesignParentCles(
+	pk bigserial primary key
+	, pk1 bigint references DesignPage(pk)
+	, pk2 bigint references DesignPage(pk)
+	);
+CREATE TABLE PartHtmlDesignPageCles_DesignPagePartHtmlCles(
+	pk bigserial primary key
+	, pk1 bigint references DesignPage(pk)
+	, pk2 bigint references PartHtml(pk)
+	);
+*/
+
 	protected static final Logger LOGGER = LoggerFactory.getLogger(SiteContexteFrFR.class);
 
 	///////////
@@ -548,6 +985,10 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -682,7 +1123,29 @@ public abstract class SiteContexteFrFRGen<DEV> extends Object {
 		return o != null;
 	}
 	public Object definirSiteContexteFrFR(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return null;
+		}
+	}
+
+	public boolean definirPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirSiteContexteFrFR(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirSiteContexteFrFR(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return null;
 		}

@@ -40,6 +40,7 @@ import java.util.Set;
 import java.util.HashSet;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
+import org.apache.commons.lang3.math.NumberUtils;
 import io.vertx.ext.web.Router;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -64,7 +65,6 @@ import java.time.LocalTime;
 import java.sql.Timestamp;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
-import io.vertx.core.http.CaseInsensitiveHeaders;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.ext.web.api.OperationResponse;
@@ -73,7 +73,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import java.nio.charset.Charset;
 import org.apache.http.NameValuePair;
 import io.vertx.ext.web.api.OperationRequest;
-import io.vertx.ext.auth.oauth2.KeycloakHelper;
+import io.vertx.ext.auth.oauth2.impl.OAuth2TokenImpl;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.net.URLDecoder;
@@ -213,14 +213,17 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
+			SchoolPayment o2 = new SchoolPayment();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(siteRequest.getSessionId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "sessionId", siteRequest.getSessionId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "sessionId", siteRequest.getSessionId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -232,8 +235,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			}
 			if(siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -245,8 +248,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			}
 			if(siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -269,8 +272,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					switch(entityVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -282,8 +285,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "archived":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -295,8 +298,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "deleted":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -310,10 +313,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						{
 							Long l = Long.parseLong(jsonObject.getString(entityVar));
 							if(l != null) {
-								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+								SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment> searchList = new SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolEnrollment.class);
+								searchList.setC(org.computate.scolaire.enUS.enrollment.SchoolEnrollment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -321,8 +324,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "enrollmentKey", l2, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "enrollmentKey", l2, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -341,8 +344,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "enrollmentPaymentEachMonth":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentPaymentEachMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentPaymentEachMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -354,8 +357,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentDescription":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentDescription", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentDescription", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -367,8 +370,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -380,8 +383,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "lateFeeDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "lateFeeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "lateFeeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -393,8 +396,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentAmount":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentAmount", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentAmount", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -406,8 +409,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentCash":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentCash", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentCash", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -419,8 +422,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentCheck":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentCheck", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentCheck", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -432,8 +435,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentECheck":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentECheck", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentECheck", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -445,8 +448,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentSystem":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentSystem", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentSystem", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -458,8 +461,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentBy":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentBy", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentBy", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -471,8 +474,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "transactionId":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "transactionId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "transactionId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -484,8 +487,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "customerProfileId":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -497,8 +500,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "transactionStatus":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "transactionStatus", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "transactionStatus", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -510,8 +513,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentRecieved":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentRecieved", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentRecieved", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -523,8 +526,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "chargeAmount":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "chargeAmount", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "chargeAmount", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -536,8 +539,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "chargeFirstLast":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "chargeFirstLast", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "chargeFirstLast", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -549,8 +552,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "chargeEnrollment":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "chargeEnrollment", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "chargeEnrollment", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -562,8 +565,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "chargeMonth":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "chargeMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "chargeMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -575,8 +578,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "chargeLateFee":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "chargeLateFee", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "chargeLateFee", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -588,8 +591,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentShortName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentShortName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentShortName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -602,7 +605,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
@@ -776,7 +779,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTImportSchoolPayment(siteRequest, eventHandler);
@@ -947,7 +950,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					);
 				}
 			});
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 					response200PUTMergeSchoolPayment(siteRequest, eventHandler);
@@ -1084,7 +1087,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolPayment.size());
 				if(listSchoolPayment.next()) {
@@ -1173,6 +1176,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			List<Future> futures = new ArrayList<>();
 
@@ -1183,8 +1187,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					switch(entityVar) {
 					case "inheritPk":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "inheritPk", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1196,8 +1200,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "archived":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "archived", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1209,8 +1213,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "deleted":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "deleted", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1224,8 +1228,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							{
 						Long l = Long.parseLong(jsonObject.getString(entityVar));
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_addA
-									, Tuple.of(pk, "enrollmentKey", l, "paymentKeys")
+							tx.preparedQuery(SiteContextEnUS.SQL_addA)
+									.execute(Tuple.of(pk, "enrollmentKey", l, "paymentKeys")
 									, b
 							-> {
 								if(b.succeeded())
@@ -1238,8 +1242,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "enrollmentPaymentEachMonth":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "enrollmentPaymentEachMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "enrollmentPaymentEachMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1251,8 +1255,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentDescription":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentDescription", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentDescription", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1264,8 +1268,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1277,8 +1281,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "lateFeeDate":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "lateFeeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "lateFeeDate", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1290,8 +1294,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentAmount":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentAmount", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentAmount", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1303,8 +1307,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentCash":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentCash", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentCash", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1316,8 +1320,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentCheck":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentCheck", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentCheck", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1329,8 +1333,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentECheck":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentECheck", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentECheck", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1342,8 +1346,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentSystem":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentSystem", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentSystem", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1355,8 +1359,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentBy":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentBy", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentBy", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1368,8 +1372,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "transactionId":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "transactionId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "transactionId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1381,8 +1385,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "customerProfileId":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "customerProfileId", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1394,8 +1398,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "transactionStatus":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "transactionStatus", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "transactionStatus", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1407,8 +1411,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentRecieved":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentRecieved", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentRecieved", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1420,8 +1424,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "chargeAmount":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "chargeAmount", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "chargeAmount", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1433,8 +1437,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "chargeFirstLast":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "chargeFirstLast", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "chargeFirstLast", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1446,8 +1450,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "chargeEnrollment":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "chargeEnrollment", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "chargeEnrollment", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1459,8 +1463,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "chargeMonth":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "chargeMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "chargeMonth", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1472,8 +1476,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "chargeLateFee":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "chargeLateFee", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "chargeLateFee", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1485,8 +1489,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 					case "paymentShortName":
 						futures.add(Future.future(a -> {
-							tx.preparedQuery(SiteContextEnUS.SQL_setD
-									, Tuple.of(pk, "paymentShortName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "paymentShortName", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
 									, b
 							-> {
 								if(b.succeeded())
@@ -1499,7 +1503,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					}
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					eventHandler.handle(Future.succeededFuture());
 				} else {
@@ -1657,7 +1661,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				})
 			);
 		});
-		CompositeFuture.all(futures).setHandler( a -> {
+		CompositeFuture.all(futures).onComplete( a -> {
 			if(a.succeeded()) {
 				if(listSchoolPayment.next(dt)) {
 					listPATCHSchoolPayment(apiRequest, listSchoolPayment, dt, eventHandler);
@@ -1732,16 +1736,18 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Transaction tx = siteRequest.getTx();
+			Integer num = 1;
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
 			Set<String> methodNames = jsonObject.fieldNames();
 			SchoolPayment o2 = new SchoolPayment();
+			o2.setSiteRequest_(siteRequest);
 			List<Future> futures = new ArrayList<>();
 
 			if(o.getUserId() == null && siteRequest.getUserId() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-							, Tuple.of(pk, "userId", siteRequest.getUserId())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+							.execute(Tuple.of(pk, "userId", siteRequest.getUserId())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1753,8 +1759,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			}
 			if(o.getUserKey() == null && siteRequest.getUserKey() != null) {
 				futures.add(Future.future(a -> {
-					tx.preparedQuery(SiteContextEnUS.SQL_setD
-				, Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
+					tx.preparedQuery(SiteContextEnUS.SQL_setD)
+				.execute(Tuple.of(pk, "userKey", siteRequest.getUserKey().toString())
 							, b
 					-> {
 						if(b.succeeded())
@@ -1776,8 +1782,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setInheritPk":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "inheritPk")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "inheritPk")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1789,8 +1795,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setInheritPk(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "inheritPk", o2.jsonInheritPk())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1804,8 +1810,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setArchived":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "archived")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "archived")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1817,8 +1823,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setArchived(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "archived", o2.jsonArchived())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "archived", o2.jsonArchived())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1832,8 +1838,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setDeleted":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "deleted")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "deleted")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1845,8 +1851,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setDeleted(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "deleted", o2.jsonDeleted())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "deleted", o2.jsonDeleted())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1862,10 +1868,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							o2.setEnrollmentKey(jsonObject.getString(methodName));
 							Long l = o2.getEnrollmentKey();
 							if(l != null) {
-								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+								SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment> searchList = new SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolEnrollment.class);
+								searchList.setC(org.computate.scolaire.enUS.enrollment.SchoolEnrollment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1882,8 +1888,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null && !l2.equals(o.getEnrollmentKey())) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_addA
-												, Tuple.of(pk, "enrollmentKey", l2, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_addA)
+												.execute(Tuple.of(pk, "enrollmentKey", l2, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1905,10 +1911,10 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							o2.setEnrollmentKey(jsonObject.getString(methodName));
 							Long l = o2.getEnrollmentKey();
 							if(l != null) {
-								SearchList<SchoolEnrollment> searchList = new SearchList<SchoolEnrollment>();
+								SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment> searchList = new SearchList<org.computate.scolaire.enUS.enrollment.SchoolEnrollment>();
 								searchList.setQuery("*:*");
 								searchList.setStore(true);
-								searchList.setC(SchoolEnrollment.class);
+								searchList.setC(org.computate.scolaire.enUS.enrollment.SchoolEnrollment.class);
 								searchList.addFilterQuery("deleted_indexed_boolean:false");
 								searchList.addFilterQuery("archived_indexed_boolean:false");
 								searchList.addFilterQuery((inheritPk ? "inheritPk" : "pk") + "_indexed_long:" + l);
@@ -1925,8 +1931,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 								Long l2 = Optional.ofNullable(searchList.getList().stream().findFirst().orElse(null)).map(a -> a.getPk()).orElse(null);
 								if(l2 != null) {
 									futures.add(Future.future(a -> {
-										tx.preparedQuery(SiteContextEnUS.SQL_removeA
-												, Tuple.of(pk, "enrollmentKey", l2, "paymentKeys")
+										tx.preparedQuery(SiteContextEnUS.SQL_removeA)
+												.execute(Tuple.of(pk, "enrollmentKey", l2, "paymentKeys")
 												, b
 										-> {
 											if(b.succeeded())
@@ -1946,8 +1952,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setEnrollmentPaymentEachMonth":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "enrollmentPaymentEachMonth")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "enrollmentPaymentEachMonth")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1959,8 +1965,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setEnrollmentPaymentEachMonth(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "enrollmentPaymentEachMonth", o2.jsonEnrollmentPaymentEachMonth())
 										, b
 								-> {
 									if(b.succeeded())
@@ -1974,8 +1980,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setPaymentDescription":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "paymentDescription")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "paymentDescription")
 										, b
 								-> {
 									if(b.succeeded())
@@ -1987,8 +1993,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setPaymentDescription(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "paymentDescription", o2.jsonPaymentDescription())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "paymentDescription", o2.jsonPaymentDescription())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2002,8 +2008,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setPaymentDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "paymentDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "paymentDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2015,8 +2021,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setPaymentDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "paymentDate", o2.jsonPaymentDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "paymentDate", o2.jsonPaymentDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2030,8 +2036,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setLateFeeDate":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "lateFeeDate")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "lateFeeDate")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2043,8 +2049,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setLateFeeDate(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "lateFeeDate", o2.jsonLateFeeDate())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "lateFeeDate", o2.jsonLateFeeDate())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2058,8 +2064,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setPaymentAmount":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "paymentAmount")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "paymentAmount")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2071,8 +2077,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setPaymentAmount(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "paymentAmount", o2.jsonPaymentAmount())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "paymentAmount", o2.jsonPaymentAmount())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2086,8 +2092,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setPaymentCash":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "paymentCash")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "paymentCash")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2099,8 +2105,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setPaymentCash(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "paymentCash", o2.jsonPaymentCash())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "paymentCash", o2.jsonPaymentCash())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2114,8 +2120,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setPaymentCheck":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "paymentCheck")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "paymentCheck")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2127,8 +2133,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setPaymentCheck(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "paymentCheck", o2.jsonPaymentCheck())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "paymentCheck", o2.jsonPaymentCheck())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2142,8 +2148,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setPaymentECheck":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "paymentECheck")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "paymentECheck")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2155,8 +2161,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setPaymentECheck(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "paymentECheck", o2.jsonPaymentECheck())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "paymentECheck", o2.jsonPaymentECheck())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2170,8 +2176,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setPaymentSystem":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "paymentSystem")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "paymentSystem")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2183,8 +2189,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setPaymentSystem(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "paymentSystem", o2.jsonPaymentSystem())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "paymentSystem", o2.jsonPaymentSystem())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2198,8 +2204,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setPaymentBy":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "paymentBy")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "paymentBy")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2211,8 +2217,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setPaymentBy(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "paymentBy", o2.jsonPaymentBy())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "paymentBy", o2.jsonPaymentBy())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2226,8 +2232,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setTransactionId":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "transactionId")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "transactionId")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2239,8 +2245,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setTransactionId(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "transactionId", o2.jsonTransactionId())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "transactionId", o2.jsonTransactionId())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2254,8 +2260,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setCustomerProfileId":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "customerProfileId")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "customerProfileId")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2267,8 +2273,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setCustomerProfileId(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "customerProfileId", o2.jsonCustomerProfileId())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2282,8 +2288,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setTransactionStatus":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "transactionStatus")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "transactionStatus")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2295,8 +2301,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setTransactionStatus(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "transactionStatus", o2.jsonTransactionStatus())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "transactionStatus", o2.jsonTransactionStatus())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2310,8 +2316,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setPaymentRecieved":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "paymentRecieved")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "paymentRecieved")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2323,8 +2329,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setPaymentRecieved(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "paymentRecieved", o2.jsonPaymentRecieved())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "paymentRecieved", o2.jsonPaymentRecieved())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2338,8 +2344,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setChargeAmount":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "chargeAmount")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "chargeAmount")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2351,8 +2357,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setChargeAmount(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "chargeAmount", o2.jsonChargeAmount())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "chargeAmount", o2.jsonChargeAmount())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2366,8 +2372,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setChargeFirstLast":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "chargeFirstLast")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "chargeFirstLast")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2379,8 +2385,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setChargeFirstLast(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "chargeFirstLast", o2.jsonChargeFirstLast())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "chargeFirstLast", o2.jsonChargeFirstLast())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2394,8 +2400,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setChargeEnrollment":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "chargeEnrollment")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "chargeEnrollment")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2407,8 +2413,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setChargeEnrollment(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "chargeEnrollment", o2.jsonChargeEnrollment())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "chargeEnrollment", o2.jsonChargeEnrollment())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2422,8 +2428,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setChargeMonth":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "chargeMonth")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "chargeMonth")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2435,8 +2441,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setChargeMonth(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "chargeMonth", o2.jsonChargeMonth())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "chargeMonth", o2.jsonChargeMonth())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2450,8 +2456,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setChargeLateFee":
 						if(jsonObject.getBoolean(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "chargeLateFee")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "chargeLateFee")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2463,8 +2469,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setChargeLateFee(jsonObject.getBoolean(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "chargeLateFee", o2.jsonChargeLateFee())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "chargeLateFee", o2.jsonChargeLateFee())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2478,8 +2484,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					case "setPaymentShortName":
 						if(jsonObject.getString(methodName) == null) {
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_removeD
-										, Tuple.of(pk, "paymentShortName")
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "paymentShortName")
 										, b
 								-> {
 									if(b.succeeded())
@@ -2491,8 +2497,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						} else {
 							o2.setPaymentShortName(jsonObject.getString(methodName));
 							futures.add(Future.future(a -> {
-								tx.preparedQuery(SiteContextEnUS.SQL_setD
-										, Tuple.of(pk, "paymentShortName", o2.jsonPaymentShortName())
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "paymentShortName", o2.jsonPaymentShortName())
 										, b
 								-> {
 									if(b.succeeded())
@@ -2505,7 +2511,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						break;
 				}
 			}
-			CompositeFuture.all(futures).setHandler( a -> {
+			CompositeFuture.all(futures).onComplete( a -> {
 				if(a.succeeded()) {
 					SchoolPayment o3 = new SchoolPayment();
 					o3.setSiteRequest_(o.getSiteRequest_());
@@ -2801,7 +2807,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			AllWriter w = AllWriter.create(listSchoolPayment.getSiteRequest_(), buffer);
 			PaymentPage page = new PaymentPage();
 			SolrDocument pageSolrDocument = new SolrDocument();
-			CaseInsensitiveHeaders requestHeaders = new CaseInsensitiveHeaders();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
 			pageSolrDocument.setField("pageUri_frFR_stored_string", "/payment");
@@ -2880,10 +2886,9 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			String userId = siteRequest.getUserId();
 			ZonedDateTime created = Optional.ofNullable(siteRequest.getJsonObject()).map(j -> j.getString("created")).map(s -> ZonedDateTime.parse(s, DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())))).orElse(ZonedDateTime.now(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())));
 
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_create
-					, Tuple.of(SchoolPayment.class.getCanonicalName(), userId, created.toOffsetDateTime())
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_create)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(SchoolPayment.class.getCanonicalName(), userId, created.toOffsetDateTime())
 					, createAsync
 			-> {
 				if(createAsync.succeeded()) {
@@ -2918,7 +2923,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 		ExceptionUtils.printRootCauseStackTrace(e);
 		OperationResponse responseOperation = new OperationResponse(400, "BAD REQUEST", 
 				Buffer.buffer().appendString(json.encodePrettily())
-				, new CaseInsensitiveHeaders().add("Content-Type", "application/json")
+				, MultiMap.caseInsensitiveMultiMap().add("Content-Type", "application/json")
 		);
 		SiteConfig siteConfig = siteRequest.getSiteConfig_();
 		SiteContextEnUS siteContext = siteRequest.getSiteContext_();
@@ -3100,10 +3105,9 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 						sqlTransactionSchoolPayment(siteRequest, b -> {
 							if(b.succeeded()) {
 								Transaction tx = siteRequest.getTx();
-								tx.preparedQuery(
-										SiteContextEnUS.SQL_selectC
-										, Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
-										, Collectors.toList()
+								tx.preparedQuery(SiteContextEnUS.SQL_selectC)
+										.collecting(Collectors.toList())
+										.execute(Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
 										, selectCAsync
 								-> {
 									if(selectCAsync.succeeded()) {
@@ -3112,7 +3116,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 											SiteUserEnUSApiServiceImpl userService = new SiteUserEnUSApiServiceImpl(siteContext);
 											if(userValues == null) {
 												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContext.getAuthProvider(), userVertx);
+												JsonObject jsonPrincipal = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("userName", jsonPrincipal.getString("preferred_username"));
@@ -3151,6 +3156,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 																		siteRequest.setUserName(jsonPrincipal.getString("preferred_username"));
 																		siteRequest.setUserFirstName(jsonPrincipal.getString("given_name"));
 																		siteRequest.setUserLastName(jsonPrincipal.getString("family_name"));
+																		siteRequest.setUserEmail(jsonPrincipal.getString("email"));
 																		siteRequest.setUserId(jsonPrincipal.getString("sub"));
 																		siteRequest.setUserKey(siteUser.getPk());
 																		eventHandler.handle(Future.succeededFuture());
@@ -3178,7 +3184,8 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 												SiteUser siteUser1 = searchList.getList().stream().findFirst().orElse(null);
 
 												JsonObject userVertx = siteRequest.getOperationRequest().getUser();
-												JsonObject jsonPrincipal = KeycloakHelper.parseToken(userVertx.getString("access_token"));
+												OAuth2TokenImpl token = new OAuth2TokenImpl(siteContext.getAuthProvider(), userVertx);
+												JsonObject jsonPrincipal = token.accessToken();
 
 												JsonObject jsonObject = new JsonObject();
 												jsonObject.put("setUserName", jsonPrincipal.getString("preferred_username"));
@@ -3187,8 +3194,6 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 												jsonObject.put("setUserCompleteName", jsonPrincipal.getString("name"));
 												jsonObject.put("setCustomerProfileId1", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId1()).orElse(null));
 												jsonObject.put("setCustomerProfileId2", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId2()).orElse(null));
-												jsonObject.put("setCustomerProfileId3", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId3()).orElse(null));
-												jsonObject.put("setCustomerProfileId4", Optional.ofNullable(siteUser1).map(u -> u.getCustomerProfileId4()).orElse(null));
 												jsonObject.put("setUserId", jsonPrincipal.getString("sub"));
 												jsonObject.put("setUserEmail", jsonPrincipal.getString("email"));
 												Boolean define = userSchoolPaymentDefine(siteRequest, jsonObject, true);
@@ -3290,19 +3295,11 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
 				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
-				return true;
 			return false;
 		} else {
 			if(jsonObject.getString("setCustomerProfileId1") == null)
 				return true;
 			if(jsonObject.getString("setCustomerProfileId2") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId3") == null)
-				return true;
-			if(jsonObject.getString("setCustomerProfileId4") == null)
 				return true;
 			return false;
 		}
@@ -3385,18 +3382,27 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 
 	public void aSearchSchoolPayment(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, Handler<AsyncResult<SearchList<SchoolPayment>>> eventHandler) {
 		try {
-			OperationRequest operationRequest = siteRequest.getOperationRequest();
-			String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
-			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
-			searchList.setPopulate(populate);
-			searchList.setStore(store);
-			searchList.setQuery("*:*");
-			searchList.setC(SchoolPayment.class);
-			searchList.setSiteRequest_(siteRequest);
-			if(entityList != null)
-				searchList.addFields(entityList);
-			searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
+			SearchList<SchoolPayment> searchList = aSearchSchoolPaymentList(siteRequest, populate, store, modify, uri, apiMethod);
+			eventHandler.handle(Future.succeededFuture(searchList));
+		} catch(Exception e) {
+			LOGGER.error(String.format("aSearchSchoolPayment failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	public SearchList<SchoolPayment> aSearchSchoolPaymentList(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod) {
+		OperationRequest operationRequest = siteRequest.getOperationRequest();
+		String entityListStr = siteRequest.getOperationRequest().getParams().getJsonObject("query").getString("fl");
+		String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
+		SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+		searchList.setPopulate(populate);
+		searchList.setStore(store);
+		searchList.setQuery("*:*");
+		searchList.setC(SchoolPayment.class);
+		searchList.setSiteRequest_(siteRequest);
+		if(entityList != null)
+			searchList.addFields(entityList);
+		searchList.add("json.facet", "{max_modified:'max(modified_indexed_date)'}");
 			searchList.add("json.facet", "{terms_childCompleteNamePreferred:{terms:{field:childCompleteNamePreferred_indexed_string}}}");
 			searchList.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
 			searchList.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
@@ -3405,87 +3411,87 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			searchList.add("json.facet", "{sum_chargeAmountNotPassed:'sum(chargeAmountNotPassed_indexed_double)'}");
 			searchList.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
 
-			String id = operationRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null) {
-				searchList.addFilterQuery("(id:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
-			}
-
-			List<String> roles = Arrays.asList("SiteAdmin");
-			List<String> roleLires = Arrays.asList("SiteManager");
-			if(
-					!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
-					&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
-					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires))
-					&& (modify || !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires))
-					) {
-				searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
-						+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
-			}
-
-			operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
-				String entityVar = null;
-				String valueIndexed = null;
-				String varIndexed = null;
-				String valueSort = null;
-				Integer valueStart = null;
-				Integer valueRows = null;
-				String paramName = paramRequest.getKey();
-				Object paramValuesObject = paramRequest.getValue();
-				JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
-
-				try {
-					for(Object paramObject : paramObjects) {
-						switch(paramName) {
-							case "q":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								varIndexed = "*".equals(entityVar) ? entityVar : SchoolPayment.varSearchSchoolPayment(entityVar);
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
-								aSearchSchoolPaymentQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "fq":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								varIndexed = SchoolPayment.varIndexedSchoolPayment(entityVar);
-								aSearchSchoolPaymentFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "sort":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = SchoolPayment.varIndexedSchoolPayment(entityVar);
-								aSearchSchoolPaymentSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
-								break;
-							case "start":
-								valueStart = (Integer)paramObject;
-								aSearchSchoolPaymentStart(uri, apiMethod, searchList, valueStart);
-								break;
-							case "rows":
-								valueRows = (Integer)paramObject;
-								aSearchSchoolPaymentRows(uri, apiMethod, searchList, valueRows);
-								break;
-							case "var":
-								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								aSearchSchoolPaymentVar(uri, apiMethod, searchList, entityVar, valueIndexed);
-								break;
-						}
-					}
-					aSearchSchoolPaymentUri(uri, apiMethod, searchList);
-				} catch(Exception e) {
-					LOGGER.error(String.format("aSearchSchoolPayment failed. ", e));
-					eventHandler.handle(Future.failedFuture(e));
-				}
-			});
-			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-				searchList.addSort("paymentDate_indexed_date", ORDER.desc);
-				searchList.addSort("paymentBy_indexed_string", ORDER.desc);
-			}
-			searchList.initDeepForClass(siteRequest);
-			eventHandler.handle(Future.succeededFuture(searchList));
-		} catch(Exception e) {
-			LOGGER.error(String.format("aSearchSchoolPayment failed. ", e));
-			eventHandler.handle(Future.failedFuture(e));
+		String id = operationRequest.getParams().getJsonObject("path").getString("id");
+		if(id != null && NumberUtils.isCreatable(id)) {
+			searchList.addFilterQuery("(pk_indexed_long:" + ClientUtils.escapeQueryChars(id) + " OR objectId_indexed_string:" + ClientUtils.escapeQueryChars(id) + ")");
+		} else if(id != null) {
+			searchList.addFilterQuery("objectId_indexed_string:" + ClientUtils.escapeQueryChars(id));
 		}
+
+		List<String> roles = Arrays.asList("SiteAdmin");
+		List<String> roleLires = Arrays.asList("SiteManager");
+		if(
+				!CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roles)
+				&& !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roles)
+				&& (modify || !CollectionUtils.containsAny(siteRequest.getUserResourceRoles(), roleLires))
+				&& (modify || !CollectionUtils.containsAny(siteRequest.getUserRealmRoles(), roleLires))
+				) {
+			searchList.addFilterQuery("sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("-----")) + " OR " + "sessionId_indexed_string:" + ClientUtils.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("-----"))
+					+ " OR userKeys_indexed_longs:" + Optional.ofNullable(siteRequest.getUserKey()).orElse(0L));
+		}
+
+		operationRequest.getParams().getJsonObject("query").forEach(paramRequest -> {
+			String entityVar = null;
+			String valueIndexed = null;
+			String varIndexed = null;
+			String valueSort = null;
+			Integer valueStart = null;
+			Integer valueRows = null;
+			String paramName = paramRequest.getKey();
+			Object paramValuesObject = paramRequest.getValue();
+			JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
+
+			try {
+				for(Object paramObject : paramObjects) {
+					switch(paramName) {
+						case "q":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							varIndexed = "*".equals(entityVar) ? entityVar : SchoolPayment.varSearchSchoolPayment(entityVar);
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							valueIndexed = StringUtils.isEmpty(valueIndexed) ? "*" : valueIndexed;
+							aSearchSchoolPaymentQ(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "fq":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							varIndexed = SchoolPayment.varIndexedSchoolPayment(entityVar);
+							aSearchSchoolPaymentFq(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "sort":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
+							valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
+							varIndexed = SchoolPayment.varIndexedSchoolPayment(entityVar);
+							aSearchSchoolPaymentSort(uri, apiMethod, searchList, entityVar, valueIndexed, varIndexed);
+							break;
+						case "start":
+							valueStart = paramObject instanceof Integer ? (Integer)paramObject : Integer.parseInt(paramObject.toString());
+							aSearchSchoolPaymentStart(uri, apiMethod, searchList, valueStart);
+							break;
+						case "rows":
+							valueRows = paramObject instanceof Integer ? (Integer)paramObject : Integer.parseInt(paramObject.toString());
+							aSearchSchoolPaymentRows(uri, apiMethod, searchList, valueRows);
+							break;
+						case "var":
+							entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
+							valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
+							aSearchSchoolPaymentVar(uri, apiMethod, searchList, entityVar, valueIndexed);
+							break;
+					}
+				}
+				aSearchSchoolPaymentUri(uri, apiMethod, searchList);
+			} catch(Exception e) {
+				ExceptionUtils.rethrow(e);
+			}
+		});
+		if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
+			searchList.addSort("paymentDate_indexed_date", ORDER.desc);
+			searchList.addSort("paymentBy_indexed_string", ORDER.desc);
+		}
+		aSearchSchoolPayment2(siteRequest, populate, store, modify, uri, apiMethod, searchList);
+		searchList.initDeepForClass(siteRequest);
+		return searchList;
+	}
+	public void aSearchSchoolPayment2(SiteRequestEnUS siteRequest, Boolean populate, Boolean store, Boolean modify, String uri, String apiMethod, SearchList<SchoolPayment> searchList) {
 	}
 
 	public void defineSchoolPayment(SchoolPayment o, Handler<AsyncResult<OperationResponse>> eventHandler) {
@@ -3493,10 +3499,9 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_define
-					, Tuple.of(pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_define)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
 					, defineAsync
 			-> {
 				if(defineAsync.succeeded()) {
@@ -3530,10 +3535,9 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 			SiteRequestEnUS siteRequest = o.getSiteRequest_();
 			Transaction tx = siteRequest.getTx();
 			Long pk = o.getPk();
-			tx.preparedQuery(
-					SiteContextEnUS.SQL_attribute
-					, Tuple.of(pk, pk)
-					, Collectors.toList()
+			tx.preparedQuery(SiteContextEnUS.SQL_attribute)
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk, pk)
 					, attributeAsync
 			-> {
 				try {
@@ -3635,7 +3639,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 					}
 				}
 
-				CompositeFuture.all(futures).setHandler(a -> {
+				CompositeFuture.all(futures).onComplete(a -> {
 					if(a.succeeded()) {
 						SchoolPaymentEnUSApiServiceImpl service = new SchoolPaymentEnUSApiServiceImpl(siteRequest.getSiteContext_());
 						List<Future> futures2 = new ArrayList<>();
@@ -3653,7 +3657,7 @@ public class SchoolPaymentEnUSGenApiServiceImpl implements SchoolPaymentEnUSGenA
 							);
 						}
 
-						CompositeFuture.all(futures2).setHandler(b -> {
+						CompositeFuture.all(futures2).onComplete(b -> {
 							if(b.succeeded()) {
 								eventHandler.handle(Future.succeededFuture());
 							} else {

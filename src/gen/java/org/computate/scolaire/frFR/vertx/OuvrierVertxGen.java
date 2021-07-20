@@ -13,6 +13,7 @@ import org.computate.scolaire.frFR.couverture.Couverture;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import io.vertx.core.logging.Logger;
@@ -95,6 +96,10 @@ public abstract class OuvrierVertxGen<DEV> extends AbstractVerticle {
 			else if(o instanceof Cluster) {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
+			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
 			}
 		}
 		return o;
@@ -200,15 +205,37 @@ public abstract class OuvrierVertxGen<DEV> extends AbstractVerticle {
 				if(o == null)
 					o = definirOuvrierVertx(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}
 		return o != null;
 	}
 	public Object definirOuvrierVertx(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return null;
+		}
+	}
+
+	public boolean definirPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirOuvrierVertx(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirOuvrierVertx(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return null;
 		}

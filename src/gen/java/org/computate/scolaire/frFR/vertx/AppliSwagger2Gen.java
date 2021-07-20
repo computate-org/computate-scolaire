@@ -3,21 +3,25 @@ package org.computate.scolaire.frFR.vertx;
 import java.util.Arrays;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.computate.scolaire.frFR.contexte.SiteContexteFrFR;
+import java.util.HashMap;
 import org.computate.scolaire.frFR.ecrivain.ToutEcrivain;
 import org.computate.scolaire.frFR.requete.api.RequeteApi;
 import org.apache.commons.lang3.StringUtils;
 import java.lang.Integer;
 import java.text.NumberFormat;
 import io.vertx.core.logging.LoggerFactory;
+import java.util.ArrayList;
 import org.computate.scolaire.frFR.couverture.Couverture;
 import org.computate.scolaire.frFR.config.ConfigSite;
 import org.apache.commons.collections.CollectionUtils;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.computate.scolaire.frFR.requete.RequeteSiteFrFR;
 import java.lang.String;
 import io.vertx.core.logging.Logger;
+import java.math.RoundingMode;
 import java.math.MathContext;
 import org.computate.scolaire.frFR.cluster.Cluster;
 import org.apache.commons.text.StringEscapeUtils;
@@ -34,7 +38,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 /**	
- * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr</a>
+ * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true">Trouver la classe  dans Solr. </a>
  * <br/>
  **/
 public abstract class AppliSwagger2Gen<DEV> extends Object {
@@ -44,7 +48,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// requeteSite_ //
 	//////////////////
 
-	/**	L'entité « requeteSite_ »
+	/**	 L'entité requeteSite_
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -52,7 +56,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<RequeteSiteFrFR> requeteSite_Couverture = new Couverture<RequeteSiteFrFR>().p(this).c(RequeteSiteFrFR.class).var("requeteSite_").o(requeteSite_);
 
-	/**	<br/>L'entité « requeteSite_ »
+	/**	<br/> L'entité requeteSite_
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:requeteSite_">Trouver l'entité requeteSite_ dans Solr</a>
 	 * <br/>
@@ -68,6 +72,9 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		this.requeteSite_ = requeteSite_;
 		this.requeteSite_Couverture.dejaInitialise = true;
 	}
+	public static RequeteSiteFrFR staticSetRequeteSite_(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected AppliSwagger2 requeteSite_Init() {
 		if(!requeteSite_Couverture.dejaInitialise) {
 			_requeteSite_(requeteSite_Couverture);
@@ -82,7 +89,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// siteContexte //
 	//////////////////
 
-	/**	L'entité « siteContexte »
+	/**	 L'entité siteContexte
 	 *	Il est construit avant d'être initialisé avec le constructeur par défaut SiteContexteFrFR(). 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -90,7 +97,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<SiteContexteFrFR> siteContexteCouverture = new Couverture<SiteContexteFrFR>().p(this).c(SiteContexteFrFR.class).var("siteContexte").o(siteContexte);
 
-	/**	<br/>L'entité « siteContexte »
+	/**	<br/> L'entité siteContexte
 	 * Il est construit avant d'être initialisé avec le constructeur par défaut SiteContexteFrFR(). 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:siteContexte">Trouver l'entité siteContexte dans Solr</a>
 	 * <br/>
@@ -106,6 +113,9 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		this.siteContexte = siteContexte;
 		this.siteContexteCouverture.dejaInitialise = true;
 	}
+	public static SiteContexteFrFR staticSetSiteContexte(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected AppliSwagger2 siteContexteInit() {
 		if(!siteContexteCouverture.dejaInitialise) {
 			_siteContexte(siteContexte);
@@ -119,7 +129,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// configSite //
 	////////////////
 
-	/**	L'entité « configSite »
+	/**	 L'entité configSite
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -127,7 +137,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<ConfigSite> configSiteCouverture = new Couverture<ConfigSite>().p(this).c(ConfigSite.class).var("configSite").o(configSite);
 
-	/**	<br/>L'entité « configSite »
+	/**	<br/> L'entité configSite
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:configSite">Trouver l'entité configSite dans Solr</a>
 	 * <br/>
@@ -142,6 +152,9 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public void setConfigSite(ConfigSite configSite) {
 		this.configSite = configSite;
 		this.configSiteCouverture.dejaInitialise = true;
+	}
+	public static ConfigSite staticSetConfigSite(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected AppliSwagger2 configSiteInit() {
 		if(!configSiteCouverture.dejaInitialise) {
@@ -159,7 +172,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// appliChemin //
 	/////////////////
 
-	/**	L'entité « appliChemin »
+	/**	 L'entité appliChemin
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -167,7 +180,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> appliCheminCouverture = new Couverture<String>().p(this).c(String.class).var("appliChemin").o(appliChemin);
 
-	/**	<br/>L'entité « appliChemin »
+	/**	<br/> L'entité appliChemin
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:appliChemin">Trouver l'entité appliChemin dans Solr</a>
 	 * <br/>
@@ -178,10 +191,12 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public String getAppliChemin() {
 		return appliChemin;
 	}
-
-	public void setAppliChemin(String appliChemin) {
-		this.appliChemin = appliChemin;
+	public void setAppliChemin(String o) {
+		this.appliChemin = AppliSwagger2.staticSetAppliChemin(requeteSite_, o);
 		this.appliCheminCouverture.dejaInitialise = true;
+	}
+	public static String staticSetAppliChemin(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected AppliSwagger2 appliCheminInit() {
 		if(!appliCheminCouverture.dejaInitialise) {
@@ -193,12 +208,28 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		return (AppliSwagger2)this;
 	}
 
+	public static String staticSolrAppliChemin(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrAppliChemin(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAppliChemin(RequeteSiteFrFR requeteSite_, String o) {
+		return AppliSwagger2.staticSolrStrAppliChemin(requeteSite_, AppliSwagger2.staticSolrAppliChemin(requeteSite_, AppliSwagger2.staticSetAppliChemin(requeteSite_, o)));
+	}
+
 	public String solrAppliChemin() {
-		return appliChemin;
+		return AppliSwagger2.staticSolrAppliChemin(requeteSite_, appliChemin);
 	}
 
 	public String strAppliChemin() {
 		return appliChemin == null ? "" : appliChemin;
+	}
+
+	public String sqlAppliChemin() {
+		return appliChemin;
 	}
 
 	public String jsonAppliChemin() {
@@ -221,7 +252,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// appliNom //
 	//////////////
 
-	/**	L'entité « appliNom »
+	/**	 L'entité appliNom
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -229,7 +260,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> appliNomCouverture = new Couverture<String>().p(this).c(String.class).var("appliNom").o(appliNom);
 
-	/**	<br/>L'entité « appliNom »
+	/**	<br/> L'entité appliNom
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:appliNom">Trouver l'entité appliNom dans Solr</a>
 	 * <br/>
@@ -240,10 +271,12 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public String getAppliNom() {
 		return appliNom;
 	}
-
-	public void setAppliNom(String appliNom) {
-		this.appliNom = appliNom;
+	public void setAppliNom(String o) {
+		this.appliNom = AppliSwagger2.staticSetAppliNom(requeteSite_, o);
 		this.appliNomCouverture.dejaInitialise = true;
+	}
+	public static String staticSetAppliNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected AppliSwagger2 appliNomInit() {
 		if(!appliNomCouverture.dejaInitialise) {
@@ -255,12 +288,28 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		return (AppliSwagger2)this;
 	}
 
+	public static String staticSolrAppliNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrAppliNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqAppliNom(RequeteSiteFrFR requeteSite_, String o) {
+		return AppliSwagger2.staticSolrStrAppliNom(requeteSite_, AppliSwagger2.staticSolrAppliNom(requeteSite_, AppliSwagger2.staticSetAppliNom(requeteSite_, o)));
+	}
+
 	public String solrAppliNom() {
-		return appliNom;
+		return AppliSwagger2.staticSolrAppliNom(requeteSite_, appliNom);
 	}
 
 	public String strAppliNom() {
 		return appliNom == null ? "" : appliNom;
+	}
+
+	public String sqlAppliNom() {
+		return appliNom;
 	}
 
 	public String jsonAppliNom() {
@@ -283,7 +332,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// langueNom //
 	///////////////
 
-	/**	L'entité « langueNom »
+	/**	 L'entité langueNom
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -291,7 +340,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> langueNomCouverture = new Couverture<String>().p(this).c(String.class).var("langueNom").o(langueNom);
 
-	/**	<br/>L'entité « langueNom »
+	/**	<br/> L'entité langueNom
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:langueNom">Trouver l'entité langueNom dans Solr</a>
 	 * <br/>
@@ -302,10 +351,12 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public String getLangueNom() {
 		return langueNom;
 	}
-
-	public void setLangueNom(String langueNom) {
-		this.langueNom = langueNom;
+	public void setLangueNom(String o) {
+		this.langueNom = AppliSwagger2.staticSetLangueNom(requeteSite_, o);
 		this.langueNomCouverture.dejaInitialise = true;
+	}
+	public static String staticSetLangueNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected AppliSwagger2 langueNomInit() {
 		if(!langueNomCouverture.dejaInitialise) {
@@ -317,12 +368,28 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		return (AppliSwagger2)this;
 	}
 
+	public static String staticSolrLangueNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrLangueNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqLangueNom(RequeteSiteFrFR requeteSite_, String o) {
+		return AppliSwagger2.staticSolrStrLangueNom(requeteSite_, AppliSwagger2.staticSolrLangueNom(requeteSite_, AppliSwagger2.staticSetLangueNom(requeteSite_, o)));
+	}
+
 	public String solrLangueNom() {
-		return langueNom;
+		return AppliSwagger2.staticSolrLangueNom(requeteSite_, langueNom);
 	}
 
 	public String strLangueNom() {
 		return langueNom == null ? "" : langueNom;
+	}
+
+	public String sqlLangueNom() {
+		return langueNom;
 	}
 
 	public String jsonLangueNom() {
@@ -345,7 +412,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// openApiVersion //
 	////////////////////
 
-	/**	L'entité « openApiVersion »
+	/**	 L'entité openApiVersion
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -353,7 +420,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> openApiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("openApiVersion").o(openApiVersion);
 
-	/**	<br/>L'entité « openApiVersion »
+	/**	<br/> L'entité openApiVersion
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:openApiVersion">Trouver l'entité openApiVersion dans Solr</a>
 	 * <br/>
@@ -364,10 +431,12 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public String getOpenApiVersion() {
 		return openApiVersion;
 	}
-
-	public void setOpenApiVersion(String openApiVersion) {
-		this.openApiVersion = openApiVersion;
+	public void setOpenApiVersion(String o) {
+		this.openApiVersion = AppliSwagger2.staticSetOpenApiVersion(requeteSite_, o);
 		this.openApiVersionCouverture.dejaInitialise = true;
+	}
+	public static String staticSetOpenApiVersion(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected AppliSwagger2 openApiVersionInit() {
 		if(!openApiVersionCouverture.dejaInitialise) {
@@ -379,12 +448,28 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		return (AppliSwagger2)this;
 	}
 
+	public static String staticSolrOpenApiVersion(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrOpenApiVersion(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqOpenApiVersion(RequeteSiteFrFR requeteSite_, String o) {
+		return AppliSwagger2.staticSolrStrOpenApiVersion(requeteSite_, AppliSwagger2.staticSolrOpenApiVersion(requeteSite_, AppliSwagger2.staticSetOpenApiVersion(requeteSite_, o)));
+	}
+
 	public String solrOpenApiVersion() {
-		return openApiVersion;
+		return AppliSwagger2.staticSolrOpenApiVersion(requeteSite_, openApiVersion);
 	}
 
 	public String strOpenApiVersion() {
 		return openApiVersion == null ? "" : openApiVersion;
+	}
+
+	public String sqlOpenApiVersion() {
+		return openApiVersion;
 	}
 
 	public String jsonOpenApiVersion() {
@@ -407,7 +492,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// openApiVersionNumero //
 	//////////////////////////
 
-	/**	L'entité « openApiVersionNumero »
+	/**	 L'entité openApiVersionNumero
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -416,7 +501,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<Integer> openApiVersionNumeroCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("openApiVersionNumero").o(openApiVersionNumero);
 
-	/**	<br/>L'entité « openApiVersionNumero »
+	/**	<br/> L'entité openApiVersionNumero
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:openApiVersionNumero">Trouver l'entité openApiVersionNumero dans Solr</a>
 	 * <br/>
@@ -432,11 +517,14 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		this.openApiVersionNumero = openApiVersionNumero;
 		this.openApiVersionNumeroCouverture.dejaInitialise = true;
 	}
-	public AppliSwagger2 setOpenApiVersionNumero(String o) {
-		if(NumberUtils.isParsable(o))
-			this.openApiVersionNumero = Integer.parseInt(o);
+	public void setOpenApiVersionNumero(String o) {
+		this.openApiVersionNumero = AppliSwagger2.staticSetOpenApiVersionNumero(requeteSite_, o);
 		this.openApiVersionNumeroCouverture.dejaInitialise = true;
-		return (AppliSwagger2)this;
+	}
+	public static Integer staticSetOpenApiVersionNumero(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected AppliSwagger2 openApiVersionNumeroInit() {
 		if(!openApiVersionNumeroCouverture.dejaInitialise) {
@@ -448,12 +536,28 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		return (AppliSwagger2)this;
 	}
 
+	public static Integer staticSolrOpenApiVersionNumero(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrOpenApiVersionNumero(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqOpenApiVersionNumero(RequeteSiteFrFR requeteSite_, String o) {
+		return AppliSwagger2.staticSolrStrOpenApiVersionNumero(requeteSite_, AppliSwagger2.staticSolrOpenApiVersionNumero(requeteSite_, AppliSwagger2.staticSetOpenApiVersionNumero(requeteSite_, o)));
+	}
+
 	public Integer solrOpenApiVersionNumero() {
-		return openApiVersionNumero;
+		return AppliSwagger2.staticSolrOpenApiVersionNumero(requeteSite_, openApiVersionNumero);
 	}
 
 	public String strOpenApiVersionNumero() {
 		return openApiVersionNumero == null ? "" : openApiVersionNumero.toString();
+	}
+
+	public Integer sqlOpenApiVersionNumero() {
+		return openApiVersionNumero;
 	}
 
 	public String jsonOpenApiVersionNumero() {
@@ -476,7 +580,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// tabsSchema //
 	////////////////
 
-	/**	L'entité « tabsSchema »
+	/**	 L'entité tabsSchema
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonSerialize(using = ToStringSerializer.class)
@@ -485,7 +589,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<Integer> tabsSchemaCouverture = new Couverture<Integer>().p(this).c(Integer.class).var("tabsSchema").o(tabsSchema);
 
-	/**	<br/>L'entité « tabsSchema »
+	/**	<br/> L'entité tabsSchema
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:tabsSchema">Trouver l'entité tabsSchema dans Solr</a>
 	 * <br/>
@@ -501,11 +605,14 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		this.tabsSchema = tabsSchema;
 		this.tabsSchemaCouverture.dejaInitialise = true;
 	}
-	public AppliSwagger2 setTabsSchema(String o) {
-		if(NumberUtils.isParsable(o))
-			this.tabsSchema = Integer.parseInt(o);
+	public void setTabsSchema(String o) {
+		this.tabsSchema = AppliSwagger2.staticSetTabsSchema(requeteSite_, o);
 		this.tabsSchemaCouverture.dejaInitialise = true;
-		return (AppliSwagger2)this;
+	}
+	public static Integer staticSetTabsSchema(RequeteSiteFrFR requeteSite_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
 	}
 	protected AppliSwagger2 tabsSchemaInit() {
 		if(!tabsSchemaCouverture.dejaInitialise) {
@@ -517,12 +624,28 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		return (AppliSwagger2)this;
 	}
 
+	public static Integer staticSolrTabsSchema(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o;
+	}
+
+	public static String staticSolrStrTabsSchema(RequeteSiteFrFR requeteSite_, Integer o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqTabsSchema(RequeteSiteFrFR requeteSite_, String o) {
+		return AppliSwagger2.staticSolrStrTabsSchema(requeteSite_, AppliSwagger2.staticSolrTabsSchema(requeteSite_, AppliSwagger2.staticSetTabsSchema(requeteSite_, o)));
+	}
+
 	public Integer solrTabsSchema() {
-		return tabsSchema;
+		return AppliSwagger2.staticSolrTabsSchema(requeteSite_, tabsSchema);
 	}
 
 	public String strTabsSchema() {
 		return tabsSchema == null ? "" : tabsSchema.toString();
+	}
+
+	public Integer sqlTabsSchema() {
+		return tabsSchema;
 	}
 
 	public String jsonTabsSchema() {
@@ -545,7 +668,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// apiVersion //
 	////////////////
 
-	/**	L'entité « apiVersion »
+	/**	 L'entité apiVersion
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -553,7 +676,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> apiVersionCouverture = new Couverture<String>().p(this).c(String.class).var("apiVersion").o(apiVersion);
 
-	/**	<br/>L'entité « apiVersion »
+	/**	<br/> L'entité apiVersion
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:apiVersion">Trouver l'entité apiVersion dans Solr</a>
 	 * <br/>
@@ -564,10 +687,12 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public String getApiVersion() {
 		return apiVersion;
 	}
-
-	public void setApiVersion(String apiVersion) {
-		this.apiVersion = apiVersion;
+	public void setApiVersion(String o) {
+		this.apiVersion = AppliSwagger2.staticSetApiVersion(requeteSite_, o);
 		this.apiVersionCouverture.dejaInitialise = true;
+	}
+	public static String staticSetApiVersion(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected AppliSwagger2 apiVersionInit() {
 		if(!apiVersionCouverture.dejaInitialise) {
@@ -579,12 +704,28 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		return (AppliSwagger2)this;
 	}
 
+	public static String staticSolrApiVersion(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrApiVersion(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqApiVersion(RequeteSiteFrFR requeteSite_, String o) {
+		return AppliSwagger2.staticSolrStrApiVersion(requeteSite_, AppliSwagger2.staticSolrApiVersion(requeteSite_, AppliSwagger2.staticSetApiVersion(requeteSite_, o)));
+	}
+
 	public String solrApiVersion() {
-		return apiVersion;
+		return AppliSwagger2.staticSolrApiVersion(requeteSite_, apiVersion);
 	}
 
 	public String strApiVersion() {
 		return apiVersion == null ? "" : apiVersion;
+	}
+
+	public String sqlApiVersion() {
+		return apiVersion;
 	}
 
 	public String jsonApiVersion() {
@@ -607,7 +748,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// openApiYamlChemin //
 	///////////////////////
 
-	/**	L'entité « openApiYamlChemin »
+	/**	 L'entité openApiYamlChemin
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -615,7 +756,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<String> openApiYamlCheminCouverture = new Couverture<String>().p(this).c(String.class).var("openApiYamlChemin").o(openApiYamlChemin);
 
-	/**	<br/>L'entité « openApiYamlChemin »
+	/**	<br/> L'entité openApiYamlChemin
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:openApiYamlChemin">Trouver l'entité openApiYamlChemin dans Solr</a>
 	 * <br/>
@@ -626,10 +767,12 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public String getOpenApiYamlChemin() {
 		return openApiYamlChemin;
 	}
-
-	public void setOpenApiYamlChemin(String openApiYamlChemin) {
-		this.openApiYamlChemin = openApiYamlChemin;
+	public void setOpenApiYamlChemin(String o) {
+		this.openApiYamlChemin = AppliSwagger2.staticSetOpenApiYamlChemin(requeteSite_, o);
 		this.openApiYamlCheminCouverture.dejaInitialise = true;
+	}
+	public static String staticSetOpenApiYamlChemin(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
 	}
 	protected AppliSwagger2 openApiYamlCheminInit() {
 		if(!openApiYamlCheminCouverture.dejaInitialise) {
@@ -641,12 +784,28 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		return (AppliSwagger2)this;
 	}
 
+	public static String staticSolrOpenApiYamlChemin(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrOpenApiYamlChemin(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqOpenApiYamlChemin(RequeteSiteFrFR requeteSite_, String o) {
+		return AppliSwagger2.staticSolrStrOpenApiYamlChemin(requeteSite_, AppliSwagger2.staticSolrOpenApiYamlChemin(requeteSite_, AppliSwagger2.staticSetOpenApiYamlChemin(requeteSite_, o)));
+	}
+
 	public String solrOpenApiYamlChemin() {
-		return openApiYamlChemin;
+		return AppliSwagger2.staticSolrOpenApiYamlChemin(requeteSite_, openApiYamlChemin);
 	}
 
 	public String strOpenApiYamlChemin() {
 		return openApiYamlChemin == null ? "" : openApiYamlChemin;
+	}
+
+	public String sqlOpenApiYamlChemin() {
+		return openApiYamlChemin;
 	}
 
 	public String jsonOpenApiYamlChemin() {
@@ -669,7 +828,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// openApiYamlFichier //
 	////////////////////////
 
-	/**	L'entité « openApiYamlFichier »
+	/**	 L'entité openApiYamlFichier
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -677,7 +836,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<File> openApiYamlFichierCouverture = new Couverture<File>().p(this).c(File.class).var("openApiYamlFichier").o(openApiYamlFichier);
 
-	/**	<br/>L'entité « openApiYamlFichier »
+	/**	<br/> L'entité openApiYamlFichier
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:openApiYamlFichier">Trouver l'entité openApiYamlFichier dans Solr</a>
 	 * <br/>
@@ -693,6 +852,9 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		this.openApiYamlFichier = openApiYamlFichier;
 		this.openApiYamlFichierCouverture.dejaInitialise = true;
 	}
+	public static File staticSetOpenApiYamlFichier(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
+	}
 	protected AppliSwagger2 openApiYamlFichierInit() {
 		if(!openApiYamlFichierCouverture.dejaInitialise) {
 			_openApiYamlFichier(openApiYamlFichierCouverture);
@@ -707,7 +869,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// w //
 	///////
 
-	/**	L'entité « w »
+	/**	 L'entité w
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -715,7 +877,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("w").o(w);
 
-	/**	<br/>L'entité « w »
+	/**	<br/> L'entité w
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:w">Trouver l'entité w dans Solr</a>
 	 * <br/>
@@ -730,6 +892,9 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public void setW(ToutEcrivain w) {
 		this.w = w;
 		this.wCouverture.dejaInitialise = true;
+	}
+	public static ToutEcrivain staticSetW(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected AppliSwagger2 wInit() {
 		if(!wCouverture.dejaInitialise) {
@@ -747,7 +912,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// wChemins //
 	//////////////
 
-	/**	L'entité « wChemins »
+	/**	 L'entité wChemins
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -755,7 +920,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCheminsCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wChemins").o(wChemins);
 
-	/**	<br/>L'entité « wChemins »
+	/**	<br/> L'entité wChemins
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:wChemins">Trouver l'entité wChemins dans Solr</a>
 	 * <br/>
@@ -770,6 +935,9 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public void setWChemins(ToutEcrivain wChemins) {
 		this.wChemins = wChemins;
 		this.wCheminsCouverture.dejaInitialise = true;
+	}
+	public static ToutEcrivain staticSetWChemins(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected AppliSwagger2 wCheminsInit() {
 		if(!wCheminsCouverture.dejaInitialise) {
@@ -787,7 +955,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// wCorpsRequetes //
 	////////////////////
 
-	/**	L'entité « wCorpsRequetes »
+	/**	 L'entité wCorpsRequetes
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -795,7 +963,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wCorpsRequetesCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wCorpsRequetes").o(wCorpsRequetes);
 
-	/**	<br/>L'entité « wCorpsRequetes »
+	/**	<br/> L'entité wCorpsRequetes
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:wCorpsRequetes">Trouver l'entité wCorpsRequetes dans Solr</a>
 	 * <br/>
@@ -810,6 +978,9 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public void setWCorpsRequetes(ToutEcrivain wCorpsRequetes) {
 		this.wCorpsRequetes = wCorpsRequetes;
 		this.wCorpsRequetesCouverture.dejaInitialise = true;
+	}
+	public static ToutEcrivain staticSetWCorpsRequetes(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected AppliSwagger2 wCorpsRequetesInit() {
 		if(!wCorpsRequetesCouverture.dejaInitialise) {
@@ -827,7 +998,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	// wSchemas //
 	//////////////
 
-	/**	L'entité « wSchemas »
+	/**	 L'entité wSchemas
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonInclude(Include.NON_NULL)
@@ -835,7 +1006,7 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	@JsonIgnore
 	public Couverture<ToutEcrivain> wSchemasCouverture = new Couverture<ToutEcrivain>().p(this).c(ToutEcrivain.class).var("wSchemas").o(wSchemas);
 
-	/**	<br/>L'entité « wSchemas »
+	/**	<br/> L'entité wSchemas
 	 *  est défini comme null avant d'être initialisé. 
 	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.vertx.AppliSwagger2&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:wSchemas">Trouver l'entité wSchemas dans Solr</a>
 	 * <br/>
@@ -850,6 +1021,9 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 	public void setWSchemas(ToutEcrivain wSchemas) {
 		this.wSchemas = wSchemas;
 		this.wSchemasCouverture.dejaInitialise = true;
+	}
+	public static ToutEcrivain staticSetWSchemas(RequeteSiteFrFR requeteSite_, String o) {
+		return null;
 	}
 	protected AppliSwagger2 wSchemasInit() {
 		if(!wSchemasCouverture.dejaInitialise) {
@@ -938,6 +1112,10 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 				Cluster cluster = (Cluster)o;
 				o = cluster.obtenirPourClasse(v);
 			}
+			else if(o instanceof Map) {
+				Map<?, ?> map = (Map<?, ?>)o;
+				o = map.get(v);
+			}
 		}
 		return o;
 	}
@@ -1006,6 +1184,126 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 		}
 	}
 
+	///////////////
+	// staticSet //
+	///////////////
+
+	public static Object staticSetPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSetAppliSwagger2(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSetAppliSwagger2(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "appliChemin":
+			return AppliSwagger2.staticSetAppliChemin(requeteSite_, o);
+		case "appliNom":
+			return AppliSwagger2.staticSetAppliNom(requeteSite_, o);
+		case "langueNom":
+			return AppliSwagger2.staticSetLangueNom(requeteSite_, o);
+		case "openApiVersion":
+			return AppliSwagger2.staticSetOpenApiVersion(requeteSite_, o);
+		case "openApiVersionNumero":
+			return AppliSwagger2.staticSetOpenApiVersionNumero(requeteSite_, o);
+		case "tabsSchema":
+			return AppliSwagger2.staticSetTabsSchema(requeteSite_, o);
+		case "apiVersion":
+			return AppliSwagger2.staticSetApiVersion(requeteSite_, o);
+		case "openApiYamlChemin":
+			return AppliSwagger2.staticSetOpenApiYamlChemin(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
+	////////////////
+	// staticSolr //
+	////////////////
+
+	public static Object staticSolrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrAppliSwagger2(entiteVar,  requeteSite_, o);
+	}
+	public static Object staticSolrAppliSwagger2(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "appliChemin":
+			return AppliSwagger2.staticSolrAppliChemin(requeteSite_, (String)o);
+		case "appliNom":
+			return AppliSwagger2.staticSolrAppliNom(requeteSite_, (String)o);
+		case "langueNom":
+			return AppliSwagger2.staticSolrLangueNom(requeteSite_, (String)o);
+		case "openApiVersion":
+			return AppliSwagger2.staticSolrOpenApiVersion(requeteSite_, (String)o);
+		case "openApiVersionNumero":
+			return AppliSwagger2.staticSolrOpenApiVersionNumero(requeteSite_, (Integer)o);
+		case "tabsSchema":
+			return AppliSwagger2.staticSolrTabsSchema(requeteSite_, (Integer)o);
+		case "apiVersion":
+			return AppliSwagger2.staticSolrApiVersion(requeteSite_, (String)o);
+		case "openApiYamlChemin":
+			return AppliSwagger2.staticSolrOpenApiYamlChemin(requeteSite_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	///////////////////
+	// staticSolrStr //
+	///////////////////
+
+	public static String staticSolrStrPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		return staticSolrStrAppliSwagger2(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrStrAppliSwagger2(String entiteVar, RequeteSiteFrFR requeteSite_, Object o) {
+		switch(entiteVar) {
+		case "appliChemin":
+			return AppliSwagger2.staticSolrStrAppliChemin(requeteSite_, (String)o);
+		case "appliNom":
+			return AppliSwagger2.staticSolrStrAppliNom(requeteSite_, (String)o);
+		case "langueNom":
+			return AppliSwagger2.staticSolrStrLangueNom(requeteSite_, (String)o);
+		case "openApiVersion":
+			return AppliSwagger2.staticSolrStrOpenApiVersion(requeteSite_, (String)o);
+		case "openApiVersionNumero":
+			return AppliSwagger2.staticSolrStrOpenApiVersionNumero(requeteSite_, (Integer)o);
+		case "tabsSchema":
+			return AppliSwagger2.staticSolrStrTabsSchema(requeteSite_, (Integer)o);
+		case "apiVersion":
+			return AppliSwagger2.staticSolrStrApiVersion(requeteSite_, (String)o);
+		case "openApiYamlChemin":
+			return AppliSwagger2.staticSolrStrOpenApiYamlChemin(requeteSite_, (String)o);
+			default:
+				return null;
+		}
+	}
+
+	//////////////////
+	// staticSolrFq //
+	//////////////////
+
+	public static String staticSolrFqPourClasse(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		return staticSolrFqAppliSwagger2(entiteVar,  requeteSite_, o);
+	}
+	public static String staticSolrFqAppliSwagger2(String entiteVar, RequeteSiteFrFR requeteSite_, String o) {
+		switch(entiteVar) {
+		case "appliChemin":
+			return AppliSwagger2.staticSolrFqAppliChemin(requeteSite_, o);
+		case "appliNom":
+			return AppliSwagger2.staticSolrFqAppliNom(requeteSite_, o);
+		case "langueNom":
+			return AppliSwagger2.staticSolrFqLangueNom(requeteSite_, o);
+		case "openApiVersion":
+			return AppliSwagger2.staticSolrFqOpenApiVersion(requeteSite_, o);
+		case "openApiVersionNumero":
+			return AppliSwagger2.staticSolrFqOpenApiVersionNumero(requeteSite_, o);
+		case "tabsSchema":
+			return AppliSwagger2.staticSolrFqTabsSchema(requeteSite_, o);
+		case "apiVersion":
+			return AppliSwagger2.staticSolrFqApiVersion(requeteSite_, o);
+		case "openApiYamlChemin":
+			return AppliSwagger2.staticSolrFqOpenApiYamlChemin(requeteSite_, o);
+			default:
+				return null;
+		}
+	}
+
 	/////////////
 	// definir //
 	/////////////
@@ -1018,15 +1316,37 @@ public abstract class AppliSwagger2Gen<DEV> extends Object {
 				if(o == null)
 					o = definirAppliSwagger2(v, val);
 				else if(o instanceof Cluster) {
-					Cluster cluster = (Cluster)o;
-					o = cluster.definirPourClasse(v, val);
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
 				}
 			}
 		}
 		return o != null;
 	}
 	public Object definirAppliSwagger2(String var, String val) {
-		switch(var) {
+		switch(var.toLowerCase()) {
+			default:
+				return null;
+		}
+	}
+
+	public boolean definirPourClasse(String var, Object val) {
+		String[] vars = StringUtils.split(var, ".");
+		Object o = null;
+		if(val != null) {
+			for(String v : vars) {
+				if(o == null)
+					o = definirAppliSwagger2(v, val);
+				else if(o instanceof Cluster) {
+					Cluster oCluster = (Cluster)o;
+					o = oCluster.definirPourClasse(v, val);
+				}
+			}
+		}
+		return o != null;
+	}
+	public Object definirAppliSwagger2(String var, Object val) {
+		switch(var.toLowerCase()) {
 			default:
 				return null;
 		}

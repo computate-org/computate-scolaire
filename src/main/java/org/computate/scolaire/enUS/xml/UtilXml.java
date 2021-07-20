@@ -1,7 +1,8 @@
 package org.computate.scolaire.enUS.xml;
 
-/**	
- *	Static methods for escaping XML. 
+/**
+ * Static methods for escaping XML. 
+ * CanonicalName: org.computate.scolaire.frFR.xml.OutilXml
  **/
 public class UtilXml {
 

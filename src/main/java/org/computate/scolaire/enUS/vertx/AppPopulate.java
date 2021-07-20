@@ -5,6 +5,9 @@ import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.wrap.Wrap;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 
+/**
+ * CanonicalName: org.computate.scolaire.frFR.vertx.AppliPeupler
+ **/
 public class AppPopulate extends AppPopulateGen<Object> {
 
 	protected void _siteRequest_(Wrap<SiteRequestEnUS> c) {
