@@ -328,14 +328,18 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	}
 
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
-		if(chargeAmount != null 
-				&& (
-						chargeEnrollment
-						|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.withDayOfMonth(paymentDay).compareTo(now) >= 0
-						|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0
-				) && (chargeEnrollment || chargeFirstLast || paymentDate.compareTo(paymentNext.minusMonths(1)) > 0) 
-				&& (chargeEnrollment || paymentDate.compareTo(paymentNext) <= 0)
-				)
+		if(chargeAmount != null && paymentDate != null && (
+				chargeEnrollment
+				|| paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0
+				))
+//		if(chargeAmount != null 
+//				&& (
+//						chargeEnrollment
+//						|| chargeFirstLast && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.withDayOfMonth(paymentDay).compareTo(now) >= 0
+//						|| paymentDate != null && paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0
+//				) && (chargeEnrollment || chargeFirstLast || paymentDate.compareTo(paymentNext.minusMonths(1)) > 0) 
+//				&& (chargeEnrollment || paymentDate.compareTo(paymentNext) <= 0)
+//				)
 			c.o(chargeAmount);
 	}
 

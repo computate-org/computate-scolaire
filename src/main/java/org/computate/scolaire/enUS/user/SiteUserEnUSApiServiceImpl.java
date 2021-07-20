@@ -1,10 +1,12 @@
 package org.computate.scolaire.enUS.user;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.util.ClientUtils;
@@ -22,6 +24,7 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
+import io.vertx.core.Promise;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.api.OperationRequest;
@@ -318,5 +321,121 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 			LOGGER.error(String.format("searchpageSiteUser failed. ", ex));
 			errorSiteUser(siteRequest, eventHandler, Future.failedFuture(ex));
 		}
+	}
+
+	@Override public Future<SiteUser> patchSiteUserFuture(SiteUser o, Boolean inheritPk, Handler<AsyncResult<SiteUser>> eventHandler) {
+		Promise<SiteUser> promise = Promise.promise();
+		SiteRequestEnUS siteRequest = o.getSiteRequest_();
+		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			if(apiRequest != null && apiRequest.getNumFound() == 1L) {
+				apiRequest.setOriginal(o);
+				apiRequest.setPk(o.getPk());
+			}
+			JsonObject jsonObject = siteRequest.getJsonObject();
+			if(CollectionUtils.containsAny(jsonObject.fieldNames(), Arrays.asList("setCustomerProfileId1", "setCustomerProfileId2", "setCustomerProfileId3", "setCustomerProfileId4", "setCustomerProfileId5", "setCustomerProfileId6", "setCustomerProfileId7", "setCustomerProfileId8", "setCustomerProfileId9", "setCustomerProfileId10"))) {
+				throw new RuntimeException("Error processing request. ");
+			}
+			sqlConnectionSiteUser(siteRequest, a -> {
+				if(a.succeeded()) {
+					sqlTransactionSiteUser(siteRequest, b -> {
+						if(b.succeeded()) {
+							sqlPATCHSiteUser(o, inheritPk, c -> {
+								if(c.succeeded()) {
+									SiteUser siteUser = c.result();
+									defineIndexSiteUser(siteUser, d -> {
+										if(d.succeeded()) {
+											if(apiRequest != null) {
+												apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+												if(apiRequest.getNumFound() == 1L) {
+													siteUser.apiRequestSiteUser();
+												}
+												siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+											}
+											eventHandler.handle(Future.succeededFuture(siteUser));
+											promise.complete(siteUser);
+										} else {
+											LOGGER.error(String.format("patchSiteUserFuture failed. ", d.cause()));
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									LOGGER.error(String.format("patchSiteUserFuture failed. ", c.cause()));
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							LOGGER.error(String.format("patchSiteUserFuture failed. ", b.cause()));
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					LOGGER.error(String.format("patchSiteUserFuture failed. ", a.cause()));
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			LOGGER.error(String.format("patchSiteUserFuture failed. ", e));
+			errorSiteUser(siteRequest, null, Future.failedFuture(e));
+		}
+		return promise.future();
+	}
+
+	@Override public Future<SiteUser> postSiteUserFuture(SiteRequestEnUS siteRequest, Boolean inheritPk, Handler<AsyncResult<SiteUser>> eventHandler) {
+		Promise<SiteUser> promise = Promise.promise();
+		JsonObject jsonObject = siteRequest.getJsonObject();
+		if(CollectionUtils.containsAny(jsonObject.fieldNames(), Arrays.asList("customerProfileId1", "customerProfileId2", "customerProfileId3", "customerProfileId4", "customerProfileId5", "customerProfileId6", "customerProfileId7", "customerProfileId8", "customerProfileId9", "customerProfileId10"))) {
+			throw new RuntimeException("Error processing request. ");
+		}
+		try {
+			sqlConnectionSiteUser(siteRequest, a -> {
+				if(a.succeeded()) {
+					sqlTransactionSiteUser(siteRequest, b -> {
+						if(b.succeeded()) {
+							createSiteUser(siteRequest, c -> {
+								if(c.succeeded()) {
+									SiteUser siteUser = c.result();
+									sqlPOSTSiteUser(siteUser, inheritPk, d -> {
+										if(d.succeeded()) {
+											defineIndexSiteUser(siteUser, e -> {
+												if(e.succeeded()) {
+													ApiRequest apiRequest = siteRequest.getApiRequest_();
+													if(apiRequest != null) {
+														apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+														siteUser.apiRequestSiteUser();
+														siteRequest.getVertx().eventBus().publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+													}
+													eventHandler.handle(Future.succeededFuture(siteUser));
+													promise.complete(siteUser);
+												} else {
+													LOGGER.error(String.format("postSiteUserFuture failed. ", e.cause()));
+													eventHandler.handle(Future.failedFuture(e.cause()));
+												}
+											});
+										} else {
+											LOGGER.error(String.format("postSiteUserFuture failed. ", d.cause()));
+											eventHandler.handle(Future.failedFuture(d.cause()));
+										}
+									});
+								} else {
+									LOGGER.error(String.format("postSiteUserFuture failed. ", c.cause()));
+									eventHandler.handle(Future.failedFuture(c.cause()));
+								}
+							});
+						} else {
+							LOGGER.error(String.format("postSiteUserFuture failed. ", b.cause()));
+							eventHandler.handle(Future.failedFuture(b.cause()));
+						}
+					});
+				} else {
+					LOGGER.error(String.format("postSiteUserFuture failed. ", a.cause()));
+					eventHandler.handle(Future.failedFuture(a.cause()));
+				}
+			});
+		} catch(Exception e) {
+			LOGGER.error(String.format("postSiteUserFuture failed. ", e));
+			errorSiteUser(siteRequest, null, Future.failedFuture(e));
+		}
+		return promise.future();
 	}
 }

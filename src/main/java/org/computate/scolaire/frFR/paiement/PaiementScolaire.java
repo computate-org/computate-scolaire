@@ -1226,14 +1226,18 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	 * r.enUS: chargeLateFee
 	 */                   
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
-		if(fraisMontant != null 
-				&& (
-						fraisInscription
-						|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
-						|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now) >= 0
-				) && (fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) 
-				&& (fraisInscription || paiementDate.compareTo(paiementProchain) <= 0)
-				)
+		if(fraisMontant != null && paiementDate != null && (
+				fraisInscription
+				|| paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now) >= 0
+				))
+//		if(fraisMontant != null 
+//				&& (
+//						fraisInscription
+//						|| fraisPremierDernier && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.withDayOfMonth(paiementJour).compareTo(now) >= 0
+//						|| paiementDate != null && paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now) >= 0
+//				) && (fraisInscription || fraisPremierDernier || paiementDate.compareTo(paiementProchain.minusMonths(1)) > 0) 
+//				&& (fraisInscription || paiementDate.compareTo(paiementProchain) <= 0)
+//				)
 			c.o(fraisMontant);
 	}
 
