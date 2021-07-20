@@ -2176,7 +2176,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				profile.setCustomerProfileId(customerProfileId);
 				transactionRequest.setProfile(profile);
 				OrderType order = new OrderType();
-				order.setDescription(StringUtils.truncate(String.format("%s payment for $%s%s %s %s", enrollmentKey, amount, " 3%", childCompleteNamePreferred, fd.format(chargeEndDate)), 255));
+				order.setDescription(StringUtils.truncate(String.format("%s payment for $%s %s %s", enrollmentKey, amount, childCompleteNamePreferred, fd.format(chargeEndDate)), 255));
 				transactionRequest.setOrder(order);
 				hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
 
@@ -2210,7 +2210,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				{ e("form").a("style", "display: inline-block; ").a("method", "post").a("target", "_blank").a("action", configSite.getAuthorizeUrl() + "/payment/payment").f();
 					e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
 					{ e("button").a("class", "w3-button w3-light-gray w3-text-purple text-decoration-underline ").a("style", "white-space: normal; text-align: left; ").a("type", "submit").f();
-						sx("Make a payment by credit for a 3% fee. Cash, check, or e-check are always accepted as well. ");
+						sx("Make a payment by credit. Cash, check, or e-check are always accepted as well. ");
 					} g("button");
 				} g("form");
 			}
