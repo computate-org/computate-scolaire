@@ -1194,14 +1194,14 @@ public class PageLayout extends PageLayoutGen<Object> {
 		}
 	}
 
-	public void  writeMakePayment(Integer ecoleNumero, BigDecimal amount, Long enrollmentKey, String childCompleteNamePreferred) {
+	public void  writeMakePayment(Integer schoolNumber, BigDecimal amount, Long enrollmentKey, String childCompleteNamePreferred) {
 		SiteConfig siteConfig = siteRequest_.getSiteConfig_();
 		SiteUser siteUser = siteRequest_.getSiteUser();
-		String authorizeApiLoginId = (String)siteConfig.obtainSiteConfig("authorizeApiLoginId" + ecoleNumero);
-		String authorizeTransactionKey = (String)siteConfig.obtainSiteConfig("authorizeTransactionKey" + ecoleNumero);
+		String authorizeApiLoginId = (String)siteConfig.obtainSiteConfig("authorizeApiLoginId" + schoolNumber);
+		String authorizeTransactionKey = (String)siteConfig.obtainSiteConfig("authorizeTransactionKey" + schoolNumber);
 
 		if(siteUser != null) {
-			String customerProfileId = (String)siteUser.obtainSiteUser("customerProfileId" + ecoleNumero);
+			String customerProfileId = (String)siteUser.obtainSiteUser("customerProfileId" + schoolNumber);
 			if(customerProfileId != null) {
 				MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
 				merchantAuthenticationType.setName(authorizeApiLoginId);
@@ -1247,7 +1247,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				else {
 					profilePageResponse = hostedProfileController.getApiResponse();
 					if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
-						throw new RuntimeException(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+						throw new RuntimeException(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s, school number: %s, enrollment key: %s, child name: %s", m.getCode(), m.getText(), schoolNumber, enrollmentKey, childCompleteNamePreferred)).orElse("GetHostedProfilePageRequest failed. "));
 					}
 				}
 

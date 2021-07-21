@@ -2056,6 +2056,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	}
 
 	/**
+	 * Param1.var.enUS: schoolNumber
 	 * r: obtenirConfigSite
 	 * r.enUS: obtainSiteConfig
 	 * r: obtenirUtilisateurSite
@@ -2078,6 +2079,8 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r.enUS: PaymentDay
 	 * r: paiementJour
 	 * r.enUS: paymentDay
+	 * r: ecoleNumero
+	 * r.enUS: schoolNumber
 	 */
 	public void writeMakePayment(Integer ecoleNumero, BigDecimal amount, Long enrollmentKey, String childCompleteNamePreferred) {
 		ConfigSite configSite = requeteSite_.getConfigSite_();
@@ -2132,7 +2135,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 				else {
 					profilePageResponse = hostedProfileController.getApiResponse();
 					if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
-						throw new RuntimeException(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedProfilePageRequest failed. "));
+						throw new RuntimeException(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s, school number: %s, enrollment key: %s, child name: %s", m.getCode(), m.getText(), ecoleNumero, enrollmentKey, childCompleteNamePreferred)).orElse("GetHostedProfilePageRequest failed. "));
 					}
 				}
 

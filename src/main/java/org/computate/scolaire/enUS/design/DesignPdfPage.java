@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -894,8 +895,16 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 			renderer.layout();
 			renderer.createPDF(os);
 			renderer.finishPDF();
+
+			String filename = schoolEnrollment.getObjectId();
+			if(pageDesign_ != null) {
+				String designName = pageDesign_.getPageDesignCompleteName();
+				if("name roster".equals(designName) && year_ != null)
+					filename = toId(String.format("name roster %s %s %s-%s", year_.getSchoolName(), year_.getSchoolLocation(), year_.getYearStart(), year_.getYearEnd()).toLowerCase());
+			}
+
 			siteRequest_.getRequestHeaders()
-					.add("Content-Disposition", "inline; filename=\"" + schoolEnrollment.getObjectId() + ".pdf\"")
+					.add("Content-Disposition", "inline; filename=\"" + filename + ".pdf\"")
 					.add("Content-Transfer-Encoding", "binary")
 					.add("Accept-Ranges", "bytes")
 					;
@@ -903,5 +912,18 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 		} catch (IOException | ParserConfigurationException | SAXException | DocumentException e) {
 			ExceptionUtils.rethrow(e);
 		}
+	}
+
+	public String toId(String s) {
+		if(s != null) {
+			s = Normalizer.normalize(s, Normalizer.Form.NFD);
+			s = StringUtils.lowerCase(s);
+			s = StringUtils.trim(s);
+			s = StringUtils.replacePattern(s, "\\s{1,}", "-");
+			s = StringUtils.replacePattern(s, "[^\\w-]", "");
+			s = StringUtils.replacePattern(s, "-{2,}", "-");
+		}
+
+		return s;
 	}
 }
