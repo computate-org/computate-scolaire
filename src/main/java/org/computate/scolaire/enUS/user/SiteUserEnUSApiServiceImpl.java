@@ -117,6 +117,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 					profile.setMerchantCustomerId(StringUtils.substring(jsonObject.getString("userCompleteName"), 0, 20));
 				}
 				createCustomerProfileRequest.setProfile(profile);
+				LOGGER.info(String.format("authorizeApiLoginId: %s, authorizeTransactionKey: %s, schoolNumber: %s, %s", authorizeApiLoginId, authorizeTransactionKey, schoolNumber, jsonObject));
 		
 				CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
 				GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(authorizeEnvironment));
@@ -124,6 +125,9 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 				if(controller.getErrorResponse() != null)
 					throw new RuntimeException(controller.getResults().toString());
 				CreateCustomerProfileResponse response = controller.getApiResponse();
+				response.getMessages().getMessage().forEach(message -> {
+					LOGGER.info(String.format("%s %s", message.getCode(), message.getText()));
+				});
 				if(MessageTypeEnum.ERROR.equals(response.getMessages().getResultCode())) {
 					String message = response.getMessages().getMessage().stream().findFirst().map(m -> m.getText()).orElse("");
 					Matcher matcher = Pattern.compile("A duplicate record with ID (\\d+) already exists.").matcher(message);

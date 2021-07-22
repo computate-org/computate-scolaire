@@ -903,8 +903,8 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 				String schoolLocation = siteRequest_.getRequestVars().get("schoolLocation");
 				String yearStart = siteRequest_.getRequestVars().get("yearStart");
 				Integer yearEnd = yearStart == null ? null : Integer.parseInt(yearStart) + 1;
-				if("name roster".equals(designName))
-					filename = toId(String.format("name roster %s %s %s-%s", schoolName, schoolLocation, yearStart, yearEnd).toLowerCase());
+				if(designName.contains(" roster"))
+					filename = toId(String.format(" %s %s %s-%s", designName, schoolName, schoolLocation, yearStart, yearEnd).toLowerCase());
 			}
 
 			siteRequest_.getRequestHeaders()
