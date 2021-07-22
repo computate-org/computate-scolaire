@@ -899,8 +899,12 @@ public class DesignPdfPage extends DesignPdfPageGen<DesignPdfGenPage> {
 			String filename = schoolEnrollment.getObjectId();
 			if(pageDesign_ != null) {
 				String designName = pageDesign_.getPageDesignCompleteName();
-				if("name roster".equals(designName) && year_ != null)
-					filename = toId(String.format("name roster %s %s %s-%s", year_.getSchoolName(), year_.getSchoolLocation(), year_.getYearStart(), year_.getYearEnd()).toLowerCase());
+				String schoolName = siteRequest_.getRequestVars().get("schoolName");
+				String schoolLocation = siteRequest_.getRequestVars().get("schoolLocation");
+				String yearStart = siteRequest_.getRequestVars().get("yearStart");
+				Integer yearEnd = yearStart == null ? null : Integer.parseInt(yearStart) + 1;
+				if("name roster".equals(designName))
+					filename = toId(String.format("name roster %s %s %s-%s", schoolName, schoolLocation, yearStart, yearEnd).toLowerCase());
 			}
 
 			siteRequest_.getRequestHeaders()
