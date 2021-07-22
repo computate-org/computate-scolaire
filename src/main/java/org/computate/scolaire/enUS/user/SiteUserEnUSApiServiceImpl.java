@@ -171,7 +171,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 						sqlTransactionSiteUser(siteRequest, b -> {
 							if(b.succeeded()) {
 								Transaction tx = siteRequest.getTx();
-								tx.preparedQuery("select c.pk, c.current, c.canonical_name, c.created, c.user_id, d1.value as customerProfileId1, d2.value as customerProfileId2, d3.value as customerProfileId3, d4.value as customerProfileId4 from c left outer join d d1 on c.pk=d1.pk_c and d1.path='customerProfileId1' left join d d2 on c.pk=d2.pk_c and d2.path='customerProfileId2' left join d d3 on c.pk=d3.pk_c and d3.path='customerProfileId3' left join d d4 on c.pk=d4.pk_c and d4.path='customerProfileId4' where canonical_name=$1 and user_id=$2;")
+								tx.preparedQuery("select c.pk, c.current, c.canonical_name, c.created, c.user_id, d1.value as customerprofileid1, d2.value as customerprofileid2, d3.value as customerprofileid3, d4.value as customerprofileid4 from c left outer join d d1 on c.pk=d1.pk_c and d1.path='customerProfileId1' left join d d2 on c.pk=d2.pk_c and d2.path='customerProfileId2' left join d d3 on c.pk=d3.pk_c and d3.path='customerProfileId3' left join d d4 on c.pk=d4.pk_c and d4.path='customerProfileId4' where canonical_name=$1 and user_id=$2;")
 										.collecting(Collectors.toList())
 										.execute(Tuple.of("org.computate.scolaire.enUS.user.SiteUser", userId)
 										, selectCAsync
