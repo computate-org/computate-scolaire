@@ -3757,6 +3757,86 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return merePrenom == null ? "" : StringEscapeUtils.escapeHtml4(strMerePrenom());
 	}
 
+	////////////////////
+	// mereFamilleNom //
+	////////////////////
+
+	/**	 L'entité mereFamilleNom
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String mereFamilleNom;
+	@JsonIgnore
+	public Couverture<String> mereFamilleNomCouverture = new Couverture<String>().p(this).c(String.class).var("mereFamilleNom").o(mereFamilleNom);
+
+	/**	<br/> L'entité mereFamilleNom
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mereFamilleNom">Trouver l'entité mereFamilleNom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mereFamilleNom(Couverture<String> c);
+
+	public String getMereFamilleNom() {
+		return mereFamilleNom;
+	}
+	public void setMereFamilleNom(String o) {
+		this.mereFamilleNom = InscriptionScolaire.staticSetMereFamilleNom(requeteSite_, o);
+		this.mereFamilleNomCouverture.dejaInitialise = true;
+	}
+	public static String staticSetMereFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire mereFamilleNomInit() {
+		if(!mereFamilleNomCouverture.dejaInitialise) {
+			_mereFamilleNom(mereFamilleNomCouverture);
+			if(mereFamilleNom == null)
+				setMereFamilleNom(mereFamilleNomCouverture.o);
+		}
+		mereFamilleNomCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrMereFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrMereFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqMereFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrMereFamilleNom(requeteSite_, InscriptionScolaire.staticSolrMereFamilleNom(requeteSite_, InscriptionScolaire.staticSetMereFamilleNom(requeteSite_, o)));
+	}
+
+	public String solrMereFamilleNom() {
+		return InscriptionScolaire.staticSolrMereFamilleNom(requeteSite_, mereFamilleNom);
+	}
+
+	public String strMereFamilleNom() {
+		return mereFamilleNom == null ? "" : mereFamilleNom;
+	}
+
+	public String sqlMereFamilleNom() {
+		return mereFamilleNom;
+	}
+
+	public String jsonMereFamilleNom() {
+		return mereFamilleNom == null ? "" : mereFamilleNom;
+	}
+
+	public String nomAffichageMereFamilleNom() {
+		return null;
+	}
+
+	public String htmTooltipMereFamilleNom() {
+		return null;
+	}
+
+	public String htmMereFamilleNom() {
+		return mereFamilleNom == null ? "" : StringEscapeUtils.escapeHtml4(strMereFamilleNom());
+	}
+
 	///////////////////////
 	// merePrenomPrefere //
 	///////////////////////
@@ -3917,6 +3997,166 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		return mereNomCompletPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strMereNomCompletPrefere());
 	}
 
+	/////////////////////////
+	// mereNumeroTelephone //
+	/////////////////////////
+
+	/**	 L'entité mereNumeroTelephone
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String mereNumeroTelephone;
+	@JsonIgnore
+	public Couverture<String> mereNumeroTelephoneCouverture = new Couverture<String>().p(this).c(String.class).var("mereNumeroTelephone").o(mereNumeroTelephone);
+
+	/**	<br/> L'entité mereNumeroTelephone
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mereNumeroTelephone">Trouver l'entité mereNumeroTelephone dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mereNumeroTelephone(Couverture<String> c);
+
+	public String getMereNumeroTelephone() {
+		return mereNumeroTelephone;
+	}
+	public void setMereNumeroTelephone(String o) {
+		this.mereNumeroTelephone = InscriptionScolaire.staticSetMereNumeroTelephone(requeteSite_, o);
+		this.mereNumeroTelephoneCouverture.dejaInitialise = true;
+	}
+	public static String staticSetMereNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire mereNumeroTelephoneInit() {
+		if(!mereNumeroTelephoneCouverture.dejaInitialise) {
+			_mereNumeroTelephone(mereNumeroTelephoneCouverture);
+			if(mereNumeroTelephone == null)
+				setMereNumeroTelephone(mereNumeroTelephoneCouverture.o);
+		}
+		mereNumeroTelephoneCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrMereNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrMereNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqMereNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrMereNumeroTelephone(requeteSite_, InscriptionScolaire.staticSolrMereNumeroTelephone(requeteSite_, InscriptionScolaire.staticSetMereNumeroTelephone(requeteSite_, o)));
+	}
+
+	public String solrMereNumeroTelephone() {
+		return InscriptionScolaire.staticSolrMereNumeroTelephone(requeteSite_, mereNumeroTelephone);
+	}
+
+	public String strMereNumeroTelephone() {
+		return mereNumeroTelephone == null ? "" : mereNumeroTelephone;
+	}
+
+	public String sqlMereNumeroTelephone() {
+		return mereNumeroTelephone;
+	}
+
+	public String jsonMereNumeroTelephone() {
+		return mereNumeroTelephone == null ? "" : mereNumeroTelephone;
+	}
+
+	public String nomAffichageMereNumeroTelephone() {
+		return null;
+	}
+
+	public String htmTooltipMereNumeroTelephone() {
+		return null;
+	}
+
+	public String htmMereNumeroTelephone() {
+		return mereNumeroTelephone == null ? "" : StringEscapeUtils.escapeHtml4(strMereNumeroTelephone());
+	}
+
+	//////////////
+	// mereMail //
+	//////////////
+
+	/**	 L'entité mereMail
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String mereMail;
+	@JsonIgnore
+	public Couverture<String> mereMailCouverture = new Couverture<String>().p(this).c(String.class).var("mereMail").o(mereMail);
+
+	/**	<br/> L'entité mereMail
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:mereMail">Trouver l'entité mereMail dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _mereMail(Couverture<String> c);
+
+	public String getMereMail() {
+		return mereMail;
+	}
+	public void setMereMail(String o) {
+		this.mereMail = InscriptionScolaire.staticSetMereMail(requeteSite_, o);
+		this.mereMailCouverture.dejaInitialise = true;
+	}
+	public static String staticSetMereMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire mereMailInit() {
+		if(!mereMailCouverture.dejaInitialise) {
+			_mereMail(mereMailCouverture);
+			if(mereMail == null)
+				setMereMail(mereMailCouverture.o);
+		}
+		mereMailCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrMereMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrMereMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqMereMail(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrMereMail(requeteSite_, InscriptionScolaire.staticSolrMereMail(requeteSite_, InscriptionScolaire.staticSetMereMail(requeteSite_, o)));
+	}
+
+	public String solrMereMail() {
+		return InscriptionScolaire.staticSolrMereMail(requeteSite_, mereMail);
+	}
+
+	public String strMereMail() {
+		return mereMail == null ? "" : mereMail;
+	}
+
+	public String sqlMereMail() {
+		return mereMail;
+	}
+
+	public String jsonMereMail() {
+		return mereMail == null ? "" : mereMail;
+	}
+
+	public String nomAffichageMereMail() {
+		return null;
+	}
+
+	public String htmTooltipMereMail() {
+		return null;
+	}
+
+	public String htmMereMail() {
+		return mereMail == null ? "" : StringEscapeUtils.escapeHtml4(strMereMail());
+	}
+
 	////////////////
 	// perePrenom //
 	////////////////
@@ -3995,6 +4235,86 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String htmPerePrenom() {
 		return perePrenom == null ? "" : StringEscapeUtils.escapeHtml4(strPerePrenom());
+	}
+
+	////////////////////
+	// pereFamilleNom //
+	////////////////////
+
+	/**	 L'entité pereFamilleNom
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String pereFamilleNom;
+	@JsonIgnore
+	public Couverture<String> pereFamilleNomCouverture = new Couverture<String>().p(this).c(String.class).var("pereFamilleNom").o(pereFamilleNom);
+
+	/**	<br/> L'entité pereFamilleNom
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pereFamilleNom">Trouver l'entité pereFamilleNom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pereFamilleNom(Couverture<String> c);
+
+	public String getPereFamilleNom() {
+		return pereFamilleNom;
+	}
+	public void setPereFamilleNom(String o) {
+		this.pereFamilleNom = InscriptionScolaire.staticSetPereFamilleNom(requeteSite_, o);
+		this.pereFamilleNomCouverture.dejaInitialise = true;
+	}
+	public static String staticSetPereFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire pereFamilleNomInit() {
+		if(!pereFamilleNomCouverture.dejaInitialise) {
+			_pereFamilleNom(pereFamilleNomCouverture);
+			if(pereFamilleNom == null)
+				setPereFamilleNom(pereFamilleNomCouverture.o);
+		}
+		pereFamilleNomCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrPereFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPereFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPereFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrPereFamilleNom(requeteSite_, InscriptionScolaire.staticSolrPereFamilleNom(requeteSite_, InscriptionScolaire.staticSetPereFamilleNom(requeteSite_, o)));
+	}
+
+	public String solrPereFamilleNom() {
+		return InscriptionScolaire.staticSolrPereFamilleNom(requeteSite_, pereFamilleNom);
+	}
+
+	public String strPereFamilleNom() {
+		return pereFamilleNom == null ? "" : pereFamilleNom;
+	}
+
+	public String sqlPereFamilleNom() {
+		return pereFamilleNom;
+	}
+
+	public String jsonPereFamilleNom() {
+		return pereFamilleNom == null ? "" : pereFamilleNom;
+	}
+
+	public String nomAffichagePereFamilleNom() {
+		return null;
+	}
+
+	public String htmTooltipPereFamilleNom() {
+		return null;
+	}
+
+	public String htmPereFamilleNom() {
+		return pereFamilleNom == null ? "" : StringEscapeUtils.escapeHtml4(strPereFamilleNom());
 	}
 
 	///////////////////////
@@ -4155,6 +4475,406 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 
 	public String htmPereNomCompletPrefere() {
 		return pereNomCompletPrefere == null ? "" : StringEscapeUtils.escapeHtml4(strPereNomCompletPrefere());
+	}
+
+	/////////////////////////
+	// pereNumeroTelephone //
+	/////////////////////////
+
+	/**	 L'entité pereNumeroTelephone
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String pereNumeroTelephone;
+	@JsonIgnore
+	public Couverture<String> pereNumeroTelephoneCouverture = new Couverture<String>().p(this).c(String.class).var("pereNumeroTelephone").o(pereNumeroTelephone);
+
+	/**	<br/> L'entité pereNumeroTelephone
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pereNumeroTelephone">Trouver l'entité pereNumeroTelephone dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pereNumeroTelephone(Couverture<String> c);
+
+	public String getPereNumeroTelephone() {
+		return pereNumeroTelephone;
+	}
+	public void setPereNumeroTelephone(String o) {
+		this.pereNumeroTelephone = InscriptionScolaire.staticSetPereNumeroTelephone(requeteSite_, o);
+		this.pereNumeroTelephoneCouverture.dejaInitialise = true;
+	}
+	public static String staticSetPereNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire pereNumeroTelephoneInit() {
+		if(!pereNumeroTelephoneCouverture.dejaInitialise) {
+			_pereNumeroTelephone(pereNumeroTelephoneCouverture);
+			if(pereNumeroTelephone == null)
+				setPereNumeroTelephone(pereNumeroTelephoneCouverture.o);
+		}
+		pereNumeroTelephoneCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrPereNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPereNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPereNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrPereNumeroTelephone(requeteSite_, InscriptionScolaire.staticSolrPereNumeroTelephone(requeteSite_, InscriptionScolaire.staticSetPereNumeroTelephone(requeteSite_, o)));
+	}
+
+	public String solrPereNumeroTelephone() {
+		return InscriptionScolaire.staticSolrPereNumeroTelephone(requeteSite_, pereNumeroTelephone);
+	}
+
+	public String strPereNumeroTelephone() {
+		return pereNumeroTelephone == null ? "" : pereNumeroTelephone;
+	}
+
+	public String sqlPereNumeroTelephone() {
+		return pereNumeroTelephone;
+	}
+
+	public String jsonPereNumeroTelephone() {
+		return pereNumeroTelephone == null ? "" : pereNumeroTelephone;
+	}
+
+	public String nomAffichagePereNumeroTelephone() {
+		return null;
+	}
+
+	public String htmTooltipPereNumeroTelephone() {
+		return null;
+	}
+
+	public String htmPereNumeroTelephone() {
+		return pereNumeroTelephone == null ? "" : StringEscapeUtils.escapeHtml4(strPereNumeroTelephone());
+	}
+
+	//////////////
+	// pereMail //
+	//////////////
+
+	/**	 L'entité pereMail
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String pereMail;
+	@JsonIgnore
+	public Couverture<String> pereMailCouverture = new Couverture<String>().p(this).c(String.class).var("pereMail").o(pereMail);
+
+	/**	<br/> L'entité pereMail
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:pereMail">Trouver l'entité pereMail dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _pereMail(Couverture<String> c);
+
+	public String getPereMail() {
+		return pereMail;
+	}
+	public void setPereMail(String o) {
+		this.pereMail = InscriptionScolaire.staticSetPereMail(requeteSite_, o);
+		this.pereMailCouverture.dejaInitialise = true;
+	}
+	public static String staticSetPereMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire pereMailInit() {
+		if(!pereMailCouverture.dejaInitialise) {
+			_pereMail(pereMailCouverture);
+			if(pereMail == null)
+				setPereMail(pereMailCouverture.o);
+		}
+		pereMailCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrPereMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrPereMail(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPereMail(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrPereMail(requeteSite_, InscriptionScolaire.staticSolrPereMail(requeteSite_, InscriptionScolaire.staticSetPereMail(requeteSite_, o)));
+	}
+
+	public String solrPereMail() {
+		return InscriptionScolaire.staticSolrPereMail(requeteSite_, pereMail);
+	}
+
+	public String strPereMail() {
+		return pereMail == null ? "" : pereMail;
+	}
+
+	public String sqlPereMail() {
+		return pereMail;
+	}
+
+	public String jsonPereMail() {
+		return pereMail == null ? "" : pereMail;
+	}
+
+	public String nomAffichagePereMail() {
+		return null;
+	}
+
+	public String htmTooltipPereMail() {
+		return null;
+	}
+
+	public String htmPereMail() {
+		return pereMail == null ? "" : StringEscapeUtils.escapeHtml4(strPereMail());
+	}
+
+	///////////////////
+	// gardienPrenom //
+	///////////////////
+
+	/**	 L'entité gardienPrenom
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String gardienPrenom;
+	@JsonIgnore
+	public Couverture<String> gardienPrenomCouverture = new Couverture<String>().p(this).c(String.class).var("gardienPrenom").o(gardienPrenom);
+
+	/**	<br/> L'entité gardienPrenom
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:gardienPrenom">Trouver l'entité gardienPrenom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _gardienPrenom(Couverture<String> c);
+
+	public String getGardienPrenom() {
+		return gardienPrenom;
+	}
+	public void setGardienPrenom(String o) {
+		this.gardienPrenom = InscriptionScolaire.staticSetGardienPrenom(requeteSite_, o);
+		this.gardienPrenomCouverture.dejaInitialise = true;
+	}
+	public static String staticSetGardienPrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire gardienPrenomInit() {
+		if(!gardienPrenomCouverture.dejaInitialise) {
+			_gardienPrenom(gardienPrenomCouverture);
+			if(gardienPrenom == null)
+				setGardienPrenom(gardienPrenomCouverture.o);
+		}
+		gardienPrenomCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrGardienPrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrGardienPrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqGardienPrenom(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrGardienPrenom(requeteSite_, InscriptionScolaire.staticSolrGardienPrenom(requeteSite_, InscriptionScolaire.staticSetGardienPrenom(requeteSite_, o)));
+	}
+
+	public String solrGardienPrenom() {
+		return InscriptionScolaire.staticSolrGardienPrenom(requeteSite_, gardienPrenom);
+	}
+
+	public String strGardienPrenom() {
+		return gardienPrenom == null ? "" : gardienPrenom;
+	}
+
+	public String sqlGardienPrenom() {
+		return gardienPrenom;
+	}
+
+	public String jsonGardienPrenom() {
+		return gardienPrenom == null ? "" : gardienPrenom;
+	}
+
+	public String nomAffichageGardienPrenom() {
+		return null;
+	}
+
+	public String htmTooltipGardienPrenom() {
+		return null;
+	}
+
+	public String htmGardienPrenom() {
+		return gardienPrenom == null ? "" : StringEscapeUtils.escapeHtml4(strGardienPrenom());
+	}
+
+	///////////////////////
+	// gardienFamilleNom //
+	///////////////////////
+
+	/**	 L'entité gardienFamilleNom
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String gardienFamilleNom;
+	@JsonIgnore
+	public Couverture<String> gardienFamilleNomCouverture = new Couverture<String>().p(this).c(String.class).var("gardienFamilleNom").o(gardienFamilleNom);
+
+	/**	<br/> L'entité gardienFamilleNom
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:gardienFamilleNom">Trouver l'entité gardienFamilleNom dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _gardienFamilleNom(Couverture<String> c);
+
+	public String getGardienFamilleNom() {
+		return gardienFamilleNom;
+	}
+	public void setGardienFamilleNom(String o) {
+		this.gardienFamilleNom = InscriptionScolaire.staticSetGardienFamilleNom(requeteSite_, o);
+		this.gardienFamilleNomCouverture.dejaInitialise = true;
+	}
+	public static String staticSetGardienFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire gardienFamilleNomInit() {
+		if(!gardienFamilleNomCouverture.dejaInitialise) {
+			_gardienFamilleNom(gardienFamilleNomCouverture);
+			if(gardienFamilleNom == null)
+				setGardienFamilleNom(gardienFamilleNomCouverture.o);
+		}
+		gardienFamilleNomCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrGardienFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrGardienFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqGardienFamilleNom(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrGardienFamilleNom(requeteSite_, InscriptionScolaire.staticSolrGardienFamilleNom(requeteSite_, InscriptionScolaire.staticSetGardienFamilleNom(requeteSite_, o)));
+	}
+
+	public String solrGardienFamilleNom() {
+		return InscriptionScolaire.staticSolrGardienFamilleNom(requeteSite_, gardienFamilleNom);
+	}
+
+	public String strGardienFamilleNom() {
+		return gardienFamilleNom == null ? "" : gardienFamilleNom;
+	}
+
+	public String sqlGardienFamilleNom() {
+		return gardienFamilleNom;
+	}
+
+	public String jsonGardienFamilleNom() {
+		return gardienFamilleNom == null ? "" : gardienFamilleNom;
+	}
+
+	public String nomAffichageGardienFamilleNom() {
+		return null;
+	}
+
+	public String htmTooltipGardienFamilleNom() {
+		return null;
+	}
+
+	public String htmGardienFamilleNom() {
+		return gardienFamilleNom == null ? "" : StringEscapeUtils.escapeHtml4(strGardienFamilleNom());
+	}
+
+	////////////////////////////
+	// gardienNumeroTelephone //
+	////////////////////////////
+
+	/**	 L'entité gardienNumeroTelephone
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String gardienNumeroTelephone;
+	@JsonIgnore
+	public Couverture<String> gardienNumeroTelephoneCouverture = new Couverture<String>().p(this).c(String.class).var("gardienNumeroTelephone").o(gardienNumeroTelephone);
+
+	/**	<br/> L'entité gardienNumeroTelephone
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:gardienNumeroTelephone">Trouver l'entité gardienNumeroTelephone dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _gardienNumeroTelephone(Couverture<String> c);
+
+	public String getGardienNumeroTelephone() {
+		return gardienNumeroTelephone;
+	}
+	public void setGardienNumeroTelephone(String o) {
+		this.gardienNumeroTelephone = InscriptionScolaire.staticSetGardienNumeroTelephone(requeteSite_, o);
+		this.gardienNumeroTelephoneCouverture.dejaInitialise = true;
+	}
+	public static String staticSetGardienNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire gardienNumeroTelephoneInit() {
+		if(!gardienNumeroTelephoneCouverture.dejaInitialise) {
+			_gardienNumeroTelephone(gardienNumeroTelephoneCouverture);
+			if(gardienNumeroTelephone == null)
+				setGardienNumeroTelephone(gardienNumeroTelephoneCouverture.o);
+		}
+		gardienNumeroTelephoneCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrGardienNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrGardienNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqGardienNumeroTelephone(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrGardienNumeroTelephone(requeteSite_, InscriptionScolaire.staticSolrGardienNumeroTelephone(requeteSite_, InscriptionScolaire.staticSetGardienNumeroTelephone(requeteSite_, o)));
+	}
+
+	public String solrGardienNumeroTelephone() {
+		return InscriptionScolaire.staticSolrGardienNumeroTelephone(requeteSite_, gardienNumeroTelephone);
+	}
+
+	public String strGardienNumeroTelephone() {
+		return gardienNumeroTelephone == null ? "" : gardienNumeroTelephone;
+	}
+
+	public String sqlGardienNumeroTelephone() {
+		return gardienNumeroTelephone;
+	}
+
+	public String jsonGardienNumeroTelephone() {
+		return gardienNumeroTelephone == null ? "" : gardienNumeroTelephone;
+	}
+
+	public String nomAffichageGardienNumeroTelephone() {
+		return null;
+	}
+
+	public String htmTooltipGardienNumeroTelephone() {
+		return null;
+	}
+
+	public String htmGardienNumeroTelephone() {
+		return gardienNumeroTelephone == null ? "" : StringEscapeUtils.escapeHtml4(strGardienNumeroTelephone());
 	}
 
 	//////////////////////
@@ -8986,6 +9706,86 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				} g("div");
 			} g("div");
 		} g("div");
+	}
+
+	////////////////////////
+	// familleAddresseCsv //
+	////////////////////////
+
+	/**	 L'entité familleAddresseCsv
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String familleAddresseCsv;
+	@JsonIgnore
+	public Couverture<String> familleAddresseCsvCouverture = new Couverture<String>().p(this).c(String.class).var("familleAddresseCsv").o(familleAddresseCsv);
+
+	/**	<br/> L'entité familleAddresseCsv
+	 *  est défini comme null avant d'être initialisé. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_frFR_indexed_string:org.computate.scolaire.frFR.inscription.InscriptionScolaire&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_frFR_indexed_string:familleAddresseCsv">Trouver l'entité familleAddresseCsv dans Solr</a>
+	 * <br/>
+	 * @param c est pour envelopper une valeur à assigner à cette entité lors de l'initialisation. 
+	 **/
+	protected abstract void _familleAddresseCsv(Couverture<String> c);
+
+	public String getFamilleAddresseCsv() {
+		return familleAddresseCsv;
+	}
+	public void setFamilleAddresseCsv(String o) {
+		this.familleAddresseCsv = InscriptionScolaire.staticSetFamilleAddresseCsv(requeteSite_, o);
+		this.familleAddresseCsvCouverture.dejaInitialise = true;
+	}
+	public static String staticSetFamilleAddresseCsv(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+	protected InscriptionScolaire familleAddresseCsvInit() {
+		if(!familleAddresseCsvCouverture.dejaInitialise) {
+			_familleAddresseCsv(familleAddresseCsvCouverture);
+			if(familleAddresseCsv == null)
+				setFamilleAddresseCsv(familleAddresseCsvCouverture.o);
+		}
+		familleAddresseCsvCouverture.dejaInitialise(true);
+		return (InscriptionScolaire)this;
+	}
+
+	public static String staticSolrFamilleAddresseCsv(RequeteSiteFrFR requeteSite_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrFamilleAddresseCsv(RequeteSiteFrFR requeteSite_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqFamilleAddresseCsv(RequeteSiteFrFR requeteSite_, String o) {
+		return InscriptionScolaire.staticSolrStrFamilleAddresseCsv(requeteSite_, InscriptionScolaire.staticSolrFamilleAddresseCsv(requeteSite_, InscriptionScolaire.staticSetFamilleAddresseCsv(requeteSite_, o)));
+	}
+
+	public String solrFamilleAddresseCsv() {
+		return InscriptionScolaire.staticSolrFamilleAddresseCsv(requeteSite_, familleAddresseCsv);
+	}
+
+	public String strFamilleAddresseCsv() {
+		return familleAddresseCsv == null ? "" : familleAddresseCsv;
+	}
+
+	public String sqlFamilleAddresseCsv() {
+		return familleAddresseCsv;
+	}
+
+	public String jsonFamilleAddresseCsv() {
+		return familleAddresseCsv == null ? "" : familleAddresseCsv;
+	}
+
+	public String nomAffichageFamilleAddresseCsv() {
+		return null;
+	}
+
+	public String htmTooltipFamilleAddresseCsv() {
+		return null;
+	}
+
+	public String htmFamilleAddresseCsv() {
+		return familleAddresseCsv == null ? "" : StringEscapeUtils.escapeHtml4(strFamilleAddresseCsv());
 	}
 
 	///////////////////////////////////////
@@ -17668,11 +18468,20 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		enfantPrenomPrefereInit();
 		enfantFamilleNomInit();
 		merePrenomInit();
+		mereFamilleNomInit();
 		merePrenomPrefereInit();
 		mereNomCompletPrefereInit();
+		mereNumeroTelephoneInit();
+		mereMailInit();
 		perePrenomInit();
+		pereFamilleNomInit();
 		perePrenomPrefereInit();
 		pereNomCompletPrefereInit();
+		pereNumeroTelephoneInit();
+		pereMailInit();
+		gardienPrenomInit();
+		gardienFamilleNomInit();
+		gardienNumeroTelephoneInit();
 		enfantNomCompletInit();
 		enfantNomCompletPrefereInit();
 		enfantDateNaissanceInit();
@@ -17720,6 +18529,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		familleDivorceInit();
 		inscriptionMotDePasseInit();
 		familleAddresseInit();
+		familleAddresseCsvInit();
 		familleCommentVousConnaissezEcoleInit();
 		inscriptionConsiderationsSpecialesInit();
 		enfantConditionsMedicalesInit();
@@ -17933,16 +18743,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.enfantFamilleNom;
 			case "merePrenom":
 				return oInscriptionScolaire.merePrenom;
+			case "mereFamilleNom":
+				return oInscriptionScolaire.mereFamilleNom;
 			case "merePrenomPrefere":
 				return oInscriptionScolaire.merePrenomPrefere;
 			case "mereNomCompletPrefere":
 				return oInscriptionScolaire.mereNomCompletPrefere;
+			case "mereNumeroTelephone":
+				return oInscriptionScolaire.mereNumeroTelephone;
+			case "mereMail":
+				return oInscriptionScolaire.mereMail;
 			case "perePrenom":
 				return oInscriptionScolaire.perePrenom;
+			case "pereFamilleNom":
+				return oInscriptionScolaire.pereFamilleNom;
 			case "perePrenomPrefere":
 				return oInscriptionScolaire.perePrenomPrefere;
 			case "pereNomCompletPrefere":
 				return oInscriptionScolaire.pereNomCompletPrefere;
+			case "pereNumeroTelephone":
+				return oInscriptionScolaire.pereNumeroTelephone;
+			case "pereMail":
+				return oInscriptionScolaire.pereMail;
+			case "gardienPrenom":
+				return oInscriptionScolaire.gardienPrenom;
+			case "gardienFamilleNom":
+				return oInscriptionScolaire.gardienFamilleNom;
+			case "gardienNumeroTelephone":
+				return oInscriptionScolaire.gardienNumeroTelephone;
 			case "enfantNomComplet":
 				return oInscriptionScolaire.enfantNomComplet;
 			case "enfantNomCompletPrefere":
@@ -18037,6 +18865,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return oInscriptionScolaire.inscriptionMotDePasse;
 			case "familleAddresse":
 				return oInscriptionScolaire.familleAddresse;
+			case "familleAddresseCsv":
+				return oInscriptionScolaire.familleAddresseCsv;
 			case "familleCommentVousConnaissezEcole":
 				return oInscriptionScolaire.familleCommentVousConnaissezEcole;
 			case "inscriptionConsiderationsSpeciales":
@@ -18316,16 +19146,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSetEnfantFamilleNom(requeteSite_, o);
 		case "merePrenom":
 			return InscriptionScolaire.staticSetMerePrenom(requeteSite_, o);
+		case "mereFamilleNom":
+			return InscriptionScolaire.staticSetMereFamilleNom(requeteSite_, o);
 		case "merePrenomPrefere":
 			return InscriptionScolaire.staticSetMerePrenomPrefere(requeteSite_, o);
 		case "mereNomCompletPrefere":
 			return InscriptionScolaire.staticSetMereNomCompletPrefere(requeteSite_, o);
+		case "mereNumeroTelephone":
+			return InscriptionScolaire.staticSetMereNumeroTelephone(requeteSite_, o);
+		case "mereMail":
+			return InscriptionScolaire.staticSetMereMail(requeteSite_, o);
 		case "perePrenom":
 			return InscriptionScolaire.staticSetPerePrenom(requeteSite_, o);
+		case "pereFamilleNom":
+			return InscriptionScolaire.staticSetPereFamilleNom(requeteSite_, o);
 		case "perePrenomPrefere":
 			return InscriptionScolaire.staticSetPerePrenomPrefere(requeteSite_, o);
 		case "pereNomCompletPrefere":
 			return InscriptionScolaire.staticSetPereNomCompletPrefere(requeteSite_, o);
+		case "pereNumeroTelephone":
+			return InscriptionScolaire.staticSetPereNumeroTelephone(requeteSite_, o);
+		case "pereMail":
+			return InscriptionScolaire.staticSetPereMail(requeteSite_, o);
+		case "gardienPrenom":
+			return InscriptionScolaire.staticSetGardienPrenom(requeteSite_, o);
+		case "gardienFamilleNom":
+			return InscriptionScolaire.staticSetGardienFamilleNom(requeteSite_, o);
+		case "gardienNumeroTelephone":
+			return InscriptionScolaire.staticSetGardienNumeroTelephone(requeteSite_, o);
 		case "enfantNomComplet":
 			return InscriptionScolaire.staticSetEnfantNomComplet(requeteSite_, o);
 		case "enfantNomCompletPrefere":
@@ -18420,6 +19268,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSetInscriptionMotDePasse(requeteSite_, o);
 		case "familleAddresse":
 			return InscriptionScolaire.staticSetFamilleAddresse(requeteSite_, o);
+		case "familleAddresseCsv":
+			return InscriptionScolaire.staticSetFamilleAddresseCsv(requeteSite_, o);
 		case "familleCommentVousConnaissezEcole":
 			return InscriptionScolaire.staticSetFamilleCommentVousConnaissezEcole(requeteSite_, o);
 		case "inscriptionConsiderationsSpeciales":
@@ -18622,16 +19472,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrEnfantFamilleNom(requeteSite_, (String)o);
 		case "merePrenom":
 			return InscriptionScolaire.staticSolrMerePrenom(requeteSite_, (String)o);
+		case "mereFamilleNom":
+			return InscriptionScolaire.staticSolrMereFamilleNom(requeteSite_, (String)o);
 		case "merePrenomPrefere":
 			return InscriptionScolaire.staticSolrMerePrenomPrefere(requeteSite_, (String)o);
 		case "mereNomCompletPrefere":
 			return InscriptionScolaire.staticSolrMereNomCompletPrefere(requeteSite_, (String)o);
+		case "mereNumeroTelephone":
+			return InscriptionScolaire.staticSolrMereNumeroTelephone(requeteSite_, (String)o);
+		case "mereMail":
+			return InscriptionScolaire.staticSolrMereMail(requeteSite_, (String)o);
 		case "perePrenom":
 			return InscriptionScolaire.staticSolrPerePrenom(requeteSite_, (String)o);
+		case "pereFamilleNom":
+			return InscriptionScolaire.staticSolrPereFamilleNom(requeteSite_, (String)o);
 		case "perePrenomPrefere":
 			return InscriptionScolaire.staticSolrPerePrenomPrefere(requeteSite_, (String)o);
 		case "pereNomCompletPrefere":
 			return InscriptionScolaire.staticSolrPereNomCompletPrefere(requeteSite_, (String)o);
+		case "pereNumeroTelephone":
+			return InscriptionScolaire.staticSolrPereNumeroTelephone(requeteSite_, (String)o);
+		case "pereMail":
+			return InscriptionScolaire.staticSolrPereMail(requeteSite_, (String)o);
+		case "gardienPrenom":
+			return InscriptionScolaire.staticSolrGardienPrenom(requeteSite_, (String)o);
+		case "gardienFamilleNom":
+			return InscriptionScolaire.staticSolrGardienFamilleNom(requeteSite_, (String)o);
+		case "gardienNumeroTelephone":
+			return InscriptionScolaire.staticSolrGardienNumeroTelephone(requeteSite_, (String)o);
 		case "enfantNomComplet":
 			return InscriptionScolaire.staticSolrEnfantNomComplet(requeteSite_, (String)o);
 		case "enfantNomCompletPrefere":
@@ -18726,6 +19594,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrInscriptionMotDePasse(requeteSite_, (String)o);
 		case "familleAddresse":
 			return InscriptionScolaire.staticSolrFamilleAddresse(requeteSite_, (String)o);
+		case "familleAddresseCsv":
+			return InscriptionScolaire.staticSolrFamilleAddresseCsv(requeteSite_, (String)o);
 		case "familleCommentVousConnaissezEcole":
 			return InscriptionScolaire.staticSolrFamilleCommentVousConnaissezEcole(requeteSite_, (String)o);
 		case "inscriptionConsiderationsSpeciales":
@@ -18928,16 +19798,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrStrEnfantFamilleNom(requeteSite_, (String)o);
 		case "merePrenom":
 			return InscriptionScolaire.staticSolrStrMerePrenom(requeteSite_, (String)o);
+		case "mereFamilleNom":
+			return InscriptionScolaire.staticSolrStrMereFamilleNom(requeteSite_, (String)o);
 		case "merePrenomPrefere":
 			return InscriptionScolaire.staticSolrStrMerePrenomPrefere(requeteSite_, (String)o);
 		case "mereNomCompletPrefere":
 			return InscriptionScolaire.staticSolrStrMereNomCompletPrefere(requeteSite_, (String)o);
+		case "mereNumeroTelephone":
+			return InscriptionScolaire.staticSolrStrMereNumeroTelephone(requeteSite_, (String)o);
+		case "mereMail":
+			return InscriptionScolaire.staticSolrStrMereMail(requeteSite_, (String)o);
 		case "perePrenom":
 			return InscriptionScolaire.staticSolrStrPerePrenom(requeteSite_, (String)o);
+		case "pereFamilleNom":
+			return InscriptionScolaire.staticSolrStrPereFamilleNom(requeteSite_, (String)o);
 		case "perePrenomPrefere":
 			return InscriptionScolaire.staticSolrStrPerePrenomPrefere(requeteSite_, (String)o);
 		case "pereNomCompletPrefere":
 			return InscriptionScolaire.staticSolrStrPereNomCompletPrefere(requeteSite_, (String)o);
+		case "pereNumeroTelephone":
+			return InscriptionScolaire.staticSolrStrPereNumeroTelephone(requeteSite_, (String)o);
+		case "pereMail":
+			return InscriptionScolaire.staticSolrStrPereMail(requeteSite_, (String)o);
+		case "gardienPrenom":
+			return InscriptionScolaire.staticSolrStrGardienPrenom(requeteSite_, (String)o);
+		case "gardienFamilleNom":
+			return InscriptionScolaire.staticSolrStrGardienFamilleNom(requeteSite_, (String)o);
+		case "gardienNumeroTelephone":
+			return InscriptionScolaire.staticSolrStrGardienNumeroTelephone(requeteSite_, (String)o);
 		case "enfantNomComplet":
 			return InscriptionScolaire.staticSolrStrEnfantNomComplet(requeteSite_, (String)o);
 		case "enfantNomCompletPrefere":
@@ -19032,6 +19920,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrStrInscriptionMotDePasse(requeteSite_, (String)o);
 		case "familleAddresse":
 			return InscriptionScolaire.staticSolrStrFamilleAddresse(requeteSite_, (String)o);
+		case "familleAddresseCsv":
+			return InscriptionScolaire.staticSolrStrFamilleAddresseCsv(requeteSite_, (String)o);
 		case "familleCommentVousConnaissezEcole":
 			return InscriptionScolaire.staticSolrStrFamilleCommentVousConnaissezEcole(requeteSite_, (String)o);
 		case "inscriptionConsiderationsSpeciales":
@@ -19234,16 +20124,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrFqEnfantFamilleNom(requeteSite_, o);
 		case "merePrenom":
 			return InscriptionScolaire.staticSolrFqMerePrenom(requeteSite_, o);
+		case "mereFamilleNom":
+			return InscriptionScolaire.staticSolrFqMereFamilleNom(requeteSite_, o);
 		case "merePrenomPrefere":
 			return InscriptionScolaire.staticSolrFqMerePrenomPrefere(requeteSite_, o);
 		case "mereNomCompletPrefere":
 			return InscriptionScolaire.staticSolrFqMereNomCompletPrefere(requeteSite_, o);
+		case "mereNumeroTelephone":
+			return InscriptionScolaire.staticSolrFqMereNumeroTelephone(requeteSite_, o);
+		case "mereMail":
+			return InscriptionScolaire.staticSolrFqMereMail(requeteSite_, o);
 		case "perePrenom":
 			return InscriptionScolaire.staticSolrFqPerePrenom(requeteSite_, o);
+		case "pereFamilleNom":
+			return InscriptionScolaire.staticSolrFqPereFamilleNom(requeteSite_, o);
 		case "perePrenomPrefere":
 			return InscriptionScolaire.staticSolrFqPerePrenomPrefere(requeteSite_, o);
 		case "pereNomCompletPrefere":
 			return InscriptionScolaire.staticSolrFqPereNomCompletPrefere(requeteSite_, o);
+		case "pereNumeroTelephone":
+			return InscriptionScolaire.staticSolrFqPereNumeroTelephone(requeteSite_, o);
+		case "pereMail":
+			return InscriptionScolaire.staticSolrFqPereMail(requeteSite_, o);
+		case "gardienPrenom":
+			return InscriptionScolaire.staticSolrFqGardienPrenom(requeteSite_, o);
+		case "gardienFamilleNom":
+			return InscriptionScolaire.staticSolrFqGardienFamilleNom(requeteSite_, o);
+		case "gardienNumeroTelephone":
+			return InscriptionScolaire.staticSolrFqGardienNumeroTelephone(requeteSite_, o);
 		case "enfantNomComplet":
 			return InscriptionScolaire.staticSolrFqEnfantNomComplet(requeteSite_, o);
 		case "enfantNomCompletPrefere":
@@ -19338,6 +20246,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			return InscriptionScolaire.staticSolrFqInscriptionMotDePasse(requeteSite_, o);
 		case "familleAddresse":
 			return InscriptionScolaire.staticSolrFqFamilleAddresse(requeteSite_, o);
+		case "familleAddresseCsv":
+			return InscriptionScolaire.staticSolrFqFamilleAddresseCsv(requeteSite_, o);
 		case "familleCommentVousConnaissezEcole":
 			return InscriptionScolaire.staticSolrFqFamilleCommentVousConnaissezEcole(requeteSite_, o);
 		case "inscriptionConsiderationsSpeciales":
@@ -20151,6 +21061,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setMerePrenom(merePrenom);
 			}
 
+			if(sauvegardes.contains("mereFamilleNom")) {
+				String mereFamilleNom = (String)solrDocument.get("mereFamilleNom_stored_string");
+				if(mereFamilleNom != null)
+					oInscriptionScolaire.setMereFamilleNom(mereFamilleNom);
+			}
+
 			if(sauvegardes.contains("merePrenomPrefere")) {
 				String merePrenomPrefere = (String)solrDocument.get("merePrenomPrefere_stored_string");
 				if(merePrenomPrefere != null)
@@ -20163,10 +21079,28 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 					oInscriptionScolaire.setMereNomCompletPrefere(mereNomCompletPrefere);
 			}
 
+			if(sauvegardes.contains("mereNumeroTelephone")) {
+				String mereNumeroTelephone = (String)solrDocument.get("mereNumeroTelephone_stored_string");
+				if(mereNumeroTelephone != null)
+					oInscriptionScolaire.setMereNumeroTelephone(mereNumeroTelephone);
+			}
+
+			if(sauvegardes.contains("mereMail")) {
+				String mereMail = (String)solrDocument.get("mereMail_stored_string");
+				if(mereMail != null)
+					oInscriptionScolaire.setMereMail(mereMail);
+			}
+
 			if(sauvegardes.contains("perePrenom")) {
 				String perePrenom = (String)solrDocument.get("perePrenom_stored_string");
 				if(perePrenom != null)
 					oInscriptionScolaire.setPerePrenom(perePrenom);
+			}
+
+			if(sauvegardes.contains("pereFamilleNom")) {
+				String pereFamilleNom = (String)solrDocument.get("pereFamilleNom_stored_string");
+				if(pereFamilleNom != null)
+					oInscriptionScolaire.setPereFamilleNom(pereFamilleNom);
 			}
 
 			if(sauvegardes.contains("perePrenomPrefere")) {
@@ -20179,6 +21113,36 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				String pereNomCompletPrefere = (String)solrDocument.get("pereNomCompletPrefere_stored_string");
 				if(pereNomCompletPrefere != null)
 					oInscriptionScolaire.setPereNomCompletPrefere(pereNomCompletPrefere);
+			}
+
+			if(sauvegardes.contains("pereNumeroTelephone")) {
+				String pereNumeroTelephone = (String)solrDocument.get("pereNumeroTelephone_stored_string");
+				if(pereNumeroTelephone != null)
+					oInscriptionScolaire.setPereNumeroTelephone(pereNumeroTelephone);
+			}
+
+			if(sauvegardes.contains("pereMail")) {
+				String pereMail = (String)solrDocument.get("pereMail_stored_string");
+				if(pereMail != null)
+					oInscriptionScolaire.setPereMail(pereMail);
+			}
+
+			if(sauvegardes.contains("gardienPrenom")) {
+				String gardienPrenom = (String)solrDocument.get("gardienPrenom_stored_string");
+				if(gardienPrenom != null)
+					oInscriptionScolaire.setGardienPrenom(gardienPrenom);
+			}
+
+			if(sauvegardes.contains("gardienFamilleNom")) {
+				String gardienFamilleNom = (String)solrDocument.get("gardienFamilleNom_stored_string");
+				if(gardienFamilleNom != null)
+					oInscriptionScolaire.setGardienFamilleNom(gardienFamilleNom);
+			}
+
+			if(sauvegardes.contains("gardienNumeroTelephone")) {
+				String gardienNumeroTelephone = (String)solrDocument.get("gardienNumeroTelephone_stored_string");
+				if(gardienNumeroTelephone != null)
+					oInscriptionScolaire.setGardienNumeroTelephone(gardienNumeroTelephone);
 			}
 
 			if(sauvegardes.contains("enfantNomComplet")) {
@@ -20461,6 +21425,12 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				String familleAddresse = (String)solrDocument.get("familleAddresse_stored_string");
 				if(familleAddresse != null)
 					oInscriptionScolaire.setFamilleAddresse(familleAddresse);
+			}
+
+			if(sauvegardes.contains("familleAddresseCsv")) {
+				String familleAddresseCsv = (String)solrDocument.get("familleAddresseCsv_stored_string");
+				if(familleAddresseCsv != null)
+					oInscriptionScolaire.setFamilleAddresseCsv(familleAddresseCsv);
 			}
 
 			if(sauvegardes.contains("familleCommentVousConnaissezEcole")) {
@@ -21063,6 +22033,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("merePrenom_indexed_string", merePrenom);
 			document.addField("merePrenom_stored_string", merePrenom);
 		}
+		if(mereFamilleNom != null) {
+			document.addField("mereFamilleNom_indexed_string", mereFamilleNom);
+			document.addField("mereFamilleNom_stored_string", mereFamilleNom);
+		}
 		if(merePrenomPrefere != null) {
 			document.addField("merePrenomPrefere_indexed_string", merePrenomPrefere);
 			document.addField("merePrenomPrefere_stored_string", merePrenomPrefere);
@@ -21071,9 +22045,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 			document.addField("mereNomCompletPrefere_indexed_string", mereNomCompletPrefere);
 			document.addField("mereNomCompletPrefere_stored_string", mereNomCompletPrefere);
 		}
+		if(mereNumeroTelephone != null) {
+			document.addField("mereNumeroTelephone_indexed_string", mereNumeroTelephone);
+			document.addField("mereNumeroTelephone_stored_string", mereNumeroTelephone);
+		}
+		if(mereMail != null) {
+			document.addField("mereMail_indexed_string", mereMail);
+			document.addField("mereMail_stored_string", mereMail);
+		}
 		if(perePrenom != null) {
 			document.addField("perePrenom_indexed_string", perePrenom);
 			document.addField("perePrenom_stored_string", perePrenom);
+		}
+		if(pereFamilleNom != null) {
+			document.addField("pereFamilleNom_indexed_string", pereFamilleNom);
+			document.addField("pereFamilleNom_stored_string", pereFamilleNom);
 		}
 		if(perePrenomPrefere != null) {
 			document.addField("perePrenomPrefere_indexed_string", perePrenomPrefere);
@@ -21082,6 +22068,26 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(pereNomCompletPrefere != null) {
 			document.addField("pereNomCompletPrefere_indexed_string", pereNomCompletPrefere);
 			document.addField("pereNomCompletPrefere_stored_string", pereNomCompletPrefere);
+		}
+		if(pereNumeroTelephone != null) {
+			document.addField("pereNumeroTelephone_indexed_string", pereNumeroTelephone);
+			document.addField("pereNumeroTelephone_stored_string", pereNumeroTelephone);
+		}
+		if(pereMail != null) {
+			document.addField("pereMail_indexed_string", pereMail);
+			document.addField("pereMail_stored_string", pereMail);
+		}
+		if(gardienPrenom != null) {
+			document.addField("gardienPrenom_indexed_string", gardienPrenom);
+			document.addField("gardienPrenom_stored_string", gardienPrenom);
+		}
+		if(gardienFamilleNom != null) {
+			document.addField("gardienFamilleNom_indexed_string", gardienFamilleNom);
+			document.addField("gardienFamilleNom_stored_string", gardienFamilleNom);
+		}
+		if(gardienNumeroTelephone != null) {
+			document.addField("gardienNumeroTelephone_indexed_string", gardienNumeroTelephone);
+			document.addField("gardienNumeroTelephone_stored_string", gardienNumeroTelephone);
 		}
 		if(enfantNomComplet != null) {
 			document.addField("enfantNomComplet_indexed_string", enfantNomComplet);
@@ -21269,6 +22275,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(familleAddresse != null) {
 			document.addField("familleAddresse_indexed_string", familleAddresse);
 			document.addField("familleAddresse_stored_string", familleAddresse);
+		}
+		if(familleAddresseCsv != null) {
+			document.addField("familleAddresseCsv_indexed_string", familleAddresseCsv);
+			document.addField("familleAddresseCsv_stored_string", familleAddresseCsv);
 		}
 		if(familleCommentVousConnaissezEcole != null) {
 			document.addField("familleCommentVousConnaissezEcole_indexed_string", familleCommentVousConnaissezEcole);
@@ -21613,16 +22623,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "enfantFamilleNom_indexed_string";
 			case "merePrenom":
 				return "merePrenom_indexed_string";
+			case "mereFamilleNom":
+				return "mereFamilleNom_indexed_string";
 			case "merePrenomPrefere":
 				return "merePrenomPrefere_indexed_string";
 			case "mereNomCompletPrefere":
 				return "mereNomCompletPrefere_indexed_string";
+			case "mereNumeroTelephone":
+				return "mereNumeroTelephone_indexed_string";
+			case "mereMail":
+				return "mereMail_indexed_string";
 			case "perePrenom":
 				return "perePrenom_indexed_string";
+			case "pereFamilleNom":
+				return "pereFamilleNom_indexed_string";
 			case "perePrenomPrefere":
 				return "perePrenomPrefere_indexed_string";
 			case "pereNomCompletPrefere":
 				return "pereNomCompletPrefere_indexed_string";
+			case "pereNumeroTelephone":
+				return "pereNumeroTelephone_indexed_string";
+			case "pereMail":
+				return "pereMail_indexed_string";
+			case "gardienPrenom":
+				return "gardienPrenom_indexed_string";
+			case "gardienFamilleNom":
+				return "gardienFamilleNom_indexed_string";
+			case "gardienNumeroTelephone":
+				return "gardienNumeroTelephone_indexed_string";
 			case "enfantNomComplet":
 				return "enfantNomComplet_indexed_string";
 			case "enfantNomCompletPrefere":
@@ -21715,6 +22743,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				return "inscriptionMotDePasse_indexed_string";
 			case "familleAddresse":
 				return "familleAddresse_indexed_string";
+			case "familleAddresseCsv":
+				return "familleAddresseCsv_indexed_string";
 			case "familleCommentVousConnaissezEcole":
 				return "familleCommentVousConnaissezEcole_indexed_string";
 			case "inscriptionConsiderationsSpeciales":
@@ -21946,6 +22976,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(merePrenom != null)
 			oInscriptionScolaire.setMerePrenom(merePrenom);
 
+		String mereFamilleNom = (String)solrDocument.get("mereFamilleNom_stored_string");
+		if(mereFamilleNom != null)
+			oInscriptionScolaire.setMereFamilleNom(mereFamilleNom);
+
 		String merePrenomPrefere = (String)solrDocument.get("merePrenomPrefere_stored_string");
 		if(merePrenomPrefere != null)
 			oInscriptionScolaire.setMerePrenomPrefere(merePrenomPrefere);
@@ -21954,9 +22988,21 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		if(mereNomCompletPrefere != null)
 			oInscriptionScolaire.setMereNomCompletPrefere(mereNomCompletPrefere);
 
+		String mereNumeroTelephone = (String)solrDocument.get("mereNumeroTelephone_stored_string");
+		if(mereNumeroTelephone != null)
+			oInscriptionScolaire.setMereNumeroTelephone(mereNumeroTelephone);
+
+		String mereMail = (String)solrDocument.get("mereMail_stored_string");
+		if(mereMail != null)
+			oInscriptionScolaire.setMereMail(mereMail);
+
 		String perePrenom = (String)solrDocument.get("perePrenom_stored_string");
 		if(perePrenom != null)
 			oInscriptionScolaire.setPerePrenom(perePrenom);
+
+		String pereFamilleNom = (String)solrDocument.get("pereFamilleNom_stored_string");
+		if(pereFamilleNom != null)
+			oInscriptionScolaire.setPereFamilleNom(pereFamilleNom);
 
 		String perePrenomPrefere = (String)solrDocument.get("perePrenomPrefere_stored_string");
 		if(perePrenomPrefere != null)
@@ -21965,6 +23011,26 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		String pereNomCompletPrefere = (String)solrDocument.get("pereNomCompletPrefere_stored_string");
 		if(pereNomCompletPrefere != null)
 			oInscriptionScolaire.setPereNomCompletPrefere(pereNomCompletPrefere);
+
+		String pereNumeroTelephone = (String)solrDocument.get("pereNumeroTelephone_stored_string");
+		if(pereNumeroTelephone != null)
+			oInscriptionScolaire.setPereNumeroTelephone(pereNumeroTelephone);
+
+		String pereMail = (String)solrDocument.get("pereMail_stored_string");
+		if(pereMail != null)
+			oInscriptionScolaire.setPereMail(pereMail);
+
+		String gardienPrenom = (String)solrDocument.get("gardienPrenom_stored_string");
+		if(gardienPrenom != null)
+			oInscriptionScolaire.setGardienPrenom(gardienPrenom);
+
+		String gardienFamilleNom = (String)solrDocument.get("gardienFamilleNom_stored_string");
+		if(gardienFamilleNom != null)
+			oInscriptionScolaire.setGardienFamilleNom(gardienFamilleNom);
+
+		String gardienNumeroTelephone = (String)solrDocument.get("gardienNumeroTelephone_stored_string");
+		if(gardienNumeroTelephone != null)
+			oInscriptionScolaire.setGardienNumeroTelephone(gardienNumeroTelephone);
 
 		String enfantNomComplet = (String)solrDocument.get("enfantNomComplet_stored_string");
 		if(enfantNomComplet != null)
@@ -22153,6 +23219,10 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		String familleAddresse = (String)solrDocument.get("familleAddresse_stored_string");
 		if(familleAddresse != null)
 			oInscriptionScolaire.setFamilleAddresse(familleAddresse);
+
+		String familleAddresseCsv = (String)solrDocument.get("familleAddresseCsv_stored_string");
+		if(familleAddresseCsv != null)
+			oInscriptionScolaire.setFamilleAddresseCsv(familleAddresseCsv);
 
 		String familleCommentVousConnaissezEcole = (String)solrDocument.get("familleCommentVousConnaissezEcole_stored_string");
 		if(familleCommentVousConnaissezEcole != null)
@@ -22490,16 +23560,34 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("enfantFamilleNom");
 			if(!Objects.equals(merePrenom, original.getMerePrenom()))
 				requeteApi.addVars("merePrenom");
+			if(!Objects.equals(mereFamilleNom, original.getMereFamilleNom()))
+				requeteApi.addVars("mereFamilleNom");
 			if(!Objects.equals(merePrenomPrefere, original.getMerePrenomPrefere()))
 				requeteApi.addVars("merePrenomPrefere");
 			if(!Objects.equals(mereNomCompletPrefere, original.getMereNomCompletPrefere()))
 				requeteApi.addVars("mereNomCompletPrefere");
+			if(!Objects.equals(mereNumeroTelephone, original.getMereNumeroTelephone()))
+				requeteApi.addVars("mereNumeroTelephone");
+			if(!Objects.equals(mereMail, original.getMereMail()))
+				requeteApi.addVars("mereMail");
 			if(!Objects.equals(perePrenom, original.getPerePrenom()))
 				requeteApi.addVars("perePrenom");
+			if(!Objects.equals(pereFamilleNom, original.getPereFamilleNom()))
+				requeteApi.addVars("pereFamilleNom");
 			if(!Objects.equals(perePrenomPrefere, original.getPerePrenomPrefere()))
 				requeteApi.addVars("perePrenomPrefere");
 			if(!Objects.equals(pereNomCompletPrefere, original.getPereNomCompletPrefere()))
 				requeteApi.addVars("pereNomCompletPrefere");
+			if(!Objects.equals(pereNumeroTelephone, original.getPereNumeroTelephone()))
+				requeteApi.addVars("pereNumeroTelephone");
+			if(!Objects.equals(pereMail, original.getPereMail()))
+				requeteApi.addVars("pereMail");
+			if(!Objects.equals(gardienPrenom, original.getGardienPrenom()))
+				requeteApi.addVars("gardienPrenom");
+			if(!Objects.equals(gardienFamilleNom, original.getGardienFamilleNom()))
+				requeteApi.addVars("gardienFamilleNom");
+			if(!Objects.equals(gardienNumeroTelephone, original.getGardienNumeroTelephone()))
+				requeteApi.addVars("gardienNumeroTelephone");
 			if(!Objects.equals(enfantNomComplet, original.getEnfantNomComplet()))
 				requeteApi.addVars("enfantNomComplet");
 			if(!Objects.equals(enfantNomCompletPrefere, original.getEnfantNomCompletPrefere()))
@@ -22594,6 +23682,8 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				requeteApi.addVars("inscriptionMotDePasse");
 			if(!Objects.equals(familleAddresse, original.getFamilleAddresse()))
 				requeteApi.addVars("familleAddresse");
+			if(!Objects.equals(familleAddresseCsv, original.getFamilleAddresseCsv()))
+				requeteApi.addVars("familleAddresseCsv");
 			if(!Objects.equals(familleCommentVousConnaissezEcole, original.getFamilleCommentVousConnaissezEcole()))
 				requeteApi.addVars("familleCommentVousConnaissezEcole");
 			if(!Objects.equals(inscriptionConsiderationsSpeciales, original.getInscriptionConsiderationsSpeciales()))
@@ -22741,7 +23831,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), inscriptionCle, anneeCle, blocCles, ecoleCle, sessionCle, ageCle, blocCle, enfantCle, mereCles, pereCles, gardienCles, paiementCles, formInscriptionCle, utilisateurCles, scolaireTri, ecoleTri, anneeTri, saisonTri, sessionTri, ageTri, enfantPrenom, enfantPrenomPrefere, enfantFamilleNom, merePrenom, merePrenomPrefere, mereNomCompletPrefere, perePrenom, perePrenomPrefere, pereNomCompletPrefere, enfantNomComplet, enfantNomCompletPrefere, enfantDateNaissance, enfantDateNaissanceDAnnee, enfantDateNaissanceMoisDAnnee, enfantDateNaissanceJourDeSemaine, enfantMoisNaissance, enfantJourNaissance, ecoleNom, ecoleNomComplet, ecoleEmplacement, ecoleAddresse, ecoleNumeroTelephone, ecoleForm, ecoleNumero, ecoleAdministrateurNom, anneeDebut, anneeFin, saisonDateDebut, anneeFraisInscription, sessionDateDebut, sessionDateFin, ageNomComplet, ageDebut, ageFin, blocHeureDebut, blocHeureFin, blocPrixParMois, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi, blocPrixTotal, blocNomAdmin, blocNomCourt, blocNomComplet, inscriptionApprouve, inscriptionImmunisations, photo, familleMarie, familleSepare, familleDivorce, inscriptionMotDePasse, familleAddresse, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, adminNotes, enfantPropre, inscriptionNomGroupe, inscriptionCouleurGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, customerProfileId, inscriptionDateFrais, paiementLastDate, paiementLastStr, paiementMontant, fraisMontant, fraisMontantFuture, fraisMontantDu, fraisMontantNonPasse, fraisMaintenant, paiementsAJour, paiementsEnRetard, paiementsEnRetardMontant, paiementsEnAvance, paiementsEnSouffrance, paiementsEnSouffranceMontant, fraisCrees, creeDAnnee, creeJourDeSemaine, creeMoisDAnnee, creeHeureDuJour, inscriptionJoursDeSemaine, inscriptionNomsParents, inscriptionMails, inscriptionMail, inscriptionMailsParents, inscriptionNumeroTelephones, inscriptionNumeroTelephone, inscriptionNomParent, inscriptionNomParentLignes, inscriptionMailParentLignes, inscriptionDetailParentLignes, inscriptionChercherParentLignes, inscriptionContactUrgenceParentLignes, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10, enfantImmunisationsRecu, enfantPhotosApprouve, inscriptionNomComplet);
+		return Objects.hash(super.hashCode(), inscriptionCle, anneeCle, blocCles, ecoleCle, sessionCle, ageCle, blocCle, enfantCle, mereCles, pereCles, gardienCles, paiementCles, formInscriptionCle, utilisateurCles, scolaireTri, ecoleTri, anneeTri, saisonTri, sessionTri, ageTri, enfantPrenom, enfantPrenomPrefere, enfantFamilleNom, merePrenom, mereFamilleNom, merePrenomPrefere, mereNomCompletPrefere, mereNumeroTelephone, mereMail, perePrenom, pereFamilleNom, perePrenomPrefere, pereNomCompletPrefere, pereNumeroTelephone, pereMail, gardienPrenom, gardienFamilleNom, gardienNumeroTelephone, enfantNomComplet, enfantNomCompletPrefere, enfantDateNaissance, enfantDateNaissanceDAnnee, enfantDateNaissanceMoisDAnnee, enfantDateNaissanceJourDeSemaine, enfantMoisNaissance, enfantJourNaissance, ecoleNom, ecoleNomComplet, ecoleEmplacement, ecoleAddresse, ecoleNumeroTelephone, ecoleForm, ecoleNumero, ecoleAdministrateurNom, anneeDebut, anneeFin, saisonDateDebut, anneeFraisInscription, sessionDateDebut, sessionDateFin, ageNomComplet, ageDebut, ageFin, blocHeureDebut, blocHeureFin, blocPrixParMois, blocDimanche, blocLundi, blocMardi, blocMercredi, blocJeudi, blocVendredi, blocSamedi, blocPrixTotal, blocNomAdmin, blocNomCourt, blocNomComplet, inscriptionApprouve, inscriptionImmunisations, photo, familleMarie, familleSepare, familleDivorce, inscriptionMotDePasse, familleAddresse, familleAddresseCsv, familleCommentVousConnaissezEcole, inscriptionConsiderationsSpeciales, enfantConditionsMedicales, enfantEcolesPrecedemmentFrequentees, enfantDescription, enfantObjectifs, adminNotes, enfantPropre, inscriptionNomGroupe, inscriptionCouleurGroupe, inscriptionPaimentChaqueMois, inscriptionPaimentComplet, customerProfileId, inscriptionDateFrais, paiementLastDate, paiementLastStr, paiementMontant, fraisMontant, fraisMontantFuture, fraisMontantDu, fraisMontantNonPasse, fraisMaintenant, paiementsAJour, paiementsEnRetard, paiementsEnRetardMontant, paiementsEnAvance, paiementsEnSouffrance, paiementsEnSouffranceMontant, fraisCrees, creeDAnnee, creeJourDeSemaine, creeMoisDAnnee, creeHeureDuJour, inscriptionJoursDeSemaine, inscriptionNomsParents, inscriptionMails, inscriptionMail, inscriptionMailsParents, inscriptionNumeroTelephones, inscriptionNumeroTelephone, inscriptionNomParent, inscriptionNomParentLignes, inscriptionMailParentLignes, inscriptionDetailParentLignes, inscriptionChercherParentLignes, inscriptionContactUrgenceParentLignes, inscriptionSignature1, inscriptionSignature2, inscriptionSignature3, inscriptionSignature4, inscriptionSignature5, inscriptionSignature6, inscriptionSignature7, inscriptionSignature8, inscriptionSignature9, inscriptionSignature10, inscriptionDate1, inscriptionDate2, inscriptionDate3, inscriptionDate4, inscriptionDate5, inscriptionDate6, inscriptionDate7, inscriptionDate8, inscriptionDate9, inscriptionDate10, enfantImmunisationsRecu, enfantPhotosApprouve, inscriptionNomComplet);
 	}
 
 	////////////
@@ -22779,11 +23869,20 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( enfantPrenomPrefere, that.enfantPrenomPrefere )
 				&& Objects.equals( enfantFamilleNom, that.enfantFamilleNom )
 				&& Objects.equals( merePrenom, that.merePrenom )
+				&& Objects.equals( mereFamilleNom, that.mereFamilleNom )
 				&& Objects.equals( merePrenomPrefere, that.merePrenomPrefere )
 				&& Objects.equals( mereNomCompletPrefere, that.mereNomCompletPrefere )
+				&& Objects.equals( mereNumeroTelephone, that.mereNumeroTelephone )
+				&& Objects.equals( mereMail, that.mereMail )
 				&& Objects.equals( perePrenom, that.perePrenom )
+				&& Objects.equals( pereFamilleNom, that.pereFamilleNom )
 				&& Objects.equals( perePrenomPrefere, that.perePrenomPrefere )
 				&& Objects.equals( pereNomCompletPrefere, that.pereNomCompletPrefere )
+				&& Objects.equals( pereNumeroTelephone, that.pereNumeroTelephone )
+				&& Objects.equals( pereMail, that.pereMail )
+				&& Objects.equals( gardienPrenom, that.gardienPrenom )
+				&& Objects.equals( gardienFamilleNom, that.gardienFamilleNom )
+				&& Objects.equals( gardienNumeroTelephone, that.gardienNumeroTelephone )
 				&& Objects.equals( enfantNomComplet, that.enfantNomComplet )
 				&& Objects.equals( enfantNomCompletPrefere, that.enfantNomCompletPrefere )
 				&& Objects.equals( enfantDateNaissance, that.enfantDateNaissance )
@@ -22831,6 +23930,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 				&& Objects.equals( familleDivorce, that.familleDivorce )
 				&& Objects.equals( inscriptionMotDePasse, that.inscriptionMotDePasse )
 				&& Objects.equals( familleAddresse, that.familleAddresse )
+				&& Objects.equals( familleAddresseCsv, that.familleAddresseCsv )
 				&& Objects.equals( familleCommentVousConnaissezEcole, that.familleCommentVousConnaissezEcole )
 				&& Objects.equals( inscriptionConsiderationsSpeciales, that.inscriptionConsiderationsSpeciales )
 				&& Objects.equals( enfantConditionsMedicales, that.enfantConditionsMedicales )
@@ -22934,11 +24034,20 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", enfantPrenomPrefere: \"" ).append(enfantPrenomPrefere).append( "\"" );
 		sb.append( ", enfantFamilleNom: \"" ).append(enfantFamilleNom).append( "\"" );
 		sb.append( ", merePrenom: \"" ).append(merePrenom).append( "\"" );
+		sb.append( ", mereFamilleNom: \"" ).append(mereFamilleNom).append( "\"" );
 		sb.append( ", merePrenomPrefere: \"" ).append(merePrenomPrefere).append( "\"" );
 		sb.append( ", mereNomCompletPrefere: \"" ).append(mereNomCompletPrefere).append( "\"" );
+		sb.append( ", mereNumeroTelephone: \"" ).append(mereNumeroTelephone).append( "\"" );
+		sb.append( ", mereMail: \"" ).append(mereMail).append( "\"" );
 		sb.append( ", perePrenom: \"" ).append(perePrenom).append( "\"" );
+		sb.append( ", pereFamilleNom: \"" ).append(pereFamilleNom).append( "\"" );
 		sb.append( ", perePrenomPrefere: \"" ).append(perePrenomPrefere).append( "\"" );
 		sb.append( ", pereNomCompletPrefere: \"" ).append(pereNomCompletPrefere).append( "\"" );
+		sb.append( ", pereNumeroTelephone: \"" ).append(pereNumeroTelephone).append( "\"" );
+		sb.append( ", pereMail: \"" ).append(pereMail).append( "\"" );
+		sb.append( ", gardienPrenom: \"" ).append(gardienPrenom).append( "\"" );
+		sb.append( ", gardienFamilleNom: \"" ).append(gardienFamilleNom).append( "\"" );
+		sb.append( ", gardienNumeroTelephone: \"" ).append(gardienNumeroTelephone).append( "\"" );
 		sb.append( ", enfantNomComplet: \"" ).append(enfantNomComplet).append( "\"" );
 		sb.append( ", enfantNomCompletPrefere: \"" ).append(enfantNomCompletPrefere).append( "\"" );
 		sb.append( ", enfantDateNaissance: " ).append(enfantDateNaissance);
@@ -22986,6 +24095,7 @@ public abstract class InscriptionScolaireGen<DEV> extends Cluster {
 		sb.append( ", familleDivorce: " ).append(familleDivorce);
 		sb.append( ", inscriptionMotDePasse: \"" ).append(inscriptionMotDePasse).append( "\"" );
 		sb.append( ", familleAddresse: \"" ).append(familleAddresse).append( "\"" );
+		sb.append( ", familleAddresseCsv: \"" ).append(familleAddresseCsv).append( "\"" );
 		sb.append( ", familleCommentVousConnaissezEcole: \"" ).append(familleCommentVousConnaissezEcole).append( "\"" );
 		sb.append( ", inscriptionConsiderationsSpeciales: \"" ).append(inscriptionConsiderationsSpeciales).append( "\"" );
 		sb.append( ", enfantConditionsMedicales: \"" ).append(enfantConditionsMedicales).append( "\"" );

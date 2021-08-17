@@ -3748,6 +3748,86 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return momFirstName == null ? "" : StringEscapeUtils.escapeHtml4(strMomFirstName());
 	}
 
+	///////////////////
+	// momFamilyName //
+	///////////////////
+
+	/**	 The entity momFamilyName
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String momFamilyName;
+	@JsonIgnore
+	public Wrap<String> momFamilyNameWrap = new Wrap<String>().p(this).c(String.class).var("momFamilyName").o(momFamilyName);
+
+	/**	<br/> The entity momFamilyName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momFamilyName">Find the entity momFamilyName in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _momFamilyName(Wrap<String> c);
+
+	public String getMomFamilyName() {
+		return momFamilyName;
+	}
+	public void setMomFamilyName(String o) {
+		this.momFamilyName = SchoolEnrollment.staticSetMomFamilyName(siteRequest_, o);
+		this.momFamilyNameWrap.alreadyInitialized = true;
+	}
+	public static String staticSetMomFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment momFamilyNameInit() {
+		if(!momFamilyNameWrap.alreadyInitialized) {
+			_momFamilyName(momFamilyNameWrap);
+			if(momFamilyName == null)
+				setMomFamilyName(momFamilyNameWrap.o);
+		}
+		momFamilyNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrMomFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrMomFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqMomFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrMomFamilyName(siteRequest_, SchoolEnrollment.staticSolrMomFamilyName(siteRequest_, SchoolEnrollment.staticSetMomFamilyName(siteRequest_, o)));
+	}
+
+	public String solrMomFamilyName() {
+		return SchoolEnrollment.staticSolrMomFamilyName(siteRequest_, momFamilyName);
+	}
+
+	public String strMomFamilyName() {
+		return momFamilyName == null ? "" : momFamilyName;
+	}
+
+	public String sqlMomFamilyName() {
+		return momFamilyName;
+	}
+
+	public String jsonMomFamilyName() {
+		return momFamilyName == null ? "" : momFamilyName;
+	}
+
+	public String nomAffichageMomFamilyName() {
+		return null;
+	}
+
+	public String htmTooltipMomFamilyName() {
+		return null;
+	}
+
+	public String htmMomFamilyName() {
+		return momFamilyName == null ? "" : StringEscapeUtils.escapeHtml4(strMomFamilyName());
+	}
+
 	///////////////////////////
 	// momFirstNamePreferred //
 	///////////////////////////
@@ -3908,6 +3988,166 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		return momCompleteNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strMomCompleteNamePreferred());
 	}
 
+	////////////////////
+	// momPhoneNumber //
+	////////////////////
+
+	/**	 The entity momPhoneNumber
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String momPhoneNumber;
+	@JsonIgnore
+	public Wrap<String> momPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("momPhoneNumber").o(momPhoneNumber);
+
+	/**	<br/> The entity momPhoneNumber
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momPhoneNumber">Find the entity momPhoneNumber in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _momPhoneNumber(Wrap<String> c);
+
+	public String getMomPhoneNumber() {
+		return momPhoneNumber;
+	}
+	public void setMomPhoneNumber(String o) {
+		this.momPhoneNumber = SchoolEnrollment.staticSetMomPhoneNumber(siteRequest_, o);
+		this.momPhoneNumberWrap.alreadyInitialized = true;
+	}
+	public static String staticSetMomPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment momPhoneNumberInit() {
+		if(!momPhoneNumberWrap.alreadyInitialized) {
+			_momPhoneNumber(momPhoneNumberWrap);
+			if(momPhoneNumber == null)
+				setMomPhoneNumber(momPhoneNumberWrap.o);
+		}
+		momPhoneNumberWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrMomPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrMomPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqMomPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrMomPhoneNumber(siteRequest_, SchoolEnrollment.staticSolrMomPhoneNumber(siteRequest_, SchoolEnrollment.staticSetMomPhoneNumber(siteRequest_, o)));
+	}
+
+	public String solrMomPhoneNumber() {
+		return SchoolEnrollment.staticSolrMomPhoneNumber(siteRequest_, momPhoneNumber);
+	}
+
+	public String strMomPhoneNumber() {
+		return momPhoneNumber == null ? "" : momPhoneNumber;
+	}
+
+	public String sqlMomPhoneNumber() {
+		return momPhoneNumber;
+	}
+
+	public String jsonMomPhoneNumber() {
+		return momPhoneNumber == null ? "" : momPhoneNumber;
+	}
+
+	public String nomAffichageMomPhoneNumber() {
+		return null;
+	}
+
+	public String htmTooltipMomPhoneNumber() {
+		return null;
+	}
+
+	public String htmMomPhoneNumber() {
+		return momPhoneNumber == null ? "" : StringEscapeUtils.escapeHtml4(strMomPhoneNumber());
+	}
+
+	//////////////
+	// momEmail //
+	//////////////
+
+	/**	 The entity momEmail
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String momEmail;
+	@JsonIgnore
+	public Wrap<String> momEmailWrap = new Wrap<String>().p(this).c(String.class).var("momEmail").o(momEmail);
+
+	/**	<br/> The entity momEmail
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:momEmail">Find the entity momEmail in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _momEmail(Wrap<String> c);
+
+	public String getMomEmail() {
+		return momEmail;
+	}
+	public void setMomEmail(String o) {
+		this.momEmail = SchoolEnrollment.staticSetMomEmail(siteRequest_, o);
+		this.momEmailWrap.alreadyInitialized = true;
+	}
+	public static String staticSetMomEmail(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment momEmailInit() {
+		if(!momEmailWrap.alreadyInitialized) {
+			_momEmail(momEmailWrap);
+			if(momEmail == null)
+				setMomEmail(momEmailWrap.o);
+		}
+		momEmailWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrMomEmail(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrMomEmail(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqMomEmail(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrMomEmail(siteRequest_, SchoolEnrollment.staticSolrMomEmail(siteRequest_, SchoolEnrollment.staticSetMomEmail(siteRequest_, o)));
+	}
+
+	public String solrMomEmail() {
+		return SchoolEnrollment.staticSolrMomEmail(siteRequest_, momEmail);
+	}
+
+	public String strMomEmail() {
+		return momEmail == null ? "" : momEmail;
+	}
+
+	public String sqlMomEmail() {
+		return momEmail;
+	}
+
+	public String jsonMomEmail() {
+		return momEmail == null ? "" : momEmail;
+	}
+
+	public String nomAffichageMomEmail() {
+		return null;
+	}
+
+	public String htmTooltipMomEmail() {
+		return null;
+	}
+
+	public String htmMomEmail() {
+		return momEmail == null ? "" : StringEscapeUtils.escapeHtml4(strMomEmail());
+	}
+
 	//////////////////
 	// dadFirstName //
 	//////////////////
@@ -3986,6 +4226,86 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String htmDadFirstName() {
 		return dadFirstName == null ? "" : StringEscapeUtils.escapeHtml4(strDadFirstName());
+	}
+
+	///////////////////
+	// dadFamilyName //
+	///////////////////
+
+	/**	 The entity dadFamilyName
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String dadFamilyName;
+	@JsonIgnore
+	public Wrap<String> dadFamilyNameWrap = new Wrap<String>().p(this).c(String.class).var("dadFamilyName").o(dadFamilyName);
+
+	/**	<br/> The entity dadFamilyName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadFamilyName">Find the entity dadFamilyName in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _dadFamilyName(Wrap<String> c);
+
+	public String getDadFamilyName() {
+		return dadFamilyName;
+	}
+	public void setDadFamilyName(String o) {
+		this.dadFamilyName = SchoolEnrollment.staticSetDadFamilyName(siteRequest_, o);
+		this.dadFamilyNameWrap.alreadyInitialized = true;
+	}
+	public static String staticSetDadFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment dadFamilyNameInit() {
+		if(!dadFamilyNameWrap.alreadyInitialized) {
+			_dadFamilyName(dadFamilyNameWrap);
+			if(dadFamilyName == null)
+				setDadFamilyName(dadFamilyNameWrap.o);
+		}
+		dadFamilyNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrDadFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrDadFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDadFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrDadFamilyName(siteRequest_, SchoolEnrollment.staticSolrDadFamilyName(siteRequest_, SchoolEnrollment.staticSetDadFamilyName(siteRequest_, o)));
+	}
+
+	public String solrDadFamilyName() {
+		return SchoolEnrollment.staticSolrDadFamilyName(siteRequest_, dadFamilyName);
+	}
+
+	public String strDadFamilyName() {
+		return dadFamilyName == null ? "" : dadFamilyName;
+	}
+
+	public String sqlDadFamilyName() {
+		return dadFamilyName;
+	}
+
+	public String jsonDadFamilyName() {
+		return dadFamilyName == null ? "" : dadFamilyName;
+	}
+
+	public String nomAffichageDadFamilyName() {
+		return null;
+	}
+
+	public String htmTooltipDadFamilyName() {
+		return null;
+	}
+
+	public String htmDadFamilyName() {
+		return dadFamilyName == null ? "" : StringEscapeUtils.escapeHtml4(strDadFamilyName());
 	}
 
 	///////////////////////////
@@ -4146,6 +4466,406 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 
 	public String htmDadCompleteNamePreferred() {
 		return dadCompleteNamePreferred == null ? "" : StringEscapeUtils.escapeHtml4(strDadCompleteNamePreferred());
+	}
+
+	////////////////////
+	// dadPhoneNumber //
+	////////////////////
+
+	/**	 The entity dadPhoneNumber
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String dadPhoneNumber;
+	@JsonIgnore
+	public Wrap<String> dadPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("dadPhoneNumber").o(dadPhoneNumber);
+
+	/**	<br/> The entity dadPhoneNumber
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadPhoneNumber">Find the entity dadPhoneNumber in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _dadPhoneNumber(Wrap<String> c);
+
+	public String getDadPhoneNumber() {
+		return dadPhoneNumber;
+	}
+	public void setDadPhoneNumber(String o) {
+		this.dadPhoneNumber = SchoolEnrollment.staticSetDadPhoneNumber(siteRequest_, o);
+		this.dadPhoneNumberWrap.alreadyInitialized = true;
+	}
+	public static String staticSetDadPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment dadPhoneNumberInit() {
+		if(!dadPhoneNumberWrap.alreadyInitialized) {
+			_dadPhoneNumber(dadPhoneNumberWrap);
+			if(dadPhoneNumber == null)
+				setDadPhoneNumber(dadPhoneNumberWrap.o);
+		}
+		dadPhoneNumberWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrDadPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrDadPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDadPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrDadPhoneNumber(siteRequest_, SchoolEnrollment.staticSolrDadPhoneNumber(siteRequest_, SchoolEnrollment.staticSetDadPhoneNumber(siteRequest_, o)));
+	}
+
+	public String solrDadPhoneNumber() {
+		return SchoolEnrollment.staticSolrDadPhoneNumber(siteRequest_, dadPhoneNumber);
+	}
+
+	public String strDadPhoneNumber() {
+		return dadPhoneNumber == null ? "" : dadPhoneNumber;
+	}
+
+	public String sqlDadPhoneNumber() {
+		return dadPhoneNumber;
+	}
+
+	public String jsonDadPhoneNumber() {
+		return dadPhoneNumber == null ? "" : dadPhoneNumber;
+	}
+
+	public String nomAffichageDadPhoneNumber() {
+		return null;
+	}
+
+	public String htmTooltipDadPhoneNumber() {
+		return null;
+	}
+
+	public String htmDadPhoneNumber() {
+		return dadPhoneNumber == null ? "" : StringEscapeUtils.escapeHtml4(strDadPhoneNumber());
+	}
+
+	//////////////
+	// dadEmail //
+	//////////////
+
+	/**	 The entity dadEmail
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String dadEmail;
+	@JsonIgnore
+	public Wrap<String> dadEmailWrap = new Wrap<String>().p(this).c(String.class).var("dadEmail").o(dadEmail);
+
+	/**	<br/> The entity dadEmail
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:dadEmail">Find the entity dadEmail in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _dadEmail(Wrap<String> c);
+
+	public String getDadEmail() {
+		return dadEmail;
+	}
+	public void setDadEmail(String o) {
+		this.dadEmail = SchoolEnrollment.staticSetDadEmail(siteRequest_, o);
+		this.dadEmailWrap.alreadyInitialized = true;
+	}
+	public static String staticSetDadEmail(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment dadEmailInit() {
+		if(!dadEmailWrap.alreadyInitialized) {
+			_dadEmail(dadEmailWrap);
+			if(dadEmail == null)
+				setDadEmail(dadEmailWrap.o);
+		}
+		dadEmailWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrDadEmail(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrDadEmail(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqDadEmail(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrDadEmail(siteRequest_, SchoolEnrollment.staticSolrDadEmail(siteRequest_, SchoolEnrollment.staticSetDadEmail(siteRequest_, o)));
+	}
+
+	public String solrDadEmail() {
+		return SchoolEnrollment.staticSolrDadEmail(siteRequest_, dadEmail);
+	}
+
+	public String strDadEmail() {
+		return dadEmail == null ? "" : dadEmail;
+	}
+
+	public String sqlDadEmail() {
+		return dadEmail;
+	}
+
+	public String jsonDadEmail() {
+		return dadEmail == null ? "" : dadEmail;
+	}
+
+	public String nomAffichageDadEmail() {
+		return null;
+	}
+
+	public String htmTooltipDadEmail() {
+		return null;
+	}
+
+	public String htmDadEmail() {
+		return dadEmail == null ? "" : StringEscapeUtils.escapeHtml4(strDadEmail());
+	}
+
+	///////////////////////
+	// guardianFirstName //
+	///////////////////////
+
+	/**	 The entity guardianFirstName
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String guardianFirstName;
+	@JsonIgnore
+	public Wrap<String> guardianFirstNameWrap = new Wrap<String>().p(this).c(String.class).var("guardianFirstName").o(guardianFirstName);
+
+	/**	<br/> The entity guardianFirstName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardianFirstName">Find the entity guardianFirstName in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _guardianFirstName(Wrap<String> c);
+
+	public String getGuardianFirstName() {
+		return guardianFirstName;
+	}
+	public void setGuardianFirstName(String o) {
+		this.guardianFirstName = SchoolEnrollment.staticSetGuardianFirstName(siteRequest_, o);
+		this.guardianFirstNameWrap.alreadyInitialized = true;
+	}
+	public static String staticSetGuardianFirstName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment guardianFirstNameInit() {
+		if(!guardianFirstNameWrap.alreadyInitialized) {
+			_guardianFirstName(guardianFirstNameWrap);
+			if(guardianFirstName == null)
+				setGuardianFirstName(guardianFirstNameWrap.o);
+		}
+		guardianFirstNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrGuardianFirstName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrGuardianFirstName(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqGuardianFirstName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrGuardianFirstName(siteRequest_, SchoolEnrollment.staticSolrGuardianFirstName(siteRequest_, SchoolEnrollment.staticSetGuardianFirstName(siteRequest_, o)));
+	}
+
+	public String solrGuardianFirstName() {
+		return SchoolEnrollment.staticSolrGuardianFirstName(siteRequest_, guardianFirstName);
+	}
+
+	public String strGuardianFirstName() {
+		return guardianFirstName == null ? "" : guardianFirstName;
+	}
+
+	public String sqlGuardianFirstName() {
+		return guardianFirstName;
+	}
+
+	public String jsonGuardianFirstName() {
+		return guardianFirstName == null ? "" : guardianFirstName;
+	}
+
+	public String nomAffichageGuardianFirstName() {
+		return null;
+	}
+
+	public String htmTooltipGuardianFirstName() {
+		return null;
+	}
+
+	public String htmGuardianFirstName() {
+		return guardianFirstName == null ? "" : StringEscapeUtils.escapeHtml4(strGuardianFirstName());
+	}
+
+	////////////////////////
+	// guardianFamilyName //
+	////////////////////////
+
+	/**	 The entity guardianFamilyName
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String guardianFamilyName;
+	@JsonIgnore
+	public Wrap<String> guardianFamilyNameWrap = new Wrap<String>().p(this).c(String.class).var("guardianFamilyName").o(guardianFamilyName);
+
+	/**	<br/> The entity guardianFamilyName
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardianFamilyName">Find the entity guardianFamilyName in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _guardianFamilyName(Wrap<String> c);
+
+	public String getGuardianFamilyName() {
+		return guardianFamilyName;
+	}
+	public void setGuardianFamilyName(String o) {
+		this.guardianFamilyName = SchoolEnrollment.staticSetGuardianFamilyName(siteRequest_, o);
+		this.guardianFamilyNameWrap.alreadyInitialized = true;
+	}
+	public static String staticSetGuardianFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment guardianFamilyNameInit() {
+		if(!guardianFamilyNameWrap.alreadyInitialized) {
+			_guardianFamilyName(guardianFamilyNameWrap);
+			if(guardianFamilyName == null)
+				setGuardianFamilyName(guardianFamilyNameWrap.o);
+		}
+		guardianFamilyNameWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrGuardianFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrGuardianFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqGuardianFamilyName(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrGuardianFamilyName(siteRequest_, SchoolEnrollment.staticSolrGuardianFamilyName(siteRequest_, SchoolEnrollment.staticSetGuardianFamilyName(siteRequest_, o)));
+	}
+
+	public String solrGuardianFamilyName() {
+		return SchoolEnrollment.staticSolrGuardianFamilyName(siteRequest_, guardianFamilyName);
+	}
+
+	public String strGuardianFamilyName() {
+		return guardianFamilyName == null ? "" : guardianFamilyName;
+	}
+
+	public String sqlGuardianFamilyName() {
+		return guardianFamilyName;
+	}
+
+	public String jsonGuardianFamilyName() {
+		return guardianFamilyName == null ? "" : guardianFamilyName;
+	}
+
+	public String nomAffichageGuardianFamilyName() {
+		return null;
+	}
+
+	public String htmTooltipGuardianFamilyName() {
+		return null;
+	}
+
+	public String htmGuardianFamilyName() {
+		return guardianFamilyName == null ? "" : StringEscapeUtils.escapeHtml4(strGuardianFamilyName());
+	}
+
+	/////////////////////////
+	// guardianPhoneNumber //
+	/////////////////////////
+
+	/**	 The entity guardianPhoneNumber
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String guardianPhoneNumber;
+	@JsonIgnore
+	public Wrap<String> guardianPhoneNumberWrap = new Wrap<String>().p(this).c(String.class).var("guardianPhoneNumber").o(guardianPhoneNumber);
+
+	/**	<br/> The entity guardianPhoneNumber
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:guardianPhoneNumber">Find the entity guardianPhoneNumber in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _guardianPhoneNumber(Wrap<String> c);
+
+	public String getGuardianPhoneNumber() {
+		return guardianPhoneNumber;
+	}
+	public void setGuardianPhoneNumber(String o) {
+		this.guardianPhoneNumber = SchoolEnrollment.staticSetGuardianPhoneNumber(siteRequest_, o);
+		this.guardianPhoneNumberWrap.alreadyInitialized = true;
+	}
+	public static String staticSetGuardianPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment guardianPhoneNumberInit() {
+		if(!guardianPhoneNumberWrap.alreadyInitialized) {
+			_guardianPhoneNumber(guardianPhoneNumberWrap);
+			if(guardianPhoneNumber == null)
+				setGuardianPhoneNumber(guardianPhoneNumberWrap.o);
+		}
+		guardianPhoneNumberWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrGuardianPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrGuardianPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqGuardianPhoneNumber(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrGuardianPhoneNumber(siteRequest_, SchoolEnrollment.staticSolrGuardianPhoneNumber(siteRequest_, SchoolEnrollment.staticSetGuardianPhoneNumber(siteRequest_, o)));
+	}
+
+	public String solrGuardianPhoneNumber() {
+		return SchoolEnrollment.staticSolrGuardianPhoneNumber(siteRequest_, guardianPhoneNumber);
+	}
+
+	public String strGuardianPhoneNumber() {
+		return guardianPhoneNumber == null ? "" : guardianPhoneNumber;
+	}
+
+	public String sqlGuardianPhoneNumber() {
+		return guardianPhoneNumber;
+	}
+
+	public String jsonGuardianPhoneNumber() {
+		return guardianPhoneNumber == null ? "" : guardianPhoneNumber;
+	}
+
+	public String nomAffichageGuardianPhoneNumber() {
+		return null;
+	}
+
+	public String htmTooltipGuardianPhoneNumber() {
+		return null;
+	}
+
+	public String htmGuardianPhoneNumber() {
+		return guardianPhoneNumber == null ? "" : StringEscapeUtils.escapeHtml4(strGuardianPhoneNumber());
 	}
 
 	///////////////////////
@@ -8971,6 +9691,86 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				} g("div");
 			} g("div");
 		} g("div");
+	}
+
+	//////////////////////
+	// familyAddressCsv //
+	//////////////////////
+
+	/**	 The entity familyAddressCsv
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected String familyAddressCsv;
+	@JsonIgnore
+	public Wrap<String> familyAddressCsvWrap = new Wrap<String>().p(this).c(String.class).var("familyAddressCsv").o(familyAddressCsv);
+
+	/**	<br/> The entity familyAddressCsv
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.enrollment.SchoolEnrollment&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:familyAddressCsv">Find the entity familyAddressCsv in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _familyAddressCsv(Wrap<String> c);
+
+	public String getFamilyAddressCsv() {
+		return familyAddressCsv;
+	}
+	public void setFamilyAddressCsv(String o) {
+		this.familyAddressCsv = SchoolEnrollment.staticSetFamilyAddressCsv(siteRequest_, o);
+		this.familyAddressCsvWrap.alreadyInitialized = true;
+	}
+	public static String staticSetFamilyAddressCsv(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+	protected SchoolEnrollment familyAddressCsvInit() {
+		if(!familyAddressCsvWrap.alreadyInitialized) {
+			_familyAddressCsv(familyAddressCsvWrap);
+			if(familyAddressCsv == null)
+				setFamilyAddressCsv(familyAddressCsvWrap.o);
+		}
+		familyAddressCsvWrap.alreadyInitialized(true);
+		return (SchoolEnrollment)this;
+	}
+
+	public static String staticSolrFamilyAddressCsv(SiteRequestEnUS siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSolrStrFamilyAddressCsv(SiteRequestEnUS siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqFamilyAddressCsv(SiteRequestEnUS siteRequest_, String o) {
+		return SchoolEnrollment.staticSolrStrFamilyAddressCsv(siteRequest_, SchoolEnrollment.staticSolrFamilyAddressCsv(siteRequest_, SchoolEnrollment.staticSetFamilyAddressCsv(siteRequest_, o)));
+	}
+
+	public String solrFamilyAddressCsv() {
+		return SchoolEnrollment.staticSolrFamilyAddressCsv(siteRequest_, familyAddressCsv);
+	}
+
+	public String strFamilyAddressCsv() {
+		return familyAddressCsv == null ? "" : familyAddressCsv;
+	}
+
+	public String sqlFamilyAddressCsv() {
+		return familyAddressCsv;
+	}
+
+	public String jsonFamilyAddressCsv() {
+		return familyAddressCsv == null ? "" : familyAddressCsv;
+	}
+
+	public String nomAffichageFamilyAddressCsv() {
+		return null;
+	}
+
+	public String htmTooltipFamilyAddressCsv() {
+		return null;
+	}
+
+	public String htmFamilyAddressCsv() {
+		return familyAddressCsv == null ? "" : StringEscapeUtils.escapeHtml4(strFamilyAddressCsv());
 	}
 
 	/////////////////////////////////
@@ -17632,11 +18432,20 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		childFirstNamePreferredInit();
 		childFamilyNameInit();
 		momFirstNameInit();
+		momFamilyNameInit();
 		momFirstNamePreferredInit();
 		momCompleteNamePreferredInit();
+		momPhoneNumberInit();
+		momEmailInit();
 		dadFirstNameInit();
+		dadFamilyNameInit();
 		dadFirstNamePreferredInit();
 		dadCompleteNamePreferredInit();
+		dadPhoneNumberInit();
+		dadEmailInit();
+		guardianFirstNameInit();
+		guardianFamilyNameInit();
+		guardianPhoneNumberInit();
 		childCompleteNameInit();
 		childCompleteNamePreferredInit();
 		childBirthDateInit();
@@ -17684,6 +18493,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		familyDivorcedInit();
 		enrollmentPassphraseInit();
 		familyAddressInit();
+		familyAddressCsvInit();
 		familyHowDoYouKnowTheSchoolInit();
 		enrollmentSpecialConsiderationsInit();
 		childMedicalConditionsInit();
@@ -17897,16 +18707,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.childFamilyName;
 			case "momFirstName":
 				return oSchoolEnrollment.momFirstName;
+			case "momFamilyName":
+				return oSchoolEnrollment.momFamilyName;
 			case "momFirstNamePreferred":
 				return oSchoolEnrollment.momFirstNamePreferred;
 			case "momCompleteNamePreferred":
 				return oSchoolEnrollment.momCompleteNamePreferred;
+			case "momPhoneNumber":
+				return oSchoolEnrollment.momPhoneNumber;
+			case "momEmail":
+				return oSchoolEnrollment.momEmail;
 			case "dadFirstName":
 				return oSchoolEnrollment.dadFirstName;
+			case "dadFamilyName":
+				return oSchoolEnrollment.dadFamilyName;
 			case "dadFirstNamePreferred":
 				return oSchoolEnrollment.dadFirstNamePreferred;
 			case "dadCompleteNamePreferred":
 				return oSchoolEnrollment.dadCompleteNamePreferred;
+			case "dadPhoneNumber":
+				return oSchoolEnrollment.dadPhoneNumber;
+			case "dadEmail":
+				return oSchoolEnrollment.dadEmail;
+			case "guardianFirstName":
+				return oSchoolEnrollment.guardianFirstName;
+			case "guardianFamilyName":
+				return oSchoolEnrollment.guardianFamilyName;
+			case "guardianPhoneNumber":
+				return oSchoolEnrollment.guardianPhoneNumber;
 			case "childCompleteName":
 				return oSchoolEnrollment.childCompleteName;
 			case "childCompleteNamePreferred":
@@ -18001,6 +18829,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return oSchoolEnrollment.enrollmentPassphrase;
 			case "familyAddress":
 				return oSchoolEnrollment.familyAddress;
+			case "familyAddressCsv":
+				return oSchoolEnrollment.familyAddressCsv;
 			case "familyHowDoYouKnowTheSchool":
 				return oSchoolEnrollment.familyHowDoYouKnowTheSchool;
 			case "enrollmentSpecialConsiderations":
@@ -18280,16 +19110,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSetChildFamilyName(siteRequest_, o);
 		case "momFirstName":
 			return SchoolEnrollment.staticSetMomFirstName(siteRequest_, o);
+		case "momFamilyName":
+			return SchoolEnrollment.staticSetMomFamilyName(siteRequest_, o);
 		case "momFirstNamePreferred":
 			return SchoolEnrollment.staticSetMomFirstNamePreferred(siteRequest_, o);
 		case "momCompleteNamePreferred":
 			return SchoolEnrollment.staticSetMomCompleteNamePreferred(siteRequest_, o);
+		case "momPhoneNumber":
+			return SchoolEnrollment.staticSetMomPhoneNumber(siteRequest_, o);
+		case "momEmail":
+			return SchoolEnrollment.staticSetMomEmail(siteRequest_, o);
 		case "dadFirstName":
 			return SchoolEnrollment.staticSetDadFirstName(siteRequest_, o);
+		case "dadFamilyName":
+			return SchoolEnrollment.staticSetDadFamilyName(siteRequest_, o);
 		case "dadFirstNamePreferred":
 			return SchoolEnrollment.staticSetDadFirstNamePreferred(siteRequest_, o);
 		case "dadCompleteNamePreferred":
 			return SchoolEnrollment.staticSetDadCompleteNamePreferred(siteRequest_, o);
+		case "dadPhoneNumber":
+			return SchoolEnrollment.staticSetDadPhoneNumber(siteRequest_, o);
+		case "dadEmail":
+			return SchoolEnrollment.staticSetDadEmail(siteRequest_, o);
+		case "guardianFirstName":
+			return SchoolEnrollment.staticSetGuardianFirstName(siteRequest_, o);
+		case "guardianFamilyName":
+			return SchoolEnrollment.staticSetGuardianFamilyName(siteRequest_, o);
+		case "guardianPhoneNumber":
+			return SchoolEnrollment.staticSetGuardianPhoneNumber(siteRequest_, o);
 		case "childCompleteName":
 			return SchoolEnrollment.staticSetChildCompleteName(siteRequest_, o);
 		case "childCompleteNamePreferred":
@@ -18384,6 +19232,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSetEnrollmentPassphrase(siteRequest_, o);
 		case "familyAddress":
 			return SchoolEnrollment.staticSetFamilyAddress(siteRequest_, o);
+		case "familyAddressCsv":
+			return SchoolEnrollment.staticSetFamilyAddressCsv(siteRequest_, o);
 		case "familyHowDoYouKnowTheSchool":
 			return SchoolEnrollment.staticSetFamilyHowDoYouKnowTheSchool(siteRequest_, o);
 		case "enrollmentSpecialConsiderations":
@@ -18586,16 +19436,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrChildFamilyName(siteRequest_, (String)o);
 		case "momFirstName":
 			return SchoolEnrollment.staticSolrMomFirstName(siteRequest_, (String)o);
+		case "momFamilyName":
+			return SchoolEnrollment.staticSolrMomFamilyName(siteRequest_, (String)o);
 		case "momFirstNamePreferred":
 			return SchoolEnrollment.staticSolrMomFirstNamePreferred(siteRequest_, (String)o);
 		case "momCompleteNamePreferred":
 			return SchoolEnrollment.staticSolrMomCompleteNamePreferred(siteRequest_, (String)o);
+		case "momPhoneNumber":
+			return SchoolEnrollment.staticSolrMomPhoneNumber(siteRequest_, (String)o);
+		case "momEmail":
+			return SchoolEnrollment.staticSolrMomEmail(siteRequest_, (String)o);
 		case "dadFirstName":
 			return SchoolEnrollment.staticSolrDadFirstName(siteRequest_, (String)o);
+		case "dadFamilyName":
+			return SchoolEnrollment.staticSolrDadFamilyName(siteRequest_, (String)o);
 		case "dadFirstNamePreferred":
 			return SchoolEnrollment.staticSolrDadFirstNamePreferred(siteRequest_, (String)o);
 		case "dadCompleteNamePreferred":
 			return SchoolEnrollment.staticSolrDadCompleteNamePreferred(siteRequest_, (String)o);
+		case "dadPhoneNumber":
+			return SchoolEnrollment.staticSolrDadPhoneNumber(siteRequest_, (String)o);
+		case "dadEmail":
+			return SchoolEnrollment.staticSolrDadEmail(siteRequest_, (String)o);
+		case "guardianFirstName":
+			return SchoolEnrollment.staticSolrGuardianFirstName(siteRequest_, (String)o);
+		case "guardianFamilyName":
+			return SchoolEnrollment.staticSolrGuardianFamilyName(siteRequest_, (String)o);
+		case "guardianPhoneNumber":
+			return SchoolEnrollment.staticSolrGuardianPhoneNumber(siteRequest_, (String)o);
 		case "childCompleteName":
 			return SchoolEnrollment.staticSolrChildCompleteName(siteRequest_, (String)o);
 		case "childCompleteNamePreferred":
@@ -18690,6 +19558,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrEnrollmentPassphrase(siteRequest_, (String)o);
 		case "familyAddress":
 			return SchoolEnrollment.staticSolrFamilyAddress(siteRequest_, (String)o);
+		case "familyAddressCsv":
+			return SchoolEnrollment.staticSolrFamilyAddressCsv(siteRequest_, (String)o);
 		case "familyHowDoYouKnowTheSchool":
 			return SchoolEnrollment.staticSolrFamilyHowDoYouKnowTheSchool(siteRequest_, (String)o);
 		case "enrollmentSpecialConsiderations":
@@ -18892,16 +19762,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrStrChildFamilyName(siteRequest_, (String)o);
 		case "momFirstName":
 			return SchoolEnrollment.staticSolrStrMomFirstName(siteRequest_, (String)o);
+		case "momFamilyName":
+			return SchoolEnrollment.staticSolrStrMomFamilyName(siteRequest_, (String)o);
 		case "momFirstNamePreferred":
 			return SchoolEnrollment.staticSolrStrMomFirstNamePreferred(siteRequest_, (String)o);
 		case "momCompleteNamePreferred":
 			return SchoolEnrollment.staticSolrStrMomCompleteNamePreferred(siteRequest_, (String)o);
+		case "momPhoneNumber":
+			return SchoolEnrollment.staticSolrStrMomPhoneNumber(siteRequest_, (String)o);
+		case "momEmail":
+			return SchoolEnrollment.staticSolrStrMomEmail(siteRequest_, (String)o);
 		case "dadFirstName":
 			return SchoolEnrollment.staticSolrStrDadFirstName(siteRequest_, (String)o);
+		case "dadFamilyName":
+			return SchoolEnrollment.staticSolrStrDadFamilyName(siteRequest_, (String)o);
 		case "dadFirstNamePreferred":
 			return SchoolEnrollment.staticSolrStrDadFirstNamePreferred(siteRequest_, (String)o);
 		case "dadCompleteNamePreferred":
 			return SchoolEnrollment.staticSolrStrDadCompleteNamePreferred(siteRequest_, (String)o);
+		case "dadPhoneNumber":
+			return SchoolEnrollment.staticSolrStrDadPhoneNumber(siteRequest_, (String)o);
+		case "dadEmail":
+			return SchoolEnrollment.staticSolrStrDadEmail(siteRequest_, (String)o);
+		case "guardianFirstName":
+			return SchoolEnrollment.staticSolrStrGuardianFirstName(siteRequest_, (String)o);
+		case "guardianFamilyName":
+			return SchoolEnrollment.staticSolrStrGuardianFamilyName(siteRequest_, (String)o);
+		case "guardianPhoneNumber":
+			return SchoolEnrollment.staticSolrStrGuardianPhoneNumber(siteRequest_, (String)o);
 		case "childCompleteName":
 			return SchoolEnrollment.staticSolrStrChildCompleteName(siteRequest_, (String)o);
 		case "childCompleteNamePreferred":
@@ -18996,6 +19884,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrStrEnrollmentPassphrase(siteRequest_, (String)o);
 		case "familyAddress":
 			return SchoolEnrollment.staticSolrStrFamilyAddress(siteRequest_, (String)o);
+		case "familyAddressCsv":
+			return SchoolEnrollment.staticSolrStrFamilyAddressCsv(siteRequest_, (String)o);
 		case "familyHowDoYouKnowTheSchool":
 			return SchoolEnrollment.staticSolrStrFamilyHowDoYouKnowTheSchool(siteRequest_, (String)o);
 		case "enrollmentSpecialConsiderations":
@@ -19198,16 +20088,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrFqChildFamilyName(siteRequest_, o);
 		case "momFirstName":
 			return SchoolEnrollment.staticSolrFqMomFirstName(siteRequest_, o);
+		case "momFamilyName":
+			return SchoolEnrollment.staticSolrFqMomFamilyName(siteRequest_, o);
 		case "momFirstNamePreferred":
 			return SchoolEnrollment.staticSolrFqMomFirstNamePreferred(siteRequest_, o);
 		case "momCompleteNamePreferred":
 			return SchoolEnrollment.staticSolrFqMomCompleteNamePreferred(siteRequest_, o);
+		case "momPhoneNumber":
+			return SchoolEnrollment.staticSolrFqMomPhoneNumber(siteRequest_, o);
+		case "momEmail":
+			return SchoolEnrollment.staticSolrFqMomEmail(siteRequest_, o);
 		case "dadFirstName":
 			return SchoolEnrollment.staticSolrFqDadFirstName(siteRequest_, o);
+		case "dadFamilyName":
+			return SchoolEnrollment.staticSolrFqDadFamilyName(siteRequest_, o);
 		case "dadFirstNamePreferred":
 			return SchoolEnrollment.staticSolrFqDadFirstNamePreferred(siteRequest_, o);
 		case "dadCompleteNamePreferred":
 			return SchoolEnrollment.staticSolrFqDadCompleteNamePreferred(siteRequest_, o);
+		case "dadPhoneNumber":
+			return SchoolEnrollment.staticSolrFqDadPhoneNumber(siteRequest_, o);
+		case "dadEmail":
+			return SchoolEnrollment.staticSolrFqDadEmail(siteRequest_, o);
+		case "guardianFirstName":
+			return SchoolEnrollment.staticSolrFqGuardianFirstName(siteRequest_, o);
+		case "guardianFamilyName":
+			return SchoolEnrollment.staticSolrFqGuardianFamilyName(siteRequest_, o);
+		case "guardianPhoneNumber":
+			return SchoolEnrollment.staticSolrFqGuardianPhoneNumber(siteRequest_, o);
 		case "childCompleteName":
 			return SchoolEnrollment.staticSolrFqChildCompleteName(siteRequest_, o);
 		case "childCompleteNamePreferred":
@@ -19302,6 +20210,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			return SchoolEnrollment.staticSolrFqEnrollmentPassphrase(siteRequest_, o);
 		case "familyAddress":
 			return SchoolEnrollment.staticSolrFqFamilyAddress(siteRequest_, o);
+		case "familyAddressCsv":
+			return SchoolEnrollment.staticSolrFqFamilyAddressCsv(siteRequest_, o);
 		case "familyHowDoYouKnowTheSchool":
 			return SchoolEnrollment.staticSolrFqFamilyHowDoYouKnowTheSchool(siteRequest_, o);
 		case "enrollmentSpecialConsiderations":
@@ -20115,6 +21025,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setMomFirstName(momFirstName);
 			}
 
+			if(saves.contains("momFamilyName")) {
+				String momFamilyName = (String)solrDocument.get("momFamilyName_stored_string");
+				if(momFamilyName != null)
+					oSchoolEnrollment.setMomFamilyName(momFamilyName);
+			}
+
 			if(saves.contains("momFirstNamePreferred")) {
 				String momFirstNamePreferred = (String)solrDocument.get("momFirstNamePreferred_stored_string");
 				if(momFirstNamePreferred != null)
@@ -20127,10 +21043,28 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 					oSchoolEnrollment.setMomCompleteNamePreferred(momCompleteNamePreferred);
 			}
 
+			if(saves.contains("momPhoneNumber")) {
+				String momPhoneNumber = (String)solrDocument.get("momPhoneNumber_stored_string");
+				if(momPhoneNumber != null)
+					oSchoolEnrollment.setMomPhoneNumber(momPhoneNumber);
+			}
+
+			if(saves.contains("momEmail")) {
+				String momEmail = (String)solrDocument.get("momEmail_stored_string");
+				if(momEmail != null)
+					oSchoolEnrollment.setMomEmail(momEmail);
+			}
+
 			if(saves.contains("dadFirstName")) {
 				String dadFirstName = (String)solrDocument.get("dadFirstName_stored_string");
 				if(dadFirstName != null)
 					oSchoolEnrollment.setDadFirstName(dadFirstName);
+			}
+
+			if(saves.contains("dadFamilyName")) {
+				String dadFamilyName = (String)solrDocument.get("dadFamilyName_stored_string");
+				if(dadFamilyName != null)
+					oSchoolEnrollment.setDadFamilyName(dadFamilyName);
 			}
 
 			if(saves.contains("dadFirstNamePreferred")) {
@@ -20143,6 +21077,36 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				String dadCompleteNamePreferred = (String)solrDocument.get("dadCompleteNamePreferred_stored_string");
 				if(dadCompleteNamePreferred != null)
 					oSchoolEnrollment.setDadCompleteNamePreferred(dadCompleteNamePreferred);
+			}
+
+			if(saves.contains("dadPhoneNumber")) {
+				String dadPhoneNumber = (String)solrDocument.get("dadPhoneNumber_stored_string");
+				if(dadPhoneNumber != null)
+					oSchoolEnrollment.setDadPhoneNumber(dadPhoneNumber);
+			}
+
+			if(saves.contains("dadEmail")) {
+				String dadEmail = (String)solrDocument.get("dadEmail_stored_string");
+				if(dadEmail != null)
+					oSchoolEnrollment.setDadEmail(dadEmail);
+			}
+
+			if(saves.contains("guardianFirstName")) {
+				String guardianFirstName = (String)solrDocument.get("guardianFirstName_stored_string");
+				if(guardianFirstName != null)
+					oSchoolEnrollment.setGuardianFirstName(guardianFirstName);
+			}
+
+			if(saves.contains("guardianFamilyName")) {
+				String guardianFamilyName = (String)solrDocument.get("guardianFamilyName_stored_string");
+				if(guardianFamilyName != null)
+					oSchoolEnrollment.setGuardianFamilyName(guardianFamilyName);
+			}
+
+			if(saves.contains("guardianPhoneNumber")) {
+				String guardianPhoneNumber = (String)solrDocument.get("guardianPhoneNumber_stored_string");
+				if(guardianPhoneNumber != null)
+					oSchoolEnrollment.setGuardianPhoneNumber(guardianPhoneNumber);
 			}
 
 			if(saves.contains("childCompleteName")) {
@@ -20425,6 +21389,12 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				String familyAddress = (String)solrDocument.get("familyAddress_stored_string");
 				if(familyAddress != null)
 					oSchoolEnrollment.setFamilyAddress(familyAddress);
+			}
+
+			if(saves.contains("familyAddressCsv")) {
+				String familyAddressCsv = (String)solrDocument.get("familyAddressCsv_stored_string");
+				if(familyAddressCsv != null)
+					oSchoolEnrollment.setFamilyAddressCsv(familyAddressCsv);
 			}
 
 			if(saves.contains("familyHowDoYouKnowTheSchool")) {
@@ -21027,6 +21997,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("momFirstName_indexed_string", momFirstName);
 			document.addField("momFirstName_stored_string", momFirstName);
 		}
+		if(momFamilyName != null) {
+			document.addField("momFamilyName_indexed_string", momFamilyName);
+			document.addField("momFamilyName_stored_string", momFamilyName);
+		}
 		if(momFirstNamePreferred != null) {
 			document.addField("momFirstNamePreferred_indexed_string", momFirstNamePreferred);
 			document.addField("momFirstNamePreferred_stored_string", momFirstNamePreferred);
@@ -21035,9 +22009,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 			document.addField("momCompleteNamePreferred_indexed_string", momCompleteNamePreferred);
 			document.addField("momCompleteNamePreferred_stored_string", momCompleteNamePreferred);
 		}
+		if(momPhoneNumber != null) {
+			document.addField("momPhoneNumber_indexed_string", momPhoneNumber);
+			document.addField("momPhoneNumber_stored_string", momPhoneNumber);
+		}
+		if(momEmail != null) {
+			document.addField("momEmail_indexed_string", momEmail);
+			document.addField("momEmail_stored_string", momEmail);
+		}
 		if(dadFirstName != null) {
 			document.addField("dadFirstName_indexed_string", dadFirstName);
 			document.addField("dadFirstName_stored_string", dadFirstName);
+		}
+		if(dadFamilyName != null) {
+			document.addField("dadFamilyName_indexed_string", dadFamilyName);
+			document.addField("dadFamilyName_stored_string", dadFamilyName);
 		}
 		if(dadFirstNamePreferred != null) {
 			document.addField("dadFirstNamePreferred_indexed_string", dadFirstNamePreferred);
@@ -21046,6 +22032,26 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(dadCompleteNamePreferred != null) {
 			document.addField("dadCompleteNamePreferred_indexed_string", dadCompleteNamePreferred);
 			document.addField("dadCompleteNamePreferred_stored_string", dadCompleteNamePreferred);
+		}
+		if(dadPhoneNumber != null) {
+			document.addField("dadPhoneNumber_indexed_string", dadPhoneNumber);
+			document.addField("dadPhoneNumber_stored_string", dadPhoneNumber);
+		}
+		if(dadEmail != null) {
+			document.addField("dadEmail_indexed_string", dadEmail);
+			document.addField("dadEmail_stored_string", dadEmail);
+		}
+		if(guardianFirstName != null) {
+			document.addField("guardianFirstName_indexed_string", guardianFirstName);
+			document.addField("guardianFirstName_stored_string", guardianFirstName);
+		}
+		if(guardianFamilyName != null) {
+			document.addField("guardianFamilyName_indexed_string", guardianFamilyName);
+			document.addField("guardianFamilyName_stored_string", guardianFamilyName);
+		}
+		if(guardianPhoneNumber != null) {
+			document.addField("guardianPhoneNumber_indexed_string", guardianPhoneNumber);
+			document.addField("guardianPhoneNumber_stored_string", guardianPhoneNumber);
 		}
 		if(childCompleteName != null) {
 			document.addField("childCompleteName_indexed_string", childCompleteName);
@@ -21233,6 +22239,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(familyAddress != null) {
 			document.addField("familyAddress_indexed_string", familyAddress);
 			document.addField("familyAddress_stored_string", familyAddress);
+		}
+		if(familyAddressCsv != null) {
+			document.addField("familyAddressCsv_indexed_string", familyAddressCsv);
+			document.addField("familyAddressCsv_stored_string", familyAddressCsv);
 		}
 		if(familyHowDoYouKnowTheSchool != null) {
 			document.addField("familyHowDoYouKnowTheSchool_indexed_string", familyHowDoYouKnowTheSchool);
@@ -21577,16 +22587,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "childFamilyName_indexed_string";
 			case "momFirstName":
 				return "momFirstName_indexed_string";
+			case "momFamilyName":
+				return "momFamilyName_indexed_string";
 			case "momFirstNamePreferred":
 				return "momFirstNamePreferred_indexed_string";
 			case "momCompleteNamePreferred":
 				return "momCompleteNamePreferred_indexed_string";
+			case "momPhoneNumber":
+				return "momPhoneNumber_indexed_string";
+			case "momEmail":
+				return "momEmail_indexed_string";
 			case "dadFirstName":
 				return "dadFirstName_indexed_string";
+			case "dadFamilyName":
+				return "dadFamilyName_indexed_string";
 			case "dadFirstNamePreferred":
 				return "dadFirstNamePreferred_indexed_string";
 			case "dadCompleteNamePreferred":
 				return "dadCompleteNamePreferred_indexed_string";
+			case "dadPhoneNumber":
+				return "dadPhoneNumber_indexed_string";
+			case "dadEmail":
+				return "dadEmail_indexed_string";
+			case "guardianFirstName":
+				return "guardianFirstName_indexed_string";
+			case "guardianFamilyName":
+				return "guardianFamilyName_indexed_string";
+			case "guardianPhoneNumber":
+				return "guardianPhoneNumber_indexed_string";
 			case "childCompleteName":
 				return "childCompleteName_indexed_string";
 			case "childCompleteNamePreferred":
@@ -21679,6 +22707,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				return "enrollmentPassphrase_indexed_string";
 			case "familyAddress":
 				return "familyAddress_indexed_string";
+			case "familyAddressCsv":
+				return "familyAddressCsv_indexed_string";
 			case "familyHowDoYouKnowTheSchool":
 				return "familyHowDoYouKnowTheSchool_indexed_string";
 			case "enrollmentSpecialConsiderations":
@@ -21910,6 +22940,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(momFirstName != null)
 			oSchoolEnrollment.setMomFirstName(momFirstName);
 
+		String momFamilyName = (String)solrDocument.get("momFamilyName_stored_string");
+		if(momFamilyName != null)
+			oSchoolEnrollment.setMomFamilyName(momFamilyName);
+
 		String momFirstNamePreferred = (String)solrDocument.get("momFirstNamePreferred_stored_string");
 		if(momFirstNamePreferred != null)
 			oSchoolEnrollment.setMomFirstNamePreferred(momFirstNamePreferred);
@@ -21918,9 +22952,21 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		if(momCompleteNamePreferred != null)
 			oSchoolEnrollment.setMomCompleteNamePreferred(momCompleteNamePreferred);
 
+		String momPhoneNumber = (String)solrDocument.get("momPhoneNumber_stored_string");
+		if(momPhoneNumber != null)
+			oSchoolEnrollment.setMomPhoneNumber(momPhoneNumber);
+
+		String momEmail = (String)solrDocument.get("momEmail_stored_string");
+		if(momEmail != null)
+			oSchoolEnrollment.setMomEmail(momEmail);
+
 		String dadFirstName = (String)solrDocument.get("dadFirstName_stored_string");
 		if(dadFirstName != null)
 			oSchoolEnrollment.setDadFirstName(dadFirstName);
+
+		String dadFamilyName = (String)solrDocument.get("dadFamilyName_stored_string");
+		if(dadFamilyName != null)
+			oSchoolEnrollment.setDadFamilyName(dadFamilyName);
 
 		String dadFirstNamePreferred = (String)solrDocument.get("dadFirstNamePreferred_stored_string");
 		if(dadFirstNamePreferred != null)
@@ -21929,6 +22975,26 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		String dadCompleteNamePreferred = (String)solrDocument.get("dadCompleteNamePreferred_stored_string");
 		if(dadCompleteNamePreferred != null)
 			oSchoolEnrollment.setDadCompleteNamePreferred(dadCompleteNamePreferred);
+
+		String dadPhoneNumber = (String)solrDocument.get("dadPhoneNumber_stored_string");
+		if(dadPhoneNumber != null)
+			oSchoolEnrollment.setDadPhoneNumber(dadPhoneNumber);
+
+		String dadEmail = (String)solrDocument.get("dadEmail_stored_string");
+		if(dadEmail != null)
+			oSchoolEnrollment.setDadEmail(dadEmail);
+
+		String guardianFirstName = (String)solrDocument.get("guardianFirstName_stored_string");
+		if(guardianFirstName != null)
+			oSchoolEnrollment.setGuardianFirstName(guardianFirstName);
+
+		String guardianFamilyName = (String)solrDocument.get("guardianFamilyName_stored_string");
+		if(guardianFamilyName != null)
+			oSchoolEnrollment.setGuardianFamilyName(guardianFamilyName);
+
+		String guardianPhoneNumber = (String)solrDocument.get("guardianPhoneNumber_stored_string");
+		if(guardianPhoneNumber != null)
+			oSchoolEnrollment.setGuardianPhoneNumber(guardianPhoneNumber);
 
 		String childCompleteName = (String)solrDocument.get("childCompleteName_stored_string");
 		if(childCompleteName != null)
@@ -22117,6 +23183,10 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		String familyAddress = (String)solrDocument.get("familyAddress_stored_string");
 		if(familyAddress != null)
 			oSchoolEnrollment.setFamilyAddress(familyAddress);
+
+		String familyAddressCsv = (String)solrDocument.get("familyAddressCsv_stored_string");
+		if(familyAddressCsv != null)
+			oSchoolEnrollment.setFamilyAddressCsv(familyAddressCsv);
 
 		String familyHowDoYouKnowTheSchool = (String)solrDocument.get("familyHowDoYouKnowTheSchool_stored_string");
 		if(familyHowDoYouKnowTheSchool != null)
@@ -22454,16 +23524,34 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				apiRequest.addVars("childFamilyName");
 			if(!Objects.equals(momFirstName, original.getMomFirstName()))
 				apiRequest.addVars("momFirstName");
+			if(!Objects.equals(momFamilyName, original.getMomFamilyName()))
+				apiRequest.addVars("momFamilyName");
 			if(!Objects.equals(momFirstNamePreferred, original.getMomFirstNamePreferred()))
 				apiRequest.addVars("momFirstNamePreferred");
 			if(!Objects.equals(momCompleteNamePreferred, original.getMomCompleteNamePreferred()))
 				apiRequest.addVars("momCompleteNamePreferred");
+			if(!Objects.equals(momPhoneNumber, original.getMomPhoneNumber()))
+				apiRequest.addVars("momPhoneNumber");
+			if(!Objects.equals(momEmail, original.getMomEmail()))
+				apiRequest.addVars("momEmail");
 			if(!Objects.equals(dadFirstName, original.getDadFirstName()))
 				apiRequest.addVars("dadFirstName");
+			if(!Objects.equals(dadFamilyName, original.getDadFamilyName()))
+				apiRequest.addVars("dadFamilyName");
 			if(!Objects.equals(dadFirstNamePreferred, original.getDadFirstNamePreferred()))
 				apiRequest.addVars("dadFirstNamePreferred");
 			if(!Objects.equals(dadCompleteNamePreferred, original.getDadCompleteNamePreferred()))
 				apiRequest.addVars("dadCompleteNamePreferred");
+			if(!Objects.equals(dadPhoneNumber, original.getDadPhoneNumber()))
+				apiRequest.addVars("dadPhoneNumber");
+			if(!Objects.equals(dadEmail, original.getDadEmail()))
+				apiRequest.addVars("dadEmail");
+			if(!Objects.equals(guardianFirstName, original.getGuardianFirstName()))
+				apiRequest.addVars("guardianFirstName");
+			if(!Objects.equals(guardianFamilyName, original.getGuardianFamilyName()))
+				apiRequest.addVars("guardianFamilyName");
+			if(!Objects.equals(guardianPhoneNumber, original.getGuardianPhoneNumber()))
+				apiRequest.addVars("guardianPhoneNumber");
 			if(!Objects.equals(childCompleteName, original.getChildCompleteName()))
 				apiRequest.addVars("childCompleteName");
 			if(!Objects.equals(childCompleteNamePreferred, original.getChildCompleteNamePreferred()))
@@ -22558,6 +23646,8 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				apiRequest.addVars("enrollmentPassphrase");
 			if(!Objects.equals(familyAddress, original.getFamilyAddress()))
 				apiRequest.addVars("familyAddress");
+			if(!Objects.equals(familyAddressCsv, original.getFamilyAddressCsv()))
+				apiRequest.addVars("familyAddressCsv");
 			if(!Objects.equals(familyHowDoYouKnowTheSchool, original.getFamilyHowDoYouKnowTheSchool()))
 				apiRequest.addVars("familyHowDoYouKnowTheSchool");
 			if(!Objects.equals(enrollmentSpecialConsiderations, original.getEnrollmentSpecialConsiderations()))
@@ -22705,7 +23795,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), enrollmentKey, yearKey, blockKeys, schoolKey, sessionKey, ageKey, blockKey, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, enrollmentFormKey, userKeys, educationSort, schoolSort, yearSort, seasonSort, sessionSort, ageSort, childFirstName, childFirstNamePreferred, childFamilyName, momFirstName, momFirstNamePreferred, momCompleteNamePreferred, dadFirstName, dadFirstNamePreferred, dadCompleteNamePreferred, childCompleteName, childCompleteNamePreferred, childBirthDate, childBirthDateYear, childBirthDateMonthOfYear, childBirthDateDayOfWeek, childBirthMonth, childBirthDay, schoolName, schoolCompleteName, schoolLocation, schoolAddress, schoolPhoneNumber, schoolForm, schoolNumber, schoolAdministratorName, yearStart, yearEnd, seasonStartDate, yearEnrollmentFee, sessionStartDate, sessionEndDate, ageCompleteName, ageStart, ageEnd, blockStartTime, blockEndTime, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday, blockTotalPrice, blockAdminName, blockShortName, blockCompleteName, enrollmentApproved, enrollmentImmunizations, photo, familyMarried, familySeparated, familyDivorced, enrollmentPassphrase, familyAddress, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, adminNotes, childPottyTrained, enrollmentGroupName, enrollmentGroupColor, enrollmentPaymentEachMonth, enrollmentPaymentComplete, customerProfileId, enrollmentChargeDate, paymentLastDate, paymentLastStr, paymentAmount, chargeAmount, chargeAmountFuture, chargeAmountDue, chargeAmountNotPassed, chargesNow, paymentsCurrent, paymentsLate, paymentsLateAmount, paymentsAhead, paymentsPastDue, paymentsPastDueAmount, chargesCreated, createdYear, createdDayOfWeek, createdMonthOfYear, createdHourOfDay, enrollmentDaysOfWeek, enrollmentParentNames, enrollmentEmails, enrollmentEmail, enrollmentParentEmails, enrollmentPhoneNumbers, enrollmentPhoneNumber, enrollmentParentName, enrollmentParentNameLines, enrollmentParentEmailLines, enrollmentParentDetailLines, enrollmentPickupDetailLines, enrollmentEmergencyContactDetailLines, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10, childImmunizationsReceived, childPhotosApproved, enrollmentCompleteName);
+		return Objects.hash(super.hashCode(), enrollmentKey, yearKey, blockKeys, schoolKey, sessionKey, ageKey, blockKey, childKey, momKeys, dadKeys, guardianKeys, paymentKeys, enrollmentFormKey, userKeys, educationSort, schoolSort, yearSort, seasonSort, sessionSort, ageSort, childFirstName, childFirstNamePreferred, childFamilyName, momFirstName, momFamilyName, momFirstNamePreferred, momCompleteNamePreferred, momPhoneNumber, momEmail, dadFirstName, dadFamilyName, dadFirstNamePreferred, dadCompleteNamePreferred, dadPhoneNumber, dadEmail, guardianFirstName, guardianFamilyName, guardianPhoneNumber, childCompleteName, childCompleteNamePreferred, childBirthDate, childBirthDateYear, childBirthDateMonthOfYear, childBirthDateDayOfWeek, childBirthMonth, childBirthDay, schoolName, schoolCompleteName, schoolLocation, schoolAddress, schoolPhoneNumber, schoolForm, schoolNumber, schoolAdministratorName, yearStart, yearEnd, seasonStartDate, yearEnrollmentFee, sessionStartDate, sessionEndDate, ageCompleteName, ageStart, ageEnd, blockStartTime, blockEndTime, blockPricePerMonth, blockSunday, blockMonday, blockTuesday, blockWednesday, blockThursday, blockFriday, blockSaturday, blockTotalPrice, blockAdminName, blockShortName, blockCompleteName, enrollmentApproved, enrollmentImmunizations, photo, familyMarried, familySeparated, familyDivorced, enrollmentPassphrase, familyAddress, familyAddressCsv, familyHowDoYouKnowTheSchool, enrollmentSpecialConsiderations, childMedicalConditions, childPreviousSchoolsAttended, childDescription, childObjectives, adminNotes, childPottyTrained, enrollmentGroupName, enrollmentGroupColor, enrollmentPaymentEachMonth, enrollmentPaymentComplete, customerProfileId, enrollmentChargeDate, paymentLastDate, paymentLastStr, paymentAmount, chargeAmount, chargeAmountFuture, chargeAmountDue, chargeAmountNotPassed, chargesNow, paymentsCurrent, paymentsLate, paymentsLateAmount, paymentsAhead, paymentsPastDue, paymentsPastDueAmount, chargesCreated, createdYear, createdDayOfWeek, createdMonthOfYear, createdHourOfDay, enrollmentDaysOfWeek, enrollmentParentNames, enrollmentEmails, enrollmentEmail, enrollmentParentEmails, enrollmentPhoneNumbers, enrollmentPhoneNumber, enrollmentParentName, enrollmentParentNameLines, enrollmentParentEmailLines, enrollmentParentDetailLines, enrollmentPickupDetailLines, enrollmentEmergencyContactDetailLines, enrollmentSignature1, enrollmentSignature2, enrollmentSignature3, enrollmentSignature4, enrollmentSignature5, enrollmentSignature6, enrollmentSignature7, enrollmentSignature8, enrollmentSignature9, enrollmentSignature10, enrollmentDate1, enrollmentDate2, enrollmentDate3, enrollmentDate4, enrollmentDate5, enrollmentDate6, enrollmentDate7, enrollmentDate8, enrollmentDate9, enrollmentDate10, childImmunizationsReceived, childPhotosApproved, enrollmentCompleteName);
 	}
 
 	////////////
@@ -22743,11 +23833,20 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( childFirstNamePreferred, that.childFirstNamePreferred )
 				&& Objects.equals( childFamilyName, that.childFamilyName )
 				&& Objects.equals( momFirstName, that.momFirstName )
+				&& Objects.equals( momFamilyName, that.momFamilyName )
 				&& Objects.equals( momFirstNamePreferred, that.momFirstNamePreferred )
 				&& Objects.equals( momCompleteNamePreferred, that.momCompleteNamePreferred )
+				&& Objects.equals( momPhoneNumber, that.momPhoneNumber )
+				&& Objects.equals( momEmail, that.momEmail )
 				&& Objects.equals( dadFirstName, that.dadFirstName )
+				&& Objects.equals( dadFamilyName, that.dadFamilyName )
 				&& Objects.equals( dadFirstNamePreferred, that.dadFirstNamePreferred )
 				&& Objects.equals( dadCompleteNamePreferred, that.dadCompleteNamePreferred )
+				&& Objects.equals( dadPhoneNumber, that.dadPhoneNumber )
+				&& Objects.equals( dadEmail, that.dadEmail )
+				&& Objects.equals( guardianFirstName, that.guardianFirstName )
+				&& Objects.equals( guardianFamilyName, that.guardianFamilyName )
+				&& Objects.equals( guardianPhoneNumber, that.guardianPhoneNumber )
 				&& Objects.equals( childCompleteName, that.childCompleteName )
 				&& Objects.equals( childCompleteNamePreferred, that.childCompleteNamePreferred )
 				&& Objects.equals( childBirthDate, that.childBirthDate )
@@ -22795,6 +23894,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 				&& Objects.equals( familyDivorced, that.familyDivorced )
 				&& Objects.equals( enrollmentPassphrase, that.enrollmentPassphrase )
 				&& Objects.equals( familyAddress, that.familyAddress )
+				&& Objects.equals( familyAddressCsv, that.familyAddressCsv )
 				&& Objects.equals( familyHowDoYouKnowTheSchool, that.familyHowDoYouKnowTheSchool )
 				&& Objects.equals( enrollmentSpecialConsiderations, that.enrollmentSpecialConsiderations )
 				&& Objects.equals( childMedicalConditions, that.childMedicalConditions )
@@ -22898,11 +23998,20 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", childFirstNamePreferred: \"" ).append(childFirstNamePreferred).append( "\"" );
 		sb.append( ", childFamilyName: \"" ).append(childFamilyName).append( "\"" );
 		sb.append( ", momFirstName: \"" ).append(momFirstName).append( "\"" );
+		sb.append( ", momFamilyName: \"" ).append(momFamilyName).append( "\"" );
 		sb.append( ", momFirstNamePreferred: \"" ).append(momFirstNamePreferred).append( "\"" );
 		sb.append( ", momCompleteNamePreferred: \"" ).append(momCompleteNamePreferred).append( "\"" );
+		sb.append( ", momPhoneNumber: \"" ).append(momPhoneNumber).append( "\"" );
+		sb.append( ", momEmail: \"" ).append(momEmail).append( "\"" );
 		sb.append( ", dadFirstName: \"" ).append(dadFirstName).append( "\"" );
+		sb.append( ", dadFamilyName: \"" ).append(dadFamilyName).append( "\"" );
 		sb.append( ", dadFirstNamePreferred: \"" ).append(dadFirstNamePreferred).append( "\"" );
 		sb.append( ", dadCompleteNamePreferred: \"" ).append(dadCompleteNamePreferred).append( "\"" );
+		sb.append( ", dadPhoneNumber: \"" ).append(dadPhoneNumber).append( "\"" );
+		sb.append( ", dadEmail: \"" ).append(dadEmail).append( "\"" );
+		sb.append( ", guardianFirstName: \"" ).append(guardianFirstName).append( "\"" );
+		sb.append( ", guardianFamilyName: \"" ).append(guardianFamilyName).append( "\"" );
+		sb.append( ", guardianPhoneNumber: \"" ).append(guardianPhoneNumber).append( "\"" );
 		sb.append( ", childCompleteName: \"" ).append(childCompleteName).append( "\"" );
 		sb.append( ", childCompleteNamePreferred: \"" ).append(childCompleteNamePreferred).append( "\"" );
 		sb.append( ", childBirthDate: " ).append(childBirthDate);
@@ -22950,6 +24059,7 @@ public abstract class SchoolEnrollmentGen<DEV> extends Cluster {
 		sb.append( ", familyDivorced: " ).append(familyDivorced);
 		sb.append( ", enrollmentPassphrase: \"" ).append(enrollmentPassphrase).append( "\"" );
 		sb.append( ", familyAddress: \"" ).append(familyAddress).append( "\"" );
+		sb.append( ", familyAddressCsv: \"" ).append(familyAddressCsv).append( "\"" );
 		sb.append( ", familyHowDoYouKnowTheSchool: \"" ).append(familyHowDoYouKnowTheSchool).append( "\"" );
 		sb.append( ", enrollmentSpecialConsiderations: \"" ).append(enrollmentSpecialConsiderations).append( "\"" );
 		sb.append( ", childMedicalConditions: \"" ).append(childMedicalConditions).append( "\"" );

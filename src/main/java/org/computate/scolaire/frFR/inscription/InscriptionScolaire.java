@@ -823,6 +823,36 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: momPhoneNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * r: meres
+	 * r.enUS: moms
+	 * r: PersonneNumeroTelephone
+	 * r.enUS: PersonPhoneNumber
+	 */   
+	protected void _mereNumeroTelephone(Couverture<String> c) {
+		if(meres.size() > 0)
+			c.o(meres.get(0).getPersonneNumeroTelephone());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: momEmail
+	 * Indexe: true
+	 * Stocke: true
+	 * r: meres
+	 * r.enUS: moms
+	 * r: PersonneMail
+	 * r.enUS: PersonEmail
+	 */   
+	protected void _mereMail(Couverture<String> c) {
+		if(meres.size() > 0)
+			c.o(meres.get(0).getPersonneMail());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: dadFirstName
 	 * Indexe: true
 	 * Stocke: true
@@ -883,6 +913,36 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: dadPhoneNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * r: peres
+	 * r.enUS: dads
+	 * r: PersonneNumeroTelephone
+	 * r.enUS: PersonPhoneNumber
+	 */   
+	protected void _pereNumeroTelephone(Couverture<String> c) {
+		if(peres.size() > 0)
+			c.o(peres.get(0).getPersonneNumeroTelephone());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: dadEmail
+	 * Indexe: true
+	 * Stocke: true
+	 * r: peres
+	 * r.enUS: dads
+	 * r: PersonneMail
+	 * r.enUS: PersonEmail
+	 */   
+	protected void _pereMail(Couverture<String> c) {
+		if(peres.size() > 0)
+			c.o(peres.get(0).getPersonneMail());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: guardianFirstName
 	 * Indexe: true
 	 * Stocke: true
@@ -909,6 +969,21 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	protected void _gardienFamilleNom(Couverture<String> c) {
 		if(gardiens.size() > 0)
 			c.o(gardiens.get(0).getFamilleNom());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: guardianPhoneNumber
+	 * Indexe: true
+	 * Stocke: true
+	 * r: gardiens
+	 * r.enUS: guardians
+	 * r: PersonneNumeroTelephone
+	 * r.enUS: PersonPhoneNumber
+	 */   
+	protected void _gardienNumeroTelephone(Couverture<String> c) {
+		if(gardiens.size() > 0)
+			c.o(gardiens.get(0).getPersonneNumeroTelephone());
 	}
 
 	/**
@@ -1786,6 +1861,19 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	 * HtmlCellule: 1
 	 */                   
 	protected void _familleAddresse(Couverture<String> c) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: familyAddressCsv
+	 * Indexe: true
+	 * Stocke: true
+	 * r: familleAddresse
+	 * r.enUS: familyAddress
+	 */                   
+	protected void _familleAddresseCsv(Couverture<String> c) {
+		if(familleAddresse != null)
+			c.o(familleAddresse.replace(",", "").replace("\n", " "));
 	}
 
 	/**

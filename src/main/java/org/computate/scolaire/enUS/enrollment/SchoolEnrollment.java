@@ -266,6 +266,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(moms.get(0).getPersonFirstName());
 	}
 
+	protected void _momFamilyName(Wrap<String> c) {
+		if(moms.size() > 0)
+			c.o(moms.get(0).getFamilyName());
+	}
+
 	protected void _momFirstNamePreferred(Wrap<String> c) {
 		if(moms.size() > 0)
 			c.o(moms.get(0).getPersonFirstNamePreferred());
@@ -276,9 +281,24 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 			c.o(moms.get(0).getPersonCompleteNamePreferred());
 	}
 
+	protected void _momPhoneNumber(Wrap<String> c) {
+		if(moms.size() > 0)
+			c.o(moms.get(0).getPersonPhoneNumber());
+	}
+
+	protected void _momEmail(Wrap<String> c) {
+		if(moms.size() > 0)
+			c.o(moms.get(0).getPersonEmail());
+	}
+
 	protected void _dadFirstName(Wrap<String> c) {
 		if(dads.size() > 0)
 			c.o(dads.get(0).getPersonFirstName());
+	}
+
+	protected void _dadFamilyName(Wrap<String> c) {
+		if(dads.size() > 0)
+			c.o(dads.get(0).getFamilyName());
 	}
 
 	protected void _dadFirstNamePreferred(Wrap<String> c) {
@@ -289,6 +309,31 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _dadCompleteNamePreferred(Wrap<String> c) {
 		if(dads.size() > 0)
 			c.o(dads.get(0).getPersonCompleteNamePreferred());
+	}
+
+	protected void _dadPhoneNumber(Wrap<String> c) {
+		if(dads.size() > 0)
+			c.o(dads.get(0).getPersonPhoneNumber());
+	}
+
+	protected void _dadEmail(Wrap<String> c) {
+		if(dads.size() > 0)
+			c.o(dads.get(0).getPersonEmail());
+	}
+
+	protected void _guardianFirstName(Wrap<String> c) {
+		if(guardians.size() > 0)
+			c.o(guardians.get(0).getPersonFirstName());
+	}
+
+	protected void _guardianFamilyName(Wrap<String> c) {
+		if(guardians.size() > 0)
+			c.o(guardians.get(0).getFamilyName());
+	}
+
+	protected void _guardianPhoneNumber(Wrap<String> c) {
+		if(guardians.size() > 0)
+			c.o(guardians.get(0).getPersonPhoneNumber());
 	}
 
 	protected void _childCompleteName(Wrap<String> c) {
@@ -542,6 +587,11 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _familyAddress(Wrap<String> c) {
 	}
 
+	protected void _familyAddressCsv(Wrap<String> c) {
+		if(familyAddress != null)
+			c.o(familyAddress.replace(",", "").replace("\n", " "));
+	}
+
 	protected void _familyHowDoYouKnowTheSchool(Wrap<String> c) {
 	}
 
@@ -563,25 +613,16 @@ public class SchoolEnrollment extends SchoolEnrollmentGen<Cluster> {
 	protected void _adminNotes(Wrap<String> c) {
 	}
 
-	@Override
-	public void htmAdminNotes(String classApiMethodMethod) {
+	@Override()
+	public String htmAdminNotes() {
 		List<String> adminRoles = Arrays.asList("SiteAdmin");
 		if(
 				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), adminRoles)
 				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), adminRoles)
 				) {
-			super.htmAdminNotes(classApiMethodMethod);
+			return super.htmAdminNotes();
 		}
-	}
-
-	@Override public void inputAdminNotes(String classApiMethodMethod) {
-		List<String> adminRoles = Arrays.asList("SiteAdmin");
-		if(
-				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), adminRoles)
-				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), adminRoles)
-				) {
-			super.inputAdminNotes(classApiMethodMethod);
-		}
+		return "";
 	}
 
 	protected void _childPottyTrained(Wrap<Boolean> c) {
