@@ -778,6 +778,21 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: momFamilyName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: meres
+	 * r.enUS: moms
+	 * r: FamilleNom
+	 * r.enUS: FamilyName
+	 */   
+	protected void _mereFamilleNom(Couverture<String> c) {
+		if(meres.size() > 0)
+			c.o(meres.get(0).getFamilleNom());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: momFirstNamePreferred
 	 * Indexe: true
 	 * Stocke: true
@@ -823,6 +838,21 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: dadFamilyName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: peres
+	 * r.enUS: dads
+	 * r: FamilleNom
+	 * r.enUS: FamilyName
+	 */   
+	protected void _pereFamilleNom(Couverture<String> c) {
+		if(peres.size() > 0)
+			c.o(peres.get(0).getFamilleNom());
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: dadFirstNamePreferred
 	 * Indexe: true
 	 * Stocke: true
@@ -849,6 +879,36 @@ public class InscriptionScolaire extends InscriptionScolaireGen<Cluster> {
 	protected void _pereNomCompletPrefere(Couverture<String> c) {
 		if(peres.size() > 0)
 			c.o(peres.get(0).getPersonneNomCompletPrefere());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: guardianFirstName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: gardiens
+	 * r.enUS: guardians
+	 * r: PersonnePrenom
+	 * r.enUS: PersonFirstName
+	 */      
+	protected void _gardienPrenom(Couverture<String> c) {
+		if(gardiens.size() > 0)
+			c.o(gardiens.get(0).getPersonnePrenom());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: guardianFamilyName
+	 * Indexe: true
+	 * Stocke: true
+	 * r: gardiens
+	 * r.enUS: guardians
+	 * r: FamilleNom
+	 * r.enUS: FamilyName
+	 */            
+	protected void _gardienFamilleNom(Couverture<String> c) {
+		if(gardiens.size() > 0)
+			c.o(gardiens.get(0).getFamilleNom());
 	}
 
 	/**
