@@ -53,6 +53,10 @@ import org.computate.scolaire.frFR.recherche.ListeRecherche;
  * PageSuperSearchPage.enUS: ClusterPage
  * ApiUriSearchPage.enUS: /page-design
  * 
+ * ApiMethode.enUS: DesignCsvSearchPage
+ * ApiUriDesignCsvSearchPage.enUS: /csv
+ * ApiTypeMedia200DesignCsvSearchPage: text/csv
+ * 
  * ApiMethode.frFR: DesignAffichagePageRecherche
  * PageDesignAffichagePageRecherche.frFR: DesignPageAffichage
  * PageSuperDesignAffichagePageRecherche.frFR: ClusterPage
@@ -385,6 +389,21 @@ public class DesignPage extends DesignPageGen<Cluster> {
 	 */                 
 	protected void _pagePdf(Couverture<Boolean> c) {
 		c.o(true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Var.enUS: pageCsv
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 5
+	 * NomAffichage.frFR: page CSV
+	 * NomAffichage.enUS: page CSV
+	 * Indexe: true
+	 * Stocke: true
+	 */                 
+	protected void _pageCsv(Couverture<Boolean> c) {
+		c.o(false);
 	}
 
 	/**

@@ -331,6 +331,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 			o.htmRechercherPaiements("Page");
 			o.htmRechercherPaiementsActuel("Page");
 			o.htmPagePdf("Page");
+			o.htmPageCsv("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("Page");
@@ -370,6 +371,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 			o.htmRechercherPaiements("POST");
 			o.htmRechercherPaiementsActuel("POST");
 			o.htmPagePdf("POST");
+			o.htmPageCsv("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("POST");
@@ -431,6 +433,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 			o.htmRechercherPaiements("PUTCopie");
 			o.htmRechercherPaiementsActuel("PUTCopie");
 			o.htmPagePdf("PUTCopie");
+			o.htmPageCsv("PUTCopie");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("PUTCopie");
@@ -468,6 +471,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 			o.htmRechercherPaiements("PATCH");
 			o.htmRechercherPaiementsActuel("PATCH");
 			o.htmPagePdf("PATCH");
+			o.htmPageCsv("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("PATCH");
@@ -507,6 +511,7 @@ public class DesignPageGenPage extends DesignPageGenPageGen<ClusterPage> {
 			o.htmRechercherPaiements("Recherche");
 			o.htmRechercherPaiementsActuel("Recherche");
 			o.htmPagePdf("Recherche");
+			o.htmPageCsv("Recherche");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmDesignParentCles("Recherche");

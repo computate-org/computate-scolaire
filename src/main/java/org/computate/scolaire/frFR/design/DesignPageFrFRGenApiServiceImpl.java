@@ -602,6 +602,19 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 							});
 						}));
 						break;
+					case "pageCsv":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "pageCsv", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur DesignPage.pageCsv a échoué", b.cause())));
+							});
+						}));
+						break;
 					}
 				}
 			}
@@ -1511,6 +1524,19 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("valeur DesignPage.pagePdf a échoué", b.cause())));
+							});
+						}));
+						break;
+					case "pageCsv":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+									.execute(Tuple.of(pk, "pageCsv", Optional.ofNullable(jsonObject.getValue(entiteVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("valeur DesignPage.pageCsv a échoué", b.cause())));
 							});
 						}));
 						break;
@@ -2750,6 +2776,34 @@ public class DesignPageFrFRGenApiServiceImpl implements DesignPageFrFRGenApiServ
 										a.handle(Future.succeededFuture());
 									else
 										a.handle(Future.failedFuture(new Exception("valeur DesignPage.pagePdf a échoué", b.cause())));
+								});
+							}));
+						}
+						break;
+					case "setPageCsv":
+						if(jsonObject.getBoolean(methodeNom) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_removeD)
+										.execute(Tuple.of(pk, "pageCsv")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur DesignPage.pageCsv a échoué", b.cause())));
+								});
+							}));
+						} else {
+							o2.setPageCsv(jsonObject.getBoolean(methodeNom));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContexteFrFR.SQL_setD)
+										.execute(Tuple.of(pk, "pageCsv", o2.jsonPageCsv())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("valeur DesignPage.pageCsv a échoué", b.cause())));
 								});
 							}));
 						}

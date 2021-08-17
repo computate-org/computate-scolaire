@@ -602,6 +602,19 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							});
 						}));
 						break;
+					case "pageCsv":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "pageCsv", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value PageDesign.pageCsv failed", b.cause())));
+							});
+						}));
+						break;
 					}
 				}
 			}
@@ -1511,6 +1524,19 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 									a.handle(Future.succeededFuture());
 								else
 									a.handle(Future.failedFuture(new Exception("value PageDesign.pagePdf failed", b.cause())));
+							});
+						}));
+						break;
+					case "pageCsv":
+						futures.add(Future.future(a -> {
+							tx.preparedQuery(SiteContextEnUS.SQL_setD)
+									.execute(Tuple.of(pk, "pageCsv", Optional.ofNullable(jsonObject.getValue(entityVar)).map(s -> s.toString()).orElse(null))
+									, b
+							-> {
+								if(b.succeeded())
+									a.handle(Future.succeededFuture());
+								else
+									a.handle(Future.failedFuture(new Exception("value PageDesign.pageCsv failed", b.cause())));
 							});
 						}));
 						break;
@@ -2754,6 +2780,34 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 							}));
 						}
 						break;
+					case "setPageCsv":
+						if(jsonObject.getBoolean(methodName) == null) {
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_removeD)
+										.execute(Tuple.of(pk, "pageCsv")
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value PageDesign.pageCsv failed", b.cause())));
+								});
+							}));
+						} else {
+							o2.setPageCsv(jsonObject.getBoolean(methodName));
+							futures.add(Future.future(a -> {
+								tx.preparedQuery(SiteContextEnUS.SQL_setD)
+										.execute(Tuple.of(pk, "pageCsv", o2.jsonPageCsv())
+										, b
+								-> {
+									if(b.succeeded())
+										a.handle(Future.succeededFuture());
+									else
+										a.handle(Future.failedFuture(new Exception("value PageDesign.pageCsv failed", b.cause())));
+								});
+							}));
+						}
+						break;
 				}
 			}
 			CompositeFuture.all(futures).onComplete( a -> {
@@ -3179,6 +3233,116 @@ public class PageDesignEnUSGenApiServiceImpl implements PageDesignEnUSGenApiServ
 			eventHandler.handle(Future.succeededFuture(new OperationResponse(200, "OK", buffer, requestHeaders)));
 		} catch(Exception e) {
 			LOGGER.error(String.format("response200SearchPagePageDesign failed. ", e));
+			eventHandler.handle(Future.failedFuture(e));
+		}
+	}
+
+	// DesignCsvSearchPage //
+
+	@Override
+	public void designcsvsearchpagePageDesign(OperationRequest operationRequest, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = generateSiteRequestEnUSForPageDesign(siteContext, operationRequest);
+		siteRequest.setRequestUri("/csv");
+		siteRequest.setRequestMethod("DesignCsvSearchPage");
+		try {
+			{
+				userPageDesign(siteRequest, b -> {
+					if(b.succeeded()) {
+						aSearchPageDesign(siteRequest, false, true, false, "/csv", "DesignCsvSearchPage", c -> {
+							if(c.succeeded()) {
+								SearchList<PageDesign> listPageDesign = c.result();
+								designcsvsearchpagePageDesignResponse(listPageDesign, d -> {
+									if(d.succeeded()) {
+										eventHandler.handle(Future.succeededFuture(d.result()));
+										LOGGER.info(String.format("designcsvsearchpagePageDesign succeeded. "));
+									} else {
+										LOGGER.error(String.format("designcsvsearchpagePageDesign failed. ", d.cause()));
+										errorPageDesign(siteRequest, eventHandler, d);
+									}
+								});
+							} else {
+								LOGGER.error(String.format("designcsvsearchpagePageDesign failed. ", c.cause()));
+								errorPageDesign(siteRequest, eventHandler, c);
+							}
+						});
+					} else {
+						LOGGER.error(String.format("designcsvsearchpagePageDesign failed. ", b.cause()));
+						errorPageDesign(siteRequest, eventHandler, b);
+					}
+				});
+			}
+		} catch(Exception ex) {
+			LOGGER.error(String.format("designcsvsearchpagePageDesign failed. ", ex));
+			errorPageDesign(siteRequest, eventHandler, Future.failedFuture(ex));
+		}
+	}
+
+
+	public void designcsvsearchpagePageDesignResponse(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+		try {
+			response200DesignCsvSearchPagePageDesign(listPageDesign, a -> {
+				if(a.succeeded()) {
+					eventHandler.handle(Future.succeededFuture(a.result()));
+				} else {
+					LOGGER.error(String.format("designcsvsearchpagePageDesignResponse failed. ", a.cause()));
+					errorPageDesign(siteRequest, eventHandler, a);
+				}
+			});
+		} catch(Exception ex) {
+			LOGGER.error(String.format("designcsvsearchpagePageDesignResponse failed. ", ex));
+			errorPageDesign(siteRequest, null, Future.failedFuture(ex));
+		}
+	}
+	public void response200DesignCsvSearchPagePageDesign(SearchList<PageDesign> listPageDesign, Handler<AsyncResult<OperationResponse>> eventHandler) {
+		try {
+			SiteRequestEnUS siteRequest = listPageDesign.getSiteRequest_();
+			QueryResponse responseSearch = listPageDesign.getQueryResponse();
+			SolrDocumentList solrDocuments = listPageDesign.getSolrDocumentList();
+			Long searchInMillis = Long.valueOf(responseSearch.getQTime());
+			Long transmissionInMillis = responseSearch.getElapsedTime();
+			Long startNum = responseSearch.getResults().getStart();
+			Long foundNum = responseSearch.getResults().getNumFound();
+			Integer returnedNum = responseSearch.getResults().size();
+			String searchTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(searchInMillis), TimeUnit.MILLISECONDS.toMillis(searchInMillis) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(searchInMillis)));
+			String transmissionTime = String.format("%d.%03d sec", TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis), TimeUnit.MILLISECONDS.toMillis(transmissionInMillis) - TimeUnit.SECONDS.toSeconds(TimeUnit.MILLISECONDS.toSeconds(transmissionInMillis)));
+			Exception exceptionSearch = responseSearch.getException();
+
+			JsonObject json = new JsonObject();
+			json.put("startNum", startNum);
+			json.put("foundNum", foundNum);
+			json.put("returnedNum", returnedNum);
+			json.put("searchTime", searchTime);
+			json.put("transmissionTime", transmissionTime);
+			JsonArray l = new JsonArray();
+			listPageDesign.getList().stream().forEach(o -> {
+				JsonObject json2 = JsonObject.mapFrom(o);
+				List<String> fls = listPageDesign.getFields();
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					fieldNames.addAll(json2.fieldNames());
+					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves")) {
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("pk");
+						fieldNames.remove("created");
+					}
+					else if(fls.size() >= 1) {
+						fieldNames.removeAll(fls);
+					}
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
+			});
+			json.put("list", l);
+			if(exceptionSearch != null) {
+				json.put("exceptionSearch", exceptionSearch.getMessage());
+			}
+			eventHandler.handle(Future.succeededFuture(OperationResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily()))));
+		} catch(Exception e) {
+			LOGGER.error(String.format("response200DesignCsvSearchPagePageDesign failed. ", e));
 			eventHandler.handle(Future.failedFuture(e));
 		}
 	}

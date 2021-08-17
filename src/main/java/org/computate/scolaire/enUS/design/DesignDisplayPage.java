@@ -282,7 +282,7 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 	}
 
 	protected void _school_(Wrap<School> c) {
-		if(pageDesignId.endsWith("-enrollment-form")) {
+		if(pageDesignId.endsWith("-enrollment-form") || "csv-export".equals(pageDesignId)) {
 			if(schoolSearch.size() == 1) {
 				c.o(schoolSearch.get(0));
 			}
@@ -826,6 +826,13 @@ public class DesignDisplayPage extends DesignDisplayPageGen<DesignDisplayGenPage
 	@Override public void htmlPageLayout() {
 		if(htmlPartList != null) {
 			htmlPageLayout2(pageContentType, htmlPartList, null, 0, htmlPartList.size());
+		}
+		if("csv-export".equals(pageDesignId) && school_ != null) {
+			siteRequest_.getRequestHeaders()
+					.add("Content-Disposition", "inline; filename=\"export-" + school_.getSchoolLocation().toLowerCase() + ".csv\"")
+					.add("Content-Transfer-Encoding", "binary")
+					.add("Accept-Ranges", "bytes")
+					;
 		}
 	}
 }

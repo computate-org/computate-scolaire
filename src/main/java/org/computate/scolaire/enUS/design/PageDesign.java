@@ -96,6 +96,10 @@ public class PageDesign extends PageDesignGen<Cluster> {
 		c.o(true);
 	}
 
+	protected void _pageCsv(Wrap<Boolean> c) {
+		c.o(false);
+	}
+
 	@Override()
 	protected void  _objectTitle(Wrap<String> c) {
 		c.o(pageDesignCompleteName);

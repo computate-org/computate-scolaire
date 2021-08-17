@@ -330,6 +330,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 			o.htmSearchPayments("Page");
 			o.htmSearchCurrentPayments("Page");
 			o.htmPagePdf("Page");
+			o.htmPageCsv("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("Page");
@@ -369,6 +370,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 			o.htmSearchPayments("POST");
 			o.htmSearchCurrentPayments("POST");
 			o.htmPagePdf("POST");
+			o.htmPageCsv("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("POST");
@@ -430,6 +432,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 			o.htmSearchPayments("PUTCopy");
 			o.htmSearchCurrentPayments("PUTCopy");
 			o.htmPagePdf("PUTCopy");
+			o.htmPageCsv("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("PUTCopy");
@@ -467,6 +470,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 			o.htmSearchPayments("PATCH");
 			o.htmSearchCurrentPayments("PATCH");
 			o.htmPagePdf("PATCH");
+			o.htmPageCsv("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("PATCH");
@@ -506,6 +510,7 @@ public class DesignDisplayGenPage extends DesignDisplayGenPageGen<ClusterPage> {
 			o.htmSearchPayments("Search");
 			o.htmSearchCurrentPayments("Search");
 			o.htmPagePdf("Search");
+			o.htmPageCsv("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("Search");

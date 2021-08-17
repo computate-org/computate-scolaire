@@ -2758,6 +2758,154 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////
+	// pageCsv //
+	/////////////
+
+	/**	 The entity pageCsv
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean pageCsv;
+	@JsonIgnore
+	public Wrap<Boolean> pageCsvWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("pageCsv").o(pageCsv);
+
+	/**	<br/> The entity pageCsv
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pageCsv">Find the entity pageCsv in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _pageCsv(Wrap<Boolean> c);
+
+	public Boolean getPageCsv() {
+		return pageCsv;
+	}
+
+	public void setPageCsv(Boolean pageCsv) {
+		this.pageCsv = pageCsv;
+		this.pageCsvWrap.alreadyInitialized = true;
+	}
+	public void setPageCsv(String o) {
+		this.pageCsv = PageDesign.staticSetPageCsv(siteRequest_, o);
+		this.pageCsvWrap.alreadyInitialized = true;
+	}
+	public static Boolean staticSetPageCsv(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
+	}
+	protected PageDesign pageCsvInit() {
+		if(!pageCsvWrap.alreadyInitialized) {
+			_pageCsv(pageCsvWrap);
+			if(pageCsv == null)
+				setPageCsv(pageCsvWrap.o);
+		}
+		pageCsvWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public static Boolean staticSolrPageCsv(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPageCsv(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPageCsv(SiteRequestEnUS siteRequest_, String o) {
+		return PageDesign.staticSolrStrPageCsv(siteRequest_, PageDesign.staticSolrPageCsv(siteRequest_, PageDesign.staticSetPageCsv(siteRequest_, o)));
+	}
+
+	public Boolean solrPageCsv() {
+		return PageDesign.staticSolrPageCsv(siteRequest_, pageCsv);
+	}
+
+	public String strPageCsv() {
+		return pageCsv == null ? "" : pageCsv.toString();
+	}
+
+	public Boolean sqlPageCsv() {
+		return pageCsv;
+	}
+
+	public String jsonPageCsv() {
+		return pageCsv == null ? "" : pageCsv.toString();
+	}
+
+	public String nomAffichagePageCsv() {
+		return "page CSV";
+	}
+
+	public String htmTooltipPageCsv() {
+		return null;
+	}
+
+	public String htmPageCsv() {
+		return pageCsv == null ? "" : StringEscapeUtils.escapeHtml4(strPageCsv());
+	}
+
+	public void inputPageCsv(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_pageCsv")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_pageCsv");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPageCsv classPageDesign inputPageDesign", pk, "PageCsv w3-input w3-border ");
+				a("name", "setPageCsv");
+			} else {
+				a("class", "valuePageCsv classPageDesign inputPageDesign", pk, "PageCsv w3-input w3-border ");
+				a("name", "pageCsv");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPageCsv', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_pageCsv')); }, function() { addError($('#", classApiMethodMethod, "_pageCsv')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getPageCsv() != null && getPageCsv())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varPageDesign", pk, "PageCsv ").f().sx(htmPageCsv()).g("span");
+		}
+	}
+
+	public void htmPageCsv(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignPageCsv").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classApiMethodMethod, "_pageCsv").a("class", "").f().sx("page CSV").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPageCsv(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -2797,6 +2945,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		searchPaymentsInit();
 		searchCurrentPaymentsInit();
 		pagePdfInit();
+		pageCsvInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -2875,6 +3024,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				return oPageDesign.searchCurrentPayments;
 			case "pagePdf":
 				return oPageDesign.pagePdf;
+			case "pageCsv":
+				return oPageDesign.pageCsv;
 			default:
 				return super.obtainCluster(var);
 		}
@@ -2965,6 +3116,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			return PageDesign.staticSetSearchCurrentPayments(siteRequest_, o);
 		case "pagePdf":
 			return PageDesign.staticSetPagePdf(siteRequest_, o);
+		case "pageCsv":
+			return PageDesign.staticSetPageCsv(siteRequest_, o);
 			default:
 				return Cluster.staticSetCluster(entityVar,  siteRequest_, o);
 		}
@@ -3015,6 +3168,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			return PageDesign.staticSolrSearchCurrentPayments(siteRequest_, (Boolean)o);
 		case "pagePdf":
 			return PageDesign.staticSolrPagePdf(siteRequest_, (Boolean)o);
+		case "pageCsv":
+			return PageDesign.staticSolrPageCsv(siteRequest_, (Boolean)o);
 			default:
 				return Cluster.staticSolrCluster(entityVar,  siteRequest_, o);
 		}
@@ -3065,6 +3220,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			return PageDesign.staticSolrStrSearchCurrentPayments(siteRequest_, (Boolean)o);
 		case "pagePdf":
 			return PageDesign.staticSolrStrPagePdf(siteRequest_, (Boolean)o);
+		case "pageCsv":
+			return PageDesign.staticSolrStrPageCsv(siteRequest_, (Boolean)o);
 			default:
 				return Cluster.staticSolrStrCluster(entityVar,  siteRequest_, o);
 		}
@@ -3115,6 +3272,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			return PageDesign.staticSolrFqSearchCurrentPayments(siteRequest_, o);
 		case "pagePdf":
 			return PageDesign.staticSolrFqPagePdf(siteRequest_, o);
+		case "pageCsv":
+			return PageDesign.staticSolrFqPageCsv(siteRequest_, o);
 			default:
 				return Cluster.staticSolrFqCluster(entityVar,  siteRequest_, o);
 		}
@@ -3211,6 +3370,11 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 					setPagePdf(val);
 				saves.add("pagePdf");
 				return val;
+			case "pagecsv":
+				if(val != null)
+					setPageCsv(val);
+				saves.add("pageCsv");
+				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
@@ -3302,6 +3466,11 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				if(val instanceof Boolean)
 					setPagePdf((Boolean)val);
 				saves.add("pagePdf");
+				return val;
+			case "pagecsv":
+				if(val instanceof Boolean)
+					setPageCsv((Boolean)val);
+				saves.add("pageCsv");
 				return val;
 			default:
 				return super.defineCluster(var, val);
@@ -3420,6 +3589,12 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				Boolean pagePdf = (Boolean)solrDocument.get("pagePdf_stored_boolean");
 				if(pagePdf != null)
 					oPageDesign.setPagePdf(pagePdf);
+			}
+
+			if(saves.contains("pageCsv")) {
+				Boolean pageCsv = (Boolean)solrDocument.get("pageCsv_stored_boolean");
+				if(pageCsv != null)
+					oPageDesign.setPageCsv(pageCsv);
 			}
 		}
 
@@ -3572,6 +3747,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			document.addField("pagePdf_indexed_boolean", pagePdf);
 			document.addField("pagePdf_stored_boolean", pagePdf);
 		}
+		if(pageCsv != null) {
+			document.addField("pageCsv_indexed_boolean", pageCsv);
+			document.addField("pageCsv_stored_boolean", pageCsv);
+		}
 		super.indexCluster(document);
 
 	}
@@ -3631,6 +3810,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				return "searchCurrentPayments_indexed_boolean";
 			case "pagePdf":
 				return "pagePdf_indexed_boolean";
+			case "pageCsv":
+				return "pageCsv_indexed_boolean";
 			default:
 				return Cluster.varIndexedCluster(entityVar);
 		}
@@ -3732,6 +3913,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		if(pagePdf != null)
 			oPageDesign.setPagePdf(pagePdf);
 
+		Boolean pageCsv = (Boolean)solrDocument.get("pageCsv_stored_boolean");
+		if(pageCsv != null)
+			oPageDesign.setPageCsv(pageCsv);
+
 		super.storeCluster(solrDocument);
 	}
 
@@ -3780,6 +3965,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				apiRequest.addVars("searchCurrentPayments");
 			if(!Objects.equals(pagePdf, original.getPagePdf()))
 				apiRequest.addVars("pagePdf");
+			if(!Objects.equals(pageCsv, original.getPageCsv()))
+				apiRequest.addVars("pageCsv");
 			super.apiRequestCluster();
 		}
 	}
@@ -3789,7 +3976,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), pageDesignKey, childDesignKeys, parentDesignKeys, htmlPartKeys, pageDesignCompleteName, designHidden, designAdmin, designIgnoreEmptyChildName, designIgnorePaymentsNotPastDue, designIgnorePaymentsPastDue, designFilterEnrollmentKey, designEnrollmentSortMonthDayOfBirth, designEnrollmentSortGroupName, designEnrollmentSortChildName, searchYears, searchPayments, searchCurrentPayments, pagePdf);
+		return Objects.hash(super.hashCode(), pageDesignKey, childDesignKeys, parentDesignKeys, htmlPartKeys, pageDesignCompleteName, designHidden, designAdmin, designIgnoreEmptyChildName, designIgnorePaymentsNotPastDue, designIgnorePaymentsPastDue, designFilterEnrollmentKey, designEnrollmentSortMonthDayOfBirth, designEnrollmentSortGroupName, designEnrollmentSortChildName, searchYears, searchPayments, searchCurrentPayments, pagePdf, pageCsv);
 	}
 
 	////////////
@@ -3820,7 +4007,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				&& Objects.equals( searchYears, that.searchYears )
 				&& Objects.equals( searchPayments, that.searchPayments )
 				&& Objects.equals( searchCurrentPayments, that.searchCurrentPayments )
-				&& Objects.equals( pagePdf, that.pagePdf );
+				&& Objects.equals( pagePdf, that.pagePdf )
+				&& Objects.equals( pageCsv, that.pageCsv );
 	}
 
 	//////////////
@@ -3849,6 +4037,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		sb.append( ", searchPayments: " ).append(searchPayments);
 		sb.append( ", searchCurrentPayments: " ).append(searchCurrentPayments);
 		sb.append( ", pagePdf: " ).append(pagePdf);
+		sb.append( ", pageCsv: " ).append(pageCsv);
 		sb.append(" }");
 		return sb.toString();
 	}
