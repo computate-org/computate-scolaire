@@ -374,6 +374,21 @@ public class DesignPage extends DesignPageGen<Cluster> {
 
 	/**
 	 * {@inheritDoc}
+	 * Var.enUS: pagePdf
+	 * Definir: true
+	 * HtmlLigne: 5
+	 * HtmlCellule: 4
+	 * NomAffichage.frFR: page PDF
+	 * NomAffichage.enUS: page PDF
+	 * Indexe: true
+	 * Stocke: true
+	 */                 
+	protected void _pagePdf(Couverture<Boolean> c) {
+		c.o(true);
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Var.enUS: _objectTitle
 	 * r: designPageNomComplet
 	 * r.enUS: pageDesignCompleteName

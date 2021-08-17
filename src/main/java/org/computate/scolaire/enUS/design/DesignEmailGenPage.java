@@ -329,6 +329,7 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 			o.htmSearchYears("Page");
 			o.htmSearchPayments("Page");
 			o.htmSearchCurrentPayments("Page");
+			o.htmPagePdf("Page");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("Page");
@@ -367,6 +368,7 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 			o.htmSearchYears("POST");
 			o.htmSearchPayments("POST");
 			o.htmSearchCurrentPayments("POST");
+			o.htmPagePdf("POST");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("POST");
@@ -427,6 +429,7 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 			o.htmSearchYears("PUTCopy");
 			o.htmSearchPayments("PUTCopy");
 			o.htmSearchCurrentPayments("PUTCopy");
+			o.htmPagePdf("PUTCopy");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("PUTCopy");
@@ -463,6 +466,7 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 			o.htmSearchYears("PATCH");
 			o.htmSearchPayments("PATCH");
 			o.htmSearchCurrentPayments("PATCH");
+			o.htmPagePdf("PATCH");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("PATCH");
@@ -501,6 +505,7 @@ public class DesignEmailGenPage extends DesignEmailGenPageGen<ClusterPage> {
 			o.htmSearchYears("Search");
 			o.htmSearchPayments("Search");
 			o.htmSearchCurrentPayments("Search");
+			o.htmPagePdf("Search");
 		} g("div");
 		{ e("div").a("class", "w3-cell-row ").f();
 			o.htmParentDesignKeys("Search");

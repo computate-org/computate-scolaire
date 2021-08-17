@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -593,7 +594,8 @@ public class SiteUserPage extends SiteUserPageGen<SiteUserGenPage> {
 									{ e("div").a("class", "w3-cell w3-mobile ").f();
 										for(PageDesign pageDesign : pageDesigns) {
 											try {
-												String url = "/pdf?var=design:" + URLEncoder.encode(pageDesign.getPageDesignCompleteName(), "UTF-8") + "&var=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&var=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&var=yearStart:" + yearYear.getYearStart();
+												Boolean pagePdf = BooleanUtils.isNotFalse(pageDesign.getPagePdf());
+												String url = "/" + (pagePdf ? "pdf" : "page") + "?var=design:" + URLEncoder.encode(pageDesign.getPageDesignCompleteName(), "UTF-8") + "&var=schoolName:" + URLEncoder.encode(yearYear.getSchoolName(), "UTF-8") + "&var=schoolLocation:" + URLEncoder.encode(yearYear.getSchoolLocation(), "UTF-8") + "&var=yearStart:" + yearYear.getYearStart();
 												{ e("div").a("class", "w3-cell-row w3-small ").f();
 													{ e("a").a("href", url).a("class", "").f();
 														e("span").a("class", " ").f().sx(pageDesign.getPageDesignCompleteName(), " ", yearYear.getYearStart().toString().substring(2,4), "-", yearYear.getYearEnd().toString().substring(2,4)).g("span");

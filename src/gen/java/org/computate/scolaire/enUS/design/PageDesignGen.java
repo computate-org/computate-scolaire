@@ -2610,6 +2610,154 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		} g("div");
 	}
 
+	/////////////
+	// pagePdf //
+	/////////////
+
+	/**	 The entity pagePdf
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean pagePdf;
+	@JsonIgnore
+	public Wrap<Boolean> pagePdfWrap = new Wrap<Boolean>().p(this).c(Boolean.class).var("pagePdf").o(pagePdf);
+
+	/**	<br/> The entity pagePdf
+	 *  is defined as null before being initialized. 
+	 * <br/><a href="http://localhost:8983/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.scolaire.enUS.design.PageDesign&fq=classeEtendGen_indexed_boolean:true&fq=entiteVar_enUS_indexed_string:pagePdf">Find the entity pagePdf in Solr</a>
+	 * <br/>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _pagePdf(Wrap<Boolean> c);
+
+	public Boolean getPagePdf() {
+		return pagePdf;
+	}
+
+	public void setPagePdf(Boolean pagePdf) {
+		this.pagePdf = pagePdf;
+		this.pagePdfWrap.alreadyInitialized = true;
+	}
+	public void setPagePdf(String o) {
+		this.pagePdf = PageDesign.staticSetPagePdf(siteRequest_, o);
+		this.pagePdfWrap.alreadyInitialized = true;
+	}
+	public static Boolean staticSetPagePdf(SiteRequestEnUS siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
+	}
+	protected PageDesign pagePdfInit() {
+		if(!pagePdfWrap.alreadyInitialized) {
+			_pagePdf(pagePdfWrap);
+			if(pagePdf == null)
+				setPagePdf(pagePdfWrap.o);
+		}
+		pagePdfWrap.alreadyInitialized(true);
+		return (PageDesign)this;
+	}
+
+	public static Boolean staticSolrPagePdf(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSolrStrPagePdf(SiteRequestEnUS siteRequest_, Boolean o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSolrFqPagePdf(SiteRequestEnUS siteRequest_, String o) {
+		return PageDesign.staticSolrStrPagePdf(siteRequest_, PageDesign.staticSolrPagePdf(siteRequest_, PageDesign.staticSetPagePdf(siteRequest_, o)));
+	}
+
+	public Boolean solrPagePdf() {
+		return PageDesign.staticSolrPagePdf(siteRequest_, pagePdf);
+	}
+
+	public String strPagePdf() {
+		return pagePdf == null ? "" : pagePdf.toString();
+	}
+
+	public Boolean sqlPagePdf() {
+		return pagePdf;
+	}
+
+	public String jsonPagePdf() {
+		return pagePdf == null ? "" : pagePdf.toString();
+	}
+
+	public String nomAffichagePagePdf() {
+		return "page PDF";
+	}
+
+	public String htmTooltipPagePdf() {
+		return null;
+	}
+
+	public String htmPagePdf() {
+		return pagePdf == null ? "" : StringEscapeUtils.escapeHtml4(strPagePdf());
+	}
+
+	public void inputPagePdf(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		if(
+				CollectionUtils.containsAny(siteRequest_.getUserResourceRoles(), ROLES)
+				|| CollectionUtils.containsAny(siteRequest_.getUserRealmRoles(), ROLES)
+				) {
+			if("Page".equals(classApiMethodMethod)) {
+				e("input")
+					.a("type", "checkbox")
+					.a("id", classApiMethodMethod, "_pagePdf")
+					.a("value", "true");
+			} else {
+				e("select")
+					.a("id", classApiMethodMethod, "_pagePdf");
+			}
+			if("Page".equals(classApiMethodMethod) || "PATCH".equals(classApiMethodMethod)) {
+				a("class", "setPagePdf classPageDesign inputPageDesign", pk, "PagePdf w3-input w3-border ");
+				a("name", "setPagePdf");
+			} else {
+				a("class", "valuePagePdf classPageDesign inputPageDesign", pk, "PagePdf w3-input w3-border ");
+				a("name", "pagePdf");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				a("onchange", "patch", getClass().getSimpleName(), "Val([{ name: 'fq', value: 'pk:", pk, "' }], 'setPagePdf', $(this).prop('checked'), function() { addGlow($('#", classApiMethodMethod, "_pagePdf')); }, function() { addError($('#", classApiMethodMethod, "_pagePdf')); }); ");
+			}
+			if("Page".equals(classApiMethodMethod)) {
+				if(getPagePdf() != null && getPagePdf())
+					a("checked", "checked");
+				fg();
+			} else {
+				f();
+				e("option").a("value", "").a("selected", "selected").f().g("option");
+				e("option").a("value", "true").f().sx("true").g("option");
+				e("option").a("value", "false").f().sx("false").g("option");
+				g("select");
+			}
+
+		} else {
+			e("span").a("class", "varPageDesign", pk, "PagePdf ").f().sx(htmPagePdf()).g("span");
+		}
+	}
+
+	public void htmPagePdf(String classApiMethodMethod) {
+		PageDesign s = (PageDesign)this;
+		{ e("div").a("class", "w3-cell w3-cell-top w3-center w3-mobile ").f();
+			{ e("div").a("class", "w3-padding ").f();
+				{ e("div").a("id", "suggest", classApiMethodMethod, "PageDesignPagePdf").f();
+					{ e("div").a("class", "w3-card ").f();
+						{ e("div").a("class", "w3-cell-row w3-khaki ").f();
+							e("label").a("for", classApiMethodMethod, "_pagePdf").a("class", "").f().sx("page PDF").g("label");
+						} g("div");
+						{ e("div").a("class", "w3-cell-row w3-padding ").f();
+							{ e("div").a("class", "w3-cell ").f();
+
+								inputPagePdf(classApiMethodMethod);
+							} g("div");
+						} g("div");
+					} g("div");
+				} g("div");
+			} g("div");
+		} g("div");
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -2648,6 +2796,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		searchYearsInit();
 		searchPaymentsInit();
 		searchCurrentPaymentsInit();
+		pagePdfInit();
 	}
 
 	@Override public void initDeepForClass(SiteRequestEnUS siteRequest_) {
@@ -2724,6 +2873,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				return oPageDesign.searchPayments;
 			case "searchCurrentPayments":
 				return oPageDesign.searchCurrentPayments;
+			case "pagePdf":
+				return oPageDesign.pagePdf;
 			default:
 				return super.obtainCluster(var);
 		}
@@ -2812,6 +2963,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			return PageDesign.staticSetSearchPayments(siteRequest_, o);
 		case "searchCurrentPayments":
 			return PageDesign.staticSetSearchCurrentPayments(siteRequest_, o);
+		case "pagePdf":
+			return PageDesign.staticSetPagePdf(siteRequest_, o);
 			default:
 				return Cluster.staticSetCluster(entityVar,  siteRequest_, o);
 		}
@@ -2860,6 +3013,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			return PageDesign.staticSolrSearchPayments(siteRequest_, (Boolean)o);
 		case "searchCurrentPayments":
 			return PageDesign.staticSolrSearchCurrentPayments(siteRequest_, (Boolean)o);
+		case "pagePdf":
+			return PageDesign.staticSolrPagePdf(siteRequest_, (Boolean)o);
 			default:
 				return Cluster.staticSolrCluster(entityVar,  siteRequest_, o);
 		}
@@ -2908,6 +3063,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			return PageDesign.staticSolrStrSearchPayments(siteRequest_, (Boolean)o);
 		case "searchCurrentPayments":
 			return PageDesign.staticSolrStrSearchCurrentPayments(siteRequest_, (Boolean)o);
+		case "pagePdf":
+			return PageDesign.staticSolrStrPagePdf(siteRequest_, (Boolean)o);
 			default:
 				return Cluster.staticSolrStrCluster(entityVar,  siteRequest_, o);
 		}
@@ -2956,6 +3113,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			return PageDesign.staticSolrFqSearchPayments(siteRequest_, o);
 		case "searchCurrentPayments":
 			return PageDesign.staticSolrFqSearchCurrentPayments(siteRequest_, o);
+		case "pagePdf":
+			return PageDesign.staticSolrFqPagePdf(siteRequest_, o);
 			default:
 				return Cluster.staticSolrFqCluster(entityVar,  siteRequest_, o);
 		}
@@ -3047,6 +3206,11 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 					setSearchCurrentPayments(val);
 				saves.add("searchCurrentPayments");
 				return val;
+			case "pagepdf":
+				if(val != null)
+					setPagePdf(val);
+				saves.add("pagePdf");
+				return val;
 			default:
 				return super.defineCluster(var, val);
 		}
@@ -3133,6 +3297,11 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				if(val instanceof Boolean)
 					setSearchCurrentPayments((Boolean)val);
 				saves.add("searchCurrentPayments");
+				return val;
+			case "pagepdf":
+				if(val instanceof Boolean)
+					setPagePdf((Boolean)val);
+				saves.add("pagePdf");
 				return val;
 			default:
 				return super.defineCluster(var, val);
@@ -3245,6 +3414,12 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				Boolean searchCurrentPayments = (Boolean)solrDocument.get("searchCurrentPayments_stored_boolean");
 				if(searchCurrentPayments != null)
 					oPageDesign.setSearchCurrentPayments(searchCurrentPayments);
+			}
+
+			if(saves.contains("pagePdf")) {
+				Boolean pagePdf = (Boolean)solrDocument.get("pagePdf_stored_boolean");
+				if(pagePdf != null)
+					oPageDesign.setPagePdf(pagePdf);
 			}
 		}
 
@@ -3393,6 +3568,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 			document.addField("searchCurrentPayments_indexed_boolean", searchCurrentPayments);
 			document.addField("searchCurrentPayments_stored_boolean", searchCurrentPayments);
 		}
+		if(pagePdf != null) {
+			document.addField("pagePdf_indexed_boolean", pagePdf);
+			document.addField("pagePdf_stored_boolean", pagePdf);
+		}
 		super.indexCluster(document);
 
 	}
@@ -3450,6 +3629,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				return "searchPayments_indexed_boolean";
 			case "searchCurrentPayments":
 				return "searchCurrentPayments_indexed_boolean";
+			case "pagePdf":
+				return "pagePdf_indexed_boolean";
 			default:
 				return Cluster.varIndexedCluster(entityVar);
 		}
@@ -3547,6 +3728,10 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		if(searchCurrentPayments != null)
 			oPageDesign.setSearchCurrentPayments(searchCurrentPayments);
 
+		Boolean pagePdf = (Boolean)solrDocument.get("pagePdf_stored_boolean");
+		if(pagePdf != null)
+			oPageDesign.setPagePdf(pagePdf);
+
 		super.storeCluster(solrDocument);
 	}
 
@@ -3593,6 +3778,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				apiRequest.addVars("searchPayments");
 			if(!Objects.equals(searchCurrentPayments, original.getSearchCurrentPayments()))
 				apiRequest.addVars("searchCurrentPayments");
+			if(!Objects.equals(pagePdf, original.getPagePdf()))
+				apiRequest.addVars("pagePdf");
 			super.apiRequestCluster();
 		}
 	}
@@ -3602,7 +3789,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 	//////////////
 
 	@Override public int hashCode() {
-		return Objects.hash(super.hashCode(), pageDesignKey, childDesignKeys, parentDesignKeys, htmlPartKeys, pageDesignCompleteName, designHidden, designAdmin, designIgnoreEmptyChildName, designIgnorePaymentsNotPastDue, designIgnorePaymentsPastDue, designFilterEnrollmentKey, designEnrollmentSortMonthDayOfBirth, designEnrollmentSortGroupName, designEnrollmentSortChildName, searchYears, searchPayments, searchCurrentPayments);
+		return Objects.hash(super.hashCode(), pageDesignKey, childDesignKeys, parentDesignKeys, htmlPartKeys, pageDesignCompleteName, designHidden, designAdmin, designIgnoreEmptyChildName, designIgnorePaymentsNotPastDue, designIgnorePaymentsPastDue, designFilterEnrollmentKey, designEnrollmentSortMonthDayOfBirth, designEnrollmentSortGroupName, designEnrollmentSortChildName, searchYears, searchPayments, searchCurrentPayments, pagePdf);
 	}
 
 	////////////
@@ -3632,7 +3819,8 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 				&& Objects.equals( designEnrollmentSortChildName, that.designEnrollmentSortChildName )
 				&& Objects.equals( searchYears, that.searchYears )
 				&& Objects.equals( searchPayments, that.searchPayments )
-				&& Objects.equals( searchCurrentPayments, that.searchCurrentPayments );
+				&& Objects.equals( searchCurrentPayments, that.searchCurrentPayments )
+				&& Objects.equals( pagePdf, that.pagePdf );
 	}
 
 	//////////////
@@ -3660,6 +3848,7 @@ public abstract class PageDesignGen<DEV> extends Cluster {
 		sb.append( ", searchYears: " ).append(searchYears);
 		sb.append( ", searchPayments: " ).append(searchPayments);
 		sb.append( ", searchCurrentPayments: " ).append(searchCurrentPayments);
+		sb.append( ", pagePdf: " ).append(pagePdf);
 		sb.append(" }");
 		return sb.toString();
 	}
