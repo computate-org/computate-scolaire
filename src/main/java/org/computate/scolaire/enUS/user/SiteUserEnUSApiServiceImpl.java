@@ -396,9 +396,9 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 
 										enrollments.forEach(schoolEnrollment -> {
 											futures.add(
-
-												enrollmentService.enrollmentChargesFuture(schoolEnrollment, d -> {
-													if(d.succeeded()) {
+												Future.future(d -> {
+//												enrollmentService.enrollmentChargesFuture(schoolEnrollment, d -> {
+//													if(d.succeeded()) {
 //														enrollmentService.authorizeNetEnrollmentPaymentsFuture(schoolEnrollment, e -> {
 //															if(e.succeeded()) {
 																LOGGER.info("Creating payments for customer %s succeeded. ");
@@ -471,10 +471,10 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 //																errorSiteUser(siteRequest, eventHandler, e);
 //															}
 //														});
-													} else {
-														LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
-														errorSiteUser(siteRequest, eventHandler, d);
-													}
+//													} else {
+//														LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
+//														errorSiteUser(siteRequest, eventHandler, d);
+//													}
 												})
 											);
 										});
