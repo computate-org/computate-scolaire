@@ -422,10 +422,11 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
 		listSchoolEnrollment.getList().forEach(o -> {
 			futures.add(
-				enrollmentService.enrollmentChargesFuture(o, a -> {
-					if(a.succeeded()) {
-//						enrollmentService.authorizeNetEnrollmentPaymentsFuture(o, b -> {
-//							if(b.succeeded()) {
+				Future.future(a -> {
+//				enrollmentService.enrollmentChargesFuture(o, a -> {
+//					if(a.succeeded()) {
+////						enrollmentService.authorizeNetEnrollmentPaymentsFuture(o, b -> {
+////							if(b.succeeded()) {
 								LOGGER.info("Creating charges for customer %s succeeded. ");
 								List<Future> futures2 = new ArrayList<>();
 		
@@ -491,9 +492,9 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 //								errorAppVertx(siteRequest, b);
 //							}
 //						});
-					} else {
-						errorAppVertx(siteRequest, a);
-					}
+//					} else {
+//						errorAppVertx(siteRequest, a);
+//					}
 				})
 			);
 		});
