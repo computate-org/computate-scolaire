@@ -401,6 +401,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 //													if(d.succeeded()) {
 //														enrollmentService.authorizeNetEnrollmentPaymentsFuture(schoolEnrollment, e -> {
 //															if(e.succeeded()) {
+															try {
 																LOGGER.info("Creating payments for customer %s succeeded. ");
 																List<Future> futures2 = new ArrayList<>();
 										
@@ -424,15 +425,17 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 																	siteRequest2.getVertx().eventBus().publish("websocketSchoolPayment", JsonObject.mapFrom(apiRequest2).toString());
 										
 																	o2.setSiteRequest_(siteRequest2);
-																	futures2.add(
-																		service.patchSchoolPaymentFuture(o2, false, a -> {
-																			if(a.succeeded()) {
+																	futures2.add(Future.future(a -> {
+																		
+																		service.patchSchoolPaymentFuture(o2, false, e -> {
+																			if(b.succeeded()) {
+																				a.complete();
 																			} else {
 																				LOGGER.info(String.format("SchoolPayment %s failed. ", o2.getPk()));
-																				eventHandler.handle(Future.failedFuture(a.cause()));
+																				a.fail(e.cause());
 																			}
-																		})
-																	);
+																		});
+																	}));
 																}
 				
 																CompositeFuture.all(futures2).setHandler(f -> {
@@ -450,22 +453,21 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 						
 																		enrollmentService.patchSchoolEnrollmentFuture(schoolEnrollment, false, g -> {
 																			if(g.succeeded()) {
-																				LOGGER.info("Refreshing enrollment succeeded. ");
-																				if(g.succeeded()) {
-																				} else {
-																					LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", g.cause()));
-																					errorSiteUser(siteRequest, eventHandler, g);
-																				}
+																				d.complete();
 																			} else {
 																				LOGGER.error("Refreshing enrollment succeeded. ", g.cause());
-																				errorSiteUser(siteRequest, eventHandler, g);
+																				d.fail(g.cause());
 																			}
 																		});
 																	} else {
 																		LOGGER.error("Refresh relations failed. ", f.cause());
-																		errorSiteUser(siteRequest, eventHandler, f);
+																		d.fail(f.cause());
 																	}
 																});
+															} catch(Exception ex) {
+																LOGGER.error("Refresh relations failed. ", ex);
+																d.fail(ex);
+															}
 //															} else {
 //																LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e.cause()));
 //																errorSiteUser(siteRequest, eventHandler, e);
