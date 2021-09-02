@@ -397,8 +397,8 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 										enrollments.forEach(schoolEnrollment -> {
 											futures.add(
 												Future.future(d -> {
-//												enrollmentService.enrollmentChargesFuture(schoolEnrollment, d -> {
-//													if(d.succeeded()) {
+												enrollmentService.enrollmentChargesFuture(schoolEnrollment, e -> {
+													if(e.succeeded()) {
 //														enrollmentService.authorizeNetEnrollmentPaymentsFuture(schoolEnrollment, e -> {
 //															if(e.succeeded()) {
 															try {
@@ -427,12 +427,12 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 																	o2.setSiteRequest_(siteRequest2);
 																	futures2.add(Future.future(a -> {
 																		
-																		service.patchSchoolPaymentFuture(o2, false, e -> {
-																			if(b.succeeded()) {
+																		service.patchSchoolPaymentFuture(o2, false, f -> {
+																			if(f.succeeded()) {
 																				a.complete();
 																			} else {
 																				LOGGER.info(String.format("SchoolPayment %s failed. ", o2.getPk()));
-																				a.fail(e.cause());
+																				a.fail(f.cause());
 																			}
 																		});
 																	}));
@@ -473,10 +473,11 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 //																errorSiteUser(siteRequest, eventHandler, e);
 //															}
 //														});
-//													} else {
-//														LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", d.cause()));
-//														errorSiteUser(siteRequest, eventHandler, d);
-//													}
+													} else {
+														LOGGER.error(String.format("refreshsearchpageSchoolEnrollment failed. ", e.cause()));
+														errorSiteUser(siteRequest, eventHandler, e);
+													}
+												});
 												})
 											);
 										});

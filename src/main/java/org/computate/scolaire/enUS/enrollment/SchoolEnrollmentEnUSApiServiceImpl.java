@@ -334,8 +334,8 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 
 			CompositeFuture.all(futures1).setHandler(f -> {
 				if(f.succeeded()) {
-//					enrollmentService.enrollmentChargesFuture(o, a -> {
-//						if(a.succeeded()) {
+					enrollmentService.enrollmentChargesFuture(o, a -> {
+						if(a.succeeded()) {
 	//						enrollmentService.authorizeNetEnrollmentPaymentsFuture(o, b -> {
 	//							if(b.succeeded()) {
 									LOGGER.info("Creating charges for customer %s succeeded. ");
@@ -364,10 +364,10 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 	//								errorAppVertx(siteRequest, b);
 	//							}
 	//						});
-//						} else {
-//							errorSchoolEnrollment(siteRequest, eventHandler, a);
-//						}
-//					});
+						} else {
+							errorSchoolEnrollment(siteRequest, eventHandler, a);
+						}
+					});
 				} else {
 					LOGGER.error("Refresh relations failed. ", f.cause());
 					errorSchoolEnrollment(siteRequest, eventHandler, f);
@@ -392,22 +392,22 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 		List<Future> futures = new ArrayList<>();
 		SiteRequestEnUS siteRequest = listSchoolEnrollment.getSiteRequest_();
 
-//		listSchoolEnrollment.getList().forEach(o -> {
-//			futures.add(
-//					enrollmentChargesFuture(o, a -> {
-//					if(a.succeeded()) {
-////						authorizeNetEnrollmentPaymentsFuture(o, c -> {
-////							if(a.succeeded()) {
-////							} else {
-////								errorSchoolEnrollment(siteRequest, eventHandler, a);
-////							}
-////						});
-//					} else {
-//						errorSchoolEnrollment(siteRequest, eventHandler, a);
-//					}
-//				})
-//			);
-//		});
+		listSchoolEnrollment.getList().forEach(o -> {
+			futures.add(
+					enrollmentChargesFuture(o, a -> {
+					if(a.succeeded()) {
+//						authorizeNetEnrollmentPaymentsFuture(o, c -> {
+//							if(a.succeeded()) {
+//							} else {
+//								errorSchoolEnrollment(siteRequest, eventHandler, a);
+//							}
+//						});
+					} else {
+						errorSchoolEnrollment(siteRequest, eventHandler, a);
+					}
+				})
+			);
+		});
 		CompositeFuture.all(futures).setHandler( a -> {
 			if(a.succeeded()) {
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + listSchoolEnrollment.size());
@@ -417,109 +417,109 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 			}
 		});
 	}
-//
-//	public Future<SchoolEnrollment> enrollmentChargesFuture(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
-//		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
-//		SiteContextEnUS siteContextEnUS = siteRequest.getSiteContext_();
-//		SiteConfig siteConfig = siteRequest.getSiteConfig_();
-//		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
-//		LocalDate now = LocalDate.now(zoneId);
-//		Integer paymentDay = siteConfig.getPaymentDay();
-//		Vertx vertx = siteRequest.getVertx();
-//		SchoolPaymentEnUSApiServiceImpl paymentService = new SchoolPaymentEnUSApiServiceImpl(siteContextEnUS);
-//		Promise<SchoolEnrollment> promise = Promise.promise();
-//		try {
-//			SiteConfig configSite = siteContextEnUS.getSiteConfig();
-//			LocalDate sessionStartDate = schoolEnrollment.getSessionStartDate();
-//			LocalDate sessionEndDate = schoolEnrollment.getSessionEndDate();
-//			LocalDate chargeStartDate = sessionStartDate == null ? null : (sessionStartDate.getDayOfMonth() < paymentDay ? sessionStartDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionStartDate.withDayOfMonth(paymentDay));
-//			LocalDate chargeEndDate = sessionEndDate == null ? null : (sessionEndDate.getDayOfMonth() < paymentDay ? sessionEndDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionEndDate.withDayOfMonth(paymentDay).minusMonths(1));
-//			LocalDate paymentNext = now.getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay);
-//			BigDecimal blockPricePerMonth = schoolEnrollment.getBlockPricePerMonth();
-//			BigDecimal yearEnrollmentFee = schoolEnrollment.getYearEnrollmentFee();
-//			Long enrollmentKey = schoolEnrollment.getPk();
-//			LocalDate enrollmentCreated = schoolEnrollment.getCreated().toLocalDate();
-//			Long numMonths = chargeStartDate == null ? null : ChronoUnit.MONTHS.between(chargeStartDate, chargeEndDate);
-//			List<Future> futures = new ArrayList<>();
-//
-//			String lateFeeAmountStr = siteRequest.getRequestVars().get("lateFeeAmount");
-//			if(lateFeeAmountStr != null) {
-//				BigDecimal lateFeeAmount = new BigDecimal(lateFeeAmountStr);
-//				SchoolPayment o = new SchoolPayment();
-//				o.setSiteRequest_(siteRequest);
-//				o.setChargeAmount(lateFeeAmount);
-//				o.setPaymentDate(now.plusDays(15));
-//				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
-//				o.setChargeLateFee(true);
-//				o.setEnrollmentKey(schoolEnrollment.getPk());
-//				o.setPaymentDescription("late pick-up/drop-off fee");
-//				o.setEnrollment_(schoolEnrollment);
-//
-//				SiteRequestEnUS siteRequest2 = siteRequest.copy();
-//				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
-//				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
-//
-//				ApiRequest apiRequest2 = new ApiRequest();
-//				apiRequest2.setRows(1);
-//				apiRequest2.setNumFound(1L);
-//				apiRequest2.setNumPATCH(0L);
-//				apiRequest2.initDeepApiRequest(siteRequest2);
-//				siteRequest2.setApiRequest_(apiRequest2);
-//
-//				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
-//					if(b.succeeded()) {
-//						LOGGER.info(String.format("late fee charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
-//					} else {
-//						LOGGER.error(String.format("create late fee %s failed for enrollment %s. ", sessionStartDate, enrollmentKey), b.cause());
-//						promise.fail(b.cause());
-//					}
-//				}));
-//			}
-//
-//			SearchList<SchoolPayment> chargeMonthList = new SearchList<SchoolPayment>();
-//			chargeMonthList.setStore(true);
-//			chargeMonthList.setQuery("*:*");
-//			chargeMonthList.setC(SchoolPayment.class);
-//			chargeMonthList.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
-//			chargeMonthList.addFilterQuery("chargeMonth_indexed_boolean:true");
-//			chargeMonthList.add("json.facet", "{paymentDate:{terms:{field:paymentDate_indexed_date, limit:1000}}}");
-//			chargeMonthList.setRows(0);
-//			chargeMonthList.initDeepSearchList(siteRequest);
-//			SimpleOrderedMap chargeMonthFacets = (SimpleOrderedMap)Optional.ofNullable(chargeMonthList.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
-//			List<LocalDate> paymentsDue = Optional.ofNullable((SimpleOrderedMap)chargeMonthFacets.get("paymentDate")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> ((Date)m.get("val")).toInstant().atZone(zoneId).toLocalDate(), Collectors.toList()));
-//
-//			SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
-//			searchList.setStore(true);
-//			searchList.setQuery("*:*");
-//			searchList.setC(SchoolPayment.class);
-//			searchList.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
-//			searchList.addFilterQuery("deleted_indexed_boolean:false");
-//			searchList.addFilterQuery("archived_indexed_boolean:false");
-//			searchList.add("json.facet", "{paymentDate:{terms:{field:paymentDate_indexed_date, limit:1000}}}");
-//			searchList.add("json.facet", "{chargeEnrollment:{terms:{field:chargeEnrollment_indexed_boolean, limit:1000}}}");
-//			searchList.add("json.facet", "{chargeFirstLast:{terms:{field:chargeFirstLast_indexed_boolean, limit:1000}}}");
-//
-//			searchList.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
-//			searchList.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
-//			searchList.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
-//			searchList.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
-//			searchList.add("json.facet", "{sum_chargeAmountPassed:'sum(chargeAmountPassed_indexed_double)'}");
-//			searchList.addSort("paymentDate_indexed_date", ORDER.desc);
-//			searchList.setRows(0);
-//			searchList.initDeepSearchList(siteRequest);
-//
-//			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(searchList.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
-//			Integer chargeEnrollment = Optional.ofNullable((SimpleOrderedMap)facets.get("chargeEnrollment")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
-//			Integer chargeFirstLast = Optional.ofNullable((SimpleOrderedMap)facets.get("chargeFirstLast")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
-//
-//			BigDecimal paymentAmount = Optional.ofNullable((Double)facets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
-//			BigDecimal chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
-//			BigDecimal chargeAmountFuture = Optional.ofNullable((Double)facets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
-//			BigDecimal chargeAmountDue = Optional.ofNullable((Double)facets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
-//			BigDecimal chargeAmountPassed = Optional.ofNullable((Double)facets.get("sum_chargeAmountPassed")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
-//			BigDecimal chargesNow = chargeAmount.subtract(paymentAmount).subtract(chargeAmountFuture);
-//			Boolean paymentsCurrent = chargesNow.compareTo(BigDecimal.ZERO) <= 0;
-//			Boolean paymentsLate = chargesNow.subtract(chargeAmountDue).compareTo(BigDecimal.ZERO) > 0;
+
+	public Future<SchoolEnrollment> enrollmentChargesFuture(SchoolEnrollment schoolEnrollment, Handler<AsyncResult<SchoolEnrollment>> eventHandler) {
+		SiteRequestEnUS siteRequest = schoolEnrollment.getSiteRequest_();
+		SiteContextEnUS siteContextEnUS = siteRequest.getSiteContext_();
+		SiteConfig siteConfig = siteRequest.getSiteConfig_();
+		ZoneId zoneId = ZoneId.of(siteConfig.getSiteZone());
+		LocalDate now = LocalDate.now(zoneId);
+		Integer paymentDay = siteConfig.getPaymentDay();
+		Vertx vertx = siteRequest.getVertx();
+		SchoolPaymentEnUSApiServiceImpl paymentService = new SchoolPaymentEnUSApiServiceImpl(siteContextEnUS);
+		Promise<SchoolEnrollment> promise = Promise.promise();
+		try {
+			SiteConfig configSite = siteContextEnUS.getSiteConfig();
+			LocalDate sessionStartDate = schoolEnrollment.getSessionStartDate();
+			LocalDate sessionEndDate = schoolEnrollment.getSessionEndDate();
+			LocalDate chargeStartDate = sessionStartDate == null ? null : (sessionStartDate.getDayOfMonth() < paymentDay ? sessionStartDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionStartDate.withDayOfMonth(paymentDay));
+			LocalDate chargeEndDate = sessionEndDate == null ? null : (sessionEndDate.getDayOfMonth() < paymentDay ? sessionEndDate.withDayOfMonth(paymentDay).minusMonths(1) : sessionEndDate.withDayOfMonth(paymentDay).minusMonths(1));
+			LocalDate paymentNext = now.getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay);
+			BigDecimal blockPricePerMonth = schoolEnrollment.getBlockPricePerMonth();
+			BigDecimal yearEnrollmentFee = schoolEnrollment.getYearEnrollmentFee();
+			Long enrollmentKey = schoolEnrollment.getPk();
+			LocalDate enrollmentCreated = schoolEnrollment.getCreated().toLocalDate();
+			Long numMonths = chargeStartDate == null ? null : ChronoUnit.MONTHS.between(chargeStartDate, chargeEndDate);
+			List<Future> futures = new ArrayList<>();
+
+			String lateFeeAmountStr = siteRequest.getRequestVars().get("lateFeeAmount");
+			if(lateFeeAmountStr != null) {
+				BigDecimal lateFeeAmount = new BigDecimal(lateFeeAmountStr);
+				SchoolPayment o = new SchoolPayment();
+				o.setSiteRequest_(siteRequest);
+				o.setChargeAmount(lateFeeAmount);
+				o.setPaymentDate(now.plusDays(15));
+				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
+				o.setChargeLateFee(true);
+				o.setEnrollmentKey(schoolEnrollment.getPk());
+				o.setPaymentDescription("late pick-up/drop-off fee");
+				o.setEnrollment_(schoolEnrollment);
+
+				SiteRequestEnUS siteRequest2 = siteRequest.copy();
+				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
+				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+
+				ApiRequest apiRequest2 = new ApiRequest();
+				apiRequest2.setRows(1);
+				apiRequest2.setNumFound(1L);
+				apiRequest2.setNumPATCH(0L);
+				apiRequest2.initDeepApiRequest(siteRequest2);
+				siteRequest2.setApiRequest_(apiRequest2);
+
+				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
+					if(b.succeeded()) {
+						LOGGER.info(String.format("late fee charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
+					} else {
+						LOGGER.error(String.format("create late fee %s failed for enrollment %s. ", sessionStartDate, enrollmentKey), b.cause());
+						promise.fail(b.cause());
+					}
+				}));
+			}
+
+			SearchList<SchoolPayment> chargeMonthList = new SearchList<SchoolPayment>();
+			chargeMonthList.setStore(true);
+			chargeMonthList.setQuery("*:*");
+			chargeMonthList.setC(SchoolPayment.class);
+			chargeMonthList.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
+			chargeMonthList.addFilterQuery("chargeMonth_indexed_boolean:true");
+			chargeMonthList.add("json.facet", "{paymentDate:{terms:{field:paymentDate_indexed_date, limit:1000}}}");
+			chargeMonthList.setRows(0);
+			chargeMonthList.initDeepSearchList(siteRequest);
+			SimpleOrderedMap chargeMonthFacets = (SimpleOrderedMap)Optional.ofNullable(chargeMonthList.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			List<LocalDate> paymentsDue = Optional.ofNullable((SimpleOrderedMap)chargeMonthFacets.get("paymentDate")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().collect(Collectors.mapping(m -> ((Date)m.get("val")).toInstant().atZone(zoneId).toLocalDate(), Collectors.toList()));
+
+			SearchList<SchoolPayment> searchList = new SearchList<SchoolPayment>();
+			searchList.setStore(true);
+			searchList.setQuery("*:*");
+			searchList.setC(SchoolPayment.class);
+			searchList.addFilterQuery("enrollmentKey_indexed_long:" + schoolEnrollment.getPk());
+			searchList.addFilterQuery("deleted_indexed_boolean:false");
+			searchList.addFilterQuery("archived_indexed_boolean:false");
+			searchList.add("json.facet", "{paymentDate:{terms:{field:paymentDate_indexed_date, limit:1000}}}");
+			searchList.add("json.facet", "{chargeEnrollment:{terms:{field:chargeEnrollment_indexed_boolean, limit:1000}}}");
+			searchList.add("json.facet", "{chargeFirstLast:{terms:{field:chargeFirstLast_indexed_boolean, limit:1000}}}");
+
+			searchList.add("json.facet", "{sum_paymentAmount:'sum(paymentAmount_indexed_double)'}");
+			searchList.add("json.facet", "{sum_chargeAmount:'sum(chargeAmount_indexed_double)'}");
+			searchList.add("json.facet", "{sum_chargeAmountDue:'sum(chargeAmountDue_indexed_double)'}");
+			searchList.add("json.facet", "{sum_chargeAmountFuture:'sum(chargeAmountFuture_indexed_double)'}");
+			searchList.add("json.facet", "{sum_chargeAmountPassed:'sum(chargeAmountPassed_indexed_double)'}");
+			searchList.addSort("paymentDate_indexed_date", ORDER.desc);
+			searchList.setRows(0);
+			searchList.initDeepSearchList(siteRequest);
+
+			SimpleOrderedMap facets = (SimpleOrderedMap)Optional.ofNullable(searchList.getQueryResponse()).map(QueryResponse::getResponse).map(r -> r.get("facets")).orElse(new SimpleOrderedMap());
+			Integer chargeEnrollment = Optional.ofNullable((SimpleOrderedMap)facets.get("chargeEnrollment")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
+			Integer chargeFirstLast = Optional.ofNullable((SimpleOrderedMap)facets.get("chargeFirstLast")).map(m -> ((List<SimpleOrderedMap>)m.get("buckets"))).orElse(Arrays.asList()).stream().filter(m -> BooleanUtils.isTrue((Boolean)m.get("val"))).findFirst().map(m -> (Integer)m.get("count")).orElse(0);
+
+			BigDecimal paymentAmount = Optional.ofNullable((Double)facets.get("sum_paymentAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
+			BigDecimal chargeAmount = Optional.ofNullable((Double)facets.get("sum_chargeAmount")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
+			BigDecimal chargeAmountFuture = Optional.ofNullable((Double)facets.get("sum_chargeAmountFuture")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
+			BigDecimal chargeAmountDue = Optional.ofNullable((Double)facets.get("sum_chargeAmountDue")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
+			BigDecimal chargeAmountPassed = Optional.ofNullable((Double)facets.get("sum_chargeAmountPassed")).map(d -> new BigDecimal(d, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING)).orElse(new BigDecimal(0, MathContext.DECIMAL64).setScale(2, RoundingMode.CEILING));
+			BigDecimal chargesNow = chargeAmount.subtract(paymentAmount).subtract(chargeAmountFuture);
+			Boolean paymentsCurrent = chargesNow.compareTo(BigDecimal.ZERO) <= 0;
+			Boolean paymentsLate = chargesNow.subtract(chargeAmountDue).compareTo(BigDecimal.ZERO) > 0;
 //			if(paymentsLate && chargeStartDate != null) {
 //				BigDecimal paymentsLateAmount = chargesNow.subtract(chargeAmountDue);
 //				LocalDate lateFeeStartDate = (now.getDayOfMonth() < paymentDay ? now.withDayOfMonth(paymentDay).minusMonths(1) : now.withDayOfMonth(paymentDay)).plusDays(1);
@@ -572,124 +572,124 @@ public class SchoolEnrollmentEnUSApiServiceImpl extends SchoolEnrollmentEnUSGenA
 //					}));
 //				}
 //			}
-//
-//			if(sessionStartDate != null && yearEnrollmentFee != null && chargeEnrollment == 0) {
-//				SchoolPayment o = new SchoolPayment();
-//				o.setSiteRequest_(siteRequest);
-//				o.setChargeAmount(yearEnrollmentFee);
-//				LocalDate paymentDate = enrollmentCreated.compareTo(sessionStartDate) > 0 ? paymentNext : sessionStartDate;
-//				o.setPaymentDate(paymentDate);
-//				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
-//				o.setChargeEnrollment(true);
-//				o.setEnrollmentKey(schoolEnrollment.getPk());
-//				o.setEnrollment_(schoolEnrollment);
-//
-//				SiteRequestEnUS siteRequest2 = siteRequest.copy();
-//				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
-//				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
-//
-//				ApiRequest apiRequest2 = new ApiRequest();
-//				apiRequest2.setRows(1);
-//				apiRequest2.setNumFound(1L);
-//				apiRequest2.setNumPATCH(0L);
-//				apiRequest2.initDeepApiRequest(siteRequest2);
-//				siteRequest2.setApiRequest_(apiRequest2);
-//
-//				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
-//					if(b.succeeded()) {
-//						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
-//					} else {
-//						LOGGER.error(String.format("create fee %s failed for enrollment %s. ", sessionStartDate, enrollmentKey), b.cause());
-//						promise.fail(b.cause());
-//					}
-//				}));
-//			}
-//			if(blockPricePerMonth != null && chargeFirstLast == 0) {
-//				SchoolPayment o = new SchoolPayment();
-//				o.setSiteRequest_(siteRequest);
-//				o.setChargeAmount(blockPricePerMonth.multiply(BigDecimal.valueOf(2)));
-//				LocalDate paymentDate = enrollmentCreated.compareTo(sessionStartDate) > 0 ? paymentNext : sessionStartDate;
-//				o.setPaymentDate(paymentDate);
-//				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
-//				o.setChargeFirstLast(true);
-//				o.setEnrollmentKey(schoolEnrollment.getPk());
-//				o.setEnrollment_(schoolEnrollment);
-//
-//				SiteRequestEnUS siteRequest2 = siteRequest.copy();
-//				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
-//				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
-//
-//				ApiRequest apiRequest2 = new ApiRequest();
-//				apiRequest2.setRows(1);
-//				apiRequest2.setNumFound(1L);
-//				apiRequest2.setNumPATCH(0L);
-//				apiRequest2.initDeepApiRequest(siteRequest2);
-//				siteRequest2.setApiRequest_(apiRequest2);
-//
-//				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
-//					if(b.succeeded()) {
-//						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
-//					} else {
-//						LOGGER.error(String.format("create fee %s failed for enrollment %s. ", sessionStartDate, enrollmentKey), b.cause());
-//						promise.fail(b.cause());
-//					}
-//				}));
-//			}
-//			if(numMonths != null) {
-//				for(long i = 1; i < numMonths; i++) {
-//					LocalDate paymentDate = chargeStartDate.plusMonths(i);
-//					if(!paymentsDue.contains(paymentDate)) {
-//						SchoolPayment o = new SchoolPayment();
-//						o.setSiteRequest_(siteRequest);
-//						chargeAmount = enrollmentCreated.compareTo(paymentDate) > 0 ? BigDecimal.ZERO 
-//								: schoolEnrollment.getBlockPricePerMonth();
-//						o.setChargeAmount(chargeAmount);
-//						o.setPaymentDate(paymentDate);
-//						o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
-//						o.setChargeMonth(true);
-//						o.setEnrollmentKey(schoolEnrollment.getPk());
-//						o.setEnrollment_(schoolEnrollment);
-//	
-//						SiteRequestEnUS siteRequest2 = siteRequest.copy();
-//						siteRequest2.setJsonObject(JsonObject.mapFrom(o));
-//						siteRequest2.initDeepSiteRequestEnUS(siteRequest);
-//
-//						ApiRequest apiRequest2 = new ApiRequest();
-//						apiRequest2.setRows(1);
-//						apiRequest2.setNumFound(1L);
-//						apiRequest2.setNumPATCH(0L);
-//						apiRequest2.initDeepApiRequest(siteRequest2);
-//						siteRequest2.setApiRequest_(apiRequest2);
-//	
-//						futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
-//							if(b.succeeded()) {
-//								LOGGER.info(String.format("charge %s created for enrollment %s. ", paymentDate, enrollmentKey));
-//							} else {
-//								LOGGER.error(String.format("create fee %s failed for enrollment %s. ", paymentDate, enrollmentKey), b.cause());
-//								promise.fail(b.cause());
-//							}
-//						}));
-//					}
-//				}
-//			}
-//			CompositeFuture.all(futures).setHandler(b -> {
-//				if(b.succeeded()) {
-//					LOGGER.info(String.format("Charges created for enrollment %s. ", enrollmentKey));
-//					eventHandler.handle(Future.succeededFuture(schoolEnrollment));
-//					promise.complete();
-//				} else {
-//					LOGGER.error("Refresh relations failed. ", b.cause());
-//					eventHandler.handle(Future.failedFuture(b.cause()));
-//					promise.fail(b.cause());
-//				}
-//			});
-//
-//			return promise.future();
-//		} catch(Exception e) {
-//			eventHandler.handle(Future.failedFuture(e));
-//			return Future.failedFuture(e);
-//		}
-//	}
+
+			if(sessionStartDate != null && yearEnrollmentFee != null && chargeEnrollment == 0) {
+				SchoolPayment o = new SchoolPayment();
+				o.setSiteRequest_(siteRequest);
+				o.setChargeAmount(yearEnrollmentFee);
+				LocalDate paymentDate = enrollmentCreated.compareTo(sessionStartDate) > 0 ? paymentNext : sessionStartDate;
+				o.setPaymentDate(paymentDate);
+				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
+				o.setChargeEnrollment(true);
+				o.setEnrollmentKey(schoolEnrollment.getPk());
+				o.setEnrollment_(schoolEnrollment);
+
+				SiteRequestEnUS siteRequest2 = siteRequest.copy();
+				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
+				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+
+				ApiRequest apiRequest2 = new ApiRequest();
+				apiRequest2.setRows(1);
+				apiRequest2.setNumFound(1L);
+				apiRequest2.setNumPATCH(0L);
+				apiRequest2.initDeepApiRequest(siteRequest2);
+				siteRequest2.setApiRequest_(apiRequest2);
+
+				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
+					if(b.succeeded()) {
+						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
+					} else {
+						LOGGER.error(String.format("create fee %s failed for enrollment %s. ", sessionStartDate, enrollmentKey), b.cause());
+						promise.fail(b.cause());
+					}
+				}));
+			}
+			if(blockPricePerMonth != null && chargeFirstLast == 0) {
+				SchoolPayment o = new SchoolPayment();
+				o.setSiteRequest_(siteRequest);
+				o.setChargeAmount(blockPricePerMonth.multiply(BigDecimal.valueOf(2)));
+				LocalDate paymentDate = enrollmentCreated.compareTo(sessionStartDate) > 0 ? paymentNext : sessionStartDate;
+				o.setPaymentDate(paymentDate);
+				o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
+				o.setChargeFirstLast(true);
+				o.setEnrollmentKey(schoolEnrollment.getPk());
+				o.setEnrollment_(schoolEnrollment);
+
+				SiteRequestEnUS siteRequest2 = siteRequest.copy();
+				siteRequest2.setJsonObject(JsonObject.mapFrom(o));
+				siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+
+				ApiRequest apiRequest2 = new ApiRequest();
+				apiRequest2.setRows(1);
+				apiRequest2.setNumFound(1L);
+				apiRequest2.setNumPATCH(0L);
+				apiRequest2.initDeepApiRequest(siteRequest2);
+				siteRequest2.setApiRequest_(apiRequest2);
+
+				futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
+					if(b.succeeded()) {
+						LOGGER.info(String.format("charge %s created for enrollment %s. ", sessionStartDate, enrollmentKey));
+					} else {
+						LOGGER.error(String.format("create fee %s failed for enrollment %s. ", sessionStartDate, enrollmentKey), b.cause());
+						promise.fail(b.cause());
+					}
+				}));
+			}
+			if(numMonths != null) {
+				for(long i = 1; i < numMonths; i++) {
+					LocalDate paymentDate = chargeStartDate.plusMonths(i);
+					if(!paymentsDue.contains(paymentDate)) {
+						SchoolPayment o = new SchoolPayment();
+						o.setSiteRequest_(siteRequest);
+						chargeAmount = enrollmentCreated.compareTo(paymentDate) > 0 ? BigDecimal.ZERO 
+								: schoolEnrollment.getBlockPricePerMonth();
+						o.setChargeAmount(chargeAmount);
+						o.setPaymentDate(paymentDate);
+						o.setCustomerProfileId(schoolEnrollment.getCustomerProfileId());
+						o.setChargeMonth(true);
+						o.setEnrollmentKey(schoolEnrollment.getPk());
+						o.setEnrollment_(schoolEnrollment);
+	
+						SiteRequestEnUS siteRequest2 = siteRequest.copy();
+						siteRequest2.setJsonObject(JsonObject.mapFrom(o));
+						siteRequest2.initDeepSiteRequestEnUS(siteRequest);
+
+						ApiRequest apiRequest2 = new ApiRequest();
+						apiRequest2.setRows(1);
+						apiRequest2.setNumFound(1L);
+						apiRequest2.setNumPATCH(0L);
+						apiRequest2.initDeepApiRequest(siteRequest2);
+						siteRequest2.setApiRequest_(apiRequest2);
+	
+						futures.add(paymentService.postSchoolPaymentFuture(siteRequest2, false, b -> {
+							if(b.succeeded()) {
+								LOGGER.info(String.format("charge %s created for enrollment %s. ", paymentDate, enrollmentKey));
+							} else {
+								LOGGER.error(String.format("create fee %s failed for enrollment %s. ", paymentDate, enrollmentKey), b.cause());
+								promise.fail(b.cause());
+							}
+						}));
+					}
+				}
+			}
+			CompositeFuture.all(futures).setHandler(b -> {
+				if(b.succeeded()) {
+					LOGGER.info(String.format("Charges created for enrollment %s. ", enrollmentKey));
+					eventHandler.handle(Future.succeededFuture(schoolEnrollment));
+					promise.complete();
+				} else {
+					LOGGER.error("Refresh relations failed. ", b.cause());
+					eventHandler.handle(Future.failedFuture(b.cause()));
+					promise.fail(b.cause());
+				}
+			});
+
+			return promise.future();
+		} catch(Exception e) {
+			eventHandler.handle(Future.failedFuture(e));
+			return Future.failedFuture(e);
+		}
+	}
 
 	@Override
 	public void response200SearchSchoolEnrollment(SearchList<SchoolEnrollment> listSchoolEnrollment, Handler<AsyncResult<OperationResponse>> eventHandler) {
