@@ -358,6 +358,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 		if(chargeAmount != null && paymentDate != null 
 				&& !chargeLateFee
 				&& !chargeEnrollment
+				&& !chargeFirstLast
 				&& paymentDate.compareTo(now.plusDays(15)) > 0)
 //				&& paymentDate.compareTo(paymentNext) > 0)
 			c.o(chargeAmount);
