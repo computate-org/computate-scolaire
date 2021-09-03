@@ -330,6 +330,7 @@ public class SchoolPayment extends SchoolPaymentGen<Cluster> {
 	protected void _chargeAmountDue(Wrap<BigDecimal> c) {
 		if(chargeAmount != null && paymentDate != null && (
 				chargeEnrollment
+				|| chargeFirstLast
 				|| paymentDate.compareTo(now.plusDays(15)) <= 0 && paymentDate.compareTo(now) >= 0
 				))
 //		if(chargeAmount != null 

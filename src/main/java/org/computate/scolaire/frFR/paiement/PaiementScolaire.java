@@ -1228,6 +1228,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 	protected void _fraisMontantDu(Couverture<BigDecimal> c) {
 		if(fraisMontant != null && paiementDate != null && (
 				fraisInscription
+				|| fraisPremierDernier
 				|| paiementDate.compareTo(now.plusDays(15)) <= 0 && paiementDate.compareTo(now) >= 0
 				))
 //		if(fraisMontant != null 
