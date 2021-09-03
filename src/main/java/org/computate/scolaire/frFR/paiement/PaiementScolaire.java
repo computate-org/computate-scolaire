@@ -1364,6 +1364,7 @@ public class PaiementScolaire extends PaiementScolaireGen<Cluster> {
 		if(fraisMontant != null && paiementDate != null 
 				&& !fraisRetard
 				&& !fraisInscription
+				&& !fraisPremierDernier
 				&& paiementDate.compareTo(now.plusDays(15)) > 0)
 //				&& paiementDate.compareTo(paiementProchain) > 0)
 			c.o(fraisMontant);
