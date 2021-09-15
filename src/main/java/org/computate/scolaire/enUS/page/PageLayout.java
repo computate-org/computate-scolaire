@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import org.apache.commons.collections.CollectionUtils;
@@ -57,6 +58,7 @@ import net.authorize.api.contract.v1.GetHostedProfilePageResponse;
 import net.authorize.api.contract.v1.LineItemType;
 import net.authorize.api.contract.v1.MerchantAuthenticationType;
 import net.authorize.api.contract.v1.MessageTypeEnum;
+import net.authorize.api.contract.v1.MessagesType.Message;
 import net.authorize.api.contract.v1.OrderType;
 import net.authorize.api.contract.v1.SettingType;
 import net.authorize.api.contract.v1.TransactionRequestType;
@@ -1247,87 +1249,92 @@ public class PageLayout extends PageLayoutGen<Object> {
 				else {
 					profilePageResponse = hostedProfileController.getApiResponse();
 					if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
-						throw new RuntimeException(profilePageResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s, %s, school number: %s, enrollment key: %s, child name: %s", m.getCode(), m.getText(), customerProfileId, schoolNumber, enrollmentKey, childCompleteNamePreferred)).orElse("GetHostedProfilePageRequest failed. "));
+						Message message = profilePageResponse.getMessages().getMessage().stream().findFirst().orElse(null);
+						if(message != null && message.getCode().equals("E00124 The provided access token is invalid,"))
+							profilePageResponse = null;
+						throw new RuntimeException(Optional.ofNullable(message).map(m -> String.format("%s %s, %s, school number: %s, enrollment key: %s, child name: %s", m.getCode(), m.getText(), customerProfileId, schoolNumber, enrollmentKey, childCompleteNamePreferred)).orElse("GetHostedProfilePageRequest failed. "));
 					}
 				}
 
-				GetHostedPaymentPageRequest hostedPaymentPageRequest = new GetHostedPaymentPageRequest();
-				hostedPaymentPageRequest.setMerchantAuthentication(merchantAuthenticationType);
-
-				ArrayOfSetting hostedPaymentSettings = new ArrayOfSetting();
-				{
-					SettingType settingType = new SettingType();
-					String hostedPaymentReturnOptionsStr = "{ \"url\": \"%s/refresh-enrollment/%s\", \"cancelUrl\": \"%s/refresh-enrollment/%s\" }";
-					String hostedPaymentReturnOptions = String.format(hostedPaymentReturnOptionsStr, siteConfig.getSiteBaseUrl(), enrollmentKey, siteConfig.getSiteBaseUrl(), enrollmentKey);
-					settingType.setSettingName("hostedPaymentReturnOptions");
-					settingType.setSettingValue(hostedPaymentReturnOptions);
-					hostedPaymentSettings.getSetting().add(settingType);
-				}
-				hostedPaymentPageRequest.setHostedPaymentSettings(hostedPaymentSettings);
-				TransactionRequestType transactionRequest = new TransactionRequestType();
-				// This is the default transaction type. 
-				// When using AIM, if the x_type field is not sent to us, the type will default to AUTH_CAPTURE. 
-				// Simple Checkout uses AUTH_CAPTURE only. 
-				// The Virtual Terminal defaults to AUTH_CAPTURE unless you select a different transaction type.
-				// With an AUTH_CAPTURE transaction, the process is completely automatic. 
-				// The transaction is submitted to your processor for authorization and, 
-				// if approved, is placed in your Unsettled Transactions with the status Captured Pending Settlement. 
-				// The transaction will settle at your next batch. 
-				// Settlement occurs every 24 hours, within 24 hours of your Transaction Cut-off Time.
-				// See: https://support.authorize.net/s/article/What-Are-the-Transaction-Types-That-Can-Be-Submitted
-				transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
-
-				// Removed transaction fee
-				//transactionRequest.setAmount(amount.multiply(BigDecimal.valueOf(1.00)).setScale(1, RoundingMode.CEILING));
-				transactionRequest.setAmount(amount);
-
-				ArrayOfLineItem lineItems = new ArrayOfLineItem();
-				LineItemType lineItem = new LineItemType();
-				DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
-				LocalDate now = LocalDate.now();
-				Integer paymentDay = siteConfig.getPaymentDay();
-				LocalDate chargeEndDate = LocalDate.now().getDayOfMonth() <= paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay);
-				CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
-				profile.setCustomerProfileId(customerProfileId);
-				transactionRequest.setProfile(profile);
-				OrderType order = new OrderType();
-				order.setDescription(StringUtils.truncate(String.format("%s payment for $%s %s %s", enrollmentKey, amount, childCompleteNamePreferred, fd.format(chargeEndDate)), 255));
-				transactionRequest.setOrder(order);
-				hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
-
-				GetHostedPaymentPageController hostedPaymentController = new GetHostedPaymentPageController(hostedPaymentPageRequest);
-				GetHostedPaymentPageController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
-				GetHostedPaymentPageResponse hostedPaymentResponse = null;
-				hostedPaymentController.execute();
-				if(hostedPaymentController.getErrorResponse() != null)
-					throw new RuntimeException(hostedPaymentController.getResults().toString());
-				else {
-					hostedPaymentResponse = hostedPaymentController.getApiResponse();
-					if(MessageTypeEnum.ERROR.equals(hostedPaymentResponse.getMessages().getResultCode())) {
-						throw new RuntimeException(hostedPaymentResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedPaymentPageRequest failed. "));
+				if(profilePageResponse != null) {
+					GetHostedPaymentPageRequest hostedPaymentPageRequest = new GetHostedPaymentPageRequest();
+					hostedPaymentPageRequest.setMerchantAuthentication(merchantAuthenticationType);
+	
+					ArrayOfSetting hostedPaymentSettings = new ArrayOfSetting();
+					{
+						SettingType settingType = new SettingType();
+						String hostedPaymentReturnOptionsStr = "{ \"url\": \"%s/refresh-enrollment/%s\", \"cancelUrl\": \"%s/refresh-enrollment/%s\" }";
+						String hostedPaymentReturnOptions = String.format(hostedPaymentReturnOptionsStr, siteConfig.getSiteBaseUrl(), enrollmentKey, siteConfig.getSiteBaseUrl(), enrollmentKey);
+						settingType.setSettingName("hostedPaymentReturnOptions");
+						settingType.setSettingValue(hostedPaymentReturnOptions);
+						hostedPaymentSettings.getSetting().add(settingType);
 					}
+					hostedPaymentPageRequest.setHostedPaymentSettings(hostedPaymentSettings);
+					TransactionRequestType transactionRequest = new TransactionRequestType();
+					// This is the default transaction type. 
+					// When using AIM, if the x_type field is not sent to us, the type will default to AUTH_CAPTURE. 
+					// Simple Checkout uses AUTH_CAPTURE only. 
+					// The Virtual Terminal defaults to AUTH_CAPTURE unless you select a different transaction type.
+					// With an AUTH_CAPTURE transaction, the process is completely automatic. 
+					// The transaction is submitted to your processor for authorization and, 
+					// if approved, is placed in your Unsettled Transactions with the status Captured Pending Settlement. 
+					// The transaction will settle at your next batch. 
+					// Settlement occurs every 24 hours, within 24 hours of your Transaction Cut-off Time.
+					// See: https://support.authorize.net/s/article/What-Are-the-Transaction-Types-That-Can-Be-Submitted
+					transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
+	
+					// Removed transaction fee
+					//transactionRequest.setAmount(amount.multiply(BigDecimal.valueOf(1.00)).setScale(1, RoundingMode.CEILING));
+					transactionRequest.setAmount(amount);
+	
+					ArrayOfLineItem lineItems = new ArrayOfLineItem();
+					LineItemType lineItem = new LineItemType();
+					DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
+					LocalDate now = LocalDate.now();
+					Integer paymentDay = siteConfig.getPaymentDay();
+					LocalDate chargeEndDate = LocalDate.now().getDayOfMonth() <= paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay);
+					CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
+					profile.setCustomerProfileId(customerProfileId);
+					transactionRequest.setProfile(profile);
+					OrderType order = new OrderType();
+					order.setDescription(StringUtils.truncate(String.format("%s payment for $%s %s %s", enrollmentKey, amount, childCompleteNamePreferred, fd.format(chargeEndDate)), 255));
+					transactionRequest.setOrder(order);
+					hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
+	
+					GetHostedPaymentPageController hostedPaymentController = new GetHostedPaymentPageController(hostedPaymentPageRequest);
+					GetHostedPaymentPageController.setEnvironment(Environment.valueOf(siteConfig.getAuthorizeEnvironment()));
+					GetHostedPaymentPageResponse hostedPaymentResponse = null;
+					hostedPaymentController.execute();
+					if(hostedPaymentController.getErrorResponse() != null)
+						throw new RuntimeException(hostedPaymentController.getResults().toString());
+					else {
+						hostedPaymentResponse = hostedPaymentController.getApiResponse();
+						if(MessageTypeEnum.ERROR.equals(hostedPaymentResponse.getMessages().getResultCode())) {
+							throw new RuntimeException(hostedPaymentResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedPaymentPageRequest failed. "));
+						}
+					}
+	//				{ e("div").a("class", "").f();
+	//					e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
+	//					{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
+	//						e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
+	//						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage payment profile").g("button");
+	//					} g("form");
+	//					e("div").a("class", "").f().sx("Click here to manage your payment profile with authorize.net. ").g("div");
+	//				} g("div");
+	//				{ e("div").a("class", "").f();
+	//					{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
+	//						e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
+	//						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Make a payment").g("button");
+	//					} g("form");
+	//					e("div").a("class", "").f().sx("Click here to make a payment with authorize.net. ").g("div");
+	//				} g("div");
+					{ e("form").a("style", "display: inline-block; ").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
+						e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
+						{ e("button").a("class", "w3-button w3-light-gray w3-text-purple text-decoration-underline ").a("style", "white-space: normal; text-align: left; ").a("type", "submit").f();
+							sx("Make a payment by credit. Cash, check, or e-check are always accepted as well. ");
+						} g("button");
+					} g("form");
 				}
-//				{ e("div").a("class", "").f();
-//					e("div").a("class", "w3-large font-weight-bold ").f().sx("Configure school payments with authorize.net").g("div");
-//					{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/customer/manage").f();
-//						e("input").a("type", "hidden").a("name", "token").a("value", profilePageResponse.getToken()).fg();
-//						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Manage payment profile").g("button");
-//					} g("form");
-//					e("div").a("class", "").f().sx("Click here to manage your payment profile with authorize.net. ").g("div");
-//				} g("div");
-//				{ e("div").a("class", "").f();
-//					{ e("form").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
-//						e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
-//						e("button").a("class", "w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-blue-gray ").a("type", "submit").f().sx("Make a payment").g("button");
-//					} g("form");
-//					e("div").a("class", "").f().sx("Click here to make a payment with authorize.net. ").g("div");
-//				} g("div");
-				{ e("form").a("style", "display: inline-block; ").a("method", "post").a("target", "_blank").a("action", siteConfig.getAuthorizeUrl() + "/payment/payment").f();
-					e("input").a("type", "hidden").a("name", "token").a("value", hostedPaymentResponse.getToken()).fg();
-					{ e("button").a("class", "w3-button w3-light-gray w3-text-purple text-decoration-underline ").a("style", "white-space: normal; text-align: left; ").a("type", "submit").f();
-						sx("Make a payment by credit. Cash, check, or e-check are always accepted as well. ");
-					} g("button");
-				} g("form");
 			}
 		}
 	}
