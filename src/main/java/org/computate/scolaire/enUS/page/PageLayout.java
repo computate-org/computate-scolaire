@@ -1252,7 +1252,8 @@ public class PageLayout extends PageLayoutGen<Object> {
 						Message message = profilePageResponse.getMessages().getMessage().stream().findFirst().orElse(null);
 						if(message != null && message.getCode().equals("E00124 The provided access token is invalid,"))
 							profilePageResponse = null;
-						throw new RuntimeException(Optional.ofNullable(message).map(m -> String.format("%s %s, %s, school number: %s, enrollment key: %s, child name: %s", m.getCode(), m.getText(), customerProfileId, schoolNumber, enrollmentKey, childCompleteNamePreferred)).orElse("GetHostedProfilePageRequest failed. "));
+						else 
+							throw new RuntimeException(Optional.ofNullable(message).map(m -> String.format("%s %s, %s, school number: %s, enrollment key: %s, child name: %s", m.getCode(), m.getText(), customerProfileId, schoolNumber, enrollmentKey, childCompleteNamePreferred)).orElse("GetHostedProfilePageRequest failed. "));
 					}
 				}
 
