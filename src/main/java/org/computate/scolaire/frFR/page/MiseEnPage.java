@@ -1246,7 +1246,7 @@ public class MiseEnPage extends MiseEnPageGen<Object> {
 	 * r: "Déconnexion"
 	 * r.enUS: "Logout"
 	 * r: "Connexion"
-	 * r.enUS: "Login to Bountiful and Farmington"
+	 * r.enUS: "Login to Bountiful"
 	 * r: "écoles"
 	 * r.enUS: "schools"
 	 * r: "années"

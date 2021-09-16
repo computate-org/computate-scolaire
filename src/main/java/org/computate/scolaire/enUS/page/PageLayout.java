@@ -663,7 +663,7 @@ public class PageLayout extends PageLayoutGen<Object> {
 				e("a").a("class", "w3-padding ").a("href", pageUserUri).f(); 
 					e("span").a("class", "site-menu-item").f();
 						e("i").a("class", "far fa-sign-in-alt ").f().g("i");
-						sx("Login to Bountiful and Farmington");
+						sx("Login to Bountiful");
 					g("span");
 				g("a");
 			g("div");
