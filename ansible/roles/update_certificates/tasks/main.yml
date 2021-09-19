@@ -1,0 +1,30 @@
+---
+# Label: project_openshift_tasks
+# Title: create the Ansible tasks for deploying the application to OpenShift
+# Mission: create the Ansible tasks for deploying the application to OpenShift
+# Milestone: Automate Project Deployment
+# Column: Automate Project Deployment
+- debug:
+    var: SSL_JCEKS_BASE64
+#- name: Install opendatapolicing keystore secrets on OpenShift
+#  k8s:
+#    state: present
+#    name: computate-scolaire-keystore
+#    host: "{{PROJECT_HOST}}"
+#    api_key: "{{PROJECT_TOKEN}}"
+#    namespace: "{{PROJECT_NAMESPACE}}"
+#    definition: "{{ lookup('template', 'project_keystore.yml') }}"
+#    validate_certs: false
+#- name: Rollout deployment config
+#  shell: "oc login {{PROJECT_HOST}} --token={{REDHAT_OPENSHIFT_TOKEN}} && oc rollout latest dc/computate-scolaire -n {{ PROJECT_NAMESPACE }}"
+#- name: Install sso keystore secret on OpenShift
+#  k8s: 
+#    state: present
+#    name: sso-keystore
+#    host: "{{SSO_HOST}}"
+#    api_key: "{{SSO_TOKEN}}"
+#    namespace: "{{SSO_NAMESPACE}}"
+#    definition: "{{ lookup('template', 'redhat_sso_keystore.yml') }}"
+#    validate_certs: false
+#- name: Rollout deployment config
+#  shell: "oc login {{PROJECT_HOST}} --token={{REDHAT_OPENSHIFT_TOKEN}} && oc rollout latest dc/sso -n {{ PROJECT_NAMESPACE }}"
