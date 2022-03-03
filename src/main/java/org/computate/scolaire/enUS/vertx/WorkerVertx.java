@@ -598,18 +598,18 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 		try {
 			if("true".equals(System.getenv(ConfigKeys.ENABLE_DB_SOLR_SYNC))) {
-//				syncData("org.computate.scolaire.enUS.school.School").onSuccess(a -> {
-//					syncData("org.computate.scolaire.enUS.year.SchoolYear").onSuccess(p -> {
-//						syncData("org.computate.scolaire.enUS.season.SchoolSeason").onSuccess(b -> {
-//							syncData("org.computate.scolaire.enUS.session.SchoolSession").onSuccess(c -> {
-//								syncData("org.computate.scolaire.enUS.age.SchoolAge").onSuccess(d -> {
-//									syncData("org.computate.scolaire.enUS.block.SchoolBlock").onSuccess(e -> {
-//										syncData("org.computate.scolaire.enUS.mom.SchoolMom").onSuccess(f -> {
-//											syncData("org.computate.scolaire.enUS.dad.SchoolDad").onSuccess(g -> {
-//												syncData("org.computate.scolaire.enUS.child.SchoolChild").onSuccess(h -> {
-//													syncData("org.computate.scolaire.enUS.enrollment.SchoolEnrollment").onSuccess(i -> {
-//														syncData("org.computate.scolaire.enUS.guardian.SchoolGuardian").onSuccess(j -> {
-//															syncData("org.computate.scolaire.enUS.user.SiteUser").onSuccess(k -> {
+				syncData("org.computate.scolaire.enUS.school.School").onSuccess(a -> {
+					syncData("org.computate.scolaire.enUS.year.SchoolYear").onSuccess(p -> {
+						syncData("org.computate.scolaire.enUS.season.SchoolSeason").onSuccess(b -> {
+							syncData("org.computate.scolaire.enUS.session.SchoolSession").onSuccess(c -> {
+								syncData("org.computate.scolaire.enUS.age.SchoolAge").onSuccess(d -> {
+									syncData("org.computate.scolaire.enUS.block.SchoolBlock").onSuccess(e -> {
+										syncData("org.computate.scolaire.enUS.mom.SchoolMom").onSuccess(f -> {
+											syncData("org.computate.scolaire.enUS.dad.SchoolDad").onSuccess(g -> {
+												syncData("org.computate.scolaire.enUS.child.SchoolChild").onSuccess(h -> {
+													syncData("org.computate.scolaire.enUS.enrollment.SchoolEnrollment").onSuccess(i -> {
+														syncData("org.computate.scolaire.enUS.guardian.SchoolGuardian").onSuccess(j -> {
+															syncData("org.computate.scolaire.enUS.user.SiteUser").onSuccess(k -> {
 																syncData("org.computate.scolaire.enUS.receipt.SchoolReceipt").onSuccess(l -> {
 																	syncData("org.computate.scolaire.enUS.design.PageDesign").onSuccess(n -> {
 																		syncData("org.computate.scolaire.enUS.html.part.HtmlPart").onSuccess(o -> {
@@ -627,54 +627,54 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 																	LOG.error(syncDbToSolrFail, ex);
 																	promise.fail(ex);
 																});
-//															}).onFailure(ex -> {
-//																LOG.error(syncDbToSolrFail, ex);
-//																promise.fail(ex);
-//															});
-//														}).onFailure(ex -> {
-//															LOG.error(syncDbToSolrFail, ex);
-//															promise.fail(ex);
-//														});
-//													}).onFailure(ex -> {
-//														LOG.error(syncDbToSolrFail, ex);
-//														promise.fail(ex);
-//													});
-//												}).onFailure(ex -> {
-//													LOG.error(syncDbToSolrFail, ex);
-//													promise.fail(ex);
-//												});
-//											}).onFailure(ex -> {
-//												LOG.error(syncDbToSolrFail, ex);
-//												promise.fail(ex);
-//											});
-//										}).onFailure(ex -> {
-//											LOG.error(syncDbToSolrFail, ex);
-//											promise.fail(ex);
-//										});
-//									}).onFailure(ex -> {
-//										LOG.error(syncDbToSolrFail, ex);
-//										promise.fail(ex);
-//									});
-//								}).onFailure(ex -> {
-//									LOG.error(syncDbToSolrFail, ex);
-//									promise.fail(ex);
-//								});
-//							}).onFailure(ex -> {
-//								LOG.error(syncDbToSolrFail, ex);
-//								promise.fail(ex);
-//							});
-//						}).onFailure(ex -> {
-//							LOG.error(syncDbToSolrFail, ex);
-//							promise.fail(ex);
-//						});
-//					}).onFailure(ex -> {
-//						LOG.error(syncDbToSolrFail, ex);
-//						promise.fail(ex);
-//					});
-//				}).onFailure(ex -> {
-//					LOG.error(syncDbToSolrFail, ex);
-//					promise.fail(ex);
-//				});
+															}).onFailure(ex -> {
+																LOG.error(syncDbToSolrFail, ex);
+																promise.fail(ex);
+															});
+														}).onFailure(ex -> {
+															LOG.error(syncDbToSolrFail, ex);
+															promise.fail(ex);
+														});
+													}).onFailure(ex -> {
+														LOG.error(syncDbToSolrFail, ex);
+														promise.fail(ex);
+													});
+												}).onFailure(ex -> {
+													LOG.error(syncDbToSolrFail, ex);
+													promise.fail(ex);
+												});
+											}).onFailure(ex -> {
+												LOG.error(syncDbToSolrFail, ex);
+												promise.fail(ex);
+											});
+										}).onFailure(ex -> {
+											LOG.error(syncDbToSolrFail, ex);
+											promise.fail(ex);
+										});
+									}).onFailure(ex -> {
+										LOG.error(syncDbToSolrFail, ex);
+										promise.fail(ex);
+									});
+								}).onFailure(ex -> {
+									LOG.error(syncDbToSolrFail, ex);
+									promise.fail(ex);
+								});
+							}).onFailure(ex -> {
+								LOG.error(syncDbToSolrFail, ex);
+								promise.fail(ex);
+							});
+						}).onFailure(ex -> {
+							LOG.error(syncDbToSolrFail, ex);
+							promise.fail(ex);
+						});
+					}).onFailure(ex -> {
+						LOG.error(syncDbToSolrFail, ex);
+						promise.fail(ex);
+					});
+				}).onFailure(ex -> {
+					LOG.error(syncDbToSolrFail, ex);
+					promise.fail(ex);
+				});
 			} else {
 				LOG.info(syncDbToSolrSkip);
 				promise.complete();
