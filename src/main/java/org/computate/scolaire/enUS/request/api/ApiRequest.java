@@ -1,11 +1,15 @@
 package org.computate.scolaire.enUS.request.api;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.computate.scolaire.enUS.wrap.Wrap;
+
+import org.computate.scolaire.enUS.config.ConfigKeys;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
+import org.computate.scolaire.enUS.wrap.Wrap;
 
 /**
  * CanonicalName: org.computate.scolaire.frFR.requete.api.RequeteApi
@@ -53,5 +57,31 @@ public class ApiRequest extends ApiRequestGen<Object> {
 	}
 
 	protected void _vars(List<String> c) {
+	}
+
+	protected void _timeRemaining(Wrap<String> w) {
+		w.o(calculateTimeRemaining());
+	}
+
+	public String calculateTimeRemaining() {
+		ZonedDateTime now = ZonedDateTime.now(ZoneId.of(siteRequest_.getSiteConfig_().getSiteZone()));
+		Long timeDifferenceNow = ChronoUnit.SECONDS.between(created, now);
+		Double ratio = ((double) numPATCH / numFound);
+		Double remainingSeconds = ((double) timeDifferenceNow) / ratio - ((double) timeDifferenceNow);
+
+		// Calculating the difference in Hours
+		Long hours = ((Double) (remainingSeconds / 60 / 60)).longValue();
+
+		// Calculating the difference in Minutes
+		Long minutes = ((Double) ((remainingSeconds / 60) % 60)).longValue();
+
+		// Calculating the difference in Seconds
+		Long seconds = ((Double) (remainingSeconds % 60)).longValue();
+
+		return (hours > 0L ? hours + " hours " : "") + (minutes > 0L ? minutes + " minutes " : "") + (hours == 0L && minutes <= 1L ? seconds + " seconds." : "");
+	}
+
+	public boolean getEmpty() {
+		return Optional.ofNullable(siteRequest_).map(SiteRequestEnUS::getJsonObject).map(b -> b.size()).orElse(0) == 0;
 	}
 }

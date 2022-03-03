@@ -2925,11 +2925,15 @@ public abstract class ClusterGen<DEV> extends Object {
 		Object o = null;
 		if(val != null) {
 			for(String v : vars) {
-				if(o == null)
-					o = defineCluster(v, val);
-				else if(o instanceof Cluster) {
-					Cluster oCluster = (Cluster)o;
-					o = oCluster.defineForClass(v, val);
+				try {
+					if(o == null)
+						o = defineCluster(v, val);
+					else if(o instanceof Cluster) {
+						Cluster oCluster = (Cluster)o;
+						o = oCluster.defineForClass(v, val);
+					}
+				} catch(Exception ex) {
+					ExceptionUtils.rethrow(ex);
 				}
 			}
 		}

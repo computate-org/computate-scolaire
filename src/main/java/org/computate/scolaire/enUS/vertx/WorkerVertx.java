@@ -10,20 +10,25 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.util.SimpleOrderedMap;
+import org.computate.scolaire.enUS.cluster.Cluster;
+import org.computate.scolaire.enUS.config.ApiCounter;
+import org.computate.scolaire.enUS.config.ConfigKeys;
 import org.computate.scolaire.enUS.config.SiteConfig;
 import org.computate.scolaire.enUS.contexte.SiteContextEnUS;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollment;
 import org.computate.scolaire.enUS.enrollment.SchoolEnrollmentEnUSApiServiceImpl;
 import org.computate.scolaire.enUS.payment.SchoolPayment;
 import org.computate.scolaire.enUS.payment.SchoolPaymentEnUSApiServiceImpl;
-import org.computate.scolaire.enUS.search.SearchList;
 import org.computate.scolaire.enUS.request.SiteRequestEnUS;
 import org.computate.scolaire.enUS.request.api.ApiRequest;
+import org.computate.scolaire.enUS.search.SearchList;
+
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.CompositeFuture;
@@ -34,28 +39,34 @@ import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.EventBusOptions;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.core.shareddata.AsyncMap;
 import io.vertx.core.shareddata.SharedData;
-import io.vertx.core.spi.cluster.ClusterManager;
 import io.vertx.ext.mail.MailClient;
 import io.vertx.ext.mail.MailConfig;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgPool;
-import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
 import io.vertx.sqlclient.PoolOptions;
+import io.vertx.sqlclient.PreparedStatement;
+import io.vertx.sqlclient.Row;
+import io.vertx.sqlclient.RowSet;
+import io.vertx.sqlclient.RowStream;
 import io.vertx.sqlclient.SqlConnection;
 import io.vertx.sqlclient.Transaction;
+import io.vertx.sqlclient.Tuple;
 
 /**
  * A Java class to start the Vert.x application as a main method. 
  * CanonicalName: org.computate.scolaire.frFR.vertx.OuvrierVertx
  **/
 public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
+	protected static final Logger LOG = LoggerFactory.getLogger(WorkerVertx.class);
 
 	public final DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
@@ -151,7 +162,9 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 			configureCluster().future().compose(b -> 
 				configureSharedWorkerExecutor().future().compose(c -> 
 					configureEmail().future().compose(d -> 
-						configureAuthorizeNetCharges().future()
+						configureAuthorizeNetCharges().future().compose(e -> 
+							syncDbToSolr()
+						)
 					)
 				)
 			)
@@ -567,5 +580,313 @@ public class WorkerVertx extends WorkerVertxGen<AbstractVerticle> {
 			promise.complete();
 		}
 		return promise;
+	}
+
+	public static final String syncDbToSolrComplete1 = "Syncing database to Solr completed. ";
+	public static final String syncDbToSolrComplete = syncDbToSolrComplete1;
+	public static final String syncDbToSolrFail1 = "Syncing database to Solr failed. ";
+	public static final String syncDbToSolrFail = syncDbToSolrFail1;
+	public static final String syncDbToSolrSkip1 = "Skip syncing database to Solr. ";
+	public static final String syncDbToSolrSkip = syncDbToSolrSkip1;
+
+	/**	
+	 * Val.Complete.enUS:Syncing database to Solr completed. 
+	 * Val.Fail.enUS:Syncing database to Solr failed. 
+	 * Val.Skip.enUS:Skip syncing database to Solr. 
+	 **/
+	private Future<Void> syncDbToSolr() {
+		Promise<Void> promise = Promise.promise();
+		try {
+			if("true".equals(System.getenv(ConfigKeys.ENABLE_DB_SOLR_SYNC))) {
+//				syncData("org.computate.scolaire.enUS.school.School").onSuccess(a -> {
+//					syncData("org.computate.scolaire.enUS.year.SchoolYear").onSuccess(p -> {
+//						syncData("org.computate.scolaire.enUS.season.SchoolSeason").onSuccess(b -> {
+//							syncData("org.computate.scolaire.enUS.session.SchoolSession").onSuccess(c -> {
+//								syncData("org.computate.scolaire.enUS.age.SchoolAge").onSuccess(d -> {
+//									syncData("org.computate.scolaire.enUS.block.SchoolBlock").onSuccess(e -> {
+//										syncData("org.computate.scolaire.enUS.mom.SchoolMom").onSuccess(f -> {
+//											syncData("org.computate.scolaire.enUS.dad.SchoolDad").onSuccess(g -> {
+//												syncData("org.computate.scolaire.enUS.child.SchoolChild").onSuccess(h -> {
+//													syncData("org.computate.scolaire.enUS.enrollment.SchoolEnrollment").onSuccess(i -> {
+//														syncData("org.computate.scolaire.enUS.guardian.SchoolGuardian").onSuccess(j -> {
+//															syncData("org.computate.scolaire.enUS.user.SiteUser").onSuccess(k -> {
+																syncData("org.computate.scolaire.enUS.receipt.SchoolReceipt").onSuccess(l -> {
+																	syncData("org.computate.scolaire.enUS.design.PageDesign").onSuccess(n -> {
+																		syncData("org.computate.scolaire.enUS.html.part.HtmlPart").onSuccess(o -> {
+																			LOG.info(syncDbToSolrComplete);
+																			promise.complete();
+																		}).onFailure(ex -> {
+																			LOG.error(syncDbToSolrFail, ex);
+																			promise.fail(ex);
+																		});
+																	}).onFailure(ex -> {
+																		LOG.error(syncDbToSolrFail, ex);
+																		promise.fail(ex);
+																	});
+																}).onFailure(ex -> {
+																	LOG.error(syncDbToSolrFail, ex);
+																	promise.fail(ex);
+																});
+//															}).onFailure(ex -> {
+//																LOG.error(syncDbToSolrFail, ex);
+//																promise.fail(ex);
+//															});
+//														}).onFailure(ex -> {
+//															LOG.error(syncDbToSolrFail, ex);
+//															promise.fail(ex);
+//														});
+//													}).onFailure(ex -> {
+//														LOG.error(syncDbToSolrFail, ex);
+//														promise.fail(ex);
+//													});
+//												}).onFailure(ex -> {
+//													LOG.error(syncDbToSolrFail, ex);
+//													promise.fail(ex);
+//												});
+//											}).onFailure(ex -> {
+//												LOG.error(syncDbToSolrFail, ex);
+//												promise.fail(ex);
+//											});
+//										}).onFailure(ex -> {
+//											LOG.error(syncDbToSolrFail, ex);
+//											promise.fail(ex);
+//										});
+//									}).onFailure(ex -> {
+//										LOG.error(syncDbToSolrFail, ex);
+//										promise.fail(ex);
+//									});
+//								}).onFailure(ex -> {
+//									LOG.error(syncDbToSolrFail, ex);
+//									promise.fail(ex);
+//								});
+//							}).onFailure(ex -> {
+//								LOG.error(syncDbToSolrFail, ex);
+//								promise.fail(ex);
+//							});
+//						}).onFailure(ex -> {
+//							LOG.error(syncDbToSolrFail, ex);
+//							promise.fail(ex);
+//						});
+//					}).onFailure(ex -> {
+//						LOG.error(syncDbToSolrFail, ex);
+//						promise.fail(ex);
+//					});
+//				}).onFailure(ex -> {
+//					LOG.error(syncDbToSolrFail, ex);
+//					promise.fail(ex);
+//				});
+			} else {
+				LOG.info(syncDbToSolrSkip);
+				promise.complete();
+			}
+		} catch(Exception ex) {
+			LOG.error(syncDbToSolrFail, ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	public static final String syncDataComplete1 = "%s data sync completed. ";
+	public static final String syncDataComplete = syncDataComplete1;
+	public static final String syncDataFail1 = "%s data sync failed. ";
+	public static final String syncDataFail = syncDataFail1;
+	public static final String syncDataCounterResetFail1 = "%s data sync failed to reset counter. ";
+	public static final String syncDataCounterResetFail = syncDataCounterResetFail1;
+	public static final String syncDataSkip1 = "%s data sync skipped. ";
+	public static final String syncDataSkip = syncDataSkip1;
+	public static final String syncDataStarted1 = "%s data sync started. ";
+	public static final String syncDataStarted = syncDataStarted1;
+
+	/**	
+	 * Sync %s data from the database to Solr. 
+	 * Val.Complete.enUS:%s data sync completed. 
+	 * Val.Fail.enUS:%s data sync failed. 
+	 * Val.CounterResetFail.enUS:%s data sync failed to reset counter. 
+	 * Val.Skip.enUS:%s data sync skipped. 
+	 * Val.Started.enUS:%s data sync started. 
+	 **/
+	private Future<Void> syncData(String classCanonicalName) {
+		Promise<Void> promise = Promise.promise();
+		vertx.setTimer(10000, timer -> {
+			String tableName = StringUtils.substringAfterLast(classCanonicalName, ".");
+			try {
+				LOG.info(String.format(syncDataStarted, classCanonicalName));
+				pgPool.getConnection(a -> {
+					if(a.succeeded()) {
+						SqlConnection sqlConnection = a.result();
+						Transaction tx = sqlConnection.begin();
+						sqlConnection.query(String.format("SELECT count(pk) FROM c where canonical_name='%s'", classCanonicalName)).execute(b -> {
+							if(b.succeeded()) {
+								try {
+									RowSet<Row> countRowSet = b.result();
+									Optional<Long> rowCountOptional = Optional.ofNullable(countRowSet.iterator().next()).map(row -> row.getLong(0));
+									if(rowCountOptional.isPresent()) {
+										Long apiCounterResume = 0L;
+										Long apiCounterFetch = 1L;
+										ApiCounter apiCounter = new ApiCounter();
+			
+										SiteRequestEnUS siteRequest = new SiteRequestEnUS();
+										siteRequest.setSiteConfig_(siteContextEnUS.getSiteConfig());
+										siteRequest.setSiteContext_(siteContextEnUS);
+										siteRequest.initDeepSiteRequestEnUS(siteRequest);
+				
+										ApiRequest apiRequest = new ApiRequest();
+										apiRequest.setRows(apiCounterFetch.intValue());
+										apiRequest.setNumFound(rowCountOptional.get());
+										apiRequest.setNumPATCH(apiCounter.getQueueNum());
+										apiRequest.setCreated(ZonedDateTime.now(ZoneId.of(siteRequest.getSiteConfig_().getSiteZone())));
+										apiRequest.initDeepApiRequest(siteRequest);
+										vertx.eventBus().publish(String.format("websocket%s", classCanonicalName), JsonObject.mapFrom(apiRequest));
+				
+										sqlConnection.prepare(String.format("SELECT pk FROM c where canonical_name='%s'", classCanonicalName), c -> {
+											if(c.succeeded()) {
+												PreparedStatement preparedStatement = c.result();
+												apiCounter.setQueueNum(0L);
+												apiCounter.setTotalNum(0L);
+												try {
+													RowStream<Row> stream = preparedStatement.createStream(apiCounterFetch.intValue());
+													stream.pause();
+													stream.fetch(apiCounterFetch);
+													stream.exceptionHandler(ex -> {
+														LOG.error(String.format(syncDataFail, classCanonicalName), new RuntimeException(ex));
+														tx.rollback();
+														sqlConnection.close();
+														promise.fail(ex);
+													});
+													stream.endHandler(v -> {
+														LOG.info(String.format(syncDataComplete, classCanonicalName));
+														tx.rollback();
+														sqlConnection.close();
+														promise.complete();
+													});
+													stream.handler(row -> {
+	//													pgPool.getConnection(f -> {
+	//														if(f.succeeded()) {
+																try {
+	//																SqlConnection sqlConnection2 = a.result();
+																	apiCounter.incrementQueueNum();
+					
+																	SiteRequestEnUS siteRequest2 = new SiteRequestEnUS();
+																	siteRequest2.setSiteConfig_(siteContextEnUS.getSiteConfig());
+																	siteRequest2.setSiteContext_(siteContextEnUS);
+																	siteRequest2.initDeepSiteRequestEnUS(siteRequest2);
+			
+																	Cluster o = (Cluster)Class.forName(classCanonicalName).newInstance();
+																	o.setSiteRequest_(siteRequest2);
+																	Long pk = row.getLong(0);
+																	o.setPk(pk);
+	//																Transaction tx = sqlConnection2.begin();
+																	sqlConnection.preparedQuery(SiteContextEnUS.SQL_define)
+																			.collecting(Collectors.toList())
+																			.execute(Tuple.of(pk)
+																			, defineAsync
+																	-> {
+																		if(defineAsync.succeeded()) {
+																			try {
+																				for(Row definition : defineAsync.result().value()) {
+																					try {
+																						o.defineForClass(definition.getString(0), definition.getString(1));
+																					} catch(Exception e) {
+																						LOGGER.error(String.format("defineSchool failed. "), e);
+																						LOGGER.error(e);
+																					}
+																				}
+																				sqlConnection.preparedQuery(SiteContextEnUS.SQL_attribute)
+																						.collecting(Collectors.toList())
+																						.execute(Tuple.of(pk, pk)
+																						, attributeAsync
+																				-> {
+																					try {
+																						if(attributeAsync.succeeded()) {
+																							if(attributeAsync.result() != null) {
+																								for(Row definition : attributeAsync.result().value()) {
+																									if(pk.equals(definition.getLong(0)))
+																										o.attributeForClass(definition.getString(2), definition.getLong(1));
+																									else
+																										o.attributeForClass(definition.getString(3), definition.getLong(0));
+																								}
+																							}
+																							try {
+			
+																								o.initDeepForClass(siteRequest2);
+																								o.indexForClass();
+	//																							tx.commit();
+	//																							tx.close();
+	//																							sqlConnection2.close();
+																								LOG.info(String.format("Index %s %s", classCanonicalName, pk));
+																								stream.fetch(apiCounterFetch);
+																							} catch (Exception ex) {
+																								LOG.error(String.format(syncDataFail, classCanonicalName), ex);
+	//																							tx.rollback();
+	//																							tx.close();
+	//																							sqlConnection2.close();
+																							}
+																						} else {
+																							LOGGER.error(String.format("attributeSchool failed. "), attributeAsync.cause());
+	//																						tx.rollback();
+	//																						tx.close();
+	//																						sqlConnection2.close();
+																						}
+																					} catch(Exception e) {
+																						LOGGER.error(String.format("attributeSchool failed. "), e);
+	//																					tx.rollback();
+	//																					tx.close();
+	//																					sqlConnection2.close();
+																					}
+																				});
+																			} catch(Exception e) {
+																				LOGGER.error(String.format("defineSchool failed. "), e);
+	//																			tx.rollback();
+	//																			tx.close();
+	//																			sqlConnection2.close();
+																			}
+																		} else {
+																			LOGGER.error(String.format("defineSchool failed. "), defineAsync.cause());
+	//																		tx.rollback();
+	//																		tx.close();
+	//																		sqlConnection2.close();
+																		}
+																	});
+																} catch(Exception e) {
+																	LOGGER.error(String.format("defineSchool failed. "), e);
+																}
+	//														} else {
+	//															LOG.error(String.format(syncDataFail, classCanonicalName), f.cause());
+	//															promise.fail(c.cause());
+	//														}
+	//													});
+													});
+												} catch (Exception ex) {
+													LOG.error(String.format(syncDataFail, classCanonicalName), ex);
+													promise.fail(ex);
+												}
+											} else {
+												LOG.error(String.format(syncDataFail, classCanonicalName), c.cause());
+												promise.fail(c.cause());
+											}
+										});
+									} else {
+										promise.complete();
+									}
+								} catch (Exception ex) {
+									LOG.error(String.format(syncDataFail, classCanonicalName), ex);
+									promise.fail(ex);
+								}
+							} else {
+								LOG.error(String.format(syncDataFail, classCanonicalName), b.cause());
+								promise.fail(b.cause());
+							}
+						});
+					} else {
+						LOG.error(String.format(syncDataFail, classCanonicalName), a.cause());
+						promise.fail(a.cause());
+					}
+				});
+			} catch (Exception ex) {
+				LOG.error(String.format(syncDataFail, classCanonicalName), ex);
+				promise.fail(ex);
+			}
+		});
+		return promise.future();
 	}
 }
